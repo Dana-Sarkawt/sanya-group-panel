@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+*, body{
+    transition: all 0.3s ease-in-out !important;
+}
+
+
+#subDiv > div {
+	width: 100% !important;
+}
+
+.dark #subDiv > .h-px {
+	width: 30% !important;
+	height: 1px !important;
+	background-color: #393c49 !important;
+	z-index: -10 !important;
+}
+
+tr:nth-child(odd) {
+	background-color: #fff !important;
+	border: none !important;
+}
+.dark tr:nth-child(odd) {
+	background-color: #363636 !important;
+	border: none !important;
+}
+.dark th:nth-child(odd) {
+	background-color: #212121 !important;
+	border: none !important;
+}
+.dark th:nth-child(even) {
+	background-color: #212121 !important;
+	border: none !important;
+}
+
+tr:nth-child(even) {
+	background-color: #f7f6fe !important;
+	border: none !important;
+}
+.dark tr:nth-child(even) {
+	background-color: #363636 !important;
+	border: none !important;
+}

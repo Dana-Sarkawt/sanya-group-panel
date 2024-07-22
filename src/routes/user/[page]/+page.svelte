@@ -59,7 +59,7 @@ import UserTable from '$lib/Components/Tables/User.Table.Component.svelte';
                 </Dropdown>
             </div> -->
     
-            <a href="/apollo/add">
+            <a href="/user/add">
                 <button
                     class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
                     style="box-shadow:0 1px 8px 0px #24b97d;"><span>+</span> Add User</button

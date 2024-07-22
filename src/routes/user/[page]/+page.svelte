@@ -20,17 +20,17 @@ import UserTable from '$lib/Components/Tables/User.Table.Component.svelte';
         class="  flex h-[100vh] w-full flex-col justify-start items-center lg:mx-24"
         id="subDiv"
     >
-        <div class="flex h-24 w-full items-center justify-start pl-2 text-4xl dark:text-white">
-            Apollo
+        <div class="flex h-24 w-full items-center justify-start pl-2 text-4xl text-[#0F4E35] dark:text-white font-bold " >
+            Users Table
         </div>
     
         <div
-            class="flex h-16 w-full items-center justify-between rounded-t-lg bg-tableOne-light p-2 dark:bg-[#212121] bg-white"
+                class="flex h-16 w-full items-center justify-end rounded-t-lg  p-2 dark:bg-[#081c18] bg-[#ffffff]"
         >
-            <div class="flex h-auto w-auto items-center justify-center gap-2">
+            <!-- <div class="flex h-auto w-auto items-center justify-center gap-2"> -->
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-                <img
+                <!-- <img
                     src="/images/search.png"
                     class="h-8 w-8 cursor-pointer object-contain duration-300 ease-in-out"
                     alt=""
@@ -57,12 +57,12 @@ import UserTable from '$lib/Components/Tables/User.Table.Component.svelte';
                             >test</DropdownItem
                         >
                 </Dropdown>
-            </div>
+            </div> -->
     
             <a href="/apollo/add">
                 <button
-                    class="h-12 rounded-lg bg-[#f17f18] px-4 text-white"
-                    style="box-shadow:0 1px 8px 0px #f17f18;"><span>+</span> Add Apollo</button
+                    class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
+                    style="box-shadow:0 1px 8px 0px #24b97d;"><span>+</span> Add User</button
                 >
             </a>
         </div>

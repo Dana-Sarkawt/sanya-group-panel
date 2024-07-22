@@ -20,27 +20,34 @@
 }
 
 tr:nth-child(odd) {
-	background-color: #fff !important;
+	background-color: #70edbb54 !important;
 	border: none !important;
 }
+th{
+	background-color: #ffffff !important;
+	border: none !important;
+	color: black !important;
+
+}
+
 .dark tr:nth-child(odd) {
-	background-color: #363636 !important;
-	border: none !important;
-}
-.dark th:nth-child(odd) {
-	background-color: #212121 !important;
-	border: none !important;
-}
-.dark th:nth-child(even) {
-	background-color: #212121 !important;
+	background-color: #124339 !important;
 	border: none !important;
 }
 
+
 tr:nth-child(even) {
-	background-color: #f7f6fe !important;
+	background-color: #ffffff !important;
 	border: none !important;
 }
 .dark tr:nth-child(even) {
-	background-color: #363636 !important;
+	background-color: #0c2b25 !important;
 	border: none !important;
+}
+
+.dark th{
+	background-color: #081c18 !important;
+	border: none !important;
+	color: white !important;
+
 }

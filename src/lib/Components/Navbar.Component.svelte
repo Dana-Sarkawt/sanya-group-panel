@@ -8,7 +8,7 @@
   </script>
 
 <Navbar let:NavContainer class="bg-transparent dark:bg-transparent">
-    <NavContainer class="border px-5 h-26 rounded-lg md:rounded-full border-[#24b97d] bg-[#24b97d7e] text-white">
+    <NavContainer class="border px-5 h-26 rounded-lg md:rounded-full border-[#24b97d] bg-[#24b97d7e] dark:bg-[#11433A] text-white">
       <NavBrand href="/">
         <!-- <img src="/images/flowbite-svelte-icon-logo.svg" class="me-3 h-6 sm:h-9" alt="Flowbite Logo" /> -->
         <span class="self-center whitespace-nowrap text-xl font-semibold text-[#104e35] dark:text-white">Sanya Group</span>
@@ -18,22 +18,22 @@
         <NavLi class="cursor-pointer">
             Company<ChevronDownOutline class="w-6 h-6 ms-2 text-[#104e35] dark:text-white inline" />
           </NavLi>
-          <Dropdown class="w-44 z-20">
-            <DropdownItem href="/">Project</DropdownItem>
-            <DropdownItem >
-                <NavLi class="cursor-pointer text-black dark:text-white">
+          <Dropdown class="w-44 z-20 dark:bg-[#11433A] dark:border border-[#24b97d] rounded-xl">
+            <DropdownItem href="/" class="dark:hover:bg-[#336f64]">Project</DropdownItem>
+            <DropdownItem class="dark:hover:bg-[#336f64]">
+                <NavLi class="cursor-pointer text-black dark:text-white ">
                     Expenses<ChevronDownOutline class="w-6 h-6 ms-2 text-green-500  inline" />
                   </NavLi>
 
-                  <Dropdown class="w-44 z-20">
+                  <Dropdown class="w-44 z-20 absolute  bg-white dark:bg-[#11433A] border border-[#24b97d] rounded-xl" >
 
-                    <DropdownItem href="/">Daily</DropdownItem>
-                    <DropdownItem href="/">Worker</DropdownItem>
-                    <DropdownItem href="/">Preparation</DropdownItem>
+                    <DropdownItem href="/" class="dark:hover:bg-[#336f64] hover:bg-[#f2f2f2]" activeClass="bg-[#24b97d]">Daily</DropdownItem>
+                    <DropdownItem href="/" class="dark:hover:bg-[#336f64] hover:bg-[#f2f2f2]" activeClass="bg-[#24b97d]">Worker</DropdownItem>
+                    <DropdownItem href="/" class="dark:hover:bg-[#336f64] hover:bg-[#f2f2f2]" activeClass="bg-[#24b97d]">Preparation</DropdownItem>
                   </Dropdown>
             </DropdownItem>
-            <DropdownItem href="/">Capital</DropdownItem>
-            <DropdownItem href="/">Sales</DropdownItem>
+            <DropdownItem href="/" class="dark:hover:bg-[#336f64]">Capital</DropdownItem>
+            <DropdownItem href="/" class="dark:hover:bg-[#336f64]">Sales</DropdownItem>
           </Dropdown>
 
         <NavLi href="/user/1">Users</NavLi>

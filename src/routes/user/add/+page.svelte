@@ -21,5 +21,7 @@
             </select>
         </div>
 
+        <button class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out">Add User</button>
     </div>
+
 </div>

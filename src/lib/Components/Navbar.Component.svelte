@@ -6,6 +6,7 @@
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
   import { userStore } from '$lib/Store/User.Store';
+  import { authStore } from "$lib/Store/Auth.Store";
   $: activeUrl = $page.url.pathname;
   
   // onMount(() => {
@@ -58,7 +59,7 @@
   
           <NavLi href="/user/1">Users</NavLi>
           <NavLi href="/docs/components/navbar">Setting</NavLi>
-          <NavLi href="/pricing">Logout</NavLi>
+          <NavLi class="cursor-pointer"  on:click={() => authStore.logout()}>Logout</NavLi>
   
   
           <DarkMode class="text-lg" btnClass = 'text-gray-500 dark:text-gray-400  rounded-lg text-sm p-2.5'>

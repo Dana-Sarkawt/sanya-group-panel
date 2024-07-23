@@ -68,7 +68,7 @@ const createSaleStore = () => {
         }
         update((store) => {
           store.data = store.data.map((sale) =>
-            sale.id === data.id ? response.data : sale
+            sale.id === data.id ? response.data : sale,
           );
           return store;
         });

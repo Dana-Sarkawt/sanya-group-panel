@@ -9,11 +9,15 @@
     TableHead,
     TableHeadCell,
   } from "flowbite-svelte";
+  import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
+
   export let projects: Store<Database["public"]["Tables"]["Projects"]["Row"]> =
     {
       data: [],
       count: 0,
     };
+
+    let deleteModal = false;
 </script>
 
 <div class="w-full h-auto bg-[#ffffff] dark:bg-[#081c18] p-4 rounded-b-xl">
@@ -47,6 +51,7 @@
                 <a
                   href="edit/1"
                   class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full"
+                  on:click={() => (deleteModal = true)}
                 >
                   <img
                     src="/images/delete.png"
@@ -62,3 +67,6 @@
     </TableBody>
   </Table>
 </div>
+
+
+<DeleteModal bind:deleteModal={deleteModal} />

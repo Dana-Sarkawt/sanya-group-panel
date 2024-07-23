@@ -17,7 +17,7 @@ const createDepositStore = () => {
     set: async (data: Store<Database["public"]["Tables"]["Deposits"]["Row"]>) =>
       set(data),
     create: async (
-      data: Database["public"]["Tables"]["Deposits"]["Insert"]
+      data: Database["public"]["Tables"]["Deposits"]["Insert"],
     ) => {
       try {
         const response = await depositsRepository.createDepositAsync(data);
@@ -60,7 +60,7 @@ const createDepositStore = () => {
       }
     },
     update: async (
-      data: Database["public"]["Tables"]["Deposits"]["Update"]
+      data: Database["public"]["Tables"]["Deposits"]["Update"],
     ) => {
       try {
         if (!data.id || data.id === 0) {
@@ -72,7 +72,7 @@ const createDepositStore = () => {
         }
         update((store) => {
           store.data = store.data.map((deposit) =>
-            deposit.id === response.data.id ? response.data : deposit
+            deposit.id === response.data.id ? response.data : deposit,
           );
           return store;
         });

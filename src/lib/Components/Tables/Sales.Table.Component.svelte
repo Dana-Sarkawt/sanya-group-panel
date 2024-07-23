@@ -7,11 +7,15 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
+
+    import DeleteModal from '$lib/Components/DeleteModal.Component.svelte';
+
+    let deleteModal = false;
 	
 </script>
 
 
-<div class="w-full h-auto bg-[#ffffff] dark:bg-[#081c18] p-4 rounded-b-xl">
+<div class="containerw-full h-auto bg-[#ffffff] dark:bg-[#081c18] p-4 rounded-b-xl">
 
     <Table striped={true}>
         <TableHead theadClass="bg-white dark:bg-[#212121] text-center">
@@ -27,11 +31,11 @@
 
                         <TableBodyCell>
                             <div class="w-full h-auto flex justify-center items-center gap-2">
-                                <div class="w-28 h-6 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold">
+                                <div class="w-28 h-8 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold text-white">
                                     Deposit
                                 </div>
 
-                                <div class="w-28 h-6 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold">
+                                <div class="w-28 h-8 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold text-white">
                                     Financial Dues
                                 </div>
                             </div>
@@ -46,7 +50,7 @@
                                         <img src="/images/edit.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                     
-                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full">
+                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full" on:click={() => (deleteModal = true)}>
                                         <img src="/images/delete.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                 
@@ -63,11 +67,11 @@
 
                         <TableBodyCell>
                             <div class="w-full h-auto flex justify-center items-center gap-2">
-                                <div class="w-28 h-6 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold">
+                                <div class="w-28 h-8 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold text-white">
                                     Deposit
                                 </div>
 
-                                <div class="w-28 h-6 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold">
+                                <div class="w-28 h-8 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold text-white">
                                     Financial Dues
                                 </div>
                             </div>
@@ -82,7 +86,7 @@
                                         <img src="/images/edit.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                     
-                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full">
+                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full" on:click={() => (deleteModal = true)}>
                                         <img src="/images/delete.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                 
@@ -97,11 +101,11 @@
 
                         <TableBodyCell>
                             <div class="w-full h-auto flex justify-center items-center gap-2">
-                                <div class="w-28 h-6 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold">
+                                <div class="w-28 h-8 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold text-white">
                                     Deposit
                                 </div>
 
-                                <div class="w-28 h-6 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold">
+                                <div class="w-28 h-8 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold text-white">
                                     Financial Dues
                                 </div>
                             </div>
@@ -116,7 +120,7 @@
                                         <img src="/images/edit.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                     
-                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full">
+                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full" on:click={() => (deleteModal = true)}>
                                         <img src="/images/delete.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                 
@@ -126,3 +130,6 @@
         </TableBody>
     </Table>
 </div>
+
+
+<DeleteModal bind:deleteModal={deleteModal} />

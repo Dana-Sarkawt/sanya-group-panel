@@ -7,6 +7,10 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
+
+    import DeleteModal from '$lib/Components/DeleteModal.Component.svelte';
+
+    let deleteModal = false;
 	
 </script>
 
@@ -34,7 +38,7 @@
                                         <img src="/images/edit.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                     
-                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full">
+                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full" on:click={() => (deleteModal = true)}>
                                         <img src="/images/delete.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                 
@@ -56,7 +60,7 @@
                                         <img src="/images/edit.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                     
-                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full">
+                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full" on:click={() => (deleteModal = true)}>
                                         <img src="/images/delete.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                 
@@ -78,7 +82,7 @@
                                         <img src="/images/edit.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                     
-                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full">
+                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full" on:click={() => (deleteModal = true)}>
                                         <img src="/images/delete.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                 
@@ -88,3 +92,6 @@
         </TableBody>
     </Table>
 </div>
+
+
+<DeleteModal bind:deleteModal={deleteModal} />

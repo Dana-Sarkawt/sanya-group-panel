@@ -17,6 +17,7 @@ export class AuthRepository implements IAuthRepository {
           .single();
         return user;
       } catch (error) {
+        console.log(error);
         throw error;
       }
   }

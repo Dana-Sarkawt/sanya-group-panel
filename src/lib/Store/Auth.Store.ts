@@ -19,9 +19,11 @@ const createAuthStore = () => {
           throw new Error(response.error.message);
         }
         set(response.data);
+        return response;
       } catch (error) {
         console.log(error);
         set(null);
+        return null;
       }
     },
     login: async (email: string, password: string) => {

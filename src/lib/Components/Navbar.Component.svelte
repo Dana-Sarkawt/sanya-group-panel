@@ -27,7 +27,7 @@
 
                   <Dropdown class="w-44 z-20 absolute  bg-white dark:bg-[#11433A] border border-[#24b97d] rounded-xl" >
 
-                    <DropdownItem href="/" class="dark:hover:bg-[#336f64] hover:bg-[#f2f2f2]" activeClass="bg-[#24b97d]">Daily</DropdownItem>
+                    <DropdownItem href="/daily/1" class="dark:hover:bg-[#336f64] hover:bg-[#f2f2f2]" activeClass="bg-[#24b97d]">Daily</DropdownItem>
                     <DropdownItem href="/" class="dark:hover:bg-[#336f64] hover:bg-[#f2f2f2]" activeClass="bg-[#24b97d]">Worker</DropdownItem>
                     <DropdownItem href="/" class="dark:hover:bg-[#336f64] hover:bg-[#f2f2f2]" activeClass="bg-[#24b97d]">Preparation</DropdownItem>
                   </Dropdown>

@@ -24,7 +24,7 @@ import CapitalTable from '$lib/Components/Tables/Capital.Table.Component.svelte'
             </div>
         
             <div
-                    class="flex h-16 w-full items-center justify-end rounded-t-lg  p-2 dark:bg-[#081c18] bg-[#ffffff]"
+                    class="flex h-16 w-full items-center justify-between rounded-t-lg  p-2 dark:bg-[#081c18] bg-[#ffffff]"
             >
                 <!-- <div class="flex h-auto w-auto items-center justify-center gap-2"> -->
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -58,10 +58,19 @@ import CapitalTable from '$lib/Components/Tables/Capital.Table.Component.svelte'
                     </Dropdown>
                 </div> -->
         
+
+                <div class="w-auto h-12 flex justify-center items-center gap-2">
+                    
+                    <p class="h-12 w-auto flex justify-center items-center px-4 rounded-xl bg-[#D3F9E9] dark:bg-[#11433A] dark:text-white">
+                        <span class="text-[#1e4f3b] dark:text-[#54cc9c] pr-4 font-bold">Total:</span>
+                        2444</p>
+                </div>
+
+
                 <a href="/capital/add">
                     <button
                         class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
-                        style="box-shadow:0 1px 8px 0px #24b97d;"><span>+</span> Add Capital</button
+                        style="box-shadow:0 1px 8px 0px #24b97d;"><span>+</span>Add Capital</button
                     >
                 </a>
             </div>

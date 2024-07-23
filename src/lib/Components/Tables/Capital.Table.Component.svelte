@@ -1,4 +1,5 @@
 <script lang="ts">
+      import DeleteModal from '$lib/Components/DeleteModal.Component.svelte'; 
 	import {
 		Table,
 		TableBody,
@@ -8,6 +9,7 @@
 		TableHeadCell
 	} from 'flowbite-svelte';
 	
+    let deleteModal = false;
 </script>
 
 
@@ -27,6 +29,10 @@
                         <TableBodyCell>22/01/2024</TableBodyCell>
     
                         <TableBodyCell>
+                            <!-- svelte-ignore a11y-click-events-have-key-events -->
+                            <!-- svelte-ignore a11y-no-static-element-interactions -->
+                            <!-- svelte-ignore a11y-no-static-element-interactions -->
+                            <!-- svelte-ignore a11y-missing-attribute -->
                             <div class="flex h-auto w-auto items-center justify-center gap-2">
                                 
 
@@ -34,7 +40,8 @@
                                         <img src="/images/edit.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                     
-                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full">
+                                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                                    <a  class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full" on:click={() => (deleteModal = true)}>
                                         <img src="/images/delete.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                 
@@ -49,6 +56,10 @@
                         <TableBodyCell>12/01/2024</TableBodyCell>
     
                         <TableBodyCell>
+                            <!-- svelte-ignore a11y-click-events-have-key-events -->
+                            <!-- svelte-ignore a11y-no-static-element-interactions -->
+                            <!-- svelte-ignore a11y-no-static-element-interactions -->
+                            <!-- svelte-ignore a11y-missing-attribute -->
                             <div class="flex h-auto w-auto items-center justify-center gap-2">
                                 
 
@@ -56,7 +67,8 @@
                                         <img src="/images/edit.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                     
-                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full">
+                                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                                    <a  class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full" on:click={() => (deleteModal = true)}>
                                         <img src="/images/delete.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                 
@@ -71,6 +83,8 @@
                         <TableBodyCell>27/04/2024</TableBodyCell>
     
                         <TableBodyCell>
+                            <!-- svelte-ignore a11y-click-events-have-key-events -->
+                            <!-- svelte-ignore a11y-no-static-element-interactions -->
                             <div class="flex h-auto w-auto items-center justify-center gap-2">
                                 
 
@@ -78,7 +92,9 @@
                                         <img src="/images/edit.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                     
-                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full">
+                                    <!-- svelte-ignore a11y-missing-attribute -->
+                                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                                    <a  class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full" on:click={() => (deleteModal = true)}>
                                         <img src="/images/delete.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                 
@@ -88,3 +104,6 @@
         </TableBody>
     </Table>
 </div>
+
+
+<DeleteModal bind:deleteModal={deleteModal} />

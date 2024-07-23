@@ -1,8 +1,10 @@
 <script lang="ts">
   import "../app.css";
   import Navbar from "$lib/Components/Navbar.Component.svelte";
-  import { invalidate } from "$app/navigation";
+  import { goto, invalidate } from "$app/navigation";
   import { onMount } from "svelte";
+  import { page } from "$app/stores";
+  $: activeUrl = $page.url.pathname;
 
   export let data;
 
@@ -17,6 +19,8 @@
     });
     return () => data.subscription.unsubscribe();
   });
+
+
 </script>
 
 <Navbar />

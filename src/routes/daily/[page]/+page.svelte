@@ -1,6 +1,7 @@
 <script lang="ts">
 
-    import CapitalTable from '$lib/Components/Tables/Capital.Table.Component.svelte';    
+    import CapitalTable from '$lib/Components/Tables/Capital.Table.Component.svelte';
+  
             import { Button, Dropdown, DropdownItem } from 'flowbite-svelte';
             let dropDownOpen = false;
             let openSearch = false;
@@ -81,3 +82,4 @@
             </div>
         </div>
         
+

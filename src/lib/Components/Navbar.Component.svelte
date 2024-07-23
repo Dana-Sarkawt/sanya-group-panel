@@ -7,14 +7,10 @@
     NavHamburger,
     Dropdown,
     DropdownItem,
-    DropdownDivider,
   } from "flowbite-svelte";
   import { ChevronDownOutline } from "flowbite-svelte-icons";
   import { DarkMode } from "flowbite-svelte";
-  import { ThumbsUpSolid, ThumbsDownSolid } from "flowbite-svelte-icons";
   import { page } from "$app/stores";
-  import { onMount } from "svelte";
-  import { userStore } from "$lib/Store/User.Store";
   import { authStore } from "$lib/Store/Auth.Store";
   $: activeUrl = $page.url.pathname;
 

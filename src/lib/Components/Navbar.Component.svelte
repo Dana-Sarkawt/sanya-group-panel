@@ -78,8 +78,8 @@
       </Dropdown>
 
       <NavLi href="/user/1">Users</NavLi>
-      <NavLi href="/docs/components/navbar">Setting</NavLi>
-      <NavLi on:click={() => authStore.logout()}>Logout</NavLi>
+      <NavLi href="/setting">Setting</NavLi>
+      <NavLi class="cursor-pointer" on:click={() => authStore.logout()}>Logout</NavLi>
 
       <DarkMode
         class="text-lg"

@@ -5,7 +5,7 @@ export const load: LayoutServerLoad = async ({
   cookies,
 }) => {
   const { session, user } = await safeGetSession();
-  
+
   return {
     session,
     user,

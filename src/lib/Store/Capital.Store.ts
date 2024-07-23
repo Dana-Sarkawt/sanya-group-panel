@@ -20,6 +20,12 @@ const createCapitalStore = () => {
       data: Database["public"]["Tables"]["Capitals"]["Insert"]
     ) => {
       try {
+        if (!data.date || data.date === "") {
+          throw new Error("Date is required");
+        }
+        if (!data.price || data.price === 0) {
+          throw new Error("Price is required");
+        }
         const response = await capitalsRepository.createCapitalAsync(data);
         if (response.error) {
           throw new Error(response.error.message);
@@ -55,6 +61,7 @@ const createCapitalStore = () => {
           data: response.data,
           count: response.count ?? 0,
         });
+        return { data: response.data, count: response.count ?? 0 };
       } catch (error) {
         console.log(error);
       }

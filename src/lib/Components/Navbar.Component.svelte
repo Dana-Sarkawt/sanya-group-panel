@@ -33,7 +33,7 @@
                   </Dropdown>
             </DropdownItem>
             <DropdownItem href="/capital/1" class="dark:hover:bg-[#336f64]">Capital</DropdownItem>
-            <DropdownItem href="/" class="dark:hover:bg-[#336f64]">Sales</DropdownItem>
+            <DropdownItem href="/sales/1" class="dark:hover:bg-[#336f64]">Sales</DropdownItem>
           </Dropdown>
 
         <NavLi href="/user/1">Users</NavLi>

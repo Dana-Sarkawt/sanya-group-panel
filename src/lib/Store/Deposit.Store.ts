@@ -1,27 +1,26 @@
 import type { Store } from "$lib/Models/Response/Store.Response.Model";
-import { RolesRepository } from "$lib/Repositories/Implementations/Roles.Repository";
+import { DepositsRepository } from "$lib/Repositories/Implementations/Deposits.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
 import { writable } from "svelte/store";
 
-const rolesRepository = new RolesRepository();
+const depositsRepository = new DepositsRepository();
 
-const createRoleStore = () => {
+const createDepositStore = () => {
   const { subscribe, set, update } = writable<
-    Store<Database["public"]["Tables"]["Roles"]["Row"]>
+    Store<Database["public"]["Tables"]["Deposits"]["Row"]>
   >({
     data: [],
     count: 0,
   });
   return {
     subscribe,
-    set: async (data: Store<Database["public"]["Tables"]["Roles"]["Row"]>) =>
+    set: async (data: Store<Database["public"]["Tables"]["Deposits"]["Row"]>) =>
       set(data),
-    create: async (data: Database["public"]["Tables"]["Roles"]["Insert"]) => {
+    create: async (
+      data: Database["public"]["Tables"]["Deposits"]["Insert"]
+    ) => {
       try {
-        if (!data.name || data.name === "") {
-          throw new Error("Name is required");
-        }
-        const response = await rolesRepository.createRoleAsync(data);
+        const response = await depositsRepository.createDepositAsync(data);
         if (response.error) {
           throw new Error(response.error.message);
         }
@@ -37,7 +36,7 @@ const createRoleStore = () => {
     },
     get: async (id: number) => {
       try {
-        const response = await rolesRepository.readRoleAsync(id);
+        const response = await depositsRepository.readDepositAsync(id);
         if (response.error) {
           throw new Error(response.error.message);
         }
@@ -48,7 +47,7 @@ const createRoleStore = () => {
     },
     getAll: async () => {
       try {
-        const response = await rolesRepository.readRolesAsync();
+        const response = await depositsRepository.readDepositsAsync();
         if (response.error) {
           throw new Error(response.error.message);
         }
@@ -60,15 +59,21 @@ const createRoleStore = () => {
         console.log(error);
       }
     },
-    update: async (data: Database["public"]["Tables"]["Roles"]["Update"]) => {
+    update: async (
+      data: Database["public"]["Tables"]["Deposits"]["Update"]
+    ) => {
       try {
-        const response = await rolesRepository.updateRoleAsync(data);
+        if (!data.id || data.id === 0) {
+          throw new Error("Invalid deposit id");
+        }
+        const response = await depositsRepository.updateDepositAsync(data);
         if (response.error) {
           throw new Error(response.error.message);
         }
         update((store) => {
-          const index = store.data.findIndex((role) => role.id === data.id);
-          store.data[index] = response.data;
+          store.data = store.data.map((deposit) =>
+            deposit.id === response.data.id ? response.data : deposit
+          );
           return store;
         });
         return response;
@@ -78,12 +83,15 @@ const createRoleStore = () => {
     },
     delete: async (id: number) => {
       try {
-        const response = await rolesRepository.deleteRoleAsync(id);
+        if (!id || id === 0) {
+          throw new Error("Invalid deposit id");
+        }
+        const response = await depositsRepository.deleteDepositAsync(id);
         if (response.error) {
           throw new Error(response.error.message);
         }
         update((store) => {
-          store.data = store.data.filter((role) => role.id !== id);
+          store.data = store.data.filter((deposit) => deposit.id !== id);
           store.count--;
           return store;
         });
@@ -95,4 +103,4 @@ const createRoleStore = () => {
   };
 };
 
-export const roleStore = createRoleStore();
+export const depositStore = createDepositStore();

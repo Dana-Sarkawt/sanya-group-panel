@@ -1,27 +1,28 @@
 import type { Store } from "$lib/Models/Response/Store.Response.Model";
-import { RolesRepository } from "$lib/Repositories/Implementations/Roles.Repository";
+import { FinancialDuesRepository } from "$lib/Repositories/Implementations/FinancialDues.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
 import { writable } from "svelte/store";
 
-const rolesRepository = new RolesRepository();
+const financialDuesRepository = new FinancialDuesRepository();
 
-const createRoleStore = () => {
+const createFinancialDueStore = () => {
   const { subscribe, set, update } = writable<
-    Store<Database["public"]["Tables"]["Roles"]["Row"]>
+    Store<Database["public"]["Tables"]["Financial Dues"]["Row"]>
   >({
     data: [],
     count: 0,
   });
   return {
     subscribe,
-    set: async (data: Store<Database["public"]["Tables"]["Roles"]["Row"]>) =>
-      set(data),
-    create: async (data: Database["public"]["Tables"]["Roles"]["Insert"]) => {
+    set: async (
+      data: Store<Database["public"]["Tables"]["Financial Dues"]["Row"]>
+    ) => set(data),
+    create: async (
+      data: Database["public"]["Tables"]["Financial Dues"]["Insert"]
+    ) => {
       try {
-        if (!data.name || data.name === "") {
-          throw new Error("Name is required");
-        }
-        const response = await rolesRepository.createRoleAsync(data);
+        const response =
+          await financialDuesRepository.createFinancialDueAsync(data);
         if (response.error) {
           throw new Error(response.error.message);
         }
@@ -37,7 +38,8 @@ const createRoleStore = () => {
     },
     get: async (id: number) => {
       try {
-        const response = await rolesRepository.readRoleAsync(id);
+        const response =
+          await financialDuesRepository.readFinancialDueAsync(id);
         if (response.error) {
           throw new Error(response.error.message);
         }
@@ -48,7 +50,7 @@ const createRoleStore = () => {
     },
     getAll: async () => {
       try {
-        const response = await rolesRepository.readRolesAsync();
+        const response = await financialDuesRepository.readFinancialDuesAsync();
         if (response.error) {
           throw new Error(response.error.message);
         }
@@ -60,15 +62,19 @@ const createRoleStore = () => {
         console.log(error);
       }
     },
-    update: async (data: Database["public"]["Tables"]["Roles"]["Update"]) => {
+    update: async (
+      data: Database["public"]["Tables"]["Financial Dues"]["Update"]
+    ) => {
       try {
-        const response = await rolesRepository.updateRoleAsync(data);
+        const response =
+          await financialDuesRepository.updateFinancialDueAsync(data);
         if (response.error) {
           throw new Error(response.error.message);
         }
         update((store) => {
-          const index = store.data.findIndex((role) => role.id === data.id);
-          store.data[index] = response.data;
+          store.data = store.data.map((financialDue) =>
+            financialDue.id === response.data.id ? response.data : financialDue
+          );
           return store;
         });
         return response;
@@ -78,12 +84,15 @@ const createRoleStore = () => {
     },
     delete: async (id: number) => {
       try {
-        const response = await rolesRepository.deleteRoleAsync(id);
+        const response =
+          await financialDuesRepository.deleteFinancialDueAsync(id);
         if (response.error) {
           throw new Error(response.error.message);
         }
         update((store) => {
-          store.data = store.data.filter((role) => role.id !== id);
+          store.data = store.data.filter(
+            (financialDue) => financialDue.id !== id
+          );
           store.count--;
           return store;
         });
@@ -95,4 +104,4 @@ const createRoleStore = () => {
   };
 };
 
-export const roleStore = createRoleStore();
+export const financialDueStore = createFinancialDueStore();

@@ -19,6 +19,7 @@ const createAuthStore = () => {
           throw new Error(response.error.message);
         }
         set(response.data);
+        console.log(response.data);
         return response;
       } catch (error) {
         console.log(error);

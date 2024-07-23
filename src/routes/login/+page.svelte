@@ -6,8 +6,8 @@
 
   const loginRequest = new Authentication.Login();
 
-  onMount(() => {
-    checkAuth();
+  onMount(async () => {
+    await checkAuth();
   });
 
   async function login(request: Authentication.Login) {
@@ -22,12 +22,12 @@
     }
   }
 
-  function checkAuth() {
-    authStore.get();
-    if ($authStore) {
+  async function checkAuth() {
+    const response = await authStore.get();
+    if (response) {
       goto("/");
     } else {
-      return;
+      goto("/login");
     }
   }
 </script>

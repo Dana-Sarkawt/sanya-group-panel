@@ -14,9 +14,6 @@
   import { authStore } from "$lib/Store/Auth.Store";
   $: activeUrl = $page.url.pathname;
 
-  // onMount(() => {
-  //   userStore.get();
-  // });
 </script>
 
 <div class="w-full h-auto flex justify-center items-center gap-2">

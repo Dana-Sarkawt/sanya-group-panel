@@ -5,6 +5,7 @@
   import { ThumbsUpSolid, ThumbsDownSolid } from 'flowbite-svelte-icons';
   import { page } from '$app/stores';
   $: activeUrl = $page.url.pathname;
+  
   </script>
 
 <Navbar let:NavContainer class="bg-transparent dark:bg-transparent">

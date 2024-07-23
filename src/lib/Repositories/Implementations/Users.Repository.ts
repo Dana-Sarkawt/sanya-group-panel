@@ -5,7 +5,7 @@ import { Supabase } from "$lib/Supabase/Supabase";
 
 export class UsersRepository implements IUsersRepository {
   async createUserAsync(
-    request: Database["public"]["Tables"]["Users"]["Insert"]
+    request: Database["public"]["Tables"]["Users"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {
@@ -21,7 +21,7 @@ export class UsersRepository implements IUsersRepository {
     }
   }
   async readUserAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {
@@ -50,7 +50,7 @@ export class UsersRepository implements IUsersRepository {
     }
   }
   async updateUserAsync(
-    request: Database["public"]["Tables"]["Users"]["Update"]
+    request: Database["public"]["Tables"]["Users"]["Update"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {
@@ -66,7 +66,7 @@ export class UsersRepository implements IUsersRepository {
     }
   }
   async deleteUserAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {

@@ -4,4 +4,9 @@ export namespace Project {
     name: string = "";
     status: null | Status = null;
   }
+  export class Update {
+    id: number = 0;
+    name: string = "";
+    status: null | Status = null;
+  }
 }

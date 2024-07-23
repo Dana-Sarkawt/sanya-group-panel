@@ -56,6 +56,10 @@ const createRoleStore = () => {
           data: response.data,
           count: response.count ?? 0,
         });
+        return {
+          data: response.data,
+          count: response.count ?? 0,
+        };
       } catch (error) {
         console.log(error);
       }

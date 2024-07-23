@@ -5,7 +5,7 @@ import { Supabase } from "$lib/Supabase/Supabase";
 
 export class CapitalsRepository implements ICapitalsRepository {
   async createCapitalAsync(
-    request: Database["public"]["Tables"]["Capitals"]["Insert"]
+    request: Database["public"]["Tables"]["Capitals"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   > {
@@ -22,7 +22,7 @@ export class CapitalsRepository implements ICapitalsRepository {
     }
   }
   async readCapitalAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   > {
@@ -55,7 +55,7 @@ export class CapitalsRepository implements ICapitalsRepository {
     }
   }
   async updateCapitalAsync(
-    request: Database["public"]["Tables"]["Capitals"]["Update"]
+    request: Database["public"]["Tables"]["Capitals"]["Update"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   > {
@@ -73,7 +73,7 @@ export class CapitalsRepository implements ICapitalsRepository {
     }
   }
   async deleteCapitalAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   > {

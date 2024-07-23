@@ -3,12 +3,12 @@ import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 export interface ICapitalsRepository {
   createCapitalAsync(
-    request: Database["public"]["Tables"]["Capitals"]["Insert"]
+    request: Database["public"]["Tables"]["Capitals"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   >;
   readCapitalAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   >;
@@ -18,12 +18,12 @@ export interface ICapitalsRepository {
     >
   >;
   updateCapitalAsync(
-    request: Database["public"]["Tables"]["Capitals"]["Update"]
+    request: Database["public"]["Tables"]["Capitals"]["Update"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   >;
   deleteCapitalAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   >;

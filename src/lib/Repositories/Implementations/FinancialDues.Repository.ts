@@ -5,7 +5,7 @@ import { Supabase } from "$lib/Supabase/Supabase";
 
 export class FinancialDuesRepository implements IFinancialDuesRepository {
   async createFinancialDueAsync(
-    request: Database["public"]["Tables"]["Financial Dues"]["Insert"]
+    request: Database["public"]["Tables"]["Financial Dues"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<
       Database["public"]["Tables"]["Financial Dues"]["Row"]
@@ -23,7 +23,7 @@ export class FinancialDuesRepository implements IFinancialDuesRepository {
     }
   }
   async readFinancialDueAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<
       Database["public"]["Tables"]["Financial Dues"]["Row"]
@@ -56,7 +56,7 @@ export class FinancialDuesRepository implements IFinancialDuesRepository {
     }
   }
   async updateFinancialDueAsync(
-    request: Database["public"]["Tables"]["Financial Dues"]["Update"]
+    request: Database["public"]["Tables"]["Financial Dues"]["Update"],
   ): Promise<
     PostgrestSingleResponse<
       Database["public"]["Tables"]["Financial Dues"]["Row"]
@@ -75,7 +75,7 @@ export class FinancialDuesRepository implements IFinancialDuesRepository {
     }
   }
   async deleteFinancialDueAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<
       Database["public"]["Tables"]["Financial Dues"]["Row"]

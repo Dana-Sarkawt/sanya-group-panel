@@ -3,14 +3,14 @@ import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 export interface IFinancialDuesRepository {
   createFinancialDueAsync(
-    request: Database["public"]["Tables"]["Financial Dues"]["Insert"]
+    request: Database["public"]["Tables"]["Financial Dues"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<
       Database["public"]["Tables"]["Financial Dues"]["Row"]
     >
   >;
   readFinancialDueAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<
       Database["public"]["Tables"]["Financial Dues"]["Row"]
@@ -22,14 +22,14 @@ export interface IFinancialDuesRepository {
     >
   >;
   updateFinancialDueAsync(
-    request: Database["public"]["Tables"]["Financial Dues"]["Update"]
+    request: Database["public"]["Tables"]["Financial Dues"]["Update"],
   ): Promise<
     PostgrestSingleResponse<
       Database["public"]["Tables"]["Financial Dues"]["Row"]
     >
   >;
   deleteFinancialDueAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<
       Database["public"]["Tables"]["Financial Dues"]["Row"]

@@ -5,7 +5,7 @@ import { Supabase } from "$lib/Supabase/Supabase";
 
 export class SalesRepository implements ISalesRepository {
   async createSaleAsync(
-    request: Database["public"]["Tables"]["Sales"]["Insert"]
+    request: Database["public"]["Tables"]["Sales"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Sales"]["Row"]>
   > {
@@ -21,7 +21,7 @@ export class SalesRepository implements ISalesRepository {
     }
   }
   async readSaleAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Sales"]["Row"]>
   > {
@@ -50,7 +50,7 @@ export class SalesRepository implements ISalesRepository {
     }
   }
   async updateSaleAsync(
-    request: Database["public"]["Tables"]["Sales"]["Update"]
+    request: Database["public"]["Tables"]["Sales"]["Update"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Sales"]["Row"]>
   > {
@@ -67,7 +67,7 @@ export class SalesRepository implements ISalesRepository {
     }
   }
   async deleteSaleAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Sales"]["Row"]>
   > {

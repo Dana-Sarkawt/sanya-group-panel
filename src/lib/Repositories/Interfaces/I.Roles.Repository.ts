@@ -3,12 +3,12 @@ import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 export interface IRolesRepository {
   createRoleAsync(
-    request: Database["public"]["Tables"]["Roles"]["Insert"]
+    request: Database["public"]["Tables"]["Roles"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Roles"]["Row"]>
   >;
   readRoleAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Roles"]["Row"]>
   >;
@@ -16,12 +16,12 @@ export interface IRolesRepository {
     PostgrestSingleResponse<Array<Database["public"]["Tables"]["Roles"]["Row"]>>
   >;
   updateRoleAsync(
-    request: Database["public"]["Tables"]["Roles"]["Update"]
+    request: Database["public"]["Tables"]["Roles"]["Update"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Roles"]["Row"]>
   >;
   deleteRoleAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Roles"]["Row"]>
   >;

@@ -15,16 +15,16 @@
 
     <Table striped={true}>
         <TableHead theadClass="bg-white dark:bg-[#212121] text-center">
-            <TableHeadCell>Name</TableHeadCell>
-            <TableHeadCell>Phone</TableHeadCell>
-            <TableHeadCell>Role</TableHeadCell>
+            <TableHeadCell>Description</TableHeadCell>
+            <TableHeadCell>Price</TableHeadCell>
+            <TableHeadCell>Date</TableHeadCell>
             <TableHeadCell>Action</TableHeadCell>
         </TableHead>
         <TableBody tableBodyClass="divide-y text-center">
                     <TableBodyRow>
-                        <TableBodyCell>Dana</TableBodyCell>
-                        <TableBodyCell>07729997092</TableBodyCell>
-                        <TableBodyCell>Super Admin</TableBodyCell>
+                        <TableBodyCell>Payed or financial dues</TableBodyCell>
+                        <TableBodyCell>100000</TableBodyCell>
+                        <TableBodyCell>22/01/2024</TableBodyCell>
     
                         <TableBodyCell>
                             <div class="flex h-auto w-auto items-center justify-center gap-2">
@@ -44,9 +44,9 @@
 
 
                     <TableBodyRow>
-                        <TableBodyCell>12</TableBodyCell>
-                        <TableBodyCell>df</TableBodyCell>
-                        <TableBodyCell>yyuyu</TableBodyCell>
+                        <TableBodyCell>Payed or financial dues</TableBodyCell>
+                        <TableBodyCell>230000</TableBodyCell>
+                        <TableBodyCell>12/01/2024</TableBodyCell>
     
                         <TableBodyCell>
                             <div class="flex h-auto w-auto items-center justify-center gap-2">
@@ -66,9 +66,9 @@
 
 
                     <TableBodyRow>
-                        <TableBodyCell>12</TableBodyCell>
-                        <TableBodyCell>df</TableBodyCell>
-                        <TableBodyCell>yyuyu</TableBodyCell>
+                        <TableBodyCell>Payed or financial dues</TableBodyCell>
+                        <TableBodyCell>50000</TableBodyCell>
+                        <TableBodyCell>27/04/2024</TableBodyCell>
     
                         <TableBodyCell>
                             <div class="flex h-auto w-auto items-center justify-center gap-2">

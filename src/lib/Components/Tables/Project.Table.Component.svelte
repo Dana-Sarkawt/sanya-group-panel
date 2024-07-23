@@ -15,16 +15,16 @@
 
     <Table striped={true}>
         <TableHead theadClass="bg-white dark:bg-[#212121] text-center">
-            <TableHeadCell>Name</TableHeadCell>
-            <TableHeadCell>Phone</TableHeadCell>
-            <TableHeadCell>Role</TableHeadCell>
+            <TableHeadCell>Project ID</TableHeadCell>
+            <TableHeadCell>Project Name</TableHeadCell>
+            <TableHeadCell>Status</TableHeadCell>
             <TableHeadCell>Action</TableHeadCell>
         </TableHead>
         <TableBody tableBodyClass="divide-y text-center">
                     <TableBodyRow>
-                        <TableBodyCell>Dana</TableBodyCell>
-                        <TableBodyCell>07729997092</TableBodyCell>
-                        <TableBodyCell>Super Admin</TableBodyCell>
+                        <TableBodyCell>234</TableBodyCell>
+                        <TableBodyCell>project-4</TableBodyCell>
+                        <TableBodyCell>IN PROGRESS</TableBodyCell>
     
                         <TableBodyCell>
                             <div class="flex h-auto w-auto items-center justify-center gap-2">
@@ -44,9 +44,9 @@
 
 
                     <TableBodyRow>
-                        <TableBodyCell>12</TableBodyCell>
-                        <TableBodyCell>df</TableBodyCell>
-                        <TableBodyCell>yyuyu</TableBodyCell>
+                        <TableBodyCell>454</TableBodyCell>
+                        <TableBodyCell>project-2</TableBodyCell>
+                        <TableBodyCell>DONE</TableBodyCell>
     
                         <TableBodyCell>
                             <div class="flex h-auto w-auto items-center justify-center gap-2">
@@ -66,9 +66,9 @@
 
 
                     <TableBodyRow>
-                        <TableBodyCell>12</TableBodyCell>
-                        <TableBodyCell>df</TableBodyCell>
-                        <TableBodyCell>yyuyu</TableBodyCell>
+                        <TableBodyCell>625</TableBodyCell>
+                        <TableBodyCell>project-1</TableBodyCell>
+                        <TableBodyCell>DONE</TableBodyCell>
     
                         <TableBodyCell>
                             <div class="flex h-auto w-auto items-center justify-center gap-2">

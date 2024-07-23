@@ -7,7 +7,7 @@ export interface IAuthRepository {
   >;
   loginAsync(
     email: string,
-    password: string
+    password: string,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   >;

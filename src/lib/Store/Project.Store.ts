@@ -17,7 +17,7 @@ const createProjectStore = () => {
     set: async (data: Store<Database["public"]["Tables"]["Projects"]["Row"]>) =>
       set(data),
     create: async (
-      data: Database["public"]["Tables"]["Projects"]["Insert"]
+      data: Database["public"]["Tables"]["Projects"]["Insert"],
     ) => {
       try {
         if (!data.name || data.name === "") {
@@ -64,7 +64,7 @@ const createProjectStore = () => {
       }
     },
     update: async (
-      data: Database["public"]["Tables"]["Projects"]["Update"]
+      data: Database["public"]["Tables"]["Projects"]["Update"],
     ) => {
       try {
         if (!data.id) {
@@ -76,7 +76,7 @@ const createProjectStore = () => {
         }
         update((store) => {
           const index = store.data.findIndex(
-            (project) => project.id === data.id
+            (project) => project.id === data.id,
           );
           store.data[index] = response.data;
           return store;

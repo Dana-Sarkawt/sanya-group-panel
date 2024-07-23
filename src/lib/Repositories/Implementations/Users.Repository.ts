@@ -42,7 +42,7 @@ export class UsersRepository implements IUsersRepository {
     try {
       const response = await Supabase.client
         .from("Users")
-        .select("*")
+        .select("*", { count: "exact" })
         .order("id", { ascending: true });
       return response;
     } catch (error) {

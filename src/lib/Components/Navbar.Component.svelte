@@ -35,7 +35,7 @@
 
 
 
-        <NavUl nonActiveClass="text-[#104e35] dark:text-white" ulClass="bg-transparent dark:bg-transparent md:bg-transparent dark:md:bg-transparent border-0 mt-4  flex items-center flex-col p-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 text-xs lg:text-lg md:font-medium">
+        <NavUl nonActiveClass="text-[#104e35] dark:text-white" ulClass="bg-transparent dark:bg-transparent md:bg-transparent dark:md:bg-transparent border-0 mt-4  flex items-center flex-col p-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 text-xs lg:text-md xl:text-lg">
           <NavLi class="cursor-pointer">
               Company<ChevronDownOutline class="w-6 h-6 ms-2 text-[#104e35] dark:text-white inline" />
             </NavLi>

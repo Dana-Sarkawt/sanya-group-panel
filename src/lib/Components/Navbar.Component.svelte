@@ -19,7 +19,7 @@
             Company<ChevronDownOutline class="w-6 h-6 ms-2 text-[#104e35] dark:text-white inline" />
           </NavLi>
           <Dropdown class="w-44 z-20 dark:bg-[#11433A] dark:border border-[#24b97d] rounded-xl">
-            <DropdownItem href="/" class="dark:hover:bg-[#336f64]">Project</DropdownItem>
+            <DropdownItem href="/project/1" class="dark:hover:bg-[#336f64]">Project</DropdownItem>
             <DropdownItem class="dark:hover:bg-[#336f64]">
                 <NavLi class="cursor-pointer text-black dark:text-white ">
                     Expenses<ChevronDownOutline class="w-6 h-6 ms-2 text-green-500  inline" />
@@ -32,8 +32,8 @@
                     <DropdownItem href="/" class="dark:hover:bg-[#336f64] hover:bg-[#f2f2f2]" activeClass="bg-[#24b97d]">Preparation</DropdownItem>
                   </Dropdown>
             </DropdownItem>
-            <DropdownItem href="/" class="dark:hover:bg-[#336f64]">Capital</DropdownItem>
-            <DropdownItem href="/" class="dark:hover:bg-[#336f64]">Sales</DropdownItem>
+            <DropdownItem href="/capital/1" class="dark:hover:bg-[#336f64]">Capital</DropdownItem>
+            <DropdownItem href="/sales/1" class="dark:hover:bg-[#336f64]">Sales</DropdownItem>
           </Dropdown>
 
         <NavLi href="/user/1">Users</NavLi>

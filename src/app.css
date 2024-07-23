@@ -2,52 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* *, body{
     transition: all 0.3s ease-in-out !important;
 } */
 
-
 #subDiv > div {
-	width: 100% !important;
+  width: 100% !important;
 }
 
 .dark #subDiv > .h-px {
-	width: 30% !important;
-	height: 1px !important;
-	background-color: #393c49 !important;
-	z-index: -10 !important;
+  width: 30% !important;
+  height: 1px !important;
+  background-color: #393c49 !important;
+  z-index: -10 !important;
 }
 
 tr:nth-child(odd) {
-	background-color: #70edbb54 !important;
-	border: none !important;
+  background-color: #70edbb54 !important;
+  border: none !important;
 }
-th{
-	background-color: #ffffff !important;
-	border: none !important;
-	color: black !important;
-
+th {
+  background-color: #ffffff !important;
+  border: none !important;
+  color: black !important;
 }
 
 .dark tr:nth-child(odd) {
-	background-color: #124339 !important;
-	border: none !important;
+  background-color: #124339 !important;
+  border: none !important;
 }
-
 
 tr:nth-child(even) {
-	background-color: #ffffff !important;
-	border: none !important;
+  background-color: #ffffff !important;
+  border: none !important;
 }
 .dark tr:nth-child(even) {
-	background-color: #0c2b25 !important;
-	border: none !important;
+  background-color: #0c2b25 !important;
+  border: none !important;
 }
 
-.dark th{
-	background-color: #081c18 !important;
-	border: none !important;
-	color: white !important;
-
+.dark th {
+  background-color: #081c18 !important;
+  border: none !important;
+  color: white !important;
 }

@@ -1,17 +1,17 @@
 import type { Database } from "$lib/Supabase/Types/database.types";
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
-import type { IUsersRepository } from "../Interfaces/I.Users.Repository";
+import type { IDepositsRepository } from "../Interfaces/I.Deposits.Repository";
 import { Supabase } from "$lib/Supabase/Supabase";
 
-export class UsersRepository implements IUsersRepository {
-  async createUserAsync(
-    request: Database["public"]["Tables"]["Users"]["Insert"]
+export class DepositsRepository implements IDepositsRepository {
+  async createDepositAsync(
+    request: Database["public"]["Tables"]["Deposits"]["Insert"]
   ): Promise<
-    PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
+    PostgrestSingleResponse<Database["public"]["Tables"]["Deposits"]["Row"]>
   > {
     try {
       const response = await Supabase.client
-        .from("Users")
+        .from("Deposits")
         .insert(request)
         .select("*")
         .single();
@@ -20,14 +20,14 @@ export class UsersRepository implements IUsersRepository {
       throw error;
     }
   }
-  async readUserAsync(
+  async readDepositAsync(
     id: number
   ): Promise<
-    PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
+    PostgrestSingleResponse<Database["public"]["Tables"]["Deposits"]["Row"]>
   > {
     try {
       const response = await Supabase.client
-        .from("Users")
+        .from("Deposits")
         .select("*")
         .eq("id", id)
         .single();
@@ -36,12 +36,14 @@ export class UsersRepository implements IUsersRepository {
       throw error;
     }
   }
-  async readUsersAsync(): Promise<
-    PostgrestSingleResponse<Array<Database["public"]["Tables"]["Users"]["Row"]>>
+  async readDepositsAsync(): Promise<
+    PostgrestSingleResponse<
+      Array<Database["public"]["Tables"]["Deposits"]["Row"]>
+    >
   > {
     try {
       const response = await Supabase.client
-        .from("Users")
+        .from("Deposits")
         .select("*", { count: "exact" })
         .order("id", { ascending: true });
       return response;
@@ -49,14 +51,14 @@ export class UsersRepository implements IUsersRepository {
       throw error;
     }
   }
-  async updateUserAsync(
-    request: Database["public"]["Tables"]["Users"]["Update"]
+  async updateDepositAsync(
+    request: Database["public"]["Tables"]["Deposits"]["Update"]
   ): Promise<
-    PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
+    PostgrestSingleResponse<Database["public"]["Tables"]["Deposits"]["Row"]>
   > {
     try {
       const response = await Supabase.client
-        .from("Users")
+        .from("Deposits")
         .update(request)
         .eq("id", request.id!)
         .select("*")
@@ -66,14 +68,14 @@ export class UsersRepository implements IUsersRepository {
       throw error;
     }
   }
-  async deleteUserAsync(
+  async deleteDepositAsync(
     id: number
   ): Promise<
-    PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
+    PostgrestSingleResponse<Database["public"]["Tables"]["Deposits"]["Row"]>
   > {
     try {
       const response = await Supabase.client
-        .from("Users")
+        .from("Deposits")
         .delete()
         .eq("id", id)
         .select("*")

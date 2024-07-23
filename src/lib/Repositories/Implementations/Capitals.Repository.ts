@@ -1,83 +1,89 @@
 import type { Database } from "$lib/Supabase/Types/database.types";
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
-import type { IUsersRepository } from "../Interfaces/I.Users.Repository";
+import type { ICapitalsRepository } from "../Interfaces/I.Capitals.Repository";
 import { Supabase } from "$lib/Supabase/Supabase";
 
-export class UsersRepository implements IUsersRepository {
-  async createUserAsync(
-    request: Database["public"]["Tables"]["Users"]["Insert"]
+export class CapitalsRepository implements ICapitalsRepository {
+  async createCapitalAsync(
+    request: Database["public"]["Tables"]["Capitals"]["Insert"]
   ): Promise<
-    PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
+    PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   > {
     try {
       const response = await Supabase.client
-        .from("Users")
+        .from("Capitals")
         .insert(request)
         .select("*")
         .single();
+
       return response;
     } catch (error) {
       throw error;
     }
   }
-  async readUserAsync(
+  async readCapitalAsync(
     id: number
   ): Promise<
-    PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
+    PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   > {
     try {
       const response = await Supabase.client
-        .from("Users")
+        .from("Capitals")
         .select("*")
         .eq("id", id)
         .single();
+
       return response;
     } catch (error) {
       throw error;
     }
   }
-  async readUsersAsync(): Promise<
-    PostgrestSingleResponse<Array<Database["public"]["Tables"]["Users"]["Row"]>>
+  async readCapitalsAsync(): Promise<
+    PostgrestSingleResponse<
+      Array<Database["public"]["Tables"]["Capitals"]["Row"]>
+    >
   > {
     try {
       const response = await Supabase.client
-        .from("Users")
+        .from("Capitals")
         .select("*", { count: "exact" })
         .order("id", { ascending: true });
+
       return response;
     } catch (error) {
       throw error;
     }
   }
-  async updateUserAsync(
-    request: Database["public"]["Tables"]["Users"]["Update"]
+  async updateCapitalAsync(
+    request: Database["public"]["Tables"]["Capitals"]["Update"]
   ): Promise<
-    PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
+    PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   > {
     try {
       const response = await Supabase.client
-        .from("Users")
+        .from("Capitals")
         .update(request)
         .eq("id", request.id!)
         .select("*")
         .single();
+
       return response;
     } catch (error) {
       throw error;
     }
   }
-  async deleteUserAsync(
+  async deleteCapitalAsync(
     id: number
   ): Promise<
-    PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
+    PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   > {
     try {
       const response = await Supabase.client
-        .from("Users")
+        .from("Capitals")
         .delete()
         .eq("id", id)
-        .select("*")
         .single();
+
       return response;
     } catch (error) {
       throw error;

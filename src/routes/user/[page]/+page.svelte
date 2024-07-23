@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { userStore } from '$lib/Store/User.Store';
   import type { PageData } from "./$types";
   import UserTable from "$lib/Components/Tables/User.Table.Component.svelte";
+  import Pagination from "$lib/Components/Pagination.Component.svelte";
   export let data: PageData;
 </script>
 
@@ -29,3 +31,9 @@
     <UserTable bind:users={data.users} />
   </div>
 </div>
+
+
+<!-- <Pagination {...data} classType={/* provide the classType value */} Store={/* provide the Store value */} StoreData={/* provide the StoreData value */} currentPage={/* provide the currentPage value */} /> -->
+
+
+/>

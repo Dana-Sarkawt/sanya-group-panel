@@ -8,7 +8,7 @@
 
 <div class=" w-full h-auto flex justfiy-center items-center">
   <div
-    class="  flex h-[100vh] w-full flex-col justify-start items-center lg:mx-24"
+    class="  flex h-[100vh] w-full flex-col justify-start items-center"
     id="subDiv"
   >
     <div
@@ -182,7 +182,7 @@
           </div>
 
         </td>
-        
+
       </tr>
     </tbody>
   </table>

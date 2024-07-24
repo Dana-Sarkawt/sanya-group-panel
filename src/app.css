@@ -77,10 +77,10 @@ tr:nth-child(even) {
   text-align: center;
 }
 
-.table{
-color: black ;
+.table {
+  color: black;
 }
 
-.dark .table{
-color: white ;
+.dark .table {
+  color: white;
 }

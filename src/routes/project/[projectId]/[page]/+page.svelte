@@ -5,27 +5,26 @@
   import { page } from "$app/stores";
   import type { PageData } from "./$types";
   import { Tabs, TabItem } from "flowbite-svelte";
-    import CapitalTable from "$lib/Components/ResponsiveTable/CapitalTable.Component.svelte";
+  import CapitalTable from "$lib/Components/ResponsiveTable/CapitalTable.Component.svelte";
   export let data: PageData;
 
   async function retrieveCapital() {
     await capitalStore.getAll({
-        limit: 10,
-        page: 0,
-        equal: $page.params.projectId,
-        field: "project_id",
+      limit: 10,
+      page: 0,
+      equal: $page.params.projectId,
+      field: "project_id",
     });
   }
 
   async function retrieveSales() {
     await saleStore.getAll({
-        limit: 10,
-        page: 0,
-        equal: $page.params.projectId,
-        field: "project_id",
+      limit: 10,
+      page: 0,
+      equal: $page.params.projectId,
+      field: "project_id",
     });
   }
-
 </script>
 
 <div class=" w-full h-auto flex flex-col justfiy-center items-center">
@@ -58,11 +57,11 @@
                 >Total:</span
               >
               {Number(
-            $capitalStore.data.reduce(
-              (total, capital) => total + capital.price,
-              0
-            )
-          ).toFixed(2)}
+                $capitalStore.data.reduce(
+                  (total, capital) => total + capital.price,
+                  0
+                )
+              ).toFixed(2)}
             </p>
           </div>
 
@@ -81,7 +80,7 @@
     <TabItem
       activeClasses="w-24 h-12 bg-green-500 rounded-full text-white "
       inactiveClasses="w-24 h-12 bg-[#363636] rounded-full text-white "
-        on:click={retrieveSales}
+      on:click={retrieveSales}
     >
       <span slot="title">Sales</span>
       <div

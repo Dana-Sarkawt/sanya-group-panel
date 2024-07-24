@@ -1,3 +1,4 @@
+import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.Model";
 import type { Store } from "$lib/Models/Response/Store.Response.Model";
 import { CapitalsRepository } from "$lib/Repositories/Implementations/Capitals.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
@@ -51,15 +52,17 @@ const createCapitalStore = () => {
         console.log(error);
       }
     },
-    getAll: async () => {
+    getAll: async (options?:GenericListOptions) => {
       try {
-        const response = await capitalsRepository.readCapitalsAsync();
+        const response = await capitalsRepository.readCapitalsAsync(options);
         if (response.error) {
           throw new Error(response.error.message);
         }
+        const pages = Math.ceil(response.count! / (options?.limit ?? 10));
         set({
           data: response.data,
           count: response.count ?? 0,
+          pages
         });
         return { data: response.data, count: response.count ?? 0 };
       } catch (error) {

@@ -2,10 +2,11 @@ import type { Database } from "$lib/Supabase/Types/database.types";
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import type { ICapitalsRepository } from "../Interfaces/I.Capitals.Repository";
 import { Supabase } from "$lib/Supabase/Supabase";
+import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.Model";
 
 export class CapitalsRepository implements ICapitalsRepository {
   async createCapitalAsync(
-    request: Database["public"]["Tables"]["Capitals"]["Insert"],
+    request: Database["public"]["Tables"]["Capitals"]["Insert"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   > {
@@ -22,7 +23,7 @@ export class CapitalsRepository implements ICapitalsRepository {
     }
   }
   async readCapitalAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   > {
@@ -38,24 +39,34 @@ export class CapitalsRepository implements ICapitalsRepository {
       throw error;
     }
   }
-  async readCapitalsAsync(): Promise<
+  async readCapitalsAsync(
+    options?: GenericListOptions
+  ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Capitals"]["Row"]>
     >
   > {
     try {
-      const response = await Supabase.client
+      const response = Supabase.client
         .from("Capitals")
-        .select("*", { count: "exact" })
-        .order("id", { ascending: true });
+        .select("*", { count: "exact" });
 
-      return response;
+      if (options?.field && options?.equal) {
+        response.eq(options.field, options.equal);
+      }
+
+      return await response
+        .order("id", { ascending: true })
+        .range(
+          options?.page! * options?.limit!,
+          options?.limit! * (options?.page! + 1)
+        );
     } catch (error) {
       throw error;
     }
   }
   async updateCapitalAsync(
-    request: Database["public"]["Tables"]["Capitals"]["Update"],
+    request: Database["public"]["Tables"]["Capitals"]["Update"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   > {
@@ -73,7 +84,7 @@ export class CapitalsRepository implements ICapitalsRepository {
     }
   }
   async deleteCapitalAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   > {

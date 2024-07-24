@@ -1,3 +1,4 @@
+import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.Model";
 import type { Store } from "$lib/Models/Response/Store.Response.Model";
 import { FinancialDuesRepository } from "$lib/Repositories/Implementations/FinancialDues.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
@@ -48,7 +49,7 @@ const createFinancialDueStore = () => {
         console.log(error);
       }
     },
-    getAll: async () => {
+    getAll: async (options?:GenericListOptions) => {
       try {
         const response = await financialDuesRepository.readFinancialDuesAsync();
         if (response.error) {

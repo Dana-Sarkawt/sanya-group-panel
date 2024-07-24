@@ -23,9 +23,8 @@ const createWorkerStore = () => {
         if (!data.name || data.name === "") {
           throw new Error("Name is required");
         }
-
         const response = await workersRepository.createWorkerAsync(data);
-
+        
         if (response.error) {
           throw new Error(response.error.message);
         }

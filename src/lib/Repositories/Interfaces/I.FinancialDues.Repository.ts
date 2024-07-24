@@ -1,3 +1,4 @@
+import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.Model";
 import type { Database } from "$lib/Supabase/Types/database.types";
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 
@@ -16,7 +17,7 @@ export interface IFinancialDuesRepository {
       Database["public"]["Tables"]["Financial Dues"]["Row"]
     >
   >;
-  readFinancialDuesAsync(): Promise<
+  readFinancialDuesAsync(options?:GenericListOptions): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Financial Dues"]["Row"]>
     >

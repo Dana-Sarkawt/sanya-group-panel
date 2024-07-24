@@ -1,3 +1,4 @@
+import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.Model";
 import type { Store } from "$lib/Models/Response/Store.Response.Model";
 import { RolesRepository } from "$lib/Repositories/Implementations/Roles.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
@@ -46,9 +47,9 @@ const createRoleStore = () => {
         console.log(error);
       }
     },
-    getAll: async () => {
+    getAll: async (options?:GenericListOptions) => {
       try {
-        const response = await rolesRepository.readRolesAsync();
+        const response = await rolesRepository.readRolesAsync(options);
         if (response.error) {
           throw new Error(response.error.message);
         }

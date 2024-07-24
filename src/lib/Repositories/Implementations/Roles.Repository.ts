@@ -2,10 +2,11 @@ import type { Database } from "$lib/Supabase/Types/database.types";
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import type { IRolesRepository } from "../Interfaces/I.Roles.Repository";
 import { Supabase } from "$lib/Supabase/Supabase";
+import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.Model";
 
 export class RolesRepository implements IRolesRepository {
   async createRoleAsync(
-    request: Database["public"]["Tables"]["Roles"]["Insert"],
+    request: Database["public"]["Tables"]["Roles"]["Insert"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Roles"]["Row"]>
   > {
@@ -21,7 +22,7 @@ export class RolesRepository implements IRolesRepository {
     }
   }
   async readRoleAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Roles"]["Row"]>
   > {
@@ -36,7 +37,9 @@ export class RolesRepository implements IRolesRepository {
       throw error;
     }
   }
-  async readRolesAsync(): Promise<
+  async readRolesAsync(
+    options?: GenericListOptions
+  ): Promise<
     PostgrestSingleResponse<Array<Database["public"]["Tables"]["Roles"]["Row"]>>
   > {
     try {
@@ -50,7 +53,7 @@ export class RolesRepository implements IRolesRepository {
     }
   }
   async updateRoleAsync(
-    request: Database["public"]["Tables"]["Roles"]["Update"],
+    request: Database["public"]["Tables"]["Roles"]["Update"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Roles"]["Row"]>
   > {
@@ -67,7 +70,7 @@ export class RolesRepository implements IRolesRepository {
     }
   }
   async deleteRoleAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Roles"]["Row"]>
   > {

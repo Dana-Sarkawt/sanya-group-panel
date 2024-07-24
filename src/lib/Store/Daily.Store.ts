@@ -66,7 +66,11 @@ const createDailyStore = () => {
           pages: pages,
         });
 
-        return response;
+        return {
+          data: response.data,
+          count: response.count ?? 0,
+          pages: pages,
+        };
       } catch (error) {
         console.log(error);
       }

@@ -1,5 +1,6 @@
 import type { Database } from "$lib/Supabase/Types/database.types";
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
+import { GenericListOptions } from '../../Models/Common/ListOptions.Common.Model';
 
 export interface IRolesRepository {
   createRoleAsync(
@@ -12,7 +13,7 @@ export interface IRolesRepository {
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Roles"]["Row"]>
   >;
-  readRolesAsync(): Promise<
+  readRolesAsync(options?:GenericListOptions): Promise<
     PostgrestSingleResponse<Array<Database["public"]["Tables"]["Roles"]["Row"]>>
   >;
   updateRoleAsync(

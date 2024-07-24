@@ -2,10 +2,11 @@ import type { Database } from "$lib/Supabase/Types/database.types";
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import type { IFinancialDuesRepository } from "../Interfaces/I.FinancialDues.Repository";
 import { Supabase } from "$lib/Supabase/Supabase";
+import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.Model";
 
 export class FinancialDuesRepository implements IFinancialDuesRepository {
   async createFinancialDueAsync(
-    request: Database["public"]["Tables"]["Financial Dues"]["Insert"],
+    request: Database["public"]["Tables"]["Financial Dues"]["Insert"]
   ): Promise<
     PostgrestSingleResponse<
       Database["public"]["Tables"]["Financial Dues"]["Row"]
@@ -23,7 +24,7 @@ export class FinancialDuesRepository implements IFinancialDuesRepository {
     }
   }
   async readFinancialDueAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<
       Database["public"]["Tables"]["Financial Dues"]["Row"]
@@ -40,7 +41,9 @@ export class FinancialDuesRepository implements IFinancialDuesRepository {
       throw error;
     }
   }
-  async readFinancialDuesAsync(): Promise<
+  async readFinancialDuesAsync(
+    options?: GenericListOptions
+  ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Financial Dues"]["Row"]>
     >
@@ -56,7 +59,7 @@ export class FinancialDuesRepository implements IFinancialDuesRepository {
     }
   }
   async updateFinancialDueAsync(
-    request: Database["public"]["Tables"]["Financial Dues"]["Update"],
+    request: Database["public"]["Tables"]["Financial Dues"]["Update"]
   ): Promise<
     PostgrestSingleResponse<
       Database["public"]["Tables"]["Financial Dues"]["Row"]
@@ -75,7 +78,7 @@ export class FinancialDuesRepository implements IFinancialDuesRepository {
     }
   }
   async deleteFinancialDueAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<
       Database["public"]["Tables"]["Financial Dues"]["Row"]

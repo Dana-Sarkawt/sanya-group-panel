@@ -1,12 +1,12 @@
 <script lang="ts">
-	import SalesTable  from '$lib/Components/ResponsiveTable/SalesTable.Component.svelte';
-	import { saleStore } from '$lib/Store/Sale.Store';
-	import { capitalStore } from '$lib/Store/Capital.Store';
+  import SalesTable from "$lib/Components/ResponsiveTable/SalesTable.Component.svelte";
+  import { saleStore } from "$lib/Store/Sale.Store";
+  import { capitalStore } from "$lib/Store/Capital.Store";
   import { page } from "$app/stores";
-  import type { PageData } from "./$types";
   import { Tabs, TabItem } from "flowbite-svelte";
   import CapitalTable from "$lib/Components/ResponsiveTable/CapitalTable.Component.svelte";
-  export let data: PageData;
+  import Pagination from "$lib/Components/Pagination.Store.Component.svelte";
+  import { goto } from "$app/navigation";
 
   async function retrieveCapital() {
     await capitalStore.getAll({
@@ -74,6 +74,14 @@
           </a>
         </div>
         <CapitalTable bind:capitals={$capitalStore} />
+        <div class="w-full h-auto flex justify-center items-center py-12">
+          <Pagination
+            Store={capitalStore}
+            StoreData={$capitalStore}
+            currentPage={Number($page.params.page)}
+            project_id={Number($page.params.projectId)}
+          />
+        </div>
       </div>
     </TabItem>
 
@@ -106,16 +114,22 @@
         </div>
 
         <SalesTable bind:sales={$saleStore} />
+        <div class="w-full h-auto flex justify-center items-center py-12">
+          <Pagination
+            Store={saleStore}
+            StoreData={$saleStore}
+            currentPage={Number($page.params.page)}
+            project_id={Number($page.params.projectId)}
+          />
+        </div>
       </div>
     </TabItem>
-
-    <a href="/project/1/expense/0">
-      <TabItem
-        activeClasses="w-24 h-12 bg-green-500 rounded-full text-white "
-        inactiveClasses="w-24 h-12 bg-[#363636] rounded-full text-white "
-      >
-        <span slot="title">Expense</span>
-      </TabItem>
-    </a>
+    <TabItem
+      activeClasses="w-24 h-12 bg-green-500 rounded-full text-white "
+      inactiveClasses="w-24 h-12 bg-[#363636] rounded-full text-white "
+      on:click={() => goto(`/project/${$page.params.projectId}/expense/0`)}
+    >
+      <span slot="title">Expense</span>
+    </TabItem>
   </Tabs>
 </div>

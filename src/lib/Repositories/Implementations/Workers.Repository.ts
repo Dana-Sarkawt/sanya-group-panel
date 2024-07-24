@@ -45,15 +45,20 @@ export class WorkersRepository implements IWorkersRepository {
     >
   > {
     try {
-      const response = await Supabase.client
+      const response = Supabase.client
         .from("Workers")
-        .select("*", { count: "exact" })
+        .select("*", { count: "exact" });
+
+      if (options?.field && options?.equal) {
+        response.eq(options.field, options.equal);
+      }
+
+      return await response
         .order("id", { ascending: true })
         .range(
           options?.page! * options?.limit!,
           options?.limit! * (options?.page! + 1)
         );
-      return response;
     } catch (error) {
       throw error;
     }

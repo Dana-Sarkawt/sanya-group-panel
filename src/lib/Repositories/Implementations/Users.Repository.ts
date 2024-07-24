@@ -2,10 +2,11 @@ import type { Database } from "$lib/Supabase/Types/database.types";
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import type { IUsersRepository } from "../Interfaces/I.Users.Repository";
 import { Supabase } from "$lib/Supabase/Supabase";
+import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.Model";
 
 export class UsersRepository implements IUsersRepository {
   async createUserAsync(
-    request: Database["public"]["Tables"]["Users"]["Insert"],
+    request: Database["public"]["Tables"]["Users"]["Insert"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {
@@ -21,7 +22,7 @@ export class UsersRepository implements IUsersRepository {
     }
   }
   async readUserAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {
@@ -36,7 +37,9 @@ export class UsersRepository implements IUsersRepository {
       throw error;
     }
   }
-  async readUsersAsync(): Promise<
+  async readUsersAsync(
+    options?: GenericListOptions
+  ): Promise<
     PostgrestSingleResponse<Array<Database["public"]["Tables"]["Users"]["Row"]>>
   > {
     try {
@@ -50,7 +53,7 @@ export class UsersRepository implements IUsersRepository {
     }
   }
   async updateUserAsync(
-    request: Database["public"]["Tables"]["Users"]["Update"],
+    request: Database["public"]["Tables"]["Users"]["Update"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {
@@ -67,7 +70,7 @@ export class UsersRepository implements IUsersRepository {
     }
   }
   async deleteUserAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {

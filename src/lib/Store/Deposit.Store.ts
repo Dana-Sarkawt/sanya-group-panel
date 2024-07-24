@@ -2,6 +2,7 @@ import type { Store } from "$lib/Models/Response/Store.Response.Model";
 import { DepositsRepository } from "$lib/Repositories/Implementations/Deposits.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
 import { writable } from "svelte/store";
+import { GenericListOptions } from "../Models/Common/ListOptions.Common.Model";
 
 const depositsRepository = new DepositsRepository();
 
@@ -17,7 +18,7 @@ const createDepositStore = () => {
     set: async (data: Store<Database["public"]["Tables"]["Deposits"]["Row"]>) =>
       set(data),
     create: async (
-      data: Database["public"]["Tables"]["Deposits"]["Insert"],
+      data: Database["public"]["Tables"]["Deposits"]["Insert"]
     ) => {
       try {
         const response = await depositsRepository.createDepositAsync(data);
@@ -45,22 +46,32 @@ const createDepositStore = () => {
         console.log(error);
       }
     },
-    getAll: async () => {
+    getAll: async (options?: GenericListOptions) => {
       try {
-        const response = await depositsRepository.readDepositsAsync();
+        const response = await depositsRepository.readDepositsAsync(options);
         if (response.error) {
           throw new Error(response.error.message);
         }
+
+        const pages = Math.ceil(response.count! / (options?.limit! ?? 10));
+
         set({
           data: response.data,
           count: response.count ?? 0,
+          pages: pages,
         });
+
+        return {
+          data: response.data,
+          count: response.count ?? 0,
+          pages: pages,
+        };
       } catch (error) {
         console.log(error);
       }
     },
     update: async (
-      data: Database["public"]["Tables"]["Deposits"]["Update"],
+      data: Database["public"]["Tables"]["Deposits"]["Update"]
     ) => {
       try {
         if (!data.id || data.id === 0) {
@@ -72,7 +83,7 @@ const createDepositStore = () => {
         }
         update((store) => {
           store.data = store.data.map((deposit) =>
-            deposit.id === response.data.id ? response.data : deposit,
+            deposit.id === response.data.id ? response.data : deposit
           );
           return store;
         });

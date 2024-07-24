@@ -2,6 +2,7 @@ import type { Database } from "$lib/Supabase/Types/database.types";
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import type { IDepositsRepository } from "../Interfaces/I.Deposits.Repository";
 import { Supabase } from "$lib/Supabase/Supabase";
+import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.Model";
 
 export class DepositsRepository implements IDepositsRepository {
   async createDepositAsync(
@@ -36,7 +37,7 @@ export class DepositsRepository implements IDepositsRepository {
       throw error;
     }
   }
-  async readDepositsAsync(): Promise<
+  async readDepositsAsync(options?:GenericListOptions): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Deposits"]["Row"]>
     >

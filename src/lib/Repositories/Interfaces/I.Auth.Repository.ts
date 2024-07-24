@@ -4,7 +4,7 @@ import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 export interface IAuthRepository {
   createAsync(
-    request: User.Create
+    request: User.Create,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   >;
@@ -13,7 +13,7 @@ export interface IAuthRepository {
   >;
   loginAsync(
     email: string,
-    password: string
+    password: string,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   >;

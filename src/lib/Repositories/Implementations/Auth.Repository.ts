@@ -6,7 +6,7 @@ import type { User } from "$lib/Models/Request/User.Request.Model";
 
 export class AuthRepository implements IAuthRepository {
   async createAsync(
-    request: User.Create
+    request: User.Create,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {
@@ -49,7 +49,7 @@ export class AuthRepository implements IAuthRepository {
   }
   async loginAsync(
     email: string,
-    password: string
+    password: string,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {

@@ -12,7 +12,7 @@ const server = createClient<Database>(
       autoRefreshToken: false,
       persistSession: false,
     },
-  }
+  },
 );
 
 export const PUT: RequestHandler = async ({ locals, params, request }) => {

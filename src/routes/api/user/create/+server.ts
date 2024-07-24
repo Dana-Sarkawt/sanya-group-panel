@@ -13,7 +13,7 @@ const server = createClient<Database>(
       autoRefreshToken: false,
       persistSession: false,
     },
-  }
+  },
 );
 
 export const POST: RequestHandler = async ({ locals, params, request }) => {
@@ -22,7 +22,7 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
     const authUser = await server.auth.admin.createUser({
       email: userRequest.email,
       password: userRequest.password,
-      email_confirm: true
+      email_confirm: true,
     });
     if (!authUser || authUser.error) {
       return new Response(
@@ -30,7 +30,7 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
           success: false,
           message: "Failed to create user",
           data: { error: authUser.error },
-        })
+        }),
       );
     }
     const user = await server
@@ -51,7 +51,7 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
           success: false,
           message: "Failed to create user",
           data: { error: user.error },
-        })
+        }),
       );
     }
     return new Response(
@@ -59,7 +59,7 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
         success: true,
         message: "User created successfully",
         data: user,
-      })
+      }),
     );
   } catch (error) {
     console.log("Failed to operate on user", { error });
@@ -68,7 +68,7 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
         success: false,
         message: "Failed to operate on user",
         data: { error },
-      })
+      }),
     );
   }
 };

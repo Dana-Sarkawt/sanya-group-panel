@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import { User } from "$lib/Models/Request/User.Request.Model";
   import { authStore } from "$lib/Store/Auth.Store";
   import type { PageData } from "./$types";
@@ -8,10 +9,10 @@
   async function addUser(request: User.Create) {
     try {
       const response = await authStore.create(request);
-      if(!response || response.error) {
+      if (!response || response.error) {
         throw new Error("Failed to add user");
       }
-      console.log(response);
+      goto("/user/1");
     } catch (error) {
       console.log(error);
     }
@@ -78,8 +79,7 @@
 
     <button
       class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={() => addUser(userRequest)}
-      >Add User</button
+      on:click={() => addUser(userRequest)}>Add User</button
     >
   </div>
 </div>

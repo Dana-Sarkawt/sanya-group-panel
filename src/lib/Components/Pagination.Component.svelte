@@ -27,9 +27,21 @@
   }
 
   function updatePageCount() {
-    pageCount = Array.from({ length: StoreData.pages! }, (_, i) => ({
-      name: (i + 1).toString(),
-      active: i === filter.page,
+    const totalPages = StoreData.pages!;
+    const current = filter.page;
+
+    let startPage = Math.max(0, current! - 1);
+    let endPage = Math.min(totalPages - 1, current! + 1);
+
+    if (current === 0) {
+      endPage = Math.min(totalPages - 1, 2);
+    } else if (current === totalPages - 1) {
+      startPage = Math.max(0, totalPages - 3);
+    }
+
+    pageCount = Array.from({ length: endPage - startPage + 1 }, (_, i) => ({
+      name: (startPage + i + 1).toString(),
+      active: startPage + i === current,
     }));
   }
 
@@ -44,7 +56,7 @@
   };
 
   const next = async () => {
-    if (currentPage == StoreData.pages!-1) {
+    if (currentPage == StoreData.pages! - 1) {
       return;
     }
     currentPage += 1;

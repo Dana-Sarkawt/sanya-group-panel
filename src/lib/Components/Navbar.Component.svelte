@@ -5,8 +5,6 @@
     NavLi,
     NavUl,
     NavHamburger,
-    Dropdown,
-    DropdownItem,
   } from "flowbite-svelte";
   import { DarkMode } from "flowbite-svelte";
   import { authStore } from "$lib/Store/Auth.Store";
@@ -43,7 +41,6 @@
         nonActiveClass="text-[#104e35] dark:text-white"
         ulClass="bg-transparent dark:bg-transparent md:bg-transparent dark:md:bg-transparent border-0 mt-4  flex items-center flex-col p-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 text-xs lg:text-md xl:text-lg"
       >
-       
         <NavLi href="/project/1">Project</NavLi>
         <NavLi href="/user/1">Users</NavLi>
         <NavLi href="/docs/components/navbar">Setting</NavLi>

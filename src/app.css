@@ -76,3 +76,11 @@ tr:nth-child(even) {
   vertical-align: top;
   text-align: center;
 }
+
+.table{
+color: black ;
+}
+
+.dark .table{
+color: white ;
+}

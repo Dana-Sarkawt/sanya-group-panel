@@ -2,8 +2,33 @@ import { Supabase } from "$lib/Supabase/Supabase";
 import type { Database } from "$lib/Supabase/Types/database.types";
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import type { IAuthRepository } from "../Interfaces/I.Auth.Repository";
+import type { User } from "$lib/Models/Request/User.Request.Model";
 
 export class AuthRepository implements IAuthRepository {
+  async createAsync(
+    request: User.Create
+  ): Promise<
+    PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
+  > {
+    try {
+      const response = await fetch("/api/user/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to create user");
+      }
+      const user = (await response.json()) as PostgrestSingleResponse<
+        Database["public"]["Tables"]["Users"]["Row"]
+      >;
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
   async getUserAsync(): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {
@@ -24,7 +49,7 @@ export class AuthRepository implements IAuthRepository {
   }
   async loginAsync(
     email: string,
-    password: string,
+    password: string
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {

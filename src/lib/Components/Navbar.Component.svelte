@@ -7,15 +7,10 @@
     NavHamburger,
     Dropdown,
     DropdownItem,
-    DropdownDivider,
   } from "flowbite-svelte";
   import { ChevronDownOutline } from "flowbite-svelte-icons";
   import { DarkMode } from "flowbite-svelte";
-  import { ThumbsUpSolid, ThumbsDownSolid } from "flowbite-svelte-icons";
-  import { page } from "$app/stores";
   import { authStore } from "$lib/Store/Auth.Store";
-  $: activeUrl = $page.url.pathname;
-
 </script>
 
 <div class="w-full h-auto flex justify-center items-center gap-2">

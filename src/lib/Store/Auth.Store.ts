@@ -1,3 +1,4 @@
+import type { User } from "$lib/Models/Request/User.Request.Model";
 import { AuthRepository } from "$lib/Repositories/Implementations/Auth.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
 import { get, writable } from "svelte/store";
@@ -12,6 +13,17 @@ const createAuthStore = () => {
     subscribe,
     set: async (data: Database["public"]["Tables"]["Users"]["Row"] | null) =>
       set(data),
+    create: async (request: User.Create) => {
+      try {
+        const response = await authRepository.createAsync(request);
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return response;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     get: async () => {
       try {
         const response = await authRepository.getUserAsync();

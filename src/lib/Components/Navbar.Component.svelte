@@ -52,7 +52,7 @@
         <Dropdown
           class="w-44 z-20 dark:bg-[#11433A] dark:border border-[#24b97d] rounded-xl"
         >
-          <DropdownItem href="/project/1" class="dark:hover:bg-[#336f64]"
+          <DropdownItem href="/project/0" class="dark:hover:bg-[#336f64]"
             >Project</DropdownItem
           >
           <DropdownItem class="dark:hover:bg-[#336f64]">

@@ -1,16 +1,17 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import type { Filtration } from "$lib/Models/Common/Filteration.Common.Model";
   import { Pagination, type LinkType } from "flowbite-svelte";
   import { onMount } from "svelte";
 
   export let classType;
-  export let Store: any;
   export let filter: Filtration<typeof classType> = {
     page: 0,
     limit: 10,
   };
   export let StoreData: any;
   export let currentPage: number;
+  export let name: string;
   let pageCount: LinkType[] = [];
 
   onMount(() => {
@@ -19,7 +20,6 @@
 
   async function fetchData() {
     try {
-      StoreData = await Store.getAll(filter);
       updatePageCount();
     } catch (e) {
       console.log(e);
@@ -27,7 +27,7 @@
   }
 
   function updatePageCount() {
-    pageCount = Array.from({ length: StoreData.pages }, (_, i) => ({
+    pageCount = Array.from({ length: StoreData.pages! }, (_, i) => ({
       name: (i + 1).toString(),
       active: i === filter.page,
     }));
@@ -39,15 +39,17 @@
     }
     currentPage -= 1;
     filter.page = currentPage;
+    goto(`/${name}/${currentPage}`);
     fetchData();
   };
 
   const next = async () => {
-    if (currentPage == StoreData.pages - 1) {
+    if (currentPage == StoreData.pages!-1) {
       return;
     }
     currentPage += 1;
     filter.page = currentPage;
+    goto(`/${name}/${currentPage}`);
     fetchData();
   };
 
@@ -57,6 +59,7 @@
     if (page === currentPage) return;
     currentPage = page;
     filter.page = currentPage;
+    goto(`/${name}/${page}`);
     fetchData();
   };
 
@@ -68,7 +71,7 @@
   }
 </script>
 
-{#if StoreData && StoreData.pages > 1}
+{#if StoreData && (StoreData.pages ?? 0) > 1}
   <Pagination
     ulClass="inline-flex -space-x-px rtl:space-x-reverse items-center gap-4"
     normalClass="text-black bg-[#F7F6FE] hover:bg-gray-100 hover:text-gray-700 dark:bg-[#141432] border-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white rounded-xl"

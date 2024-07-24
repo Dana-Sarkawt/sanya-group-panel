@@ -1,10 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import Pagination from "$lib/Components/Pagination.Component.svelte";
-  import type { PageData } from "./$types";
-  import ProjectTable from "$lib/Components/ResponsiveTable/ProjectTable.Component.svelte";
   import { Tabs, TabItem } from "flowbite-svelte";
-  export let data: PageData;
 </script>
 
 <div class=" w-full h-auto flex flex-col justfiy-center items-center">

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import CapitalTable from "$lib/Components/Tables/Capital.Table.Component.svelte";
+  import CapitalTable from "$lib/Components/ResponsiveTable/CapitalTable.Component.svelte";
   import type { PageData } from "./$types";
   export let data: PageData;
 </script>
@@ -43,6 +43,7 @@
       </a>
     </div>
 
+    <!-- <CapitalTable bind:capitals={data.capitals} /> -->
     <CapitalTable bind:capitals={data.capitals} />
   </div>
 </div>

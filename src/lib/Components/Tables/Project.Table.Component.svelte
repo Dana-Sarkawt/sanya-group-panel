@@ -21,7 +21,7 @@
 </script>
 
 <div class="w-full h-auto bg-[#ffffff] dark:bg-[#081c18] p-4 rounded-b-xl">
-  <Table striped={true}>
+  <Table striped={true} >
     <TableHead theadClass="bg-white dark:bg-[#212121] text-center">
       <TableHeadCell>Project ID</TableHeadCell>
       <TableHeadCell>Project Name</TableHeadCell>
@@ -36,6 +36,9 @@
             <TableBodyCell>{project.name}</TableBodyCell>
             <TableBodyCell>{project.status}</TableBodyCell>
             <TableBodyCell>
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <!-- svelte-ignore a11y-no-static-element-interactions -->
+              <!-- svelte-ignore a11y-missing-attribute -->
               <div class="flex h-auto w-auto items-center justify-center gap-2">
                 <a
                   href="edit/1"
@@ -48,8 +51,9 @@
                   />
                 </a>
 
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <a
-                  href="edit/1"
                   class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full"
                   on:click={() => (deleteModal = true)}
                 >
@@ -70,3 +74,9 @@
 
 
 <DeleteModal bind:deleteModal={deleteModal} />
+
+
+
+<style>
+
+</style>

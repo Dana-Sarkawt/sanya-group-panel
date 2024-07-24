@@ -1,5 +1,5 @@
 <script lang="ts">
-  import SalesTable from "$lib/Components/Tables/Sales.Table.Component.svelte";
+  import SalesTable from "$lib/Components/ResponsiveTable/SalesTable.Component.svelte";
   import type { PageData } from "./$types";
   export let data: PageData;
 </script>
@@ -26,6 +26,8 @@
         >
       </a>
     </div>
+
+    <!-- <SalesTable bind:sales={data.sales} /> -->
 
     <SalesTable bind:sales={data.sales} />
   </div>

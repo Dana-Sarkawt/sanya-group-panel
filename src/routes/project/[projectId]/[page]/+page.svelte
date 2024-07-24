@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SalesTable  from '$lib/Components/Tables/Sales.Table.Component.svelte';
+	import SalesTable  from '$lib/Components/ResponsiveTable/SalesTable.Component.svelte';
 	import { saleStore } from '$lib/Store/Sale.Store';
 	import { capitalStore } from '$lib/Store/Capital.Store';
   import { page } from "$app/stores";

@@ -1,8 +1,21 @@
 <script lang="ts">
   import { User } from "$lib/Models/Request/User.Request.Model";
+  import { authStore } from "$lib/Store/Auth.Store";
   import type { PageData } from "./$types";
   export let data: PageData;
   const userRequest = new User.Create();
+
+  async function addUser(request: User.Create) {
+    try {
+      const response = await authStore.create(request);
+      if(!response || response.error) {
+        throw new Error("Failed to add user");
+      }
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 </script>
 
 <p class="w-full h-auto text-4xl dark:text-white text-center my-12">Add User</p>
@@ -65,6 +78,7 @@
 
     <button
       class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
+      on:click={() => addUser(userRequest)}
       >Add User</button
     >
   </div>

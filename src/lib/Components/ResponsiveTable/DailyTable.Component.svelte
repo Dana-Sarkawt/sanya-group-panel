@@ -1,13 +1,4 @@
 <script lang="ts">
-	import {
-		Table,
-		TableBody,
-		TableBodyCell,
-		TableBodyRow,
-		TableHead,
-		TableHeadCell
-	} from 'flowbite-svelte';
-
     import DeleteModal from '$lib/Components/DeleteModal.Component.svelte';
 
     let deleteModal = false;

@@ -27,7 +27,7 @@
   }
 </script>
 
-<div class=" w-full h-auto flex flex-col justfiy-center items-center">
+<div class=" w-full h-auto flex flex-col justify-center items-center">
   <!-- <ProjectTable bind:projects={data.projects} /> -->
   <Tabs tabStyle="pill" contentClass="w-[90%]">
     <TabItem

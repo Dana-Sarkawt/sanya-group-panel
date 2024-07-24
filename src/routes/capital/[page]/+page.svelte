@@ -4,7 +4,7 @@
   export let data: PageData;
 </script>
 
-<div class=" w-full h-auto flex justfiy-center items-center">
+<div class=" w-full h-auto flex justify-center items-center">
   <div
     class="  flex h-[100vh] w-full flex-col justify-start items-center "
     id="subDiv"

@@ -32,6 +32,16 @@
             <td>
               <div class="flex h-auto w-auto items-center justify-center gap-2">
                 <a
+                  href="/project/{project.id}"
+                  class="bg-blue-600 hover:bg-blue-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
+                >
+                  <img
+                    src="/images/vision.png"
+                    class="w-4 h-4 md:h-8 md:w-8 object-contain"
+                    alt=""
+                  />
+                </a>
+                <a
                   href="edit/{project.id}"
                   class="bg-green-600 hover:bg-green-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
                 >

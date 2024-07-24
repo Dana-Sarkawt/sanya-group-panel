@@ -1,7 +1,6 @@
 <script lang="ts">
 
-    import CapitalTable from '$lib/Components/Tables/Capital.Table.Component.svelte';
-  
+    import DailyTable from '$lib/Components/ResponsiveTable/DailyTable.Component.svelte';
             import { Button, Dropdown, DropdownItem } from 'flowbite-svelte';
             let dropDownOpen = false;
             let openSearch = false;
@@ -77,7 +76,9 @@
                 </div>
             
             
-            <CapitalTable/>
+            <!-- <CapitalTable/> -->
+
+            <DailyTable/>
             
             </div>
         </div>

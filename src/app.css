@@ -69,3 +69,10 @@ tr:nth-child(even) {
   border: none !important;
   color: white !important;
 }
+
+
+.table td, .table th {
+  padding: .75rem;
+  vertical-align: top;
+  text-align: center;
+}

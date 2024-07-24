@@ -24,7 +24,7 @@
   <div
     class="w-[90%] md:w-[50%] h-auto p-10 bg-[#94DCBA] dark:bg-[#11433A] border border-[#11433A] dark:border-[#94DCBA] rounded-xl flex flex-col justify-center items-center gap-6"
   >
-    <div class="w-full h-auto flex flex-col justfiy-center items-start">
+    <div class="w-full h-auto flex flex-col justify-center items-start">
       <p class="dark:text-white">Name</p>
       <input
         type="text"
@@ -33,7 +33,7 @@
       />
     </div>
 
-    <div class="w-full h-auto flex flex-col justfiy-center items-start">
+    <div class="w-full h-auto flex flex-col justify-center items-start">
       <p class="dark:text-white">Phone</p>
       <input
         type="text"
@@ -42,7 +42,7 @@
       />
     </div>
 
-    <div class="w-full h-auto flex flex-col justfiy-center items-start">
+    <div class="w-full h-auto flex flex-col justify-center items-start">
       <p class="dark:text-white">E-mail</p>
       <input
         type="text"
@@ -51,7 +51,7 @@
       />
     </div>
 
-    <div class="w-full h-auto flex flex-col justfiy-center items-start">
+    <div class="w-full h-auto flex flex-col justify-center items-start">
       <p class="dark:text-white">Password</p>
       <input
         type="password"
@@ -60,7 +60,7 @@
       />
     </div>
 
-    <div class="w-full h-auto flex flex-col justfiy-center items-start">
+    <div class="w-full h-auto flex flex-col justify-center items-start">
       <p class="dark:text-white">Role</p>
       <select
         name=""

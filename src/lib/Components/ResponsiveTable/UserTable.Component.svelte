@@ -26,7 +26,7 @@
 
 <div class="w-full h-auto flex justify-center items-center mx-2">
 
-    <table class="table w-full text-white text-[5px] md:text-lg rounded-xl p-2 ">
+    <table class="table w-[100%] text-white text-[5px] md:text-lg rounded-xl">
       <thead>
         <tr>
           <th scope="col">Name</th>

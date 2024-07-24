@@ -6,9 +6,9 @@
   export let data: PageData;
 </script>
 
-<div class=" w-full h-auto flex justfiy-center items-center">
+<div class=" w-full h-auto flex justify-center items-center ">
   <div
-    class="  flex h-[100vh] w-full flex-col justify-start items-center"
+    class="  flex h-[100vh] w-[90%] flex-col justify-start items-center "
     id="subDiv"
   >
     <div
@@ -29,15 +29,7 @@
       </a>
     </div>
     <!-- <UserTable bind:users={data.users} /> -->
-
     <UserTable bind:users={data.users} />
-
-
-    
-
-    
-
-
 
   </div>
 </div>

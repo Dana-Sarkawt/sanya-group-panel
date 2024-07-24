@@ -1,3 +1,4 @@
+import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.Model";
 import type { Store } from "$lib/Models/Response/Store.Response.Model";
 import { ProjectsRepository } from "$lib/Repositories/Implementations/Projects.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
@@ -17,7 +18,7 @@ const createProjectStore = () => {
     set: async (data: Store<Database["public"]["Tables"]["Projects"]["Row"]>) =>
       set(data),
     create: async (
-      data: Database["public"]["Tables"]["Projects"]["Insert"],
+      data: Database["public"]["Tables"]["Projects"]["Insert"]
     ) => {
       try {
         if (!data.name || data.name === "") {
@@ -48,23 +49,29 @@ const createProjectStore = () => {
         console.log(error);
       }
     },
-    getAll: async () => {
+    getAll: async (options?: GenericListOptions) => {
       try {
-        const response = await projectsRepository.readProjectsAsync();
+        const response = await projectsRepository.readProjectsAsync(options);
         if (response.error) {
           throw new Error(response.error.message);
         }
+        const pages = Math.ceil(response.count! / (options?.limit! ?? 10));
         set({
           data: response.data,
           count: response.count ?? 0,
+          pages: pages,
         });
-        return { data: response.data, count: response.count ?? 0 };
+        return {
+          data: response.data,
+          count: response.count ?? 0,
+          pages: pages,
+        };
       } catch (error) {
         console.log(error);
       }
     },
     update: async (
-      data: Database["public"]["Tables"]["Projects"]["Update"],
+      data: Database["public"]["Tables"]["Projects"]["Update"]
     ) => {
       try {
         if (!data.id) {
@@ -76,7 +83,7 @@ const createProjectStore = () => {
         }
         update((store) => {
           const index = store.data.findIndex(
-            (project) => project.id === data.id,
+            (project) => project.id === data.id
           );
           store.data[index] = response.data;
           return store;

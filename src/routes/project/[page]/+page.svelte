@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { page } from "$app/stores";
+  import Pagination from "$lib/Components/Pagination.Component.svelte";
   import type { PageData } from "./$types";
   import ProjectTable from "$lib/Components/ResponsiveTable/ProjectTable.Component.svelte";
   export let data: PageData;
@@ -30,5 +32,6 @@
     <!-- <ProjectTable bind:projects={data.projects} /> -->
 
     <ProjectTable bind:projects={data.projects} />
+    <Pagination classType={typeof(data.projects)} StoreData={data.projects} currentPage={Number($page.params.page)} name={"project"}/>
   </div>
 </div>

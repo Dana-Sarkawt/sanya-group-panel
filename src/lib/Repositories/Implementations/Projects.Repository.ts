@@ -2,10 +2,11 @@ import type { Database } from "$lib/Supabase/Types/database.types";
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import type { IProjectsRepository } from "../Interfaces/I.Projects.Repository";
 import { Supabase } from "$lib/Supabase/Supabase";
+import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.Model";
 
 export class ProjectsRepository implements IProjectsRepository {
   async createProjectAsync(
-    request: Database["public"]["Tables"]["Projects"]["Insert"],
+    request: Database["public"]["Tables"]["Projects"]["Insert"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Projects"]["Row"]>
   > {
@@ -21,7 +22,7 @@ export class ProjectsRepository implements IProjectsRepository {
     }
   }
   async readProjectAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Projects"]["Row"]>
   > {
@@ -36,7 +37,9 @@ export class ProjectsRepository implements IProjectsRepository {
       throw error;
     }
   }
-  async readProjectsAsync(): Promise<
+  async readProjectsAsync(
+    options?: GenericListOptions
+  ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Projects"]["Row"]>
     >
@@ -45,14 +48,18 @@ export class ProjectsRepository implements IProjectsRepository {
       const response = await Supabase.client
         .from("Projects")
         .select("*", { count: "exact" })
-        .order("id", { ascending: true });
+        .order("id", { ascending: true })
+        .range(
+          (options?.page!) * options?.limit!,
+          options?.limit! * (options?.page! + 1) 
+        );
       return response;
     } catch (error) {
       throw error;
     }
   }
   async updateProjectAsync(
-    request: Database["public"]["Tables"]["Projects"]["Update"],
+    request: Database["public"]["Tables"]["Projects"]["Update"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Projects"]["Row"]>
   > {
@@ -69,7 +76,7 @@ export class ProjectsRepository implements IProjectsRepository {
     }
   }
   async deleteProjectAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Projects"]["Row"]>
   > {

@@ -86,8 +86,8 @@
 {#if StoreData && (StoreData.pages ?? 0) > 1}
   <Pagination
     ulClass="inline-flex -space-x-px rtl:space-x-reverse items-center gap-4"
-    normalClass="text-black bg-[#F7F6FE] hover:bg-gray-100 hover:text-gray-700 dark:bg-[#141432] border-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white rounded-xl"
-    activeClass="text-white border-0 bg-[#F17F18] hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:text-white rounded-xl"
+    normalClass="text-black bg-green-500 hover:bg-gray-100 hover:text-gray-700 dark:bg-[#192520] border-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white rounded-xl"
+    activeClass="text-white border-0 bg-green-500 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:text-white rounded-xl"
     pages={pageCount}
     large
     on:previous={previous}

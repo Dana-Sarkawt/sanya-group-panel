@@ -70,17 +70,17 @@ tr:nth-child(even) {
   color: white !important;
 }
 
-
-.table td, .table th {
-  padding: .75rem;
+.table td,
+.table th {
+  padding: 0.75rem;
   vertical-align: top;
   text-align: center;
 }
 
-.table{
-color: black ;
+.table {
+  color: black;
 }
 
-.dark .table{
-color: white ;
+.dark .table {
+  color: white;
 }

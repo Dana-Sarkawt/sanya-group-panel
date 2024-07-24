@@ -32,6 +32,11 @@
     <!-- <ProjectTable bind:projects={data.projects} /> -->
 
     <ProjectTable bind:projects={data.projects} />
-    <Pagination classType={typeof(data.projects)} StoreData={data.projects} currentPage={Number($page.params.page)} name={"project"}/>
+
+    <div class="w-full h-auto flex justify-center items-center py-12">
+      <Pagination classType={typeof(data.projects)} StoreData={data.projects} currentPage={Number($page.params.page)} name={"project"}/>
+    </div>
+
+
   </div>
 </div>

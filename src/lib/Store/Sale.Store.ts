@@ -1,3 +1,4 @@
+import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.Model";
 import type { Store } from "$lib/Models/Response/Store.Response.Model";
 import { SalesRepository } from "$lib/Repositories/Implementations/Sales.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
@@ -43,9 +44,9 @@ const createSaleStore = () => {
         console.log(error);
       }
     },
-    getAll: async () => {
+    getAll: async (options?:GenericListOptions) => {
       try {
-        const response = await salesRepository.readSalesAsync();
+        const response = await salesRepository.readSalesAsync(options);
         if (response.error) {
           throw new Error(response.error.message);
         }

@@ -50,11 +50,13 @@ const createSaleStore = () => {
         if (response.error) {
           throw new Error(response.error.message);
         }
+        const pages = Math.ceil(response.count! / (options?.limit! ?? 10));
         set({
           data: response.data,
           count: response.count ?? 0,
+          pages
         });
-        return { data: response.data, count: response.count ?? 0 };
+        return { data: response.data, count: response.count ?? 0, pages };
       } catch (error) {
         console.log(error);
       }

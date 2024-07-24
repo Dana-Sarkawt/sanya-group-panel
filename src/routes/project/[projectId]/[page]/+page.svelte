@@ -18,6 +18,7 @@
   }
 
   async function retrieveSales() {
+    $page.params.page = "0";
     await saleStore.getAll({
       limit: 10,
       page: 0,

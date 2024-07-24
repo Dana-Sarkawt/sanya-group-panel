@@ -2,14 +2,6 @@
     import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
     import type { Store } from "$lib/Models/Response/Store.Response.Model";
     import type { Database } from "$lib/Supabase/Types/database.types";
-    import {
-      Table,
-      TableBody,
-      TableBodyCell,
-      TableBodyRow,
-      TableHead,
-      TableHeadCell,
-    } from "flowbite-svelte";
     export let capitals: Store<Database["public"]["Tables"]["Capitals"]["Row"]> =
       {
         data: [],
@@ -43,6 +35,9 @@
           <td>{capital.date}</td>
         
   <td>
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <!-- svelte-ignore a11y-missing-attribute -->
             <div class="flex h-auto w-auto items-center justify-center gap-2">
               <a
                 href="edit/1"
@@ -54,8 +49,8 @@
                   alt=""
                 />
               </a>
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
               <a
-                href="edit/1"
                 class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
                 on:click={() => (deleteModal = true)}
               >

@@ -46,8 +46,8 @@
                   alt=""
                 />
               </a>
+              <!-- svelte-ignore a11y-missing-attribute -->
               <a
-                href="edit/1"
                 class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full" 
               >
                 <img
@@ -66,3 +66,7 @@
     </table>
   
   </div>
+
+
+
+  <DeleteModal bind:deleteModal />

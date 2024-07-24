@@ -1,6 +1,6 @@
 <script lang="ts">
-  import ProjectTable from "$lib/Components/Tables/Project.Table.Component.svelte";
   import type { PageData } from "./$types";
+  import ProjectTable from "$lib/Components/ResponsiveTable/ProjectTable.Component.svelte";
   export let data: PageData;
 </script>
 
@@ -26,6 +26,8 @@
         >
       </a>
     </div>
+
+    <!-- <ProjectTable bind:projects={data.projects} /> -->
 
     <ProjectTable bind:projects={data.projects} />
   </div>

@@ -16,6 +16,7 @@ export type Database = {
           description: string | null;
           id: number;
           price: number;
+          project_id: number | null;
         };
         Insert: {
           created_at?: string;
@@ -23,6 +24,7 @@ export type Database = {
           description?: string | null;
           id?: number;
           price?: number;
+          project_id?: number | null;
         };
         Update: {
           created_at?: string;
@@ -30,8 +32,52 @@ export type Database = {
           description?: string | null;
           id?: number;
           price?: number;
+          project_id?: number | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "Capitals_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "Projects";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      Dailys: {
+        Row: {
+          created_at: string;
+          date: string;
+          description: string | null;
+          id: number;
+          price: number;
+          project_id: number | null;
+        };
+        Insert: {
+          created_at?: string;
+          date: string;
+          description?: string | null;
+          id?: number;
+          price?: number;
+          project_id?: number | null;
+        };
+        Update: {
+          created_at?: string;
+          date?: string;
+          description?: string | null;
+          id?: number;
+          price?: number;
+          project_id?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "Dailys_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "Projects";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       Deposits: {
         Row: {
@@ -39,31 +85,51 @@ export type Database = {
           date: string;
           description: string | null;
           id: number;
+          preparation_id: number | null;
           price: number;
           sale_id: number | null;
+          worker_id: number | null;
         };
         Insert: {
           created_at?: string;
           date: string;
           description?: string | null;
           id?: number;
+          preparation_id?: number | null;
           price?: number;
           sale_id?: number | null;
+          worker_id?: number | null;
         };
         Update: {
           created_at?: string;
           date?: string;
           description?: string | null;
           id?: number;
+          preparation_id?: number | null;
           price?: number;
           sale_id?: number | null;
+          worker_id?: number | null;
         };
         Relationships: [
+          {
+            foreignKeyName: "Deposits_preparation_id_fkey";
+            columns: ["preparation_id"];
+            isOneToOne: false;
+            referencedRelation: "Preparations";
+            referencedColumns: ["id"];
+          },
           {
             foreignKeyName: "Deposits_sale_id_fkey";
             columns: ["sale_id"];
             isOneToOne: false;
             referencedRelation: "Sales";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "Deposits_worker_id_fkey";
+            columns: ["worker_id"];
+            isOneToOne: false;
+            referencedRelation: "Workers";
             referencedColumns: ["id"];
           },
         ];
@@ -74,31 +140,80 @@ export type Database = {
           date: string;
           description: string | null;
           id: number;
+          preparation_id: number | null;
           price: number;
           sale_id: number | null;
+          worker_id: number | null;
         };
         Insert: {
           created_at?: string;
           date: string;
           description?: string | null;
           id?: number;
+          preparation_id?: number | null;
           price?: number;
           sale_id?: number | null;
+          worker_id?: number | null;
         };
         Update: {
           created_at?: string;
           date?: string;
           description?: string | null;
           id?: number;
+          preparation_id?: number | null;
           price?: number;
           sale_id?: number | null;
+          worker_id?: number | null;
         };
         Relationships: [
+          {
+            foreignKeyName: "Financial Dues_preparation_id_fkey";
+            columns: ["preparation_id"];
+            isOneToOne: false;
+            referencedRelation: "Preparations";
+            referencedColumns: ["id"];
+          },
           {
             foreignKeyName: "Financial Dues_sale_id_fkey";
             columns: ["sale_id"];
             isOneToOne: false;
             referencedRelation: "Sales";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "Financial Dues_worker_id_fkey";
+            columns: ["worker_id"];
+            isOneToOne: false;
+            referencedRelation: "Workers";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      Preparations: {
+        Row: {
+          created_at: string;
+          description: string | null;
+          id: number;
+          project_id: number | null;
+        };
+        Insert: {
+          created_at?: string;
+          description?: string | null;
+          id?: number;
+          project_id?: number | null;
+        };
+        Update: {
+          created_at?: string;
+          description?: string | null;
+          id?: number;
+          project_id?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "Preparations_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "Projects";
             referencedColumns: ["id"];
           },
         ];
@@ -147,18 +262,29 @@ export type Database = {
           created_at: string;
           description: string | null;
           id: number;
+          project_id: number | null;
         };
         Insert: {
           created_at?: string;
           description?: string | null;
           id?: number;
+          project_id?: number | null;
         };
         Update: {
           created_at?: string;
           description?: string | null;
           id?: number;
+          project_id?: number | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "Sales_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "Projects";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       Users: {
         Row: {
@@ -201,6 +327,35 @@ export type Database = {
             columns: ["user_uid"];
             isOneToOne: true;
             referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      Workers: {
+        Row: {
+          created_at: string;
+          id: number;
+          name: string;
+          project_id: number | null;
+        };
+        Insert: {
+          created_at?: string;
+          id?: number;
+          name?: string;
+          project_id?: number | null;
+        };
+        Update: {
+          created_at?: string;
+          id?: number;
+          name?: string;
+          project_id?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "Wrokers_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "Projects";
             referencedColumns: ["id"];
           },
         ];

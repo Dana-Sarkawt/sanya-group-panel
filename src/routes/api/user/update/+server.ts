@@ -15,10 +15,10 @@ const server = createClient<Database>(
   }
 );
 
-export const DELETE: RequestHandler = async ({ locals, params, request }) => {
+export const PUT: RequestHandler = async ({ locals, params, request }) => {
   try {
-    return new Response("User deleted successfully", { status: 200 });
+    return new Response("User updated successfully", { status: 200 });
   } catch (error) {
-    return new Response("Failed to delete user", { status: 500 });
+    return new Response("Failed to update user", { status: 500 });
   }
 };

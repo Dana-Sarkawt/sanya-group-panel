@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
   import type { Store } from "$lib/Models/Response/Store.Response.Model";
   import type { Database } from "$lib/Supabase/Types/database.types";
@@ -27,15 +28,20 @@
             <td>{worker.id}</td>
             <td>{worker.name}</td>
             <td>
+              <!-- svelte-ignore a11y-no-static-element-interactions -->
               <div class="w-full h-auto flex justify-center items-center gap-2">
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <div
-                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold text-white"
+                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold text-white cursor-pointer"
+                  on:click={() => goto(`/deposit/worker/${worker.id}`)}
                 >
                   Deposit
                 </div>
 
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <div
-                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold text-white"
+                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold text-white cursor-pointer"
+                  on:click={() => goto(`/finance/worker/${worker.id}`)}
                 >
                   Financial Dues
                 </div>

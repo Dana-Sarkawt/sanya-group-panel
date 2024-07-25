@@ -8,11 +8,12 @@
   import CapitalTable from "$lib/Components/ResponsiveTable/CapitalTable.Component.svelte";
   import Pagination from "$lib/Components/Pagination.Store.Component.svelte";
   import { goto } from "$app/navigation";
+  import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
   let totalCapital = 0;
   onMount(async () => {
-    totalCapital = await capitalStore.getTotalPrice(
+    totalCapital = (await capitalStore.getTotalPrice(
       Number($page.params.projectId)
-    ) as number;
+    )) as number;
   });
 
   async function retrieveCapital() {
@@ -50,19 +51,30 @@
 
 <div class=" w-full h-auto flex flex-col justify-center items-center">
   <!-- <ProjectTable bind:projects={data.projects} /> -->
-  <Tabs tabStyle="pill" contentClass="w-[90%]" class="flex flex-col md:flex-row space-x-0 md:space-x-2 justify-center items-center  gap-4 mt-4">
+  <Tabs
+    tabStyle="pill"
+    contentClass="w-[90%]"
+    class="flex flex-col md:flex-row space-x-0 md:space-x-2 justify-center items-center  gap-4 mt-4"
+  >
     <TabItem
-    
       activeClasses="w-60 h-28 bg-[#c62570a3] rounded-2xl text-white "
       inactiveClasses="w-60 h-28 bg-[#c6257080] rounded-2xl  text-white  "
       on:click={retrieveCapital}
     >
-      <div slot="title" class="w-full h-full flex flex-col justify-center  gap-2">
-        <img src="/images/capital.png" class="w-6 h-6 object-contain absolute mb-16 ml-3" alt="">
-        <div class=" h-auto text-xl rounded-full font-bold mt-4">{totalCapital}</div>
-        <p class="h-auto w-full">Capital</p>
-        
+      <div
+        slot="title"
+        class="w-full h-full flex flex-col justify-center gap-2"
+      >
+        <img
+          src="/images/capital.png"
+          class="w-6 h-6 object-contain absolute mb-16 ml-3"
+          alt=""
+        />
+        <div class=" h-auto text-xl rounded-full font-bold mt-4">
+          {formatNumber(totalCapital)}
         </div>
+        <p class="h-auto w-full">Capital</p>
+      </div>
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"
         id="subDiv"
@@ -117,10 +129,16 @@
       inactiveClasses="w-60 h-28 bg-[#21ACD659] rounded-2xl text-white "
       on:click={retrieveSales}
     >
-    <div slot="title" class="w-full h-full flex flex-col justify-center  gap-2">
-      <img src="/images/sale.png" class="w-6 h-6 object-contain absolute mb-16 ml-3" alt="">
-      <p class="h-auto w-full text-xl font-bold">Sales</p>
-      
+      <div
+        slot="title"
+        class="w-full h-full flex flex-col justify-center gap-2"
+      >
+        <img
+          src="/images/sale.png"
+          class="w-6 h-6 object-contain absolute mb-16 ml-3"
+          alt=""
+        />
+        <p class="h-auto w-full text-xl font-bold">Sales</p>
       </div>
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"
@@ -160,10 +178,16 @@
       inactiveClasses="w-60 h-28 bg-[#886DFF4d] rounded-2xl text-white "
       on:click={() => goto(`/project/${$page.params.projectId}/expense/0`)}
     >
-       <div slot="title" class="w-full h-full flex flex-col justify-center  gap-2">
-      <img src="/images/increase.png" class="w-6 h-6 object-contain absolute mb-16 ml-3" alt="">
-      <p class="h-auto w-full text-xl font-bold">Expense</p>
-      
+      <div
+        slot="title"
+        class="w-full h-full flex flex-col justify-center gap-2"
+      >
+        <img
+          src="/images/increase.png"
+          class="w-6 h-6 object-contain absolute mb-16 ml-3"
+          alt=""
+        />
+        <p class="h-auto w-full text-xl font-bold">Expense</p>
       </div>
     </TabItem>
   </Tabs>

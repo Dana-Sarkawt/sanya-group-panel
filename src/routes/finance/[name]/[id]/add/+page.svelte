@@ -15,7 +15,7 @@
         ...financialRequest,
         date: moment(financialRequest.date).format("YYYY-MM-DD"),
       });
-      goto(`/finance/${$page.params.name}/${$page.params.id}/0`);
+      goto(`/finance/${$page.params.name}/${$page.params.id}`);
     } catch (error) {
       console.log(error);
     }

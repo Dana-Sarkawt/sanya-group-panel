@@ -24,7 +24,7 @@
         <button
           class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
           style="box-shadow:0 1px 8px 0px #24b97d;"
-          ><span>+</span> Add Project</button
+          ><span>+</span>Add Project</button
         >
       </a>
     </div>

@@ -85,6 +85,14 @@ tr:nth-child(even) {
   color: white;
 }
 
+
+div[role="tooltip"]{
+  background-color: #08774d !important;
+  color: white !important;
+}
+
+
+
 /**
  * START  User Profile Letter Loading Style
  */

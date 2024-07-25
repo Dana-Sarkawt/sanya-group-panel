@@ -7,6 +7,7 @@
     NavHamburger,
   } from "flowbite-svelte";
   import { DarkMode } from "flowbite-svelte";
+  import { Tooltip, Button } from 'flowbite-svelte';
   import { authStore } from "$lib/Store/Auth.Store";
   import { onMount } from "svelte";
 
@@ -80,7 +81,7 @@
 
   
   <div
-    class="w-24 h-24 rounded-full border border-[#24b97d] bg-[#24b97d7e] dark:bg-[#11433A] hidden md:flex justify-center items-center text-4xl text-white"
+    class="w-24 h-24 rounded-full border border-[#24b97d] bg-[#24b97d7e] dark:bg-[#11433A] hidden md:flex justify-center items-center text-4xl text-white cursor-pointer"
   >
   {#if isLoading && !$authStore || $authStore?.name === undefined}
   <span class="loader"></span>
@@ -90,6 +91,8 @@
       .map((word) => word.charAt(0))
       .join("")}
 {/if}
-  </div>
+
+</div>
+<Tooltip defaultClass="py-2 px-3 text-sm font-medium">{$authStore?.name}</Tooltip>
 
 </div>

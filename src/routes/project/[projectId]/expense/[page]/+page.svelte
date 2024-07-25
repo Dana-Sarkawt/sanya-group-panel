@@ -3,6 +3,7 @@
   import { page } from "$app/stores";
   import Pagination from "$lib/Components/Pagination.Store.Component.svelte";
   import DailyTable from "$lib/Components/ResponsiveTable/DailyTable.Component.svelte";
+  import PreparationTable from "$lib/Components/ResponsiveTable/PreparationTable.Component.svelte";
   import WorkerTable from "$lib/Components/ResponsiveTable/WorkerTable.Component.svelte";
   import { dailyStore } from "$lib/Store/Daily.Store";
   import { preparationStore } from "$lib/Store/Preparation.Store";
@@ -165,7 +166,16 @@
             >
           </a>
         </div>
-      </div></TabItem
-    >
+        <PreparationTable bind:preparations={$preparationStore} />
+        <div class="w-full h-auto flex justify-center items-center py-12">
+          <Pagination
+            Store={preparationStore}
+            StoreData={$preparationStore}
+            currentPage={Number($page.params.page)}
+            project_id={Number($page.params.projectId)}
+          />
+        </div>
+      </div>
+    </TabItem>
   </Tabs>
 </div>

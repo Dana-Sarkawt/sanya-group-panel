@@ -18,6 +18,7 @@
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Description</th>
+        <th scope="col">New Action</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
@@ -28,19 +29,19 @@
             <td>{preparation.id}</td>
             <td>{preparation.description}</td>
             <td>
-                <div class="w-full h-auto flex justify-center items-center gap-2">
-                    <div
-                      class="w-42 h-4 md:h-8 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold text-white"
-                    >
-                      Deposit
-                    </div>
-    
-                    <div
-                      class="w-42 h-4 md:h-8 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold text-white"
-                    >
-                      Financial Dues
-                    </div>
-                  </div>
+              <div class="w-full h-auto flex justify-center items-center gap-2">
+                <div
+                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold text-white"
+                >
+                  Deposit
+                </div>
+
+                <div
+                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold text-white"
+                >
+                  Financial Dues
+                </div>
+              </div>
             </td>
             <td>
               <div class="flex h-auto w-auto items-center justify-center gap-2">

@@ -49,11 +49,15 @@ export class FinancialDuesRepository implements IFinancialDuesRepository {
     >
   > {
     try {
-      const response = await Supabase.client
+      const response = Supabase.client
         .from("Financial Dues")
-        .select("*", { count: "exact" })
-        .order("id", { ascending: true });
-      return response;
+        .select("*", { count: "exact" });
+
+      if (options?.field && options?.equal) {
+        response.eq(options.field, options.equal);
+      }
+
+      return await response.order("id", { ascending: true });
     } catch (error) {
       throw error;
     }

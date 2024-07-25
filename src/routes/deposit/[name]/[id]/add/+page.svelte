@@ -15,7 +15,7 @@
         ...depositRequest,
         date: moment(depositRequest.date).format("YYYY-MM-DD"),
       });
-      goto(`/deposit/${$page.params.name}/${$page.params.id}/0`);
+      goto(`/deposit/${$page.params.name}/${$page.params.id}`);
     } catch (error) {
       console.log(error);
     }

@@ -38,14 +38,18 @@
 
 <div class=" w-full h-auto flex flex-col justify-center items-center">
   <!-- <ProjectTable bind:projects={data.projects} /> -->
-  <Tabs tabStyle="pill" contentClass="w-[90%]">
+  <Tabs tabStyle="pill" contentClass="w-[90%]" class="flex flex-col md:flex-row space-x-0 md:space-x-2 justify-center items-center  gap-4 mt-4">
     <TabItem
-      activeClasses="w-24 h-16 bg-green-500 rounded-full text-white "
-      inactiveClasses="w-24 h-16 bg-[#363636] rounded-t-2xl  text-white  "
+    
+      activeClasses="w-60 h-28 bg-[#c62570a3] rounded-2xl text-white "
+      inactiveClasses="w-60 h-28 bg-[#c6257080] rounded-2xl  text-white  "
       on:click={retrieveCapital}
     >
-      <div slot="title" class="w-full h-full flex flex-col justify-end  gap-2">Capital
-        <div class="bg-green-500 h-5 rounded-t-full ">{totalCapital}</div>
+      <div slot="title" class="w-full h-full flex flex-col justify-center  gap-2">
+        <img src="/images/capital.png" class="w-6 h-6 object-contain absolute mb-16 ml-3" alt="">
+        <div class=" h-auto text-xl rounded-full font-bold mt-4">{totalCapital}</div>
+        <p class="h-auto w-full">Capital</p>
+        
         </div>
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"
@@ -97,11 +101,15 @@
     </TabItem>
 
     <TabItem
-      activeClasses="w-24 h-12 bg-green-500 rounded-full text-white "
-      inactiveClasses="w-24 h-12 bg-[#363636] rounded-full text-white "
+      activeClasses="w-60 h-28 bg-[#21ACD680] rounded-2xl text-white "
+      inactiveClasses="w-60 h-28 bg-[#21ACD659] rounded-2xl text-white "
       on:click={retrieveSales}
     >
-      <span slot="title">Sales</span>
+    <div slot="title" class="w-full h-full flex flex-col justify-center  gap-2">
+      <img src="/images/sale.png" class="w-6 h-6 object-contain absolute mb-16 ml-3" alt="">
+      <p class="h-auto w-full text-xl font-bold">Sales</p>
+      
+      </div>
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"
         id="subDiv"
@@ -136,11 +144,15 @@
       </div>
     </TabItem>
     <TabItem
-      activeClasses="w-24 h-12 bg-green-500 rounded-full text-white "
-      inactiveClasses="w-24 h-12 bg-[#363636] rounded-full text-white "
+      activeClasses="w-60 h-28 bg-[#886DFFa3] rounded-2xl text-white "
+      inactiveClasses="w-60 h-28 bg-[#886DFF4d] rounded-2xl text-white "
       on:click={() => goto(`/project/${$page.params.projectId}/expense/0`)}
     >
-      <span slot="title">Expense</span>
+       <div slot="title" class="w-full h-full flex flex-col justify-center  gap-2">
+      <img src="/images/increase.png" class="w-6 h-6 object-contain absolute mb-16 ml-3" alt="">
+      <p class="h-auto w-full text-xl font-bold">Expense</p>
+      
+      </div>
     </TabItem>
   </Tabs>
 </div>

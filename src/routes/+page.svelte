@@ -1,9 +1,8 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
 
-  export let data;
-
   onMount(() => {
-    console.log(data.users);
+    goto('/project/0')
   });
 </script>

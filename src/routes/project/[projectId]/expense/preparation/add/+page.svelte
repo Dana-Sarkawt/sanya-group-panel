@@ -1,31 +1,42 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
-    import { User } from "$lib/Models/Request/User.Request.Model";
-  import { dailyStore } from "$lib/Store/Daily.Store";
-    import type { PageData } from "./$types";
-    export let data: PageData;
-    // const capitalRequest = new Capital.Create();
-  
-  
-  </script>
-  
-  <p class="w-full h-auto text-4xl dark:text-white text-center my-12">Add Preparation</p>
-  <div class="w-full h-auto flex justify-center items-center">
-    <div
-      class="w-[90%] md:w-[50%] h-auto p-10 bg-[#94DCBA] dark:bg-[#11433A] border border-[#11433A] dark:border-[#94DCBA] rounded-xl flex flex-col justify-center items-center gap-6"
-    >
-      <div class="w-full h-auto flex flex-col justify-center items-start">
-        <p class="dark:text-white">Description</p>
-        <textarea
-          class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
-        />
-      </div>
-  
-      
-      <button
-        class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-        >Add Preparation</button
-      >
+  import { preparationStore } from "$lib/Store/Preparation.Store";
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
+  import { Preparation } from "$lib/Models/Request/Preparation.Request.Model";
+
+  const preparationRequest = {
+    ...new Preparation.Create(),
+    project_id: Number($page.params.projectId),
+  };
+
+  async function addPreparation() {
+    try {
+      const response = await preparationStore.create(preparationRequest);
+      if (!response) throw new Error("Failed to add preparation");
+      goto(`/project/${$page.params.projectId}/expense/0`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+</script>
+
+<p class="w-full h-auto text-4xl dark:text-white text-center my-12">
+  Add Preparation
+</p>
+<div class="w-full h-auto flex justify-center items-center">
+  <div
+    class="w-[90%] md:w-[50%] h-auto p-10 bg-[#94DCBA] dark:bg-[#11433A] border border-[#11433A] dark:border-[#94DCBA] rounded-xl flex flex-col justify-center items-center gap-6"
+  >
+    <div class="w-full h-auto flex flex-col justify-center items-start">
+      <p class="dark:text-white">Description</p>
+      <textarea
+        class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
+      />
     </div>
+
+    <button
+      class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
+      on:click={addPreparation}>Add Preparation</button
+    >
   </div>
-  
+</div>

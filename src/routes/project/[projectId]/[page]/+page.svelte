@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import SalesTable from "$lib/Components/ResponsiveTable/SalesTable.Component.svelte";
   import { saleStore } from "$lib/Store/Sale.Store";
   import { capitalStore } from "$lib/Store/Capital.Store";
@@ -7,6 +8,12 @@
   import CapitalTable from "$lib/Components/ResponsiveTable/CapitalTable.Component.svelte";
   import Pagination from "$lib/Components/Pagination.Store.Component.svelte";
   import { goto } from "$app/navigation";
+  let totalCapital = 0;
+  onMount(async () => {
+    totalCapital = await capitalStore.getTotalPrice(
+      Number($page.params.projectId)
+    ) as number;
+  });
 
   async function retrieveCapital() {
     goto(`/project/${$page.params.projectId}/0`);
@@ -33,11 +40,13 @@
   <!-- <ProjectTable bind:projects={data.projects} /> -->
   <Tabs tabStyle="pill" contentClass="w-[90%]">
     <TabItem
-      activeClasses="w-24 h-12 bg-green-500 rounded-full text-white "
-      inactiveClasses="w-24 h-12 bg-[#363636] rounded-full text-white "
+      activeClasses="w-24 h-16 bg-green-500 rounded-full text-white "
+      inactiveClasses="w-24 h-16 bg-[#363636] rounded-t-2xl  text-white  "
       on:click={retrieveCapital}
     >
-      <span slot="title">Capital</span>
+      <div slot="title" class="w-full h-full flex flex-col justify-end  gap-2">Capital
+        <div class="bg-green-500 h-5 rounded-t-full ">{totalCapital}</div>
+        </div>
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"
         id="subDiv"

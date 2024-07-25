@@ -4,29 +4,30 @@ import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 export interface ICapitalsRepository {
   createCapitalAsync(
-    request: Database["public"]["Tables"]["Capitals"]["Insert"],
+    request: Database["public"]["Tables"]["Capitals"]["Insert"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   >;
   readCapitalAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   >;
   readCapitalsAsync(
-    options?: GenericListOptions,
+    options?: GenericListOptions
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Capitals"]["Row"]>
     >
   >;
+  readCapitalsTotalPriceAsync(projectId:number): Promise<number>;
   updateCapitalAsync(
-    request: Database["public"]["Tables"]["Capitals"]["Update"],
+    request: Database["public"]["Tables"]["Capitals"]["Update"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   >;
   deleteCapitalAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   >;

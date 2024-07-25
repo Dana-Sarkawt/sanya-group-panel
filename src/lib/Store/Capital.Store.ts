@@ -18,7 +18,7 @@ const createCapitalStore = () => {
     set: async (data: Store<Database["public"]["Tables"]["Capitals"]["Row"]>) =>
       set(data),
     create: async (
-      data: Database["public"]["Tables"]["Capitals"]["Insert"],
+      data: Database["public"]["Tables"]["Capitals"]["Insert"]
     ) => {
       try {
         if (!data.date || data.date === "") {
@@ -69,8 +69,20 @@ const createCapitalStore = () => {
         console.log(error);
       }
     },
+    getTotalPrice: async (projectId: number) => {
+      try {
+        const response =
+          await capitalsRepository.readCapitalsTotalPriceAsync(projectId);
+        if (response == 0) {
+          throw new Error("No capitals found for this project");
+        }
+        return response;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     update: async (
-      data: Database["public"]["Tables"]["Capitals"]["Update"],
+      data: Database["public"]["Tables"]["Capitals"]["Update"]
     ) => {
       try {
         const response = await capitalsRepository.updateCapitalAsync(data);
@@ -79,7 +91,7 @@ const createCapitalStore = () => {
         }
         update((store) => {
           store.data = store.data.map((item) =>
-            item.id === response.data.id ? response.data : item,
+            item.id === response.data.id ? response.data : item
           );
           return store;
         });

@@ -76,6 +76,16 @@ const createDailyStore = () => {
         console.log(error);
       }
     },
+    getTotalPrice: async (projectId: number) => {
+      try {
+        const response =
+          await dailysRepository.readDailysTotalPriceAsync(projectId);
+
+        return response;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     update: async (data: Database["public"]["Tables"]["Dailys"]["Update"]) => {
       try {
         const response = await dailysRepository.updateDailyAsync(data);

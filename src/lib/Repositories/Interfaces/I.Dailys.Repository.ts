@@ -4,21 +4,21 @@ import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 export class IDailysRepository {
   async createDailyAsync(
-    request: Database["public"]["Tables"]["Dailys"]["Insert"]
+    request: Database["public"]["Tables"]["Dailys"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Dailys"]["Row"]>
   > {
     throw new Error("Method not implemented.");
   }
   async readDailyAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Dailys"]["Row"]>
   > {
     throw new Error("Method not implemented.");
   }
   async readDailysAsync(
-    options?: GenericListOptions
+    options?: GenericListOptions,
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Dailys"]["Row"]>
@@ -27,14 +27,14 @@ export class IDailysRepository {
     throw new Error("Method not implemented.");
   }
   async updateDailyAsync(
-    request: Database["public"]["Tables"]["Dailys"]["Update"]
+    request: Database["public"]["Tables"]["Dailys"]["Update"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Dailys"]["Row"]>
   > {
     throw new Error("Method not implemented.");
   }
   async deleteDailyAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Dailys"]["Row"]>
   > {

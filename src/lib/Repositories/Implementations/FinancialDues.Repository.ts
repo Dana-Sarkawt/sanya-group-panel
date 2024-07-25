@@ -6,7 +6,7 @@ import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.M
 
 export class FinancialDuesRepository implements IFinancialDuesRepository {
   async createFinancialDueAsync(
-    request: Database["public"]["Tables"]["Financial Dues"]["Insert"]
+    request: Database["public"]["Tables"]["Financial Dues"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<
       Database["public"]["Tables"]["Financial Dues"]["Row"]
@@ -24,7 +24,7 @@ export class FinancialDuesRepository implements IFinancialDuesRepository {
     }
   }
   async readFinancialDueAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<
       Database["public"]["Tables"]["Financial Dues"]["Row"]
@@ -42,7 +42,7 @@ export class FinancialDuesRepository implements IFinancialDuesRepository {
     }
   }
   async readFinancialDuesAsync(
-    options?: GenericListOptions
+    options?: GenericListOptions,
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Financial Dues"]["Row"]>
@@ -63,7 +63,7 @@ export class FinancialDuesRepository implements IFinancialDuesRepository {
     }
   }
   async updateFinancialDueAsync(
-    request: Database["public"]["Tables"]["Financial Dues"]["Update"]
+    request: Database["public"]["Tables"]["Financial Dues"]["Update"],
   ): Promise<
     PostgrestSingleResponse<
       Database["public"]["Tables"]["Financial Dues"]["Row"]
@@ -82,7 +82,7 @@ export class FinancialDuesRepository implements IFinancialDuesRepository {
     }
   }
   async deleteFinancialDueAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<
       Database["public"]["Tables"]["Financial Dues"]["Row"]

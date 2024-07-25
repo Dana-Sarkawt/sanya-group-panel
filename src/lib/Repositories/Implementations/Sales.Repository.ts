@@ -2,7 +2,7 @@ import type { Database } from "$lib/Supabase/Types/database.types";
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import type { ISalesRepository } from "../Interfaces/I.Sales.Repository";
 import { Supabase } from "$lib/Supabase/Supabase";
-import { GenericListOptions } from '../../Models/Common/ListOptions.Common.Model';
+import { GenericListOptions } from "../../Models/Common/ListOptions.Common.Model";
 
 export class SalesRepository implements ISalesRepository {
   async createSaleAsync(
@@ -37,24 +37,26 @@ export class SalesRepository implements ISalesRepository {
       throw error;
     }
   }
-  async readSalesAsync(options?:GenericListOptions): Promise<
+  async readSalesAsync(
+    options?: GenericListOptions,
+  ): Promise<
     PostgrestSingleResponse<Array<Database["public"]["Tables"]["Sales"]["Row"]>>
   > {
     try {
       const response = Supabase.client
         .from("Sales")
-        .select("*", { count: "exact" })
+        .select("*", { count: "exact" });
 
-        if (options?.field && options?.equal) {
-          response.eq(options.field, options.equal);
-        }
-  
-        return await response
-          .order("id", { ascending: true })
-          .range(
-            options?.page! * options?.limit!,
-            options?.limit! * (options?.page! + 1)
-          );
+      if (options?.field && options?.equal) {
+        response.eq(options.field, options.equal);
+      }
+
+      return await response
+        .order("id", { ascending: true })
+        .range(
+          options?.page! * options?.limit!,
+          options?.limit! * (options?.page! + 1),
+        );
     } catch (error) {
       throw error;
     }

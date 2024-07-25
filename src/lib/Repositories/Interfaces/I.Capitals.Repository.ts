@@ -13,7 +13,9 @@ export interface ICapitalsRepository {
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   >;
-  readCapitalsAsync(options?: GenericListOptions): Promise<
+  readCapitalsAsync(
+    options?: GenericListOptions,
+  ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Capitals"]["Row"]>
     >

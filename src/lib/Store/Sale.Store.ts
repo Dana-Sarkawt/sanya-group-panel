@@ -44,7 +44,7 @@ const createSaleStore = () => {
         console.log(error);
       }
     },
-    getAll: async (options?:GenericListOptions) => {
+    getAll: async (options?: GenericListOptions) => {
       try {
         const response = await salesRepository.readSalesAsync(options);
         if (response.error) {
@@ -54,7 +54,7 @@ const createSaleStore = () => {
         set({
           data: response.data,
           count: response.count ?? 0,
-          pages
+          pages,
         });
         return { data: response.data, count: response.count ?? 0, pages };
       } catch (error) {

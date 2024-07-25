@@ -17,7 +17,9 @@ export interface IFinancialDuesRepository {
       Database["public"]["Tables"]["Financial Dues"]["Row"]
     >
   >;
-  readFinancialDuesAsync(options?:GenericListOptions): Promise<
+  readFinancialDuesAsync(
+    options?: GenericListOptions,
+  ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Financial Dues"]["Row"]>
     >

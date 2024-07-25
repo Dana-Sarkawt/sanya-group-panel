@@ -13,7 +13,9 @@ export interface ISalesRepository {
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Sales"]["Row"]>
   >;
-  readSalesAsync(options?:GenericListOptions): Promise<
+  readSalesAsync(
+    options?: GenericListOptions,
+  ): Promise<
     PostgrestSingleResponse<Array<Database["public"]["Tables"]["Sales"]["Row"]>>
   >;
   updateSaleAsync(

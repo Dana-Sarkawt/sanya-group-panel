@@ -13,7 +13,9 @@ export interface IUsersRepository {
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   >;
-  readUsersAsync(options?:GenericListOptions): Promise<
+  readUsersAsync(
+    options?: GenericListOptions,
+  ): Promise<
     PostgrestSingleResponse<Array<Database["public"]["Tables"]["Users"]["Row"]>>
   >;
   updateUserAsync(

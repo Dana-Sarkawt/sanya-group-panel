@@ -17,10 +17,10 @@ const createPreparationStore = () => {
   return {
     subscribe,
     set: async (
-      data: Store<Database["public"]["Tables"]["Preparations"]["Row"]>
+      data: Store<Database["public"]["Tables"]["Preparations"]["Row"]>,
     ) => set(data),
     create: async (
-      data: Database["public"]["Tables"]["Preparations"]["Insert"]
+      data: Database["public"]["Tables"]["Preparations"]["Insert"],
     ) => {
       try {
         const response =
@@ -81,7 +81,7 @@ const createPreparationStore = () => {
       }
     },
     update: async (
-      data: Database["public"]["Tables"]["Preparations"]["Update"]
+      data: Database["public"]["Tables"]["Preparations"]["Update"],
     ) => {
       try {
         if (!data.id) {

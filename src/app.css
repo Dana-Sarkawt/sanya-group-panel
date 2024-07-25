@@ -84,3 +84,37 @@ tr:nth-child(even) {
 .dark .table {
   color: white;
 }
+
+
+
+
+
+/**
+ * START  User Profile Letter Loading Style
+ */
+
+ .loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  border: 10px solid;
+  border-color: rgba(0, 137, 66, 0.15) rgba(0, 137, 66, 0.25) rgba(0, 137, 66, 0.35) rgba(0, 137, 66, 0.5);
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
+
+/**
+ * END  User Profile Letter Loading Style
+ */
+

@@ -16,10 +16,10 @@ const createFinancialDueStore = () => {
   return {
     subscribe,
     set: async (
-      data: Store<Database["public"]["Tables"]["Financial Dues"]["Row"]>
+      data: Store<Database["public"]["Tables"]["Financial Dues"]["Row"]>,
     ) => set(data),
     create: async (
-      data: Database["public"]["Tables"]["Financial Dues"]["Insert"]
+      data: Database["public"]["Tables"]["Financial Dues"]["Insert"],
     ) => {
       try {
         const response =
@@ -71,7 +71,7 @@ const createFinancialDueStore = () => {
       }
     },
     update: async (
-      data: Database["public"]["Tables"]["Financial Dues"]["Update"]
+      data: Database["public"]["Tables"]["Financial Dues"]["Update"],
     ) => {
       try {
         const response =
@@ -81,7 +81,7 @@ const createFinancialDueStore = () => {
         }
         update((store) => {
           store.data = store.data.map((financialDue) =>
-            financialDue.id === response.data.id ? response.data : financialDue
+            financialDue.id === response.data.id ? response.data : financialDue,
           );
           return store;
         });
@@ -99,7 +99,7 @@ const createFinancialDueStore = () => {
         }
         update((store) => {
           store.data = store.data.filter(
-            (financialDue) => financialDue.id !== id
+            (financialDue) => financialDue.id !== id,
           );
           store.count--;
           return store;

@@ -52,7 +52,7 @@ const createCapitalStore = () => {
         console.log(error);
       }
     },
-    getAll: async (options?:GenericListOptions) => {
+    getAll: async (options?: GenericListOptions) => {
       try {
         const response = await capitalsRepository.readCapitalsAsync(options);
         if (response.error) {
@@ -62,7 +62,7 @@ const createCapitalStore = () => {
         set({
           data: response.data,
           count: response.count ?? 0,
-          pages
+          pages,
         });
         return { data: response.data, count: response.count ?? 0 };
       } catch (error) {

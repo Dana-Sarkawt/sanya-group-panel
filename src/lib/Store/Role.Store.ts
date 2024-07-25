@@ -47,7 +47,7 @@ const createRoleStore = () => {
         console.log(error);
       }
     },
-    getAll: async (options?:GenericListOptions) => {
+    getAll: async (options?: GenericListOptions) => {
       try {
         const response = await rolesRepository.readRolesAsync(options);
         if (response.error) {

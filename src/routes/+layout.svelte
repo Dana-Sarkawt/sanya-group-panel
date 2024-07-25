@@ -8,18 +8,25 @@
   $: activeUrl = $page.url.pathname;
 
   export let data;
+   let isLoading = true;
 
   let { supabase, session } = data;
   $: ({ supabase, session } = data);
 
   onMount(() => {
-    const { data } = supabase.auth.onAuthStateChange((event, newSession) => {
-      checkAuth();
-      if (newSession?.expires_at !== session?.expires_at) {
-        invalidate("supabase:auth");
-      }
-    });
-    return () => data.subscription.unsubscribe();
+    try{
+      isLoading = true;
+      const { data } = supabase.auth.onAuthStateChange((event, newSession) => {
+        checkAuth();
+        if (newSession?.expires_at !== session?.expires_at) {
+          invalidate("supabase:auth");
+        }
+      });
+      return () => data.subscription.unsubscribe();
+
+    }finally{
+      isLoading = false;
+    }
   });
 
   async function checkAuth() {
@@ -31,6 +38,6 @@
 </script>
 
 {#if activeUrl !== "/login"}
-  <Navbar />
+  <Navbar bind:isLoading={isLoading}/>
 {/if}
 <slot></slot>

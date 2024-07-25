@@ -4,29 +4,29 @@ import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 export interface IPreparationsRepository {
   createPreparationAsync(
-    request: Database["public"]["Tables"]["Preparations"]["Insert"]
+    request: Database["public"]["Tables"]["Preparations"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Preparations"]["Row"]>
   >;
   readPreparationAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Preparations"]["Row"]>
   >;
   readPreparationsAsync(
-    options?: GenericListOptions
+    options?: GenericListOptions,
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Preparations"]["Row"]>
     >
   >;
   updatePreparationAsync(
-    request: Database["public"]["Tables"]["Preparations"]["Update"]
+    request: Database["public"]["Tables"]["Preparations"]["Update"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Preparations"]["Row"]>
   >;
   deletePreparationAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Preparations"]["Row"]>
   >;

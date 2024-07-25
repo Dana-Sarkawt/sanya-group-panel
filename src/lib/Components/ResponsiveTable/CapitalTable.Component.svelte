@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { formatNumber } from '$lib/Utils/ConvertNumbers.Utils';
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
   import type { Store } from "$lib/Models/Response/Store.Response.Model";
   import type { Database } from "$lib/Supabase/Types/database.types";
@@ -25,7 +26,7 @@
         {#each capitals.data as capital}
           <tr>
             <td>{capital.description}</td>
-            <td>{capital.price}</td>
+            <td>{formatNumber(capital.price)}</td>
             <td>{capital.date}</td>
 
             <td>

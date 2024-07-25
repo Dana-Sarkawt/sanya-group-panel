@@ -9,6 +9,7 @@
   import { goto } from "$app/navigation";
 
   async function retrieveCapital() {
+    goto(`/project/${$page.params.projectId}/0`);
     await capitalStore.getAll({
       limit: 10,
       page: 0,
@@ -18,7 +19,7 @@
   }
 
   async function retrieveSales() {
-    $page.params.page = "0";
+    goto(`/project/${$page.params.projectId}/0`);
     await saleStore.getAll({
       limit: 10,
       page: 0,

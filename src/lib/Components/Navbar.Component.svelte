@@ -9,10 +9,8 @@
   import { DarkMode } from "flowbite-svelte";
   import { Tooltip, Button } from 'flowbite-svelte';
   import { authStore } from "$lib/Store/Auth.Store";
-  import { onMount } from "svelte";
 
   export let isLoading;
-  let hideNavbar: boolean | undefined = undefined;
 </script>
 
 <div class="w-full h-auto flex justify-center items-center gap-2">

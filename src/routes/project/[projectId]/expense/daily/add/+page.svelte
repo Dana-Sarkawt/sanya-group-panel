@@ -1,13 +1,27 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
-    import { User } from "$lib/Models/Request/User.Request.Model";
+  import moment from "moment";
+  import { goto } from "$app/navigation";
   import { dailyStore } from "$lib/Store/Daily.Store";
-    import type { PageData } from "./$types";
-    import { page } from "$app/stores";
-    export let data: PageData;
-    const userRequest = new User.Create();
-  
-  
+import { page } from "$app/stores";
+  import { Daily } from "$lib/Models/Request/Daily.Request.Model";
+
+  const dailyRequest = {
+    ...new Daily.Create(),
+    project_id: Number($page.params.projectId),
+  };
+
+  async function addDaily() {
+    try {
+      const response = await dailyStore.create({
+        ...dailyRequest,
+        date: moment(dailyRequest.date).format("YYYY-MM-DD"),
+      });
+      if (!response) throw new Error("Failed to add daily");
+      goto(`/project/${$page.params.projectId}/expense/0`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   </script>
   
   <div class="w-full h-auto flex  justify-center items-center  md:px-44">
@@ -30,7 +44,7 @@
         <p class="dark:text-white">Description</p>
         <textarea
           class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
-          bind:value={userRequest.name}
+          bind:value={dailyRequest.description}
         />
       </div>
   
@@ -39,7 +53,7 @@
         <input
           type="text"
           class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
-          bind:value={userRequest.phone}
+          bind:value={dailyRequest.price}
         />
       </div>
   
@@ -48,15 +62,16 @@
         <input
           type="date"
           class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
-          bind:value={userRequest.email}
+          bind:value={dailyRequest.date}
         />
       </div>
  
   
       <button
         class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
+        on:click={addDaily}
         >Add Daily</button
       >
+    
     </div>
-  </div>
-  
+    </div>

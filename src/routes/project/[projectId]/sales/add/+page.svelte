@@ -4,9 +4,23 @@
   import { dailyStore } from "$lib/Store/Daily.Store";
     import type { PageData } from "./$types";
     import { page } from "$app/stores";
-    export let data: PageData;
-    // const capitalRequest = new Capital.Create();
-  
+  import { saleStore } from "$lib/Store/Sale.Store";
+  import { Sale } from "$lib/Models/Request/Sale.Request.Model";
+
+  const saleRequest = {
+    ...new Sale.Create(),
+    project_id: Number($page.params.projectId),
+  };
+
+  async function addSale() {
+    try {
+      const response = await saleStore.create(saleRequest);
+      if (!response) throw new Error("Failed to add sale");
+      goto(`/project/${$page.params.projectId}/0`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   
   </script>
   
@@ -30,6 +44,7 @@
         <p class="dark:text-white">Description</p>
         <textarea
           class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
+          bind:value={saleRequest.description}
         />
       </div>
   
@@ -37,8 +52,9 @@
   
       <button
         class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
+        on:click={addSale}
         >Add Sale</button
       >
-    </div>
-  </div>
   
+  </div>
+</div>

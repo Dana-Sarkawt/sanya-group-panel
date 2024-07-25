@@ -1,15 +1,8 @@
 <script lang="ts">
-  import {
-    Table,
-    TableBody,
-    TableBodyCell,
-    TableBodyRow,
-    TableHead,
-    TableHeadCell,
-  } from "flowbite-svelte";
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
   import type { Database } from "$lib/Supabase/Types/database.types";
   import type { Store } from "$lib/Models/Response/Store.Response.Model";
+  import { goto } from "$app/navigation";
   let deleteModal = false;
   export let sales: Store<Database["public"]["Tables"]["Sales"]["Row"]> = {
     data: [],
@@ -32,15 +25,20 @@
           <tr>
             <td>{sale.description}</td>
             <td>
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <!-- svelte-ignore a11y-no-static-element-interactions -->
               <div class="w-full h-auto flex justify-center items-center gap-2">
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <div
-                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold text-white"
+                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold text-white cursor-pointer"
+                  on:click={() => goto(`/deposit/sale/${sale.id}`)}
                 >
                   Deposit
                 </div>
 
                 <div
-                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold text-white"
+                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold text-white cursor-pointer"
+                  on:click={() => goto(`/finance/sale/${sale.id}`)}
                 >
                   Financial Dues
                 </div>

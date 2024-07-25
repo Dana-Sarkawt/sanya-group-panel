@@ -6,7 +6,23 @@
     import { page } from "$app/stores";
     export let data: PageData;
     // const capitalRequest = new Capital.Create();
-  
+	import { workerStore } from '$lib/Store/Worker.Store';
+  import { Worker } from "$lib/Models/Request/Worker.Request.Model";
+
+  const workerRequest = {
+    ...new Worker.Create(),
+    project_id: Number($page.params.projectId),
+  };
+
+  async function addWorker() {
+    try {
+      const response = await workerStore.create(workerRequest);
+      if (!response) throw new Error("Failed to add worker");
+      goto(`/project/${$page.params.projectId}/expense/0`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   
   </script>
   
@@ -33,6 +49,7 @@
         <input
           type="text"
           class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
+          bind:value={workerRequest.name}
         />
       </div>
   
@@ -40,8 +57,9 @@
   
       <button
         class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
+        on:click={addWorker}
         >Add Worker</button
       >
-    </div>
-  </div>
-  
+
+</div>
+</div>

@@ -1,13 +1,26 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
-    import { User } from "$lib/Models/Request/User.Request.Model";
-  import { dailyStore } from "$lib/Store/Daily.Store";
-    import type { PageData } from "./$types";
-    import { page } from "$app/stores";
-    export let data: PageData;
-    // const capitalRequest = new Capital.Create();
-  
-  
+import { goto } from "$app/navigation";
+  import moment from "moment";
+  import { capitalStore } from "$lib/Store/Capital.Store";
+  import { page } from "$app/stores";
+  import { Capital } from "$lib/Models/Request/Capital.Request.Model";
+
+  const capitalRequest = {
+    ...new Capital.Create(),
+    project_id: Number($page.params.projectId),
+  };
+
+  async function addCapital() {
+    try {
+      capitalStore.create({
+        ...capitalRequest,
+        date: moment(capitalRequest.date).format("YYYY-MM-DD"),
+      });
+      goto(`/project/${$page.params.projectId}/0`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   </script>
   
   <div class="w-full h-auto flex  justify-center items-center  md:px-44">
@@ -30,6 +43,7 @@
         <p class="dark:text-white">Description</p>
         <textarea
           class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
+          bind:value={capitalRequest.description}
         />
       </div>
   
@@ -38,6 +52,7 @@
         <input
           type="text"
           class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
+          bind:value={capitalRequest.price}
         />
       </div>
   
@@ -46,14 +61,16 @@
         <input
           type="date"
           class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
+          bind:value={capitalRequest.date}
         />
       </div>
  
   
       <button
         class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
+        on:click={addCapital}
         >Add Capital</button
       >
     </div>
-  </div>
-  
+    </div>
+    

@@ -12,7 +12,7 @@
       if (!response || response.error) {
         throw new Error("Failed to add user");
       }
-      goto("/user/1");
+      goto("/user/0");
     } catch (error) {
       console.log(error);
     }

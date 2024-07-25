@@ -55,7 +55,6 @@ const createCapitalStore = () => {
     getAll: async (options?: GenericListOptions) => {
       try {
         const response = await capitalsRepository.readCapitalsAsync(options);
-        console.log("Response",response);
         if (response.error) {
           throw new Error(response.error.message);
         }

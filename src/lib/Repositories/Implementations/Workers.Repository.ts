@@ -54,7 +54,7 @@ export class WorkersRepository implements IWorkersRepository {
       }
 
       return await response
-        .order("id", { ascending: true })
+        .order("id", { ascending: false })
         .range(
           options?.page! * options?.limit!,
           options?.limit! * (options?.page! + 1)

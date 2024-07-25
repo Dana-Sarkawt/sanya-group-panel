@@ -46,7 +46,7 @@ export class UsersRepository implements IUsersRepository {
       const response = await Supabase.client
         .from("Users")
         .select("*", { count: "exact" })
-        .order("id", { ascending: true })
+        .order("id", { ascending: false })
         .range(
           options?.page! * options?.limit!,
           options?.limit! * (options?.page! + 1)

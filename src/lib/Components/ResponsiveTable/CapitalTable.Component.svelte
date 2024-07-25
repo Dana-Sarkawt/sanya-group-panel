@@ -26,7 +26,7 @@
         {#each capitals.data as capital}
           <tr>
             <td>{capital.description}</td>
-            <td>{formatNumber(capital.price)}</td>
+            <td>{capital.price}</td>
             <td>{capital.date}</td>
 
             <td>

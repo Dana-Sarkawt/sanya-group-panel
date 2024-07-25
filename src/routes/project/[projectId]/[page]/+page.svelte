@@ -67,7 +67,7 @@
             </p>
           </div>
 
-          <a href="/capital/add">
+          <a href="/project/{$page.params.projectId}/capital/add">
             <button
               class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
               style="box-shadow:0 1px 8px 0px #24b97d;"
@@ -106,7 +106,7 @@
         <div
           class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff]"
         >
-          <a href="/sale/add">
+          <a href="/project/{$page.params.projectId}/sales/add">
             <button
               class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
               style="box-shadow:0 1px 8px 0px #24b97d;"

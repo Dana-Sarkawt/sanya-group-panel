@@ -1,11 +1,16 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import { page } from "$app/stores";
+  import Pagination from "$lib/Components/Pagination.Store.Component.svelte";
+  import DailyTable from "$lib/Components/ResponsiveTable/DailyTable.Component.svelte";
+  import WorkerTable from "$lib/Components/ResponsiveTable/WorkerTable.Component.svelte";
   import { dailyStore } from "$lib/Store/Daily.Store";
   import { preparationStore } from "$lib/Store/Preparation.Store";
   import { workerStore } from "$lib/Store/Worker.Store";
   import { Tabs, TabItem } from "flowbite-svelte";
 
   async function retrieveDaily() {
+    goto(`/project/${$page.params.projectId}/expense/0`);
     await dailyStore.getAll({
       limit: 10,
       page: 0,
@@ -15,6 +20,7 @@
   }
 
   async function retrieveWorker() {
+    goto(`/project/${$page.params.projectId}/expense/0`);
     await workerStore.getAll({
       limit: 10,
       page: 0,
@@ -24,6 +30,7 @@
   }
 
   async function retrievePreparation() {
+    goto(`/project/${$page.params.projectId}/expense/0`);
     await preparationStore.getAll({
       limit: 10,
       page: 0,
@@ -62,11 +69,16 @@
               <span class="text-[#1e4f3b] dark:text-[#54cc9c] pr-4 font-bold"
                 >Total:</span
               >
-              312000
+              {Number(
+                $dailyStore.data.reduce(
+                  (total, daily) => total + daily.price,
+                  0
+                )
+              ).toFixed(2)}
             </p>
           </div>
 
-          <a href="/daily/add">
+          <a href="/project/{$page.params.projectId}/expense/daily/add">
             <button
               class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
               style="box-shadow:0 1px 8px 0px #24b97d;"
@@ -74,8 +86,17 @@
             >
           </a>
         </div>
-      </div></TabItem
-    >
+        <DailyTable bind:dailys={$dailyStore} />
+        <div class="w-full h-auto flex justify-center items-center py-12">
+          <Pagination
+            Store={dailyStore}
+            StoreData={$dailyStore}
+            currentPage={Number($page.params.page)}
+            project_id={Number($page.params.projectId)}
+          />
+        </div>
+      </div>
+    </TabItem>
 
     <TabItem
       activeClasses="w-24 h-12 bg-green-500 rounded-full text-white "
@@ -90,33 +111,61 @@
         <div
           class="flex h-24 w-full items-center justify-start pl-2 text-4xl text-[#0F4E35] dark:text-white font-bold"
         >
-          Sale Table
+          Worker Table
         </div>
 
         <div
           class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff]"
         >
-          <a href="/sale/add">
+          <a href="/project/{$page.params.projectId}/expense/worker/add">
             <button
               class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
               style="box-shadow:0 1px 8px 0px #24b97d;"
-              ><span>+</span> Add Sale</button
+              ><span>+</span> Add Worker</button
             >
           </a>
         </div>
 
-        <!-- <SalesTable bind:sales={data.sales} /> -->
+        <WorkerTable bind:workers={$workerStore} />
+        <div class="w-full h-auto flex justify-center items-center py-12">
+          <Pagination
+            Store={workerStore}
+            StoreData={$workerStore}
+            currentPage={Number($page.params.page)}
+            project_id={Number($page.params.projectId)}
+          />
+        </div>
       </div>
     </TabItem>
 
-    <a href="/project/1/expense/0">
-      <TabItem
-        activeClasses="w-24 h-12 bg-green-500 rounded-full text-white "
-        inactiveClasses="w-24 h-12 bg-[#363636] rounded-full text-white "
-        on:click={retrievePreparation}
+    <TabItem
+      activeClasses="w-24 h-12 bg-green-500 rounded-full text-white "
+      inactiveClasses="w-24 h-12 bg-[#363636] rounded-full text-white "
+      on:click={retrievePreparation}
+    >
+      <span slot="title">Preparation</span>
+      <div
+        class="  flex h-[100vh] w-full flex-col justify-start items-center"
+        id="subDiv"
       >
-        <span slot="title">Preparation</span>
-      </TabItem>
-    </a>
+        <div
+          class="flex h-24 w-full items-center justify-start pl-2 text-4xl text-[#0F4E35] dark:text-white font-bold"
+        >
+          Preparation Table
+        </div>
+
+        <div
+          class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff]"
+        >
+          <a href="/project/{$page.params.projectId}/expense/preparation/add">
+            <button
+              class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
+              style="box-shadow:0 1px 8px 0px #24b97d;"
+              ><span>+</span> Add Preparation</button
+            >
+          </a>
+        </div>
+      </div></TabItem
+    >
   </Tabs>
 </div>

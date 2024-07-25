@@ -2,36 +2,47 @@
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
   import type { Store } from "$lib/Models/Response/Store.Response.Model";
   import type { Database } from "$lib/Supabase/Types/database.types";
-  export let capitals: Store<Database["public"]["Tables"]["Capitals"]["Row"]> =
-    {
-      data: [],
-      count: 0,
-    };
   let deleteModal = false;
+  export let preparations: Store<
+    Database["public"]["Tables"]["Preparations"]["Row"]
+  > = {
+    data: [],
+    count: 0,
+    error: "",
+  };
 </script>
 
 <div class="w-full h-auto flex justify-center items-center mx-2">
   <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
     <thead>
       <tr>
+        <th scope="col">ID</th>
         <th scope="col">Description</th>
-        <th scope="col">Price</th>
-        <th scope="col">Date</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
-      {#if capitals.count !== 0}
-        {#each capitals.data as capital}
+      {#if preparations.count !== 0}
+        {#each preparations.data as preparation}
           <tr>
-            <td>{capital.description}</td>
-            <td>{capital.price}</td>
-            <td>{capital.date}</td>
-
+            <td>{preparation.id}</td>
+            <td>{preparation.description}</td>
             <td>
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
-              <!-- svelte-ignore a11y-no-static-element-interactions -->
-              <!-- svelte-ignore a11y-missing-attribute -->
+                <div class="w-full h-auto flex justify-center items-center gap-2">
+                    <div
+                      class="w-42 h-4 md:h-8 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold text-white"
+                    >
+                      Deposit
+                    </div>
+    
+                    <div
+                      class="w-42 h-4 md:h-8 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold text-white"
+                    >
+                      Financial Dues
+                    </div>
+                  </div>
+            </td>
+            <td>
               <div class="flex h-auto w-auto items-center justify-center gap-2">
                 <a
                   href="edit/1"
@@ -43,10 +54,9 @@
                     alt=""
                   />
                 </a>
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-missing-attribute -->
                 <a
                   class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-                  on:click={() => (deleteModal = true)}
                 >
                   <img
                     src="/images/delete.png"

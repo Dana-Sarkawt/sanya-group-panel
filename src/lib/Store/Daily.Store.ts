@@ -53,6 +53,7 @@ const createDailyStore = () => {
     getAll: async (options?: GenericListOptions) => {
       try {
         const response = await dailysRepository.readDailysAsync(options);
+        console.log("response", response);
 
         if (response.error) {
           throw new Error(response.error.message);

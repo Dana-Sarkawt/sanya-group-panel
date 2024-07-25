@@ -48,7 +48,7 @@ export class ProjectsRepository implements IProjectsRepository {
       const response = await Supabase.client
         .from("Projects")
         .select("*", { count: "exact" })
-        .order("id", { ascending: true })
+        .order("id", { ascending: false })
         .range(
           options?.page! * options?.limit!,
           options?.limit! * (options?.page! + 1),

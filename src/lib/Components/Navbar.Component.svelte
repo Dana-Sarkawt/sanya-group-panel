@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import {
     Navbar,
     NavBrand,
@@ -11,8 +11,7 @@
   import { onMount } from "svelte";
 
   export let isLoading;
-
-
+  let hideNavbar: boolean | undefined = undefined;
 </script>
 
 <div class="w-full h-auto flex justify-center items-center gap-2">
@@ -74,18 +73,16 @@
     </NavContainer>
   </Navbar>
 
-  
   <div
     class="w-24 h-24 rounded-full border border-[#24b97d] bg-[#24b97d7e] dark:bg-[#11433A] hidden md:flex justify-center items-center text-4xl text-white"
   >
-  {#if isLoading && !$authStore || $authStore?.name === undefined}
-  <span class="loader"></span>
-  {:else}
-    {$authStore?.name
-      ?.split(" ")
-      .map((word) => word.charAt(0))
-      .join("")}
-{/if}
+    {#if (isLoading && !$authStore) || $authStore?.name === undefined}
+      <span class="loader"></span>
+    {:else}
+      {$authStore?.name
+        ?.split(" ")
+        .map((word) => word.charAt(0))
+        .join("")}
+    {/if}
   </div>
-
 </div>

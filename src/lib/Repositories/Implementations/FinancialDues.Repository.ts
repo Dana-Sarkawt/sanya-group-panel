@@ -57,7 +57,7 @@ export class FinancialDuesRepository implements IFinancialDuesRepository {
         response.eq(options.field, options.equal);
       }
 
-      return await response.order("id", { ascending: true });
+      return await response.order("id", { ascending: false });
     } catch (error) {
       throw error;
     }

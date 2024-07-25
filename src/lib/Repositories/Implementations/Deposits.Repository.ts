@@ -52,7 +52,7 @@ export class DepositsRepository implements IDepositsRepository {
       if (options?.field && options?.equal) {
         response.eq(options.field, options.equal);
       }
-      return await response.order("id", { ascending: true });
+      return await response.order("id", { ascending: false });
     } catch (error) {
       throw error;
     }

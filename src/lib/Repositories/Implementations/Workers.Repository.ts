@@ -6,7 +6,7 @@ import { Supabase } from "$lib/Supabase/Supabase";
 
 export class WorkersRepository implements IWorkersRepository {
   async createWorkerAsync(
-    request: Database["public"]["Tables"]["Workers"]["Insert"]
+    request: Database["public"]["Tables"]["Workers"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Workers"]["Row"]>
   > {
@@ -22,7 +22,7 @@ export class WorkersRepository implements IWorkersRepository {
     }
   }
   async readWorkerAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Workers"]["Row"]>
   > {
@@ -38,7 +38,7 @@ export class WorkersRepository implements IWorkersRepository {
     }
   }
   async readWorkersAsync(
-    options?: GenericListOptions
+    options?: GenericListOptions,
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Workers"]["Row"]>
@@ -57,14 +57,14 @@ export class WorkersRepository implements IWorkersRepository {
         .order("id", { ascending: false })
         .range(
           options?.page! * options?.limit!,
-          options?.limit! * (options?.page! + 1)
+          options?.limit! * (options?.page! + 1),
         );
     } catch (error) {
       throw error;
     }
   }
   async updateWorkerAsync(
-    request: Database["public"]["Tables"]["Workers"]["Update"]
+    request: Database["public"]["Tables"]["Workers"]["Update"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Workers"]["Row"]>
   > {
@@ -81,7 +81,7 @@ export class WorkersRepository implements IWorkersRepository {
     }
   }
   async deleteWorkerAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Workers"]["Row"]>
   > {

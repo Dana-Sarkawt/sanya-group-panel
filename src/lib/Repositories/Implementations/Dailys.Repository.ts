@@ -6,7 +6,7 @@ import { Supabase } from "$lib/Supabase/Supabase";
 
 export class DailysRepository implements IDailysRepository {
   async createDailyAsync(
-    request: Database["public"]["Tables"]["Dailys"]["Insert"]
+    request: Database["public"]["Tables"]["Dailys"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Dailys"]["Row"]>
   > {
@@ -22,7 +22,7 @@ export class DailysRepository implements IDailysRepository {
     }
   }
   async readDailyAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Dailys"]["Row"]>
   > {
@@ -38,7 +38,7 @@ export class DailysRepository implements IDailysRepository {
     }
   }
   async readDailysAsync(
-    options?: GenericListOptions
+    options?: GenericListOptions,
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Dailys"]["Row"]>
@@ -48,7 +48,7 @@ export class DailysRepository implements IDailysRepository {
       const response = Supabase.client
         .from("Dailys")
         .select("*", { count: "exact" });
-        
+
       if (options?.field && options?.equal) {
         response.eq(options.field, options.equal);
       }
@@ -57,7 +57,7 @@ export class DailysRepository implements IDailysRepository {
         .order("id", { ascending: false })
         .range(
           options?.page! * options?.limit!,
-          options?.limit! * (options?.page! + 1)
+          options?.limit! * (options?.page! + 1),
         );
     } catch (error) {
       throw error;
@@ -76,7 +76,7 @@ export class DailysRepository implements IDailysRepository {
 
       const totalPrice = response.data.reduce(
         (acc, curr) => acc + curr.price,
-        0
+        0,
       );
       return totalPrice;
     } catch (error) {
@@ -84,12 +84,12 @@ export class DailysRepository implements IDailysRepository {
     }
   }
   async updateDailyAsync(
-    request: Database["public"]["Tables"]["Dailys"]["Update"]
+    request: Database["public"]["Tables"]["Dailys"]["Update"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Dailys"]["Row"]>
-    > {
-      try {
-        const response = await Supabase.client
+  > {
+    try {
+      const response = await Supabase.client
         .from("Dailys")
         .update(request)
         .eq("id", request.id!)
@@ -101,7 +101,7 @@ export class DailysRepository implements IDailysRepository {
     }
   }
   async deleteDailyAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Dailys"]["Row"]>
   > {

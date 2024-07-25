@@ -33,10 +33,14 @@
       <div
         class="w-12 h-12 rounded-full border border-[#24b97d] bg-[#24b97d7e] dark:bg-[#11433A] flex md:hidden my-4 justify-center items-center"
       >
+      {#if isLoading && !$authStore || $authStore?.name === undefined}
+      <span class="loader"></span>
+      {:else}
         {$authStore?.name
           ?.split(" ")
           .map((word) => word.charAt(0))
           .join("") ?? "SM"}
+      {/if}
       </div>
 
       <NavHamburger class menuClass="text-[#104e35] dark:text-white" />

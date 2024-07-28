@@ -86,7 +86,7 @@ export class SalesRepository implements ISalesRepository {
     try {
       const response = await Supabase.client
         .from("Sales")
-        .delete()
+        .update({ deleted_at: new Date().toUTCString() })
         .eq("id", id)
         .single();
       return response;

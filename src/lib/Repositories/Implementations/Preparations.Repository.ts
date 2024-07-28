@@ -88,7 +88,7 @@ export class PreparationsRepository implements IPreparationsRepository {
     try {
       const response = await Supabase.client
         .from("Preparations")
-        .delete()
+        .update({ deleted_at: new Date().toUTCString() })
         .eq("id", id)
         .select("*")
         .single();

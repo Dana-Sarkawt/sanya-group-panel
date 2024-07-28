@@ -82,7 +82,7 @@ export class DepositsRepository implements IDepositsRepository {
     try {
       const response = await Supabase.client
         .from("Deposits")
-        .delete()
+        .update({ deleted_at: new Date().toUTCString() })
         .eq("id", id)
         .select("*")
         .single();

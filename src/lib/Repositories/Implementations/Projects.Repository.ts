@@ -83,7 +83,7 @@ export class ProjectsRepository implements IProjectsRepository {
     try {
       const response = await Supabase.client
         .from("Projects")
-        .delete()
+        .update({ deleted_at: new Date().toUTCString() })
         .eq("id", id)
         .single();
       return response;

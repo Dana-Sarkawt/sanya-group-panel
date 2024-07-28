@@ -108,7 +108,7 @@ export class DailysRepository implements IDailysRepository {
     try {
       const response = await Supabase.client
         .from("Dailys")
-        .delete()
+        .update({ deleted_at: new Date().toUTCString() })
         .eq("id", id)
         .single();
       return response;

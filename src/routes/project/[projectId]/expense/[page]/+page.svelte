@@ -17,7 +17,7 @@
   onMount(async () => {
     totalDaily = (await dailyStore.getTotalPrice(
       Number($page.params.projectId)
-    )) as number;
+    ) ?? 0);
   });
 
   async function retrieveDaily() {

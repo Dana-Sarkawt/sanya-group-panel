@@ -4,14 +4,31 @@
     import { depositStore } from "$lib/Store/Deposit.Store";
     import { page } from "$app/stores";
     import { Deposit } from "$lib/Models/Request/Deposit.Request.Model";
+  import { onMount } from "svelte";
     export let depositRequest = {
-      ...new Deposit.Create(),
+      ...new Deposit.Update(),
       [`${$page.params.name}_id`]: Number($page.params.id),
     };
   
-    async function addDeposit() {
+   onMount(async () => {
+    console.log($page.params);
+    
+      const deposit = await depositStore.get(Number($page.params.depositId));
+      if(!deposit) {
+        throw new Error("Failed to fetch deposit");
+      }
+      depositRequest = {
+        ...depositRequest,
+        description: deposit.data.description as string,
+        price: deposit.data.price as number,
+        date: deposit.data.date as string,
+        id: deposit.data.id,
+      }
+    });
+  
+   async function UpdateDeposit() {
       try {
-        depositStore.create({
+        depositStore.update({
           ...depositRequest,
           date: moment(depositRequest.date).format("YYYY-MM-DD"),
         });
@@ -57,7 +74,7 @@
   
       <button
         class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-        on:click={addDeposit}>Update Deposit</button
+        on:click={UpdateDeposit}>Update Deposit</button
       >
     </div>
   </div>

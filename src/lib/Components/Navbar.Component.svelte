@@ -32,7 +32,6 @@
       class="border px-5 h-26 rounded-lg md:rounded-full border-[#24b97d] bg-[#24b97d7e] dark:bg-[#11433A] text-white"
     >
       <NavBrand href="/" class="">
-        <!-- <img src="/images/flowbite-svelte-icon-logo.svg" class="me-3 h-6 sm:h-9" alt="Flowbite Logo" /> -->
         <span
           class="self-center whitespace-nowrap text-sm lg:text-xl font-semibold text-[#104e35] dark:text-white"
           >Sanya Group</span
@@ -42,14 +41,14 @@
       <div
         class="w-12 h-12 rounded-full border border-[#24b97d] bg-[#24b97d7e] dark:bg-[#11433A] flex md:hidden my-4 justify-center items-center"
       >
-      {#if isLoading && !$authStore || $authStore?.name === undefined}
-      <span class="loader"></span>
-      {:else}
-        {$authStore?.name
-          ?.split(" ")
-          .map((word) => word.charAt(0))
-          .join("") ?? "SM"}
-      {/if}
+        {#if (isLoading && !$authStore) || $authStore?.name === undefined}
+          <span class="loader"></span>
+        {:else}
+          {$authStore?.name
+            ?.split(" ")
+            .map((word) => word.charAt(0))
+            .join("") ?? "SM"}
+        {/if}
       </div>
 
       <NavHamburger class menuClass="text-[#104e35] dark:text-white" bind:this={containerHamburger} />
@@ -90,16 +89,16 @@
   <div
     class="w-24 h-24 rounded-full border border-[#24b97d] bg-[#24b97d7e] dark:bg-[#11433A] hidden md:flex justify-center items-center text-4xl text-white cursor-pointer"
   >
-  {#if isLoading && !$authStore || $authStore?.name === undefined}
-  <span class="loader"></span>
-  {:else}
-    {$authStore?.name
-      ?.split(" ")
-      .map((word) => word.charAt(0))
-      .join("")}
-{/if}
-
-</div>
-<Tooltip defaultClass="py-2 px-3 text-sm font-medium">{$authStore?.name}</Tooltip>
-
+    {#if (isLoading && !$authStore) || $authStore?.name === undefined}
+      <span class="loader"></span>
+    {:else}
+      {$authStore?.name
+        ?.split(" ")
+        .map((word) => word.charAt(0))
+        .join("")}
+    {/if}
+  </div>
+  <Tooltip defaultClass="py-2 px-3 text-sm font-medium"
+    >{$authStore?.name}</Tooltip
+  >
 </div>

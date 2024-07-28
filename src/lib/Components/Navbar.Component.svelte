@@ -8,23 +8,26 @@
   } from "flowbite-svelte";
 
   import { DarkMode } from "flowbite-svelte";
-  import { page } from "$app/stores";
-  import { Tooltip, Button } from 'flowbite-svelte';
+  import { Tooltip } from "flowbite-svelte";
   import { authStore } from "$lib/Store/Auth.Store";
 
   export let isLoading;
-  let container:any;
-  let containerHamburger:any;
+  let navBarOpening: boolean | undefined = undefined;
+  let divContainer: HTMLDivElement | undefined = undefined;
 
-  $:{
-    console.log("Container",container);
-    console.log("ContainerHamburger",containerHamburger);
-    
+  function toggleNavBar() {
+    document.querySelector(".navbarContainer")?.setAttribute("hidden", "true");
+    document.querySelector(".navbarContainer")?.removeAttribute("tabindex");
+    document.querySelector(".navbarContainer")?.removeAttribute("role");
+  }
+
+  $: {
+    console.log("sdasdsadsad", divContainer);
   }
 </script>
 
 <div class="w-full h-auto flex justify-center items-center gap-2">
-  <Navbar 
+  <Navbar
     let:NavContainer
     class="bg-transparent dark:bg-transparent  w-full md:w-auto"
   >
@@ -51,16 +54,42 @@
         {/if}
       </div>
 
-      <NavHamburger class menuClass="text-[#104e35] dark:text-white" bind:this={containerHamburger} />
+      <NavHamburger
+        class
+        menuClass="text-[#104e35] dark:text-white"
+        onClick={() => {
+          if (
+            document.querySelector(".navbarContainer")?.hasAttribute("hidden")
+          ) {
+            document
+              .querySelector(".navbarContainer")
+              ?.removeAttribute("hidden");
+            document
+              .querySelector(".navbarContainer")
+              ?.setAttribute("tabindex", "0");
+            document
+              .querySelector(".navbarContainer")
+              ?.setAttribute("role", "button");
+          } else {
+            document
+              .querySelector(".navbarContainer")
+              ?.setAttribute("hidden", "true");
+            document
+              .querySelector(".navbarContainer")
+              ?.removeAttribute("tabindex");
+            document.querySelector(".navbarContainer")?.removeAttribute("role");
+          }
+        }}
+      />
 
       <NavUl
-        bind:this={container}
+        class="navbarContainer"
         nonActiveClass="text-[#104e35] dark:text-white"
-        ulClass="bg-transparent dark:bg-transparent md:bg-transparent dark:md:bg-transparent border-0 mt-4  flex items-center flex-col p-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 text-xs lg:text-md xl:text-lg"
+        ulClass="bg-transparent dark:bg-transparent md:bg-transparent dark:md:bg-transparent border-0 mt-4  flex items-center flex-col p-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 text-xs lg:text-md xl:text-lg shrink-10"
       >
-        <NavLi href="/project/0" >Project</NavLi>
-        <NavLi href="/user/0" >Users</NavLi>
-        <NavLi href="/setting" >Setting</NavLi>
+        <NavLi href="/project/0" on:click={toggleNavBar}>Project</NavLi>
+        <NavLi href="/user/0" on:click={toggleNavBar}>Users</NavLi>
+        <!-- <NavLi href="/setting">Setting</NavLi> -->
         <NavLi class="cursor-pointer" on:click={() => authStore.logout()}
           >Logout</NavLi
         >

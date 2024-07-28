@@ -116,6 +116,10 @@ div[role="tooltip"] {
   }
 }
 
+.navbarContainer{
+  animation: none !important;
+}
+
 /**
  * END  User Profile Letter Loading Style
  */

@@ -4,11 +4,19 @@
   import type { Store } from "$lib/Models/Response/Store.Response.Model";
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
+  import { onMount } from "svelte";
+  import { depositStore } from "$lib/Store/Deposit.Store";
   let deleteModal = false;
   export let sales: Store<Database["public"]["Tables"]["Sales"]["Row"]> = {
     data: [],
     count: 0,
   };
+
+  onMount(async () => {
+    await depositStore.getAll({
+      equal: $page.params.projectId,
+    });
+  });
 </script>
 
 <div class="w-full h-auto flex justify-center items-center mx-2">
@@ -31,17 +39,26 @@
               <div class="w-full h-auto flex justify-center items-center gap-2">
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <div
-                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold text-white cursor-pointer"
+                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold text-white cursor-pointer gap-3"
                   on:click={() => goto(`/deposit/sale/${sale.id}`)}
                 >
                   Deposit
+                  <p class="w-auto h-6 rounded-full bg-orange-700 flex justify-center items-center px-2">
+                    <!-- {$depositStore.data.filter((deposit) => deposit.sale_id === sale.id).length} -->
+                    999
+                  </p>
                 </div>
 
                 <div
-                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold text-white cursor-pointer"
+                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold text-white cursor-pointer gap-3"
                   on:click={() => goto(`/finance/sale/${sale.id}`)}
                 >
                   Financial Dues
+
+                  <p class="w-auto h-6 rounded-full bg-blue-700 flex justify-center items-center px-2">
+                    <!-- {$depositStore.data.filter((deposit) => deposit.sale_id === sale.id).length} -->
+                    999
+                  </p>
                 </div>
               </div>
             </td>

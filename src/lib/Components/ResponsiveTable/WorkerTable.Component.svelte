@@ -33,18 +33,28 @@
               <div class="w-full h-auto flex justify-center items-center gap-2">
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <div
-                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold text-white cursor-pointer"
+                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold text-white cursor-pointer gap-3"
                   on:click={() => goto(`/deposit/worker/${worker.id}`)}
                 >
                   Deposit
+
+                  <p class="w-auto h-6 rounded-full bg-orange-700 flex justify-center items-center px-2">
+                    <!-- {$depositStore.data.filter((deposit) => deposit.sale_id === sale.id).length} -->
+                    999
+                  </p>
                 </div>
 
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <div
-                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold text-white cursor-pointer"
+                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold text-white cursor-pointer gap-3"
                   on:click={() => goto(`/finance/worker/${worker.id}`)}
                 >
                   Financial Dues
+
+                  <p class="w-auto h-6 rounded-full bg-blue-700 flex justify-center items-center px-2">
+                    <!-- {$depositStore.data.filter((deposit) => deposit.sale_id === sale.id).length} -->
+                    999
+                  </p>
                 </div>
               </div>
             </td>

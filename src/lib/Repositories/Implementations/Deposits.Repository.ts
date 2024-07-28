@@ -6,7 +6,7 @@ import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.M
 
 export class DepositsRepository implements IDepositsRepository {
   async createDepositAsync(
-    request: Database["public"]["Tables"]["Deposits"]["Insert"],
+    request: Database["public"]["Tables"]["Deposits"]["Insert"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Deposits"]["Row"]>
   > {
@@ -22,7 +22,7 @@ export class DepositsRepository implements IDepositsRepository {
     }
   }
   async readDepositAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Deposits"]["Row"]>
   > {
@@ -38,7 +38,7 @@ export class DepositsRepository implements IDepositsRepository {
     }
   }
   async readDepositsAsync(
-    options?: GenericListOptions,
+    options?: GenericListOptions
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Deposits"]["Row"]>
@@ -52,13 +52,16 @@ export class DepositsRepository implements IDepositsRepository {
       if (options?.field && options?.equal) {
         response.eq(options.field, options.equal);
       }
+      if (options?.field && options?.ids) {
+        response.in(options.field, options.ids);
+      }
       return await response.order("id", { ascending: false });
     } catch (error) {
       throw error;
     }
   }
   async updateDepositAsync(
-    request: Database["public"]["Tables"]["Deposits"]["Update"],
+    request: Database["public"]["Tables"]["Deposits"]["Update"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Deposits"]["Row"]>
   > {
@@ -75,7 +78,7 @@ export class DepositsRepository implements IDepositsRepository {
     }
   }
   async deleteDepositAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Deposits"]["Row"]>
   > {

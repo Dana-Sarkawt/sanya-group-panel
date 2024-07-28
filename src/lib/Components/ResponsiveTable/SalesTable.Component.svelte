@@ -5,18 +5,29 @@
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
-  import { depositStore } from "$lib/Store/Deposit.Store";
+  import { saleStore } from "$lib/Store/Sale.Store";
   let deleteModal = false;
   export let sales: Store<Database["public"]["Tables"]["Sales"]["Row"]> = {
     data: [],
     count: 0,
   };
+  let deposits: Array<{ sale_id: number; deposit_count: number }> = [];
 
   onMount(async () => {
-    await depositStore.getAll({
-      equal: $page.params.projectId,
-    });
+    // wait at least 1 second before fetching the deposits
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    await getDeposits();
   });
+
+  async function getDeposits() {
+    const response = await saleStore.getDepositsBySaleIds(
+      sales.data.map((sale) => sale.id)
+    );
+    if (!response) {
+      return;
+    }
+    deposits = response;
+  }
 </script>
 
 <div class="w-full h-auto flex justify-center items-center mx-2">
@@ -43,9 +54,12 @@
                   on:click={() => goto(`/deposit/sale/${sale.id}`)}
                 >
                   Deposit
-                  <p class="w-auto h-6 rounded-full bg-orange-700 flex justify-center items-center px-2">
-                    <!-- {$depositStore.data.filter((deposit) => deposit.sale_id === sale.id).length} -->
-                    999
+                  <p
+                    class="w-auto h-6 rounded-full bg-orange-700 flex justify-center items-center px-2"
+                  >
+                    {deposits.filter((deposit) => deposit.sale_id === sale.id)
+                      .length}
+                    0
                   </p>
                 </div>
 
@@ -55,9 +69,12 @@
                 >
                   Financial Dues
 
-                  <p class="w-auto h-6 rounded-full bg-blue-700 flex justify-center items-center px-2">
-                    <!-- {$depositStore.data.filter((deposit) => deposit.sale_id === sale.id).length} -->
-                    999
+                  <p
+                    class="w-auto h-6 rounded-full bg-blue-700 flex justify-center items-center px-2"
+                  >
+                    {deposits.filter((deposit) => deposit.sale_id === sale.id)
+                      .length}
+                    0
                   </p>
                 </div>
               </div>

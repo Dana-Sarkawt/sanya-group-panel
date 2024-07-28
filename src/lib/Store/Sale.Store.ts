@@ -61,6 +61,18 @@ const createSaleStore = () => {
         console.log(error);
       }
     },
+    getDepositsBySaleIds: async (ids: number[]) => {
+      try {
+        console.log("ids", ids);
+        const response = await salesRepository.readDepositsBySaleIdsAsync(ids);
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     update: async (data: Database["public"]["Tables"]["Sales"]["Update"]) => {
       try {
         if (!data.id || data.id === 0) {

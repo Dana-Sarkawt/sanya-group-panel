@@ -3,4 +3,6 @@ export class GenericListOptions {
   limit?: number = 10;
   equal?: string;
   field?: string;
+  id?: number;
+  ids?: number[];
 }

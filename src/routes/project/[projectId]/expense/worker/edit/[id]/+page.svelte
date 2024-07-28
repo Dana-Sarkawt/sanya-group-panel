@@ -3,21 +3,36 @@
     import { page } from "$app/stores";
     import { workerStore } from "$lib/Store/Worker.Store";
     import { Worker } from "$lib/Models/Request/Worker.Request.Model";
+  import { onMount } from "svelte";
   
-    const workerRequest = {
-      ...new Worker.Create(),
+    let workerRequest = {
+      ...new Worker.Update(),
       project_id: Number($page.params.projectId),
     };
   
-    async function addWorker() {
-      try {
-        const response = await workerStore.create(workerRequest);
-        if (!response) throw new Error("Failed to add worker");
-        goto(`/project/${$page.params.projectId}/expense/0`);
-      } catch (error) {
-        console.log(error);
+   onMount(async () => {
+      const worker = await workerStore.get(Number($page.params.id));
+      if(!worker) {
+        throw new Error("Failed to fetch worker");
       }
-    }
+      workerRequest = {
+        ...workerRequest,
+        name: worker.data.name as string,
+        id: worker.data.id,
+      }
+    });
+  
+    async function UpdateWorker() {
+        try {
+            workerStore.update({
+            ...workerRequest,
+            });
+            goto(`/project/${$page.params.projectId}/expense/0`);
+        } catch (error) {
+            console.log(error);
+        }
+        }
+   
   </script>
   
   <div class="w-full h-auto flex justify-center items-center md:px-44">
@@ -51,7 +66,7 @@
   
       <button
         class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-        on:click={addWorker}>Update Worker</button
+        on:click={UpdateWorker}>Update Worker</button
       >
     </div>
   </div>

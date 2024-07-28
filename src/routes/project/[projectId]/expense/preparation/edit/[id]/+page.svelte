@@ -3,21 +3,36 @@
       import { goto } from "$app/navigation";
       import { page } from "$app/stores";
       import { Preparation } from "$lib/Models/Request/Preparation.Request.Model";
+  import { onMount } from "svelte";
     
-      const preparationRequest = {
-        ...new Preparation.Create(),
+      let preparationRequest = {
+        ...new Preparation.Update(),
         project_id: Number($page.params.projectId),
       };
     
-      async function addPreparation() {
-        try {
-          const response = await preparationStore.create(preparationRequest);
-          if (!response) throw new Error("Failed to add preparation");
-          goto(`/project/${$page.params.projectId}/expense/0`);
-        } catch (error) {
-          console.log(error);
+      onMount(async () => {
+        const preparation = await preparationStore.get(Number($page.params.id));
+        if(!preparation) {
+          throw new Error("Failed to fetch preparation");
         }
-      }
+        preparationRequest = {
+          ...preparationRequest,
+          description: preparation.data.description as string,
+          id: preparation.data.id,
+        }
+        });
+    
+        async function UpdatePreparation() {
+            try {
+                preparationStore.update({
+                ...preparationRequest,
+                });
+                goto(`/project/${$page.params.projectId}/expense/0`);
+            } catch (error) {
+                console.log(error);
+            }
+            } 
+      
       </script>
       
       <div class="w-full h-auto flex  justify-center items-center  md:px-44">
@@ -47,7 +62,7 @@
           
           <button
             class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-            on:click={addPreparation}
+            on:click={UpdatePreparation}
             >Update Preparation</button
           >
        

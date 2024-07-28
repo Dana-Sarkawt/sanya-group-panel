@@ -3,4 +3,10 @@ export namespace Preparation {
     description: string = "";
     project_id: number = 0;
   }
+
+  export class Update {
+    id: number = 0;
+    description: string = "";
+    project_id: number = 0;
+  }
 }

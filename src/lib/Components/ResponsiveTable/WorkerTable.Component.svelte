@@ -3,6 +3,7 @@
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
   import type { Store } from "$lib/Models/Response/Store.Response.Model";
   import type { Database } from "$lib/Supabase/Types/database.types";
+  import { page } from "$app/stores";
   let deleteModal = false;
   export let workers: Store<Database["public"]["Tables"]["Workers"]["Row"]> = {
     data: [],
@@ -50,7 +51,7 @@
             <td>
               <div class="flex h-auto w-auto items-center justify-center gap-2">
                 <a
-                  href="edit/1"
+                  href="/project/{$page.params.projectId}/expense/worker/edit/{worker.id}"
                   class="bg-green-600 hover:bg-green-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
                 >
                   <img

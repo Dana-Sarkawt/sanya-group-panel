@@ -3,6 +3,7 @@
   import type { Database } from "$lib/Supabase/Types/database.types";
   import type { Store } from "$lib/Models/Response/Store.Response.Model";
   import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
   let deleteModal = false;
   export let sales: Store<Database["public"]["Tables"]["Sales"]["Row"]> = {
     data: [],
@@ -48,7 +49,7 @@
             <td>
               <div class="flex h-auto w-auto items-center justify-center gap-2">
                 <a
-                  href="edit/1"
+                  href="/project/{$page.params.projectId}/sales/edit/{sale.id}"
                   class="bg-green-600 hover:bg-green-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
                 >
                   <img

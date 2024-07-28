@@ -6,7 +6,7 @@ import { GenericListOptions } from "../../Models/Common/ListOptions.Common.Model
 
 export class SalesRepository implements ISalesRepository {
   async createSaleAsync(
-    request: Database["public"]["Tables"]["Sales"]["Insert"],
+    request: Database["public"]["Tables"]["Sales"]["Insert"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Sales"]["Row"]>
   > {
@@ -22,7 +22,7 @@ export class SalesRepository implements ISalesRepository {
     }
   }
   async readSaleAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Sales"]["Row"]>
   > {
@@ -38,7 +38,7 @@ export class SalesRepository implements ISalesRepository {
     }
   }
   async readSalesAsync(
-    options?: GenericListOptions,
+    options?: GenericListOptions
   ): Promise<
     PostgrestSingleResponse<Array<Database["public"]["Tables"]["Sales"]["Row"]>>
   > {
@@ -55,14 +55,32 @@ export class SalesRepository implements ISalesRepository {
         .order("id", { ascending: false })
         .range(
           options?.page! * options?.limit!,
-          options?.limit! * (options?.page! + 1),
+          options?.limit! * (options?.page! + 1)
         );
     } catch (error) {
       throw error;
     }
   }
+  async readDepositsBySaleIdsAsync(
+    ids: number[]
+  ): Promise<
+    PostgrestSingleResponse<Array<{ sale_id: number; deposit_count: number }>>
+  > {
+    try {
+      const response = await Supabase.client.rpc("count_deposits_by_sales", {
+        sale_ids: ids,
+      });
+      if (response.error) {
+        throw new Error(response.error.message);
+      }
+      console.log("response", response);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
   async updateSaleAsync(
-    request: Database["public"]["Tables"]["Sales"]["Update"],
+    request: Database["public"]["Tables"]["Sales"]["Update"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Sales"]["Row"]>
   > {
@@ -79,7 +97,7 @@ export class SalesRepository implements ISalesRepository {
     }
   }
   async deleteSaleAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Sales"]["Row"]>
   > {

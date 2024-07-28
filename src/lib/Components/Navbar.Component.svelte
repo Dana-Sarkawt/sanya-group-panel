@@ -6,16 +6,25 @@
     NavUl,
     NavHamburger,
   } from "flowbite-svelte";
+
   import { DarkMode } from "flowbite-svelte";
-  import { Tooltip } from "flowbite-svelte";
+  import { page } from "$app/stores";
+  import { Tooltip, Button } from 'flowbite-svelte';
   import { authStore } from "$lib/Store/Auth.Store";
 
   export let isLoading;
-  let hideNavbar: boolean | undefined = undefined;
+  let container:any;
+  let containerHamburger:any;
+
+  $:{
+    console.log("Container",container);
+    console.log("ContainerHamburger",containerHamburger);
+    
+  }
 </script>
 
 <div class="w-full h-auto flex justify-center items-center gap-2">
-  <Navbar
+  <Navbar 
     let:NavContainer
     class="bg-transparent dark:bg-transparent  w-full md:w-auto"
   >
@@ -42,16 +51,16 @@
         {/if}
       </div>
 
-      <NavHamburger class menuClass="text-[#104e35] dark:text-white" />
+      <NavHamburger class menuClass="text-[#104e35] dark:text-white" bind:this={containerHamburger} />
 
       <NavUl
-        hidden={hideNavbar}
+        bind:this={container}
         nonActiveClass="text-[#104e35] dark:text-white"
         ulClass="bg-transparent dark:bg-transparent md:bg-transparent dark:md:bg-transparent border-0 mt-4  flex items-center flex-col p-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 text-xs lg:text-md xl:text-lg"
       >
-        <NavLi href="/project/0">Project</NavLi>
-        <NavLi href="/user/0">Users</NavLi>
-        <NavLi href="/setting">Setting</NavLi>
+        <NavLi href="/project/0" >Project</NavLi>
+        <NavLi href="/user/0" >Users</NavLi>
+        <NavLi href="/setting" >Setting</NavLi>
         <NavLi class="cursor-pointer" on:click={() => authStore.logout()}
           >Logout</NavLi
         >

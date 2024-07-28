@@ -13,7 +13,7 @@
   onMount(async () => {
     totalCapital = (await capitalStore.getTotalPrice(
       Number($page.params.projectId)
-    )) as number;
+    ) ?? 0);
   });
 
   async function retrieveCapital() {

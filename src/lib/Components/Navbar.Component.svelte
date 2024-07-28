@@ -12,9 +12,6 @@
 
   export let isLoading;
   let hideNavbar: boolean | undefined = undefined;
-
-
-  
 </script>
 
 <div class="w-full h-auto flex justify-center items-center gap-2">
@@ -48,7 +45,7 @@
       <NavHamburger class menuClass="text-[#104e35] dark:text-white" />
 
       <NavUl
-      hidden={hideNavbar}
+        hidden={hideNavbar}
         nonActiveClass="text-[#104e35] dark:text-white"
         ulClass="bg-transparent dark:bg-transparent md:bg-transparent dark:md:bg-transparent border-0 mt-4  flex items-center flex-col p-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 text-xs lg:text-md xl:text-lg"
       >

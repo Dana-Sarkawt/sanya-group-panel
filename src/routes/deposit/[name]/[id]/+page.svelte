@@ -43,11 +43,11 @@
         </thead>
         <tbody>
           {#if data.deposits?.count !== 0 && data.deposits?.data}
-            {#each data.deposits.data as capital}
+            {#each data.deposits.data as deposit}
               <tr>
-                <td>{capital.description}</td>
-                <td>{capital.price}</td>
-                <td>{capital.date}</td>
+                <td>{deposit.description}</td>
+                <td>{deposit.price}</td>
+                <td>{deposit.date}</td>
 
                 <td>
                   <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -57,7 +57,7 @@
                     class="flex h-auto w-auto items-center justify-center gap-2"
                   >
                     <a
-                      href="edit/1"
+                      href="/deposit/edit/{deposit.id}"
                       class="bg-green-600 hover:bg-green-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
                     >
                       <img

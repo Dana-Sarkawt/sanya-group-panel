@@ -1,22 +1,39 @@
 <script lang="ts">
+	import { page } from '$app/stores';
     import { goto } from "$app/navigation";
     import { projectStore } from "$lib/Store/Project.Store";
     import { Status } from "$lib/Models/Enum/Status.Enum.Model";
     import { Project } from "$lib/Models/Request/Project.Request.Model";
-    const projectRequest = new Project.Create();
-  
-    async function addProject(request: Project.Create) {
+  import { onMount } from "svelte";
+    let projectRequest = new Project.Update();
+
+    onMount(async () => {
+     const project = await projectStore.get(Number($page.params.id));
+     if(!project) {
+       throw new Error("Failed to fetch project");
+     }
+     projectRequest = {
+        ...projectRequest,
+        name: project.data.name as string,
+        status: project.data.status as Status,
+        id: project.data.id,
+     }
+    });
+
+    async function UpdateProject(request: Project.Update) {
       try {
         console.log(request);
-        const response = await projectStore.create(request);
+        const response = await projectStore.update(request);
         if (!response) {
-          throw new Error("Failed to create project");
+          throw new Error("Failed to update project");
         }
-        goto(`/project/1`);
+        goto(`/project/0`);
       } catch (error) {
         console.log(error);
       }
     }
+  
+
   </script>
   
   
@@ -62,7 +79,7 @@
   
       <button
         class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-        on:click={() => addProject(projectRequest)}>Update Project</button
+        on:click={()=> UpdateProject(projectRequest)}>Update Project</button
       >
     </div>
   </div>

@@ -1,18 +1,38 @@
 <script lang="ts">
+	import { roleStore } from '$lib/Store/Role.Store';
+	import { userStore } from '$lib/Store/User.Store';
     import { goto } from "$app/navigation";
+    import { page } from '$app/stores';
     import { User } from "$lib/Models/Request/User.Request.Model";
-    import { authStore } from "$lib/Store/Auth.Store";
+  import { onMount } from "svelte";
     import type { PageData } from "./$types";
     export let data: PageData;
-    const userRequest = new User.Create();
-  
-    async function addUser(request: User.Create) {
-      try {
-        const response = await authStore.create(request);
-        if (!response || response.error) {
-          throw new Error("Failed to add user");
+    let userRequest = new User.Update();
+
+    onMount (async () => {
+      const user = await userStore.get(Number($page.params.id));
+      await roleStore.getAll();
+      if(!user) {
+        throw new Error("Failed to fetch user");
+      }
+        userRequest = {
+            ...userRequest,
+            name: user.data.name as string,
+            phone: user.data.phone as string,
+            email: user.data.email as string,
+            role: user.data.role as number,
+            id: user.data.id,
         }
-        goto("/user/0");
+    });
+  
+    
+    async function updateUser(request: User.Update) {
+      try {
+        const response = await userStore.update(request);
+        if (!response) {
+          throw new Error("Failed to update user");
+        }
+        goto(`/user/0`);
       } catch (error) {
         console.log(error);
       }
@@ -62,15 +82,7 @@
         />
       </div>
   
-      <div class="w-full h-auto flex flex-col justify-center items-start">
-        <p class="dark:text-white">Password</p>
-        <input
-          type="password"
-          class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
-          bind:value={userRequest.password}
-        />
-      </div>
-  
+      
       <div class="w-full h-auto flex flex-col justify-center items-start">
         <p class="dark:text-white">Role</p>
         <select
@@ -79,18 +91,18 @@
           class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
           bind:value={userRequest.role}
         >
-          {#if data.roles}
-            <option value="">None</option>
-            {#each data.roles.data as role}
-              <option value={role.id}>{role.name}</option>
+        {#if $roleStore.data}
+        {#each $roleStore.data as key, value}
+              <option value={key.id}>{key.name}</option>
             {/each}
-          {/if}
+        {/if}
         </select>
       </div>
   
       <button
         class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-        on:click={() => addUser(userRequest)}>Update User</button
+        on:click={()=> updateUser(userRequest)}
+     >Update User</button
       >
     </div>
   </div>

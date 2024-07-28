@@ -79,6 +79,23 @@ export class SalesRepository implements ISalesRepository {
       throw error;
     }
   }
+  async readFinancialBySaleIdsAsync(
+    ids: number[]
+  ): Promise<
+    PostgrestSingleResponse<Array<{ sale_id: number; financial_count: number }>>
+  > {
+    try {
+      const response = await Supabase.client.rpc("count_financials_by_sales", {
+        sale_ids: ids,
+      });
+      if (response.error) {
+        throw new Error(response.error.message);
+      }
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
   async updateSaleAsync(
     request: Database["public"]["Tables"]["Sales"]["Update"]
   ): Promise<

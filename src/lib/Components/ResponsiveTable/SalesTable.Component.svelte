@@ -12,11 +12,13 @@
     count: 0,
   };
   let deposits: Array<{ sale_id: number; deposit_count: number }> = [];
+  let financial: Array<{ sale_id: number; financial_count: number }> = [];
 
   onMount(async () => {
     // wait at least 1 second before fetching the deposits
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     await getDeposits();
+    await getFinancial();
   });
 
   async function getDeposits() {
@@ -27,6 +29,15 @@
       return;
     }
     deposits = response;
+  }
+  async function getFinancial() {
+    const response = await saleStore.getFinancialBySaleIds(
+      sales.data.map((sale) => sale.id)
+    );
+    if (!response) {
+      return;
+    }
+    financial = response;
   }
 </script>
 
@@ -57,9 +68,8 @@
                   <p
                     class="w-auto h-6 rounded-full bg-orange-700 flex justify-center items-center px-2"
                   >
-                    {deposits.filter((deposit) => deposit.sale_id === sale.id)
-                      .length}
-                    0
+                    {deposits.find((d) => d.sale_id === sale.id)
+                      ?.deposit_count ?? 0}
                   </p>
                 </div>
 
@@ -72,9 +82,8 @@
                   <p
                     class="w-auto h-6 rounded-full bg-blue-700 flex justify-center items-center px-2"
                   >
-                    {deposits.filter((deposit) => deposit.sale_id === sale.id)
-                      .length}
-                    0
+                    {financial.find((f) => f.sale_id === sale.id)
+                      ?.financial_count ?? 0}
                   </p>
                 </div>
               </div>

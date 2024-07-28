@@ -73,6 +73,17 @@ const createSaleStore = () => {
         console.log(error);
       }
     },
+    getFinancialBySaleIds: async (ids: number[]) => {
+      try {
+        const response = await salesRepository.readFinancialBySaleIdsAsync(ids);
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     update: async (data: Database["public"]["Tables"]["Sales"]["Update"]) => {
       try {
         if (!data.id || data.id === 0) {
@@ -84,7 +95,7 @@ const createSaleStore = () => {
         }
         update((store) => {
           store.data = store.data.map((sale) =>
-            sale.id === data.id ? response.data : sale,
+            sale.id === data.id ? response.data : sale
           );
           return store;
         });

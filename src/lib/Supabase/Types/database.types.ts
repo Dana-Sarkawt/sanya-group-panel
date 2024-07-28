@@ -395,25 +395,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      count_deposits_by_sales:
-        | {
-            Args: {
-              sale_ids: number[]
-            }
-            Returns: {
-              sale_id: number
-              deposit_count: number
-            }[]
-          }
-        | {
-            Args: {
-              sale_ids: number[]
-            }
-            Returns: {
-              sale_id: number
-              deposit_count: number
-            }[]
-          }
+      count_deposits_by_sales: {
+        Args: {
+          sale_ids: number[]
+        }
+        Returns: {
+          sale_id: number
+          deposit_count: number
+        }[]
+      }
+      count_financials_by_sales: {
+        Args: {
+          sale_ids: number[]
+        }
+        Returns: {
+          sale_id: number
+          financial_count: number
+        }[]
+      }
     }
     Enums: {
       Project_Status: "Stopped" | "Failed" | "In Progress" | "Done"

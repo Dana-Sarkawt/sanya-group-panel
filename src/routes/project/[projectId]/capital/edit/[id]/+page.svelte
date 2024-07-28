@@ -30,7 +30,7 @@
         </a>
       
         <p class="w-full h-auto text-2xl md:text-4xl dark:text-white text-center my-12">
-          Add Capital
+          Update Capital
         </p>
       </div>
     
@@ -69,7 +69,7 @@
           <button
             class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
             on:click={addCapital}
-            >Add Capital</button
+            >Update Capital</button
           >
         </div>
         </div>

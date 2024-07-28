@@ -4,23 +4,41 @@
       import { capitalStore } from "$lib/Store/Capital.Store";
       import { page } from "$app/stores";
       import { Capital } from "$lib/Models/Request/Capital.Request.Model";
+  import { onMount } from "svelte";
+
     
-      const capitalRequest = {
-        ...new Capital.Create(),
+      let capitalRequest = {
+        ...new Capital.Update(),
         project_id: Number($page.params.projectId),
       };
     
-      async function addCapital() {
-        try {
-          capitalStore.create({
-            ...capitalRequest,
-            date: moment(capitalRequest.date).format("YYYY-MM-DD"),
-          });
-          goto(`/project/${$page.params.projectId}/0`);
-        } catch (error) {
-          console.log(error);
+     onMount(async () => {
+        const capital = await capitalStore.get(Number($page.params.id));
+        if(!capital) {
+          throw new Error("Failed to fetch capital");
         }
-      }
+        capitalRequest = {
+          ...capitalRequest,
+          description: capital.data.description as string,
+          price: capital.data.price as number,
+          date: capital.data.date as string,
+          id: capital.data.id,
+        }
+        });
+
+        async function updateCapital() {
+            try {
+                capitalStore.update({
+                ...capitalRequest,
+                date: moment(capitalRequest.date).format("YYYY-MM-DD"),
+                });
+                goto(`/project/${$page.params.projectId}/0`);
+            } catch (error) {
+                console.log(error);
+            }
+            }
+
+        
       </script>
       
       <div class="w-full h-auto flex  justify-center items-center  md:px-44">
@@ -68,7 +86,7 @@
       
           <button
             class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-            on:click={addCapital}
+            on:click={updateCapital}
             >Update Capital</button
           >
         </div>

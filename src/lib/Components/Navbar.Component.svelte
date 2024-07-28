@@ -60,7 +60,7 @@
       >
         <NavLi href="/project/0" >Project</NavLi>
         <NavLi href="/user/0" >Users</NavLi>
-        <NavLi href="/setting" >Setting</NavLi>
+        <!-- <NavLi href="/setting" >Setting</NavLi> -->
         <NavLi class="cursor-pointer" on:click={() => authStore.logout()}
           >Logout</NavLi
         >

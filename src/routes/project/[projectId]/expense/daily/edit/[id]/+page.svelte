@@ -1,22 +1,36 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
     import moment from "moment";
     import { goto } from "$app/navigation";
     import { dailyStore } from "$lib/Store/Daily.Store";
   import { page } from "$app/stores";
     import { Daily } from "$lib/Models/Request/Daily.Request.Model";
   
-    const dailyRequest = {
-      ...new Daily.Create(),
+    let dailyRequest = {
+      ...new Daily.Update(),
       project_id: Number($page.params.projectId),
     };
+
+    onMount (async () => {
+      const daily = await dailyStore.get(Number($page.params.id));
+      if(!daily) {
+        throw new Error("Failed to fetch daily");
+      }
+      dailyRequest = {
+        ...dailyRequest,
+        description: daily.data.description as string,
+        price: daily.data.price as number,
+        date: daily.data.date as string,
+        id: daily.data.id,
+      }
+    });
   
-    async function addDaily() {
+   async function UpdateDaily() {
       try {
-        const response = await dailyStore.create({
+        dailyStore.update({
           ...dailyRequest,
           date: moment(dailyRequest.date).format("YYYY-MM-DD"),
         });
-        if (!response) throw new Error("Failed to add daily");
         goto(`/project/${$page.params.projectId}/expense/0`);
       } catch (error) {
         console.log(error);
@@ -69,7 +83,7 @@
     
         <button
           class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-          on:click={addDaily}
+            on:click={UpdateDaily}
           >Update Daily</button
         >
       

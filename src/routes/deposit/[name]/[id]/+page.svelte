@@ -57,7 +57,7 @@
                     class="flex h-auto w-auto items-center justify-center gap-2"
                   >
                     <a
-                      href="/deposit/edit/{deposit.id}"
+                      href="/deposit/{$page.params.name}/{$page.params.id}/edit/{deposit.id}"
                       class="bg-green-600 hover:bg-green-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
                     >
                       <img

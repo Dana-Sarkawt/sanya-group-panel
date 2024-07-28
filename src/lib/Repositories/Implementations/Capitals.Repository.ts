@@ -109,7 +109,7 @@ export class CapitalsRepository implements ICapitalsRepository {
     try {
       const response = await Supabase.client
         .from("Capitals")
-        .delete()
+        .update({ deleted_at: new Date().toUTCString() })
         .eq("id", id)
         .single();
 

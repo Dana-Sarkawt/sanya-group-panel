@@ -91,7 +91,7 @@ export class FinancialDuesRepository implements IFinancialDuesRepository {
     try {
       const response = await Supabase.client
         .from("Financial Dues")
-        .delete()
+        .update({ deleted_at: new Date().toUTCString() })
         .eq("id", id)
         .single();
       return response;

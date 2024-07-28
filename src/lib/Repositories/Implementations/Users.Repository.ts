@@ -81,7 +81,7 @@ export class UsersRepository implements IUsersRepository {
     try {
       const response = await Supabase.client
         .from("Users")
-        .delete()
+        .update({ deleted_at: new Date().toUTCString() })
         .eq("id", id)
         .select("*")
         .single();

@@ -30,7 +30,7 @@
         ...financialRequest,
         date: moment(financialRequest.date).format("YYYY-MM-DD"),
       });
-      goto(`/finance/${$page.params.name}/${$page.params.financeId}`);
+      goto(`/finance/${$page.params.name}/${$page.params.id}`);
     } catch (error) {
       console.log(error);
     }

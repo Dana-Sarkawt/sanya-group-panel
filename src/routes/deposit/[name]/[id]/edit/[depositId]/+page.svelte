@@ -11,7 +11,6 @@
     };
   
    onMount(async () => {
-    console.log($page.params);
     
       const deposit = await depositStore.get(Number($page.params.depositId));
       if(!deposit) {

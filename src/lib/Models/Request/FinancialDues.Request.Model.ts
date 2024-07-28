@@ -6,4 +6,12 @@ export namespace FinancialDues {
     date: Date | string = moment(new Date()).format("YYYY-MM-DD");
     [x: string]: number | string | Date;
   }
+
+  export class Update {
+    id: number = 0;
+    description: string = "";
+    price: number = 0;
+    date: Date | string = moment(new Date()).format("YYYY-MM-DD");
+    [x: string]: number | string | Date;
+  }
 }

@@ -11,9 +11,8 @@
   import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
   let totalCapital = 0;
   onMount(async () => {
-    totalCapital = (await capitalStore.getTotalPrice(
-      Number($page.params.projectId)
-    ) ?? 0);
+    totalCapital =
+      (await capitalStore.getTotalPrice(Number($page.params.projectId))) ?? 0;
   });
 
   async function retrieveCapital() {
@@ -37,17 +36,19 @@
   }
 </script>
 
-
-<div class="w-full h-auto flex  justify-center items-center  md:px-44">
-
+<div class="w-full h-auto flex justify-center items-center md:px-44">
   <a href="/project/0">
-  <p class="w-24 h-12 rounded-xl flex justify-center items-center bg-green-700 hover:bg-green-500 text-white duration-300 ease-in-out">Back</p>
+    <p
+      class="w-24 h-12 rounded-xl flex justify-center items-center bg-green-700 hover:bg-green-500 text-white duration-300 ease-in-out"
+    >
+      Back
+    </p>
   </a>
 
-  <p class="w-full h-auto text-2xl md:text-4xl dark:text-white text-center my-12">
-  </p>
+  <p
+    class="w-full h-auto text-2xl md:text-4xl dark:text-white text-center my-12"
+  ></p>
 </div>
-
 
 <div class=" w-full h-auto flex flex-col justify-center items-center">
   <!-- <ProjectTable bind:projects={data.projects} /> -->

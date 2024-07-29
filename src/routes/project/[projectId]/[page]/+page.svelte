@@ -127,12 +127,7 @@
               <span class="text-[#1e4f3b] dark:text-[#54cc9c] pr-4 font-bold"
                 >Total:</span
               >
-              {Number(
-                $capitalStore.data.reduce(
-                  (total, capital) => total + capital.price,
-                  0
-                )
-              ).toFixed(2)}
+              {Number(totalCapital).toFixed(2)}
             </p>
           </div>
 

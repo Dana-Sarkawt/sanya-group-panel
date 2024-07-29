@@ -215,12 +215,12 @@
         <div class="w-auto h-12 flex justify-center items-center gap-2">
           <div class="w-auto h-12  text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]">
             <p>Deposit:</p>
-            <span>200</span>
+            <span>{sales?.deposits?.overall_total_price ?? 0}</span>
           </div>
 
           <div class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]">
             <p >Financial:</p>
-            <span>200</span>
+            <span>{sales?.financials?.overall_total_price ?? 0}</span>
           </div>
         </div>
 

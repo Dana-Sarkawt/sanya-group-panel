@@ -27,7 +27,7 @@
         style="box-shadow:0 1px 8px 0px #24b97d;"
         on:click={async () => {
           const datas = await userStore.getAllWithoutFilter();
-          await exportAsExcelFile(datas?.data, "projects");
+          await exportAsExcelFile(datas?.data, "users");
         }}
         ><span>
           <img src="/images/print.png" class="w-6 h-6 object-contain" alt="" />

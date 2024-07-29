@@ -80,7 +80,7 @@
                 >
                   Deposit
                   <p
-                    class="w-auto h-6 rounded-full bg-orange-700 flex justify-center items-center px-2"
+                    class="w-auto h-2 md:h-6 rounded-full bg-orange-700 flex justify-center items-center px-2"
                   >
                     {#if depositLoading}
                       <span class="loader2"></span>
@@ -98,7 +98,7 @@
                   Financial Dues
 
                   <p
-                    class="w-auto h-6 rounded-full bg-blue-700 flex justify-center items-center px-2"
+                    class="w-auto h-2 md:h-6 rounded-full bg-blue-700 flex justify-center items-center px-2"
                   >
                     {#if financialLoading}
                       <span class="loader2"></span>

@@ -173,7 +173,7 @@
     >
       <div
         slot="title"
-        class="w-full h-full flex flex-col justify-center gap-2"
+        class="w-full h-full flex flex-col justify-end pb-3 gap-2"
       >
         <img
           src="/images/worker.png"
@@ -181,6 +181,13 @@
           alt=""
         />
         <p class="h-auto w-full text-xl font-bold">Worker</p>
+
+        <div class="w-full h-auto flex justify-center items-center gap-2">
+          <div class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"> <span class="text-gray-400">Diposit: </span> 300</div>
+          <div class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"> <span class="text-gray-400">Financial: </span> 200</div>
+        </div>
+
+
       </div>
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"
@@ -233,7 +240,7 @@
     >
       <div
         slot="title"
-        class="w-full h-full flex flex-col justify-center gap-2"
+        class="w-full h-full flex flex-col justify-end pb-3 gap-2"
       >
         <img
           src="/images/preparation.png"
@@ -241,6 +248,13 @@
           alt=""
         />
         <p class="h-auto w-full text-xl font-bold">Preparation</p>
+
+        <div class="w-full h-auto flex justify-center items-center gap-2">
+          <div class="w-auto h-8 flex justify-center items-center bg-[#201d3892] p-2 rounded-lg gap-2"> <span class="text-gray-400">Diposit: </span> 300</div>
+          <div class="w-auto h-8 flex justify-center items-center bg-[#201d3892] p-2 rounded-lg gap-2"> <span class="text-gray-400">Financial: </span> 200</div>
+        </div>
+
+
       </div>
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"
@@ -259,7 +273,7 @@
         <button
         class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 duration-300 ease-in-out"
         style="box-shadow:0 1px 8px 0px #24b97d;"
-        
+
         ><span>
           <img src="/images/print.png" class="w-6 h-6 object-contain" alt="">
         </span>Export as Excel</button

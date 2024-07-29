@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { FinancialDues } from '$lib/Models/Request/FinancialDues.Request.Model';
   import { onMount } from "svelte";
   import SalesTable from "$lib/Components/ResponsiveTable/SalesTable.Component.svelte";
   import { saleStore } from "$lib/Store/Sale.Store";
@@ -9,6 +10,7 @@
   import Pagination from "$lib/Components/Pagination.Store.Component.svelte";
   import { goto } from "$app/navigation";
   import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
+  import Capital from '$lib/Components/Tables/Capital.Table.Component.svelte';
   let totalCapital = 0;
   let isLoading = false;
   onMount(async () => {
@@ -156,7 +158,7 @@ isLoading = true;
     >
       <div
         slot="title"
-        class="w-full h-full flex flex-col justify-center gap-2"
+        class="w-full h-full flex flex-col justify-end pb-3 gap-2"
       >
         <img
           src="/images/sale.png"
@@ -164,6 +166,12 @@ isLoading = true;
           alt=""
         />
         <p class="h-auto w-full text-xl font-bold">Sales</p>
+
+        <div class="w-full h-auto flex justify-center items-center gap-2">
+          <div class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"> <span class="text-gray-400">Diposit: </span> 300</div>
+          <div class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"> <span class="text-gray-400">Financial: </span> 200</div>
+        </div>
+
       </div>
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"

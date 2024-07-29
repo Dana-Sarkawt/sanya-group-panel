@@ -3,22 +3,38 @@
     import { page } from "$app/stores";
   import { saleStore } from "$lib/Store/Sale.Store";
   import { Sale } from "$lib/Models/Request/Sale.Request.Model";
+  import { onMount } from "svelte";
 
-  const saleRequest = {
-    ...new Sale.Create(),
+  let saleRequest = {
+    ...new Sale.Update(),
     project_id: Number($page.params.projectId),
   };
 
-  async function addSale() {
+  onMount(async () => {
+    const sale = await saleStore.get(Number($page.params.id));
+    if (!sale) {
+      throw new Error("Failed to fetch sale");
+    }
+    saleRequest = {
+      ...saleRequest,
+      description: sale.data.description as string,
+      id: sale.data.id,
+    };
+  });
+  
+
+  async function updateSale(request: Sale.Update) {
     try {
-      const response = await saleStore.create(saleRequest);
-      if (!response) throw new Error("Failed to add sale");
+      console.log(request);
+      const response = await saleStore.update(request);
+      if (!response) {
+        throw new Error("Failed to update sale");
+      }
       goto(`/project/${$page.params.projectId}/0`);
     } catch (error) {
       console.log(error);
     }
   }
-  
   </script>
   
   <div class="w-full h-auto flex  justify-center items-center  md:px-44">
@@ -49,7 +65,7 @@
   
       <button
         class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-        on:click={addSale}
+        on:click={() => updateSale(saleRequest)}
         >Update Sale</button
       >
   

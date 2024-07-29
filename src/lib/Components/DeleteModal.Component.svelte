@@ -7,6 +7,7 @@
   async function deleteStore() {
     try {
       await Store.delete(id);
+      window.location.reload();
     } catch (error) {
       console.error(error);
     } finally {

@@ -57,6 +57,26 @@ export class UsersRepository implements IUsersRepository {
       throw error;
     }
   }
+  async readUsersWithouFilterAsync(): Promise<
+    PostgrestSingleResponse<
+      Array<{
+        id: number;
+        name: string | null;
+        email: string | null;
+      }>
+    >
+  > {
+    try {
+      const response = await Supabase.client
+        .from("Users")
+        .select("id,name,email", { count: "exact" })
+        .is("deleted_at", null)
+        .order("id", { ascending: false });
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
   async updateUserAsync(
     request: Database["public"]["Tables"]["Users"]["Update"]
   ): Promise<

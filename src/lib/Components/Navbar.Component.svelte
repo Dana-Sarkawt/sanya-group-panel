@@ -34,7 +34,7 @@
     >
       <NavBrand href="/" class="">
         <span
-          class="self-center whitespace-nowrap text-sm lg:text-xl font-semibold text-[#104e35] dark:text-white mr-12 "
+          class="[text-shadow:_0_1px_15px_#24b97d] text-[#0e714a] dark:text-[#24b97d] self-center whitespace-nowrap text-sm lg:text-xl font-semibold text-[#104e35] dark:text-white mr-12 "
           >Sanya Group</span
         >
       </NavBrand>

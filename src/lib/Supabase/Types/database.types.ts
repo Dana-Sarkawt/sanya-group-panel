@@ -440,6 +440,7 @@ export type Database = {
           financial_count: number
           total_price: number
           overall_total_price: number
+          overall_count: number
         }[]
       }
       count_financials_by_workers: {

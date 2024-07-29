@@ -104,6 +104,7 @@ export class SalesRepository implements ISalesRepository {
         financial_count: number;
         total_price: number;
         overall_total_price: number;
+        overall_count: number;
       }>
     >
   > {

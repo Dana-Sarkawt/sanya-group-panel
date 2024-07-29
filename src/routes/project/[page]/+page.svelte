@@ -1,10 +1,10 @@
 <script lang="ts">
+	import { projectStore } from '$lib/Store/Project.Store';
   import { page } from "$app/stores";
   import Pagination from "$lib/Components/Pagination.Component.svelte";
   import type { PageData } from "./$types";
   import ProjectTable from "$lib/Components/ResponsiveTable/ProjectTable.Component.svelte";
   import { exportAsExcelFile } from "$lib/Utils/ExportAsExcel.Utils";
-  import { projectStore } from "$lib/Store/Project.Store";
   export let data: PageData;
 </script>
 

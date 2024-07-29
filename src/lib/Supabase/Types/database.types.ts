@@ -395,6 +395,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      count_deposits_by_preparations: {
+        Args: {
+          preparation_ids: number[]
+        }
+        Returns: {
+          preparation_id: number
+          deposit_count: number
+        }[]
+      }
       count_deposits_by_sales: {
         Args: {
           sale_ids: number[]
@@ -404,12 +413,39 @@ export type Database = {
           deposit_count: number
         }[]
       }
+      count_deposits_by_workers: {
+        Args: {
+          worker_ids: number[]
+        }
+        Returns: {
+          worker_id: number
+          deposit_count: number
+        }[]
+      }
+      count_financials_by_preparations: {
+        Args: {
+          preparation_ids: number[]
+        }
+        Returns: {
+          preparation_id: number
+          financial_count: number
+        }[]
+      }
       count_financials_by_sales: {
         Args: {
           sale_ids: number[]
         }
         Returns: {
           sale_id: number
+          financial_count: number
+        }[]
+      }
+      count_financials_by_workers: {
+        Args: {
+          worker_ids: number[]
+        }
+        Returns: {
+          worker_id: number
           financial_count: number
         }[]
       }

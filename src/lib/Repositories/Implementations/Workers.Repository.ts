@@ -63,6 +63,19 @@ export class WorkersRepository implements IWorkersRepository {
       throw error;
     }
   }
+  readDepositsByWorkerIdsAsync(ids: number[]): Promise<
+    PostgrestSingleResponse<
+      Array<{
+        worker_id: number;
+        deposit_count: number;
+      }>
+    >
+  > {
+    throw new Error("Method not implemented.");
+  }
+  readFinancialByWorkerIdsAsync(ids: number[]) {
+    throw new Error("Method not implemented.");
+  }
   async updateWorkerAsync(
     request: Database["public"]["Tables"]["Workers"]["Update"]
   ): Promise<

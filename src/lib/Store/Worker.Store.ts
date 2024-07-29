@@ -74,6 +74,29 @@ const createWorkerStore = () => {
         console.log(error);
       }
     },
+    getDepositsByWorkerIds: async (ids: number[]) => {
+      try {
+        console.log("ids", ids);
+        const response = await workersRepository.readDepositsByWorkerIdsAsync(ids);
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getFinancialByWorkerIds: async (ids: number[]) => {
+      try {
+        const response = await workersRepository.readFinancialByWorkerIdsAsync(ids);
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     update: async (data: Database["public"]["Tables"]["Workers"]["Update"]) => {
       try {
         const response = await workersRepository.updateWorkerAsync(data);

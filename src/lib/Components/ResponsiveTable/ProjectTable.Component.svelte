@@ -2,13 +2,14 @@
   import type { Store } from "$lib/Models/Response/Store.Response.Model";
   import type { Database } from "$lib/Supabase/Types/database.types";
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
-  import { page } from "$app/stores";
+  import { projectStore } from "$lib/Store/Project.Store";
 
   export let projects: Store<Database["public"]["Tables"]["Projects"]["Row"]> =
     {
       data: [],
       count: 0,
     };
+  let deleteId: number = 0;
 
   let deleteModal = false;
 </script>
@@ -31,6 +32,7 @@
             <td>{project.name}</td>
             <td>{project.status}</td>
             <td>
+              <!-- svelte-ignore a11y-no-static-element-interactions -->
               <div class="flex h-auto w-auto items-center justify-center gap-2">
                 <a
                   href="/project/{project.id}/0"
@@ -53,8 +55,13 @@
                   />
                 </a>
                 <!-- svelte-ignore a11y-missing-attribute -->
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <a
                   class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
+                  on:click={() => {
+                    deleteModal = true;
+                    deleteId = project.id;
+                  }}
                 >
                   <img
                     src="/images/delete.png"
@@ -71,4 +78,4 @@
   </table>
 </div>
 
-<DeleteModal bind:deleteModal />
+<DeleteModal bind:deleteModal Store={projectStore} id={deleteId} />

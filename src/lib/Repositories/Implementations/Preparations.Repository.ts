@@ -47,7 +47,8 @@ export class PreparationsRepository implements IPreparationsRepository {
     try {
       const response = Supabase.client
         .from("Preparations")
-        .select("*", { count: "exact" });
+        .select("*", { count: "exact" })
+        .is("deleted_at", null);
 
       if (options?.field && options?.equal) {
         response.eq(options.field, options.equal);

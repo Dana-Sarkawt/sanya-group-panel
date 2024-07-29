@@ -47,7 +47,8 @@ export class DepositsRepository implements IDepositsRepository {
     try {
       const response = Supabase.client
         .from("Deposits")
-        .select("*", { count: "exact" });
+        .select("*", { count: "exact" })
+        .is("deleted_at", null);
 
       if (options?.field && options?.equal) {
         response.eq(options.field, options.equal);

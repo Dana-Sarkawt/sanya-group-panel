@@ -1,29 +1,20 @@
 <script lang="ts">
-	import { formatNumber } from '$lib/Utils/ConvertNumbers.Utils';
+  import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
   import type { Store } from "$lib/Models/Response/Store.Response.Model";
   import type { Database } from "$lib/Supabase/Types/database.types";
-  import { onMount } from 'svelte';
-  import { projectStore } from '$lib/Store/Project.Store';
-  import { page } from '$app/stores';
+  import { onMount } from "svelte";
+  import { projectStore } from "$lib/Store/Project.Store";
+  import { page } from "$app/stores";
+  import { capitalStore } from "$lib/Store/Capital.Store";
   export let capitals: Store<Database["public"]["Tables"]["Capitals"]["Row"]> =
     {
       data: [],
       count: 0,
     };
 
-    export let project: Store<Database["public"]["Tables"]["Projects"]["Row"]> =
-    {
-      data: [],
-      count: 0,
-    };
-
- onMount(async () => {
-   //I want to get one data from the store
-    console.log($projectStore.data.find((project)=> project.id));
-  });
-
   let deleteModal = false;
+  let deleteId:number = 0;
 </script>
 
 <div class="w-full h-auto flex justify-center items-center mx-2">
@@ -50,7 +41,8 @@
               <!-- svelte-ignore a11y-missing-attribute -->
               <div class="flex h-auto w-auto items-center justify-center gap-2">
                 <a
-                  href="/project/{$page.params.projectId}/capital/edit/{capital.id}"
+                  href="/project/{$page.params
+                    .projectId}/capital/edit/{capital.id}"
                   class="bg-green-600 hover:bg-green-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
                 >
                   <img
@@ -62,7 +54,10 @@
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <a
                   class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-                  on:click={() => (deleteModal = true)}
+                  on:click={() => {
+                    deleteModal = true;
+                    deleteId = capital.id;
+                    }}
                 >
                   <img
                     src="/images/delete.png"
@@ -79,4 +74,4 @@
   </table>
 </div>
 
-<DeleteModal bind:deleteModal />
+<DeleteModal bind:deleteModal Store={capitalStore} id={deleteId} />

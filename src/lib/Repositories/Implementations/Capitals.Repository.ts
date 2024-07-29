@@ -49,7 +49,8 @@ export class CapitalsRepository implements ICapitalsRepository {
     try {
       const response = Supabase.client
         .from("Capitals")
-        .select("*", { count: "exact" });
+        .select("*", { count: "exact" })
+        .is("deleted_at", null);
 
       if (options?.field && options?.equal) {
         response.eq(options.field, options.equal);
@@ -70,6 +71,7 @@ export class CapitalsRepository implements ICapitalsRepository {
       const response = await Supabase.client
         .from("Capitals")
         .select("price")
+        .is("deleted_at", null)
         .eq("project_id", projectId);
       if (response.error) {
         throw response.error;

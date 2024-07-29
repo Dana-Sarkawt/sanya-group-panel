@@ -15,16 +15,17 @@
   };
   let deposits: Array<{ sale_id: number; deposit_count: number }> = [];
   let financial: Array<{ sale_id: number; financial_count: number }> = [];
+  let deleteId: number = 0;
 
   onMount(async () => {
     depositLoading = true;
     financialLoading = true;
-    try{
+    try {
       // wait at least 1 second before fetching the deposits
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await getDeposits();
       await getFinancial();
-    }finally{
+    } finally {
       depositLoading = false;
       financialLoading = false;
     }
@@ -77,12 +78,12 @@
                   <p
                     class="w-auto h-6 rounded-full bg-orange-700 flex justify-center items-center px-2"
                   >
-                      {#if depositLoading}
+                    {#if depositLoading}
                       <span class="loader2"></span>
-                      {:else}
-                    {deposits.find((d) => d.sale_id === sale.id)
-                      ?.deposit_count ?? 0}
-                      {/if}
+                    {:else}
+                      {deposits.find((d) => d.sale_id === sale.id)
+                        ?.deposit_count ?? 0}
+                    {/if}
                   </p>
                 </div>
 
@@ -95,13 +96,12 @@
                   <p
                     class="w-auto h-6 rounded-full bg-blue-700 flex justify-center items-center px-2"
                   >
-                  {#if financialLoading}
+                    {#if financialLoading}
                       <span class="loader2"></span>
-                      {:else}
-                    {financial.find((f) => f.sale_id === sale.id)
-                      ?.financial_count ?? 0}
-
-                  {/if}
+                    {:else}
+                      {financial.find((f) => f.sale_id === sale.id)
+                        ?.financial_count ?? 0}
+                    {/if}
                   </p>
                 </div>
               </div>
@@ -119,9 +119,15 @@
                     alt=""
                   />
                 </a>
+                <!-- svelte-ignore a11y-missing-attribute -->
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <a
-                  href="edit/1"
                   class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
+                  on:click={() => {
+                    deleteModal = true;
+                    deleteId = sale.id;
+                  }}
                 >
                   <img
                     src="/images/delete.png"
@@ -138,4 +144,4 @@
   </table>
 </div>
 
-<DeleteModal bind:deleteModal />
+<DeleteModal bind:deleteModal Store={saleStore} id={deleteId} />

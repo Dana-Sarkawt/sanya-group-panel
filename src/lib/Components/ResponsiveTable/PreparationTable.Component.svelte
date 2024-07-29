@@ -20,6 +20,7 @@
   let deposits: Array<{ preparation_id: number; deposit_count: number }> = [];
   let financial: Array<{ preparation_id: number; financial_count: number }> =
     [];
+  let deleteId: number = 0;
   onMount(async () => {
     depositLoading = true;
     financialLoading = true;
@@ -129,8 +130,14 @@
                   />
                 </a>
                 <!-- svelte-ignore a11y-missing-attribute -->
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <a
                   class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
+                  on:click={() => {
+                    deleteModal = true;
+                    deleteId = preparation.id;
+                  }}
                 >
                   <img
                     src="/images/delete.png"
@@ -147,4 +154,4 @@
   </table>
 </div>
 
-<DeleteModal bind:deleteModal />
+<DeleteModal bind:deleteModal Store={preparationStore} id={deleteId} />

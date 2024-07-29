@@ -51,7 +51,8 @@ export class FinancialDuesRepository implements IFinancialDuesRepository {
     try {
       const response = Supabase.client
         .from("Financial Dues")
-        .select("*", { count: "exact" });
+        .select("*", { count: "exact" })
+        .is("deleted_at", null);
 
       if (options?.field && options?.equal) {
         response.eq(options.field, options.equal);

@@ -45,7 +45,8 @@ export class SalesRepository implements ISalesRepository {
     try {
       const response = Supabase.client
         .from("Sales")
-        .select("*", { count: "exact" });
+        .select("*", { count: "exact" })
+        .is("deleted_at", null);
 
       if (options?.field && options?.equal) {
         response.eq(options.field, options.equal);

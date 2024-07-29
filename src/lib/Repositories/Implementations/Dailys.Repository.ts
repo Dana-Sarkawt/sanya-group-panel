@@ -47,7 +47,8 @@ export class DailysRepository implements IDailysRepository {
     try {
       const response = Supabase.client
         .from("Dailys")
-        .select("*", { count: "exact" });
+        .select("*", { count: "exact" })
+        .is("deleted_at", null);
 
       if (options?.field && options?.equal) {
         response.eq(options.field, options.equal);
@@ -68,6 +69,7 @@ export class DailysRepository implements IDailysRepository {
       const response = await Supabase.client
         .from("Dailys")
         .select("price", { count: "exact" })
+        .is("deleted_at", null)
         .eq("project_id", projectId);
 
       if (response.error) {

@@ -4,12 +4,14 @@
   import type { Database } from "$lib/Supabase/Types/database.types";
   import moment from "moment";
   import { page } from "$app/stores";
+  import { dailyStore } from "$lib/Store/Daily.Store";
   let deleteModal = false;
   export let dailys: Store<Database["public"]["Tables"]["Dailys"]["Row"]> = {
     data: [],
     count: 0,
     error: "",
   };
+  let deleteId: number = 0;
 </script>
 
 <div class="w-full h-auto flex justify-center items-center mx-2">
@@ -30,9 +32,12 @@
             <td>{daily.price}</td>
             <td>{moment(daily.date).format("YYYY-MM-DD")}</td>
             <td>
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <!-- svelte-ignore a11y-no-static-element-interactions -->
               <div class="flex h-auto w-auto items-center justify-center gap-2">
                 <a
-                  href="/project/{$page.params.projectId}/expense/daily/edit/{daily.id}"
+                  href="/project/{$page.params
+                    .projectId}/expense/daily/edit/{daily.id}"
                   class="bg-green-600 hover:bg-green-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
                 >
                   <img
@@ -42,8 +47,13 @@
                   />
                 </a>
                 <!-- svelte-ignore a11y-missing-attribute -->
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <a
                   class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
+                  on:click={() => {
+                    deleteModal = true;
+                    deleteId = daily.id;
+                  }}
                 >
                   <img
                     src="/images/delete.png"
@@ -60,4 +70,4 @@
   </table>
 </div>
 
-<DeleteModal bind:deleteModal />
+<DeleteModal bind:deleteModal Store={dailyStore} id={deleteId} />

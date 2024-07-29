@@ -46,6 +46,7 @@ export class RolesRepository implements IRolesRepository {
       const response = await Supabase.client
         .from("Roles")
         .select("*", { count: "exact" })
+        .is("deleted_at", null)
         .order("id", { ascending: false });
       return response;
     } catch (error) {

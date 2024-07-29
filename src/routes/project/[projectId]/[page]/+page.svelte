@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { FinancialDues } from "$lib/Models/Request/FinancialDues.Request.Model";
+	import { Overhaul } from '$lib/Models/Common/Overhaul.Common.Model';
   import { exportAsExcelFile } from "$lib/Utils/ExportAsExcel.Utils";
   import { onMount } from "svelte";
   import SalesTable from "$lib/Components/ResponsiveTable/SalesTable.Component.svelte";
@@ -13,13 +13,7 @@
   import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
   let totalCapital = 0;
   let isLoading = false;
-  let sales: {
-    deposits: { overall_total_price: number; overall_count: number };
-    financials: { overall_total_price: number; overall_count: number };
-  } = {
-    deposits: { overall_total_price: 0, overall_count: 0 },
-    financials: { overall_total_price: 0, overall_count: 0 },
-  };
+  let sales: Overhaul = new Overhaul();
   onMount(async () => {
     isLoading = true;
     try {

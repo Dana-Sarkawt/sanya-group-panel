@@ -12,18 +12,63 @@
   import { workerStore } from "$lib/Store/Worker.Store";
   import { Tabs, TabItem } from "flowbite-svelte";
   import { exportAsExcelFile } from "$lib/Utils/ExportAsExcel.Utils";
+  import { Overhaul } from "$lib/Models/Common/Overhaul.Common.Model";
 
   let totalDaily = 0;
   let isLoading = false;
-
+  let workers: Overhaul = new Overhaul();
+  let preparations: Overhaul = new Overhaul();
   onMount(async () => {
     try {
       totalDaily =
         (await dailyStore.getTotalPrice(Number($page.params.projectId))) ?? 0;
+      await retrieveOverhaulDeposits();
+      await retrieveOverhaulFinancials();
     } finally {
       isLoading = false;
     }
   });
+
+  async function retrieveOverhaulDeposits() {
+    try {
+      const workersDeposits = await workerStore.getOverhaulDepositsByProjectId(
+        Number($page.params.projectId)
+      );
+      const preparationsDeposits =
+        await preparationStore.getOverhaulDepositsByProjectId(
+          Number($page.params.projectId)
+        );
+      if (workersDeposits) {
+        workers.deposits = workersDeposits;
+      }
+      if (preparationsDeposits) {
+        preparations.deposits = preparationsDeposits;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function retrieveOverhaulFinancials() {
+    try {
+      const workersFinancials =
+        await workerStore.getOverhaulFinancialsByProjectId(
+          Number($page.params.projectId)
+        );
+      const preparationsFinancials =
+        await preparationStore.getOverhaulFinancialsByProjectId(
+          Number($page.params.projectId)
+        );
+      if (workersFinancials) {
+        workers.financials = workersFinancials;
+      }
+      if (preparationsFinancials) {
+        preparations.financials = preparationsFinancials;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async function retrieveDaily() {
     goto(`/project/${$page.params.projectId}/expense/0`);
@@ -189,11 +234,17 @@
         <p class="h-auto w-full text-xl font-bold">Worker</p>
 
         <div class="w-full h-auto flex justify-center items-center gap-2">
-          <div class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"> <span class="text-gray-400">Diposit: </span> 300</div>
-          <div class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"> <span class="text-gray-400">Financial: </span> 200</div>
+          <div
+            class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
+          >
+            <span class="text-gray-400">Deposit: </span> {formatNumber(workers.deposits.overall_total_price)}
+          </div>
+          <div
+            class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
+          >
+            <span class="text-gray-400">Financial: </span> {formatNumber(workers.financials.overall_total_price)}
+          </div>
         </div>
-
-
       </div>
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"
@@ -264,11 +315,17 @@
         <p class="h-auto w-full text-xl font-bold">Preparation</p>
 
         <div class="w-full h-auto flex justify-center items-center gap-2">
-          <div class="w-auto h-8 flex justify-center items-center bg-[#201d3892] p-2 rounded-lg gap-2"> <span class="text-gray-400">Diposit: </span> 300</div>
-          <div class="w-auto h-8 flex justify-center items-center bg-[#201d3892] p-2 rounded-lg gap-2"> <span class="text-gray-400">Financial: </span> 200</div>
+          <div
+            class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
+          >
+            <span class="text-gray-400">Deposit: </span> {formatNumber(preparations.deposits.overall_total_price)}
+          </div>
+          <div
+            class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
+          >
+            <span class="text-gray-400">Financial: </span> {formatNumber(preparations.financials.overall_total_price)}
+          </div>
         </div>
-
-
       </div>
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"

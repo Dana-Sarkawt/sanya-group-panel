@@ -103,6 +103,12 @@
           on:click={toggleNavBar}>Users</NavLi
         >
 
+        <NavLi
+          href="/setting"
+          class={activeUrl.startsWith("/setting") ? activeClass : nonActiveClass}
+          on:click={toggleNavBar}>Setting</NavLi
+        >
+
         <!-- <NavLi href="/setting">Setting</NavLi> -->
         <NavLi class="cursor-pointer" on:click={() => authStore.logout()}
           >Logout</NavLi

@@ -2,7 +2,6 @@
   import { depositStore } from "$lib/Store/Deposit.Store";
   import { page } from "$app/stores";
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
-  import { onMount } from "svelte";
   import type { PageData } from "./$types";
   export let data: PageData;
   let deleteModal = false;

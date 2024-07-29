@@ -174,7 +174,7 @@
             class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
           >
             <button
-              class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2  text-[8px] md:text-lg duration-300 ease-in-out"
+              class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 text-[8px] md:text-lg duration-300 ease-in-out"
               style="box-shadow:0 1px 8px 0px #24b97d;"
               on:click={async () => {
                 const datas = await dailyStore.getAllWithoutFilter(
@@ -232,12 +232,14 @@
           <div
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
-            <span class="text-gray-400">Deposit: </span> {formatNumber(workers.deposits.overall_total_price)}
+            <span class="text-gray-400">Deposit: </span>
+            {workers.deposits.overall_total_price}
           </div>
           <div
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
-            <span class="text-gray-400">Financial: </span> {formatNumber(workers.financials.overall_total_price)}
+            <span class="text-gray-400">Financial: </span>
+            {workers.financials.overall_total_price}
           </div>
         </div>
       </div>
@@ -250,27 +252,26 @@
         >
           Worker Table
         </div>
-        
+
         <div
-        class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
+          class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
         >
+          <div class="w-auto h-12 flex justify-center items-center gap-2">
+            <div
+              class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]"
+            >
+              <p>Deposit:</p>
+              <span>{formatNumber(workers.deposits.overall_total_price)}</span>
+            </div>
 
-
-
-
-        <div class="w-auto h-12 flex justify-center items-center gap-2">
-          <div class="w-auto h-12  text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]">
-            <p>Deposit:</p>
-            <span>{formatNumber(workers.deposits.overall_total_price)}</span>
+            <div
+              class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]"
+            >
+              <p>Financial:</p>
+              <span>{formatNumber(workers.financials.overall_total_price)}</span
+              >
+            </div>
           </div>
-
-          <div class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]">
-            <p >Financial:</p>
-            <span>{formatNumber(workers.financials.overall_total_price)}</span>
-          </div>
-        </div>
-
-
 
           <button
             class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 text-[8px] md:text-lg duration-300 ease-in-out"
@@ -297,7 +298,6 @@
               ><span>+</span> Add Worker</button
             >
           </a>
-
         </div>
 
         <WorkerTable bind:workers={$workerStore} />
@@ -332,12 +332,14 @@
           <div
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
-            <span class="text-gray-400">Deposit: </span> {formatNumber(preparations.deposits.overall_total_price)}
+            <span class="text-gray-400">Deposit: </span>
+            {formatNumber(preparations.deposits.overall_total_price)}
           </div>
           <div
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
-            <span class="text-gray-400">Financial: </span> {formatNumber(preparations.financials.overall_total_price)}
+            <span class="text-gray-400">Financial: </span>
+            {formatNumber(preparations.financials.overall_total_price)}
           </div>
         </div>
       </div>
@@ -354,21 +356,22 @@
         <div
           class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
         >
+          <div class="w-auto h-12 flex justify-center items-center gap-2">
+            <div
+              class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]"
+            >
+              <p>Deposit:</p>
+              <span>{preparations.deposits.overall_total_price}</span>
+            </div>
 
-        <div class="w-auto h-12 flex justify-center items-center gap-2">
-          <div class="w-auto h-12  text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]">
-            <p>Deposit:</p>
-            <span>{formatNumber(preparations.deposits.overall_total_price)}</span>
+            <div
+              class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]"
+            >
+              <p>Financial:</p>
+              <span>{preparations.financials.overall_total_price}</span>
+            </div>
           </div>
 
-          <div class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]">
-            <p >Financial:</p>
-            <span>{formatNumber(preparations.financials.overall_total_price)}</span>
-          </div>
-        </div>
-
-
-        
           <button
             class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 text-[8px] md:text-lg duration-300 ease-in-out"
             style="box-shadow:0 1px 8px 0px #24b97d;"

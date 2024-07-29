@@ -33,7 +33,7 @@
 
 <div class="w-full h-auto flex justify-center items-center">
   <div
-    class="w-[90%] md:w-[50%] h-auto p-10 bg-[#94DCBA] dark:bg-[#11433A] border border-[#11433A] dark:border-[#94DCBA] rounded-xl flex flex-col justify-center items-center gap-6"
+    class="w-[90%] md:w-[50%] h-auto p-10 bg-[#94DCBA] dark:bg-[#11433A]  border border-[#11433A] dark:border-[#94DCBA] rounded-xl flex flex-col justify-center items-center gap-6"
   >
     <div class="w-full h-auto flex flex-col justify-center items-start">
       <p class="dark:text-white">Name</p>

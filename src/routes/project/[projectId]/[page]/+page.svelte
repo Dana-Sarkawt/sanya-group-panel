@@ -115,6 +115,19 @@ isLoading = true;
             </p>
           </div>
 
+
+          <div
+          class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
+        >
+
+          <button
+        class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 duration-300 ease-in-out"
+        style="box-shadow:0 1px 8px 0px #24b97d;"
+        ><span>
+          <img src="/images/print.png" class="w-6 h-6 object-contain" alt="">
+        </span>Export as Excel</button
+      >
+
           <a href="/project/{$page.params.projectId}/capital/add">
             <button
               class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
@@ -122,6 +135,7 @@ isLoading = true;
               ><span>+</span>Add Capital</button
             >
           </a>
+          </div>
         </div>
         <CapitalTable bind:capitals={$capitalStore} />
         <div class="w-full h-auto flex justify-center items-center py-12">
@@ -162,8 +176,18 @@ isLoading = true;
         </div>
 
         <div
-          class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff]"
+          class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
         >
+
+        <button
+        class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 duration-300 ease-in-out"
+        style="box-shadow:0 1px 8px 0px #24b97d;"
+        ><span>
+          <img src="/images/print.png" class="w-6 h-6 object-contain" alt="">
+        </span>Export as Excel</button
+      >
+
+
           <a href="/project/{$page.params.projectId}/sales/add">
             <button
               class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"

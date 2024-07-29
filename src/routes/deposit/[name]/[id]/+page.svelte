@@ -1,9 +1,12 @@
 <script lang="ts">
+  import { depositStore } from "$lib/Store/Deposit.Store";
   import { page } from "$app/stores";
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
+  import { onMount } from "svelte";
   import type { PageData } from "./$types";
   export let data: PageData;
   let deleteModal = false;
+  let deleteId: number = 0;
 </script>
 
 <div class=" w-full h-auto flex justify-center items-center">
@@ -18,8 +21,21 @@
     </div>
 
     <div
-      class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff]"
+      class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] justify-between"
     >
+      <p
+        class="h-12 w-auto flex justify-center items-center px-4 rounded-xl bg-[#D3F9E9] dark:bg-[#11433A] dark:text-white"
+      >
+        <span class="text-[#1e4f3b] dark:text-[#54cc9c] pr-4 font-bold"
+          >Total:</span
+        >
+        {Number(
+          data.deposits?.data.reduce(
+            (total, deposit) => total + deposit.price,
+            0
+          )
+        ).toFixed(2)}
+      </p>
       <a href="/deposit/{$page.params.name}/{$page.params.id}/add">
         <button
           class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
@@ -27,10 +43,7 @@
           ><span>+</span> Add Deposit</button
         >
       </a>
-
-      
     </div>
-
     <!---  START TABLE  -->
 
     <div class="w-full h-auto flex justify-center items-center mx-2">
@@ -59,7 +72,8 @@
                     class="flex h-auto w-auto items-center justify-center gap-2"
                   >
                     <a
-                      href="/deposit/{$page.params.name}/{$page.params.id}/edit/{deposit.id}"
+                      href="/deposit/{$page.params.name}/{$page.params
+                        .id}/edit/{deposit.id}"
                       class="bg-green-600 hover:bg-green-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
                     >
                       <img
@@ -71,7 +85,10 @@
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <a
                       class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-                      on:click={() => (deleteModal = true)}
+                      on:click={() => {
+                        deleteModal = true;
+                        deleteId = deposit.id;
+                      }}
                     >
                       <img
                         src="/images/delete.png"
@@ -100,4 +117,4 @@
     </div>
   </div>
 </div>
-<DeleteModal bind:deleteModal />
+<DeleteModal bind:deleteModal Store={depositStore} id={deleteId} />

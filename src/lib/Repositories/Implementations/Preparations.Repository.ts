@@ -6,7 +6,7 @@ import { Supabase } from "$lib/Supabase/Supabase";
 
 export class PreparationsRepository implements IPreparationsRepository {
   async createPreparationAsync(
-    request: Database["public"]["Tables"]["Preparations"]["Insert"],
+    request: Database["public"]["Tables"]["Preparations"]["Insert"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Preparations"]["Row"]>
   > {
@@ -22,7 +22,7 @@ export class PreparationsRepository implements IPreparationsRepository {
     }
   }
   async readPreparationAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Preparations"]["Row"]>
   > {
@@ -38,7 +38,7 @@ export class PreparationsRepository implements IPreparationsRepository {
     }
   }
   async readPreparationsAsync(
-    options?: GenericListOptions,
+    options?: GenericListOptions
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Preparations"]["Row"]>
@@ -57,14 +57,58 @@ export class PreparationsRepository implements IPreparationsRepository {
         .order("id", { ascending: false })
         .range(
           options?.page! * options?.limit!,
-          options?.limit! * (options?.page! + 1),
+          options?.limit! * (options?.page! + 1)
         );
     } catch (error) {
       throw error;
     }
   }
+  async readDepositsByPreparationIdsAsync(
+    ids: number[]
+  ): Promise<
+    PostgrestSingleResponse<
+      Array<{ preparation_id: number; deposit_count: number }>
+    >
+  > {
+    try {
+      const response = await Supabase.client.rpc(
+        "count_deposits_by_preparations",
+        {
+          preparation_ids: ids,
+        }
+      );
+      if (response.error) {
+        throw new Error(response.error.message);
+      }
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async readFinancialByPreparationIdsAsync(
+    ids: number[]
+  ): Promise<
+    PostgrestSingleResponse<
+      Array<{ preparation_id: number; financial_count: number }>
+    >
+  > {
+    try {
+      const response = await Supabase.client.rpc(
+        "count_financials_by_preparations",
+        {
+          preparation_ids: ids,
+        }
+      );
+      if (response.error) {
+        throw new Error(response.error.message);
+      }
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
   async updatePreparationAsync(
-    request: Database["public"]["Tables"]["Preparations"]["Update"],
+    request: Database["public"]["Tables"]["Preparations"]["Update"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Preparations"]["Row"]>
   > {
@@ -81,7 +125,7 @@ export class PreparationsRepository implements IPreparationsRepository {
     }
   }
   async deletePreparationAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Preparations"]["Row"]>
   > {

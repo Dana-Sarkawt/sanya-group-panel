@@ -63,6 +63,46 @@ export class WorkersRepository implements IWorkersRepository {
       throw error;
     }
   }
+  async readDepositsByWorkerIdsAsync(ids: number[]): Promise<
+    PostgrestSingleResponse<
+      Array<{
+        worker_id: number;
+        deposit_count: number;
+      }>
+    >
+  > {
+    try {
+      const response = await Supabase.client.rpc("count_deposits_by_workers", {
+        worker_ids: ids,
+      });
+      if (response.error) throw new Error(response.error.message);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async readFinancialByWorkerIdsAsync(ids: number[]): Promise<
+    PostgrestSingleResponse<
+      Array<{
+        worker_id: number;
+        financial_count: number;
+      }>
+    >
+  > {
+    try {
+      const response = await Supabase.client.rpc(
+        "count_financials_by_workers",
+        {
+          worker_ids: ids,
+        }
+      );
+      if (response.error) throw new Error(response.error.message);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async updateWorkerAsync(
     request: Database["public"]["Tables"]["Workers"]["Update"]
   ): Promise<

@@ -80,6 +80,30 @@ const createPreparationStore = () => {
         console.log(error);
       }
     },
+    getDepositsByPreparationIds: async (ids: number[]) => {
+      try {
+        const response =
+          await preparationsRepository.readDepositsByPreparationIdsAsync(ids);
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getFinancialByPreparationIds: async (ids: number[]) => {
+      try {
+        const response =
+          await preparationsRepository.readFinancialByPreparationIdsAsync(ids);
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     update: async (
       data: Database["public"]["Tables"]["Preparations"]["Update"],
     ) => {

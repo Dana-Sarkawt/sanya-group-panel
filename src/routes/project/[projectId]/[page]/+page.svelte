@@ -122,7 +122,7 @@
             class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
           >
             <button
-              class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 duration-300 ease-in-out"
+              class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 text-[8px] md:text-lg duration-300 ease-in-out"
               style="box-shadow:0 1px 8px 0px #24b97d;"
               on:click={async () => {
                 const datas = await capitalStore.getAllWithoutFilter(
@@ -133,7 +133,7 @@
               ><span>
                 <img
                   src="/images/print.png"
-                  class="w-6 h-6 object-contain"
+                  class="w-2 h-2 md:w-6 md:h-6 object-contain"
                   alt=""
                 />
               </span>Export as Excel</button
@@ -141,7 +141,7 @@
 
             <a href="/project/{$page.params.projectId}/capital/add">
               <button
-                class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
+                class="h-12 rounded-lg bg-[#24b97d] px-4 text-white text-[8px] md:text-lg"
                 style="box-shadow:0 1px 8px 0px #24b97d;"
                 ><span>+</span>Add Capital</button
               >
@@ -195,8 +195,22 @@
         <div
           class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
         >
+
+        <div class="w-auto h-12 flex justify-center items-center gap-2">
+          <div class="w-auto h-12  text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]">
+            <p>Deposit:</p>
+            <span>200</span>
+          </div>
+
+          <div class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]">
+            <p >Financial:</p>
+            <span>200</span>
+          </div>
+        </div>
+
+
           <button
-            class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 duration-300 ease-in-out"
+            class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 text-[8px] md:text-lg duration-300 ease-in-out"
             style="box-shadow:0 1px 8px 0px #24b97d;"
             on:click={async () => {
               const datas = await saleStore.getAllWithoutFilter(
@@ -207,7 +221,7 @@
             ><span>
               <img
                 src="/images/print.png"
-                class="w-6 h-6 object-contain"
+                class="w-2 h-2 md:w-6 md:h-6 object-contain"
                 alt=""
               />
             </span>Export as Excel</button
@@ -215,7 +229,7 @@
 
           <a href="/project/{$page.params.projectId}/sales/add">
             <button
-              class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
+              class="h-12 rounded-lg bg-[#24b97d] px-4 text-white text-[8px] md:text-lg"
               style="box-shadow:0 1px 8px 0px #24b97d;"
               ><span>+</span> Add Sale</button
             >

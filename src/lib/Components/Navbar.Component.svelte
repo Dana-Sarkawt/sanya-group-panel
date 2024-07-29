@@ -36,7 +36,7 @@
     >
       <NavBrand href="/" class="">
         <span
-          class="self-center whitespace-nowrap text-sm lg:text-xl font-semibold text-[#104e35] dark:text-white"
+          class="self-center whitespace-nowrap text-sm lg:text-xl font-semibold text-[#104e35] dark:text-white mr-12"
           >Sanya Group</span
         >
       </NavBrand>
@@ -101,13 +101,14 @@
           <img
             src="/images/sun.png"
             slot="lightIcon"
-            class="w-32 object-cover"
+            class="w-8 object-cover"
             alt=""
           />
+          
           <img
             src="/images/moon.png"
             slot="darkIcon"
-            class="w-32 object-cover"
+            class="w-8 object-cover"
             alt=""
           />
         </DarkMode>

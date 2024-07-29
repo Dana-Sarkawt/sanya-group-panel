@@ -61,6 +61,21 @@ const createSaleStore = () => {
         console.log(error);
       }
     },
+    getAllWithoutFilter: async (projectId: number) => {
+      try {
+        const response =
+          await salesRepository.readSalesWithoutFilterAsync(projectId);
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return {
+          data: response.data,
+          count: response.count ?? 0,
+        };
+      } catch (error) {
+        console.log(error);
+      }
+    },
     getDepositsBySaleIds: async (ids: number[]) => {
       try {
         console.log("ids", ids);

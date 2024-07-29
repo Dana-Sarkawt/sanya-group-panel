@@ -64,6 +64,19 @@ export class PreparationsRepository implements IPreparationsRepository {
       throw error;
     }
   }
+  async readPreparationWithoutFilterAsync(projectId: number) {
+    try {
+      const response = await Supabase.client
+        .from("Preparations")
+        .select("Id: id, Description: description")
+        .eq("project_id", projectId)
+        .is("deleted_at", null)
+        .order("id", { ascending: false });
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
   async readDepositsByPreparationIdsAsync(
     ids: number[]
   ): Promise<

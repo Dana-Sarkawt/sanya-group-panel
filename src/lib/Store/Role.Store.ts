@@ -65,6 +65,21 @@ const createRoleStore = () => {
         console.log(error);
       }
     },
+    getAllWithoutFilter: async () => {
+      try {
+        const response =
+          await rolesRepository.readRolesWithoutFilterAsync();
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return {
+          data: response.data,
+          count: response.count ?? 0,
+        };
+      } catch (error) {
+        console.log(error);
+      }
+    },
     update: async (data: Database["public"]["Tables"]["Roles"]["Update"]) => {
       try {
         const response = await rolesRepository.updateRoleAsync(data);

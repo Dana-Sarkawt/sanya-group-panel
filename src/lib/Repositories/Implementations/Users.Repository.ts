@@ -57,19 +57,11 @@ export class UsersRepository implements IUsersRepository {
       throw error;
     }
   }
-  async readUsersWithouFilterAsync(): Promise<
-    PostgrestSingleResponse<
-      Array<{
-        id: number;
-        name: string | null;
-        email: string | null;
-      }>
-    >
-  > {
+  async readUsersWithoutFilterAsync() {
     try {
       const response = await Supabase.client
         .from("Users")
-        .select("id,name,email", { count: "exact" })
+        .select("Id: id,Name: name,Email: email", { count: "exact" })
         .is("deleted_at", null)
         .order("id", { ascending: false });
       return response;

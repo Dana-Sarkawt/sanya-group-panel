@@ -79,10 +79,60 @@ export class SalesRepository implements ISalesRepository {
       throw error;
     }
   }
-  async readDepositsBySaleIdsAsync(
-    ids: number[]
-  ): Promise<
-    PostgrestSingleResponse<Array<{ sale_id: number; deposit_count: number }>>
+  async readOverhaulDepositsByProjectIdAsync(projectId: number): Promise<
+    PostgrestSingleResponse<
+      Array<{
+        overall_total_price: number;
+        overall_count: number;
+      }>
+    >
+  > {
+    try {
+      const response = await Supabase.client.rpc(
+        "overall_deposits_by_project_for_sales",
+        {
+          p_project_id: projectId,
+        }
+      );
+      if (response.error) {
+        throw new Error(response.error.message);
+      }
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async readOverhaulFinancialsByProjectIdAsync(projectId: number): Promise<
+    PostgrestSingleResponse<
+      Array<{
+        overall_total_price: number;
+        overall_count: number;
+      }>
+    >
+  > {
+    try {
+      const response = await Supabase.client.rpc(
+        "overall_financials_by_project_for_sales",
+        {
+          p_project_id: projectId,
+        }
+      );
+      if (response.error) {
+        throw new Error(response.error.message);
+      }
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async readDepositsBySaleIdsAsync(ids: number[]): Promise<
+    PostgrestSingleResponse<
+      Array<{
+        sale_id: number;
+        deposit_count: number;
+        total_price: number;
+      }>
+    >
   > {
     try {
       const response = await Supabase.client.rpc("count_deposits_by_sales", {
@@ -91,7 +141,6 @@ export class SalesRepository implements ISalesRepository {
       if (response.error) {
         throw new Error(response.error.message);
       }
-      console.log("response", response);
       return response;
     } catch (error) {
       throw error;
@@ -103,8 +152,6 @@ export class SalesRepository implements ISalesRepository {
         sale_id: number;
         financial_count: number;
         total_price: number;
-        overall_total_price: number;
-        overall_count: number;
       }>
     >
   > {

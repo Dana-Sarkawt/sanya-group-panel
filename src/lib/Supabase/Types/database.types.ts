@@ -395,6 +395,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      count_and_sum_financials_by_sales: {
+        Args: {
+          sale_ids: number[]
+        }
+        Returns: {
+          sale_id: number
+          financial_count: number
+          total_price: number
+        }[]
+      }
       count_deposits_by_preparations: {
         Args: {
           preparation_ids: number[]
@@ -402,6 +412,7 @@ export type Database = {
         Returns: {
           preparation_id: number
           deposit_count: number
+          total_price: number
         }[]
       }
       count_deposits_by_sales: {
@@ -411,6 +422,7 @@ export type Database = {
         Returns: {
           sale_id: number
           deposit_count: number
+          total_price: number
         }[]
       }
       count_deposits_by_workers: {
@@ -420,6 +432,7 @@ export type Database = {
         Returns: {
           worker_id: number
           deposit_count: number
+          total_price: number
         }[]
       }
       count_financials_by_preparations: {
@@ -429,6 +442,7 @@ export type Database = {
         Returns: {
           preparation_id: number
           financial_count: number
+          total_price: number
         }[]
       }
       count_financials_by_sales: {
@@ -439,8 +453,6 @@ export type Database = {
           sale_id: number
           financial_count: number
           total_price: number
-          overall_total_price: number
-          overall_count: number
         }[]
       }
       count_financials_by_workers: {
@@ -450,6 +462,70 @@ export type Database = {
         Returns: {
           worker_id: number
           financial_count: number
+          total_price: number
+        }[]
+      }
+      overall_deposits_by_project_for_preparations: {
+        Args: {
+          p_project_id: number
+        }
+        Returns: {
+          overall_total_price: number
+          overall_count: number
+        }[]
+      }
+      overall_deposits_by_project_for_sales: {
+        Args: {
+          p_project_id: number
+        }
+        Returns: {
+          overall_total_price: number
+          overall_count: number
+        }[]
+      }
+      overall_deposits_by_project_for_workers: {
+        Args: {
+          p_project_id: number
+        }
+        Returns: {
+          overall_total_price: number
+          overall_count: number
+        }[]
+      }
+      overall_financials_by_project: {
+        Args: {
+          p_project_id: number
+        }
+        Returns: {
+          overall_total_price: number
+          overall_count: number
+        }[]
+      }
+      overall_financials_by_project_for_preparations: {
+        Args: {
+          p_project_id: number
+        }
+        Returns: {
+          overall_total_price: number
+          overall_count: number
+        }[]
+      }
+      overall_financials_by_project_for_sales: {
+        Args: {
+          p_project_id: number
+        }
+        Returns: {
+          overall_total_price: number
+          overall_count: number
+        }[]
+      }
+      overall_financials_by_project_for_workers: {
+        Args: {
+          p_project_id: number
+        }
+        Returns: {
+          overall_total_price: number
+          overall_count: number
         }[]
       }
     }

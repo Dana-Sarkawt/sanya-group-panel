@@ -14,7 +14,11 @@
     count: 0,
   };
   let deposits: Array<{ sale_id: number; deposit_count: number }> = [];
-  let financial: Array<{ sale_id: number; financial_count: number }> = [];
+  let financial: Array<{
+    sale_id: number;
+    financial_count: number;
+    total_price: number;
+  }> = [];
   let deleteId: number = 0;
 
   onMount(async () => {

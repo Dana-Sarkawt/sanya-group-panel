@@ -76,8 +76,8 @@ const createWorkerStore = () => {
     },
     getDepositsByWorkerIds: async (ids: number[]) => {
       try {
-        console.log("ids", ids);
-        const response = await workersRepository.readDepositsByWorkerIdsAsync(ids);
+        const response =
+          await workersRepository.readDepositsByWorkerIdsAsync(ids);
         if (response.error) {
           throw new Error(response.error.message);
         }
@@ -88,7 +88,8 @@ const createWorkerStore = () => {
     },
     getFinancialByWorkerIds: async (ids: number[]) => {
       try {
-        const response = await workersRepository.readFinancialByWorkerIdsAsync(ids);
+        const response =
+          await workersRepository.readFinancialByWorkerIdsAsync(ids);
         if (response.error) {
           throw new Error(response.error.message);
         }

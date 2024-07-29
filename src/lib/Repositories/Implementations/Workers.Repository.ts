@@ -63,7 +63,7 @@ export class WorkersRepository implements IWorkersRepository {
       throw error;
     }
   }
-  readDepositsByWorkerIdsAsync(ids: number[]): Promise<
+  async readDepositsByWorkerIdsAsync(ids: number[]): Promise<
     PostgrestSingleResponse<
       Array<{
         worker_id: number;
@@ -71,11 +71,38 @@ export class WorkersRepository implements IWorkersRepository {
       }>
     >
   > {
-    throw new Error("Method not implemented.");
+    try {
+      const response = await Supabase.client.rpc("count_deposits_by_workers", {
+        worker_ids: ids,
+      });
+      if (response.error) throw new Error(response.error.message);
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
-  readFinancialByWorkerIdsAsync(ids: number[]) {
-    throw new Error("Method not implemented.");
+  async readFinancialByWorkerIdsAsync(ids: number[]): Promise<
+    PostgrestSingleResponse<
+      Array<{
+        worker_id: number;
+        financial_count: number;
+      }>
+    >
+  > {
+    try {
+      const response = await Supabase.client.rpc(
+        "count_financials_by_workers",
+        {
+          worker_ids: ids,
+        }
+      );
+      if (response.error) throw new Error(response.error.message);
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
+
   async updateWorkerAsync(
     request: Database["public"]["Tables"]["Workers"]["Update"]
   ): Promise<

@@ -12,7 +12,7 @@
   import { authStore } from "$lib/Store/Auth.Store";
 
   $: activeUrl = $page.url.pathname;
-  let activeClass = 'text-green-500 bg-green-700 md:bg-transparent md:text-green-700 md:dark:text-green-300 dark:bg-green-600 md:dark:bg-transparent duration-300 ease-in-out';
+  let activeClass = 'text-white bg-green-700 md:bg-transparent md:text-green-700 md:dark:text-green-300 dark:bg-green-600 md:dark:bg-transparent duration-300 ease-in-out';
   let nonActiveClass = 'text-white hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 dark:text-white md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent duration-300 ease-in-out';
 
   export let isLoading;

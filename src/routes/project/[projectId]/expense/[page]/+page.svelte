@@ -166,12 +166,7 @@
               <span class="text-[#1e4f3b] dark:text-[#54cc9c] pr-4 font-bold"
                 >Total:</span
               >
-              {Number(
-                $dailyStore.data.reduce(
-                  (total, daily) => total + daily.price,
-                  0
-                )
-              ).toFixed(2)}
+              {totalDaily.toFixed(2)}
             </p>
           </div>
 

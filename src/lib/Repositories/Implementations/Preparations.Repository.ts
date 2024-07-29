@@ -77,11 +77,59 @@ export class PreparationsRepository implements IPreparationsRepository {
       throw error;
     }
   }
-  async readDepositsByPreparationIdsAsync(
-    ids: number[]
+  async readOverhaulDepositsByProjectIdAsync(
+    projectId: number
   ): Promise<
+    PostgrestSingleResponse<{
+      overall_total_price: number;
+      overall_count: number;
+    }>
+  > {
+    try {
+      const response = await Supabase.client
+        .rpc("overall_deposits_by_project_for_preparations", {
+          p_project_id: projectId,
+        })
+        .select("*")
+        .single();
+      if (response.error) {
+        throw new Error(response.error.message);
+      }
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async readOverhaulFinancialsByProjectIdAsync(
+    projectId: number
+  ): Promise<
+    PostgrestSingleResponse<{
+      overall_total_price: number;
+      overall_count: number;
+    }>
+  > {
+    try {
+      const response = await Supabase.client
+        .rpc("overall_financials_by_project_for_preparations", {
+          p_project_id: projectId,
+        })
+        .select("*")
+        .single();
+      if (response.error) {
+        throw new Error(response.error.message);
+      }
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async readDepositsByPreparationIdsAsync(ids: number[]): Promise<
     PostgrestSingleResponse<
-      Array<{ preparation_id: number; deposit_count: number }>
+      Array<{
+        preparation_id: number;
+        deposit_count: number;
+        total_price: number;
+      }>
     >
   > {
     try {
@@ -99,11 +147,13 @@ export class PreparationsRepository implements IPreparationsRepository {
       throw error;
     }
   }
-  async readFinancialByPreparationIdsAsync(
-    ids: number[]
-  ): Promise<
+  async readFinancialByPreparationIdsAsync(ids: number[]): Promise<
     PostgrestSingleResponse<
-      Array<{ preparation_id: number; financial_count: number }>
+      Array<{
+        preparation_id: number;
+        financial_count: number;
+        total_price: number;
+      }>
     >
   > {
     try {

@@ -17,10 +17,10 @@ const createPreparationStore = () => {
   return {
     subscribe,
     set: async (
-      data: Store<Database["public"]["Tables"]["Preparations"]["Row"]>,
+      data: Store<Database["public"]["Tables"]["Preparations"]["Row"]>
     ) => set(data),
     create: async (
-      data: Database["public"]["Tables"]["Preparations"]["Insert"],
+      data: Database["public"]["Tables"]["Preparations"]["Insert"]
     ) => {
       try {
         const response =
@@ -83,7 +83,9 @@ const createPreparationStore = () => {
     getAllWithoutFilter: async (projectId: number) => {
       try {
         const response =
-          await preparationsRepository.readPreparationWithoutFilterAsync(projectId);
+          await preparationsRepository.readPreparationWithoutFilterAsync(
+            projectId
+          );
         if (response.error) {
           throw new Error(response.error.message);
         }
@@ -91,6 +93,34 @@ const createPreparationStore = () => {
           data: response.data,
           count: response.count ?? 0,
         };
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getOverhaulDepositsByProjectId: async (projectId: number) => {
+      try {
+        const response =
+          await preparationsRepository.readOverhaulDepositsByProjectIdAsync(
+            projectId
+          );
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getOverhaulFinancialsByProjectId: async (projectId: number) => {
+      try {
+        const response =
+          await preparationsRepository.readOverhaulFinancialsByProjectIdAsync(
+            projectId
+          );
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return response.data;
       } catch (error) {
         console.log(error);
       }
@@ -120,7 +150,7 @@ const createPreparationStore = () => {
       }
     },
     update: async (
-      data: Database["public"]["Tables"]["Preparations"]["Update"],
+      data: Database["public"]["Tables"]["Preparations"]["Update"]
     ) => {
       try {
         if (!data.id) {

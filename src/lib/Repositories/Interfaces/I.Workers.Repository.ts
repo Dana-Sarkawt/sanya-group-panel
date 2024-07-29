@@ -20,11 +20,28 @@ export interface IWorkersRepository {
       Array<Database["public"]["Tables"]["Workers"]["Row"]>
     >
   >;
+  readOverhaulDepositsByProjectIdAsync(projectId: number): Promise<
+  PostgrestSingleResponse<
+    {
+      overall_total_price: number;
+      overall_count: number;
+    }
+  >
+>;
+readOverhaulFinancialsByProjectIdAsync(projectId: number): Promise<
+  PostgrestSingleResponse<
+    {
+      overall_total_price: number;
+      overall_count: number;
+    }
+  >
+>;
   readDepositsByWorkerIdsAsync(ids: number[]): Promise<
     PostgrestSingleResponse<
       Array<{
         worker_id: number;
         deposit_count: number;
+        total_price: number;
       }>
     >
   >;
@@ -33,6 +50,7 @@ export interface IWorkersRepository {
       Array<{
         worker_id: number;
         financial_count: number;
+        total_price: number;
       }>
     >
   >;

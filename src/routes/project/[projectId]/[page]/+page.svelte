@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { FinancialDues } from '$lib/Models/Request/FinancialDues.Request.Model';
+	import { Overhaul } from '$lib/Models/Common/Overhaul.Common.Model';
   import { exportAsExcelFile } from "$lib/Utils/ExportAsExcel.Utils";
   import { onMount } from "svelte";
   import SalesTable from "$lib/Components/ResponsiveTable/SalesTable.Component.svelte";
@@ -11,14 +11,26 @@
   import Pagination from "$lib/Components/Pagination.Store.Component.svelte";
   import { goto } from "$app/navigation";
   import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
-  import Capital from '$lib/Components/Tables/Capital.Table.Component.svelte';
   let totalCapital = 0;
   let isLoading = false;
+  let sales: Overhaul = new Overhaul();
   onMount(async () => {
     isLoading = true;
     try {
       totalCapital =
         (await capitalStore.getTotalPrice(Number($page.params.projectId))) ?? 0;
+      const deposits = await saleStore.getOverhaulDepositsByProjectId(
+        Number($page.params.projectId)
+      );
+      const financials = await saleStore.getOverhaulFinancialsByProjectId(
+        Number($page.params.projectId)
+      );
+      if (deposits) {
+        sales.deposits = deposits;
+      }
+      if (financials) {
+        sales.financials = financials;
+      }
     } finally {
       isLoading = false;
     }
@@ -109,12 +121,7 @@
               <span class="text-[#1e4f3b] dark:text-[#54cc9c] pr-4 font-bold"
                 >Total:</span
               >
-              {Number(
-                $capitalStore.data.reduce(
-                  (total, capital) => total + capital.price,
-                  0
-                )
-              ).toFixed(2)}
+              {Number(totalCapital).toFixed(2)}
             </p>
           </div>
 
@@ -177,10 +184,19 @@
         <p class="h-auto w-full text-xl font-bold">Sales</p>
 
         <div class="w-full h-auto flex justify-center items-center gap-2">
-          <div class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"> <span class="text-gray-400">Diposit: </span> 300</div>
-          <div class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"> <span class="text-gray-400">Financial: </span> 200</div>
+          <div
+            class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
+          >
+            <span class="text-gray-400">Deposit: </span>
+            {formatNumber(sales?.deposits?.overall_total_price ?? 0)}
+          </div>
+          <div
+            class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
+          >
+            <span class="text-gray-400">Financial: </span>
+            {formatNumber(sales?.financials?.overall_total_price ?? 0)}
+          </div>
         </div>
-
       </div>
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"

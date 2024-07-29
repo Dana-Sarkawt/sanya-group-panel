@@ -80,20 +80,18 @@ export class SalesRepository implements ISalesRepository {
     }
   }
   async readOverhaulDepositsByProjectIdAsync(projectId: number): Promise<
-    PostgrestSingleResponse<
-      Array<{
-        overall_total_price: number;
-        overall_count: number;
-      }>
-    >
+    PostgrestSingleResponse<{
+      overall_total_price: number;
+      overall_count: number;
+    }>
   > {
     try {
-      const response = await Supabase.client.rpc(
-        "overall_deposits_by_project_for_sales",
-        {
+      const response = await Supabase.client
+        .rpc("overall_deposits_by_project_for_sales", {
           p_project_id: projectId,
-        }
-      );
+        })
+        .select("*")
+        .single();
       if (response.error) {
         throw new Error(response.error.message);
       }
@@ -103,20 +101,18 @@ export class SalesRepository implements ISalesRepository {
     }
   }
   async readOverhaulFinancialsByProjectIdAsync(projectId: number): Promise<
-    PostgrestSingleResponse<
-      Array<{
-        overall_total_price: number;
-        overall_count: number;
-      }>
-    >
+    PostgrestSingleResponse<{
+      overall_total_price: number;
+      overall_count: number;
+    }>
   > {
     try {
-      const response = await Supabase.client.rpc(
-        "overall_financials_by_project_for_sales",
-        {
+      const response = await Supabase.client
+        .rpc("overall_financials_by_project_for_sales", {
           p_project_id: projectId,
-        }
-      );
+        })
+        .select("*")
+        .single();
       if (response.error) {
         throw new Error(response.error.message);
       }

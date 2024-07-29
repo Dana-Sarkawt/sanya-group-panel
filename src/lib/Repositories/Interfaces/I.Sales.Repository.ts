@@ -20,18 +20,18 @@ export interface ISalesRepository {
   >;
   readOverhaulDepositsByProjectIdAsync(projectId: number): Promise<
     PostgrestSingleResponse<
-      Array<{
+      {
         overall_total_price: number;
         overall_count: number;
-      }>
+      }
     >
   >;
   readOverhaulFinancialsByProjectIdAsync(projectId: number): Promise<
     PostgrestSingleResponse<
-      Array<{
+      {
         overall_total_price: number;
         overall_count: number;
-      }>
+      }
     >
   >;
   readDepositsBySaleIdsAsync(

@@ -76,6 +76,32 @@ const createSaleStore = () => {
         console.log(error);
       }
     },
+    getOverhaulDepositsByProjectId: async (projectId: number) => {
+      try {
+        const response =
+          await salesRepository.readOverhaulDepositsByProjectIdAsync(projectId);
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getOverhaulFinancialsByProjectId: async (projectId: number) => {
+      try {
+        const response =
+          await salesRepository.readOverhaulFinancialsByProjectIdAsync(
+            projectId
+          );
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     getDepositsBySaleIds: async (ids: number[]) => {
       try {
         console.log("ids", ids);

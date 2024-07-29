@@ -84,11 +84,54 @@ export class WorkersRepository implements IWorkersRepository {
       throw error;
     }
   }
+  async readOverhaulDepositsByProjectIdAsync(
+    projectId: number
+  ): Promise<
+    PostgrestSingleResponse<{
+      overall_total_price: number;
+      overall_count: number;
+    }>
+  > {
+    try {
+      const response = await Supabase.client
+        .rpc("overall_deposits_by_project_for_workers", {
+          p_project_id: projectId,
+        })
+        .select("*")
+        .single();
+      if (response.error) throw new Error(response.error.message);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async readOverhaulFinancialsByProjectIdAsync(
+    projectId: number
+  ): Promise<
+    PostgrestSingleResponse<{
+      overall_total_price: number;
+      overall_count: number;
+    }>
+  > {
+    try {
+      const response = await Supabase.client
+        .rpc("overall_financials_by_project_for_workers", {
+          p_project_id: projectId,
+        })
+        .select("*")
+        .single();
+      if (response.error) throw new Error(response.error.message);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
   async readDepositsByWorkerIdsAsync(ids: number[]): Promise<
     PostgrestSingleResponse<
       Array<{
         worker_id: number;
         deposit_count: number;
+        total_price: number;
       }>
     >
   > {
@@ -107,6 +150,7 @@ export class WorkersRepository implements IWorkersRepository {
       Array<{
         worker_id: number;
         financial_count: number;
+        total_price: number;
       }>
     >
   > {

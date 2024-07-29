@@ -62,6 +62,23 @@ export class SalesRepository implements ISalesRepository {
       throw error;
     }
   }
+  async readSalesWithoutFilterAsync(
+    projectId: number
+  ): Promise<
+    PostgrestSingleResponse<Array<{ Id: number; Description: string | null }>>
+  > {
+    try {
+      const response = await Supabase.client
+        .from("Sales")
+        .select("Id: id, Description: description")
+        .eq("project_id", projectId)
+        .is("deleted_at", null)
+        .order("id", { ascending: true });
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
   async readDepositsBySaleIdsAsync(
     ids: number[]
   ): Promise<

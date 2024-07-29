@@ -70,7 +70,7 @@ const createUserStore = () => {
     },
     getAllWithoutFilter: async () => {
       try {
-        const response = await usersRepository.readUsersWithouFilterAsync();
+        const response = await usersRepository.readUsersWithoutFilterAsync();
         if (response.error) {
           throw new Error(response.error.message);
         }

@@ -53,6 +53,18 @@ export class RolesRepository implements IRolesRepository {
       throw error;
     }
   }
+  async readRolesWithoutFilterAsync() {
+    try {
+      const response = await Supabase.client
+        .from("Roles")
+        .select("Id: id, Name: name")
+        .is("deleted_at", null)
+        .order("id", { ascending: false });
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
   async updateRoleAsync(
     request: Database["public"]["Tables"]["Roles"]["Update"]
   ): Promise<

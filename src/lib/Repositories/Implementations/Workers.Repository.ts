@@ -64,6 +64,26 @@ export class WorkersRepository implements IWorkersRepository {
       throw error;
     }
   }
+  async readWorkersWithoutFilterAsync(projectId: number): Promise<
+    PostgrestSingleResponse<
+      Array<{
+        Id: number;
+        Name: string;
+      }>
+    >
+  > {
+    try {
+      const response = await Supabase.client
+        .from("Workers")
+        .select("Id:id, Name:name")
+        .eq("ProjectId", projectId)
+        .is("deleted_at", null)
+        .order("id", { ascending: true });
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
   async readDepositsByWorkerIdsAsync(ids: number[]): Promise<
     PostgrestSingleResponse<
       Array<{

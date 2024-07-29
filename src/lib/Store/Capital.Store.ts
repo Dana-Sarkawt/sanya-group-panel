@@ -69,6 +69,21 @@ const createCapitalStore = () => {
         console.log(error);
       }
     },
+    getAllWithoutFilter: async (projectId: number) => {
+      try {
+        const response =
+          await capitalsRepository.readCapitalsWithoutFilterAsync(projectId);
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+        return {
+          data: response.data,
+          count: response.count ?? 0,
+        };
+      } catch (error) {
+        console.log(error);
+      }
+    },
     getTotalPrice: async (projectId: number) => {
       try {
         const response =

@@ -120,6 +120,19 @@ div[role="tooltip"] {
   animation: rotation 1s linear infinite;
 }
 
+.loaderPink {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  border: 10px solid;
+  border-color: #e206651d #e2066539
+  #e2066558 #e206657b;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);

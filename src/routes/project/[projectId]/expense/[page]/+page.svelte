@@ -13,11 +13,16 @@
   import { Tabs, TabItem } from "flowbite-svelte";
 
   let totalDaily = 0;
+  let isLoading = false;
 
   onMount(async () => {
-    totalDaily = (await dailyStore.getTotalPrice(
-      Number($page.params.projectId)
-    ) ?? 0);
+    try{
+      totalDaily = (await dailyStore.getTotalPrice(
+        Number($page.params.projectId)
+      ) ?? 0);
+    }finally{
+      isLoading = false;
+    }
   });
 
   async function retrieveDaily() {
@@ -87,7 +92,12 @@
           alt=""
         />
         <div class=" h-auto text-xl rounded-full font-bold mt-4">
+          {#if isLoading}
+          <span class="loaderPink"></span>
+          {:else}
           {formatNumber(totalDaily)}
+
+          {/if}
         </div>
         <p class="h-auto w-full">Daily</p>
       </div>

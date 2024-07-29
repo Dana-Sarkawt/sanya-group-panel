@@ -10,9 +10,15 @@
   import { goto } from "$app/navigation";
   import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
   let totalCapital = 0;
+  let isLoading = false;
   onMount(async () => {
-    totalCapital =
-      (await capitalStore.getTotalPrice(Number($page.params.projectId))) ?? 0;
+isLoading = true;
+    try{
+      totalCapital =
+        (await capitalStore.getTotalPrice(Number($page.params.projectId))) ?? 0;
+    }finally{
+      isLoading = false;
+    }
   });
 
   async function retrieveCapital() {
@@ -72,7 +78,11 @@
           alt=""
         />
         <div class=" h-auto text-xl rounded-full font-bold mt-4">
+          {#if isLoading}
+          <span class="loaderPink"></span>
+          {:else}
           {formatNumber(totalCapital)}
+          {/if}
         </div>
         <p class="h-auto w-full">Capital</p>
       </div>

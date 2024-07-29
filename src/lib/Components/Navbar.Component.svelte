@@ -12,17 +12,11 @@
   import { authStore } from "$lib/Store/Auth.Store";
 
   export let isLoading;
-  let navBarOpening: boolean | undefined = undefined;
-  let divContainer: HTMLDivElement | undefined = undefined;
 
   function toggleNavBar() {
     document.querySelector(".navbarContainer")?.setAttribute("hidden", "true");
     document.querySelector(".navbarContainer")?.removeAttribute("tabindex");
     document.querySelector(".navbarContainer")?.removeAttribute("role");
-  }
-
-  $: {
-    console.log("sdasdsadsad", divContainer);
   }
 </script>
 
@@ -104,7 +98,7 @@
             class="w-8 object-cover"
             alt=""
           />
-          
+
           <img
             src="/images/moon.png"
             slot="darkIcon"

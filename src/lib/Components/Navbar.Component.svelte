@@ -6,14 +6,16 @@
     NavUl,
     NavHamburger,
   } from "flowbite-svelte";
-  import { page } from '$app/stores';
+  import { page } from "$app/stores";
   import { DarkMode } from "flowbite-svelte";
   import { Tooltip } from "flowbite-svelte";
   import { authStore } from "$lib/Store/Auth.Store";
 
   $: activeUrl = $page.url.pathname;
-  let activeClass = 'text-white bg-green-700 md:bg-transparent md:text-green-700 md:dark:text-green-300 dark:bg-green-600 md:dark:bg-transparent duration-300 ease-in-out';
-  let nonActiveClass = 'text-white hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 dark:text-white md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent duration-300 ease-in-out';
+  let activeClass =
+    "text-white bg-green-700 md:bg-transparent md:text-green-700 md:dark:text-green-300 dark:bg-green-600 md:dark:bg-transparent duration-300 ease-in-out";
+  let nonActiveClass =
+    "text-white hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 dark:text-white md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent duration-300 ease-in-out";
 
   export let isLoading;
 
@@ -34,7 +36,7 @@
     >
       <NavBrand href="/" class="">
         <span
-          class="[text-shadow:_0_1px_15px_#24b97d] text-[#0e714a] dark:text-[#24b97d] self-center whitespace-nowrap text-sm lg:text-xl font-semibold  mr-12 "
+          class="[text-shadow:_0_1px_15px_#24b97d] text-[#0e714a] dark:text-[#24b97d] self-center whitespace-nowrap text-sm lg:text-xl font-semibold mr-12"
           >Sanya Group</span
         >
       </NavBrand>
@@ -81,17 +83,25 @@
       />
 
       <NavUl
-      {activeUrl} {activeClass} {nonActiveClass}
+        {activeUrl}
+        {activeClass}
+        {nonActiveClass}
         class="navbarContainer"
-        
         ulClass="bg-transparent dark:bg-transparent md:bg-transparent dark:md:bg-transparent border-0 mt-4  flex items-center flex-col p-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 text-xs lg:text-md xl:text-lg shrink-10"
       >
-        <NavLi href="/project/0" class= {activeUrl.startsWith("/project") ? activeClass : nonActiveClass}
-        on:click={toggleNavBar}>Project</NavLi>
+        <NavLi
+          href="/project/0"
+          class={activeUrl.startsWith("/project")
+            ? activeClass
+            : nonActiveClass}
+          on:click={toggleNavBar}>Project</NavLi
+        >
 
-        <NavLi href="/user/0" class= {activeUrl.startsWith("/user") ? activeClass : nonActiveClass}
-        on:click={toggleNavBar}>Users</NavLi>
-
+        <NavLi
+          href="/user/0"
+          class={activeUrl.startsWith("/user") ? activeClass : nonActiveClass}
+          on:click={toggleNavBar}>Users</NavLi
+        >
 
         <!-- <NavLi href="/setting">Setting</NavLi> -->
         <NavLi class="cursor-pointer" on:click={() => authStore.logout()}

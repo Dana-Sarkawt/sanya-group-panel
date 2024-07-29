@@ -97,10 +97,15 @@ export class SalesRepository implements ISalesRepository {
       throw error;
     }
   }
-  async readFinancialBySaleIdsAsync(
-    ids: number[]
-  ): Promise<
-    PostgrestSingleResponse<Array<{ sale_id: number; financial_count: number }>>
+  async readFinancialBySaleIdsAsync(ids: number[]): Promise<
+    PostgrestSingleResponse<
+      Array<{
+        sale_id: number;
+        financial_count: number;
+        total_price: number;
+        overall_total_price: number;
+      }>
+    >
   > {
     try {
       const response = await Supabase.client.rpc("count_financials_by_sales", {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { formatNumber } from '$lib/Utils/ConvertNumbers.Utils';
+  import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
@@ -11,16 +11,16 @@
   import { preparationStore } from "$lib/Store/Preparation.Store";
   import { workerStore } from "$lib/Store/Worker.Store";
   import { Tabs, TabItem } from "flowbite-svelte";
+  import { exportAsExcelFile } from "$lib/Utils/ExportAsExcel.Utils";
 
   let totalDaily = 0;
   let isLoading = false;
 
   onMount(async () => {
-    try{
-      totalDaily = (await dailyStore.getTotalPrice(
-        Number($page.params.projectId)
-      ) ?? 0);
-    }finally{
+    try {
+      totalDaily =
+        (await dailyStore.getTotalPrice(Number($page.params.projectId))) ?? 0;
+    } finally {
       isLoading = false;
     }
   });
@@ -93,10 +93,9 @@
         />
         <div class=" h-auto text-xl rounded-full font-bold mt-4">
           {#if isLoading}
-          <span class="loaderPink"></span>
+            <span class="loaderPink"></span>
           {:else}
-          {formatNumber(totalDaily)}
-
+            {formatNumber(totalDaily)}
           {/if}
         </div>
         <p class="h-auto w-full">Daily</p>
@@ -131,28 +130,35 @@
             </p>
           </div>
 
-
           <div
-          class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
-        >
-          <button
-          class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 duration-300 ease-in-out"
-          style="box-shadow:0 1px 8px 0px #24b97d;"
-          ><span>
-            <img src="/images/print.png" class="w-6 h-6 object-contain" alt="">
-          </span>Export as Excel</button
-        >
-
-          <a href="/project/{$page.params.projectId}/expense/daily/add">
+            class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
+          >
             <button
-              class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
+              class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 duration-300 ease-in-out"
               style="box-shadow:0 1px 8px 0px #24b97d;"
-              ><span>+</span>Add Daily</button
+              on:click={async () => {
+                const datas = await dailyStore.getAllWithoutFilter(
+                  Number($page.params.projectId)
+                );
+                await exportAsExcelFile(datas?.data, "dailys");
+              }}
+              ><span>
+                <img
+                  src="/images/print.png"
+                  class="w-6 h-6 object-contain"
+                  alt=""
+                />
+              </span>Export as Excel</button
             >
-          </a>
+
+            <a href="/project/{$page.params.projectId}/expense/daily/add">
+              <button
+                class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
+                style="box-shadow:0 1px 8px 0px #24b97d;"
+                ><span>+</span>Add Daily</button
+              >
+            </a>
           </div>
-
-
         </div>
         <DailyTable bind:dailys={$dailyStore} />
         <div class="w-full h-auto flex justify-center items-center py-12">
@@ -195,15 +201,23 @@
         <div
           class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
         >
-
-        <button
-        class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 duration-300 ease-in-out"
-        style="box-shadow:0 1px 8px 0px #24b97d;"
-        ><span>
-          <img src="/images/print.png" class="w-6 h-6 object-contain" alt="">
-        </span>Export as Excel</button
-      >
-
+          <button
+            class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 duration-300 ease-in-out"
+            style="box-shadow:0 1px 8px 0px #24b97d;"
+            on:click={async () => {
+              const datas = await workerStore.getAllWithoutFilter(
+                Number($page.params.projectId)
+              );
+              await exportAsExcelFile(datas?.data, "workers");
+            }}
+            ><span>
+              <img
+                src="/images/print.png"
+                class="w-6 h-6 object-contain"
+                alt=""
+              />
+            </span>Export as Excel</button
+          >
 
           <a href="/project/{$page.params.projectId}/expense/worker/add">
             <button
@@ -255,15 +269,23 @@
         <div
           class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
         >
-
-        <button
-        class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 duration-300 ease-in-out"
-        style="box-shadow:0 1px 8px 0px #24b97d;"
-        
-        ><span>
-          <img src="/images/print.png" class="w-6 h-6 object-contain" alt="">
-        </span>Export as Excel</button
-      >
+          <button
+            class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 duration-300 ease-in-out"
+            style="box-shadow:0 1px 8px 0px #24b97d;"
+            on:click={async () => {
+              const datas = await preparationStore.getAllWithoutFilter(
+                Number($page.params.projectId)
+              );
+              await exportAsExcelFile(datas?.data, "preparations");
+            }}
+            ><span>
+              <img
+                src="/images/print.png"
+                class="w-6 h-6 object-contain"
+                alt=""
+              />
+            </span>Export as Excel</button
+          >
 
           <a href="/project/{$page.params.projectId}/expense/preparation/add">
             <button

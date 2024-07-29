@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { exportAsExcelFile } from "$lib/Utils/ExportAsExcel.Utils";
   import { onMount } from "svelte";
   import SalesTable from "$lib/Components/ResponsiveTable/SalesTable.Component.svelte";
   import { saleStore } from "$lib/Store/Sale.Store";
@@ -12,11 +13,11 @@
   let totalCapital = 0;
   let isLoading = false;
   onMount(async () => {
-isLoading = true;
-    try{
+    isLoading = true;
+    try {
       totalCapital =
         (await capitalStore.getTotalPrice(Number($page.params.projectId))) ?? 0;
-    }finally{
+    } finally {
       isLoading = false;
     }
   });
@@ -79,9 +80,9 @@ isLoading = true;
         />
         <div class=" h-auto text-xl rounded-full font-bold mt-4">
           {#if isLoading}
-          <span class="loaderPink"></span>
+            <span class="loaderPink"></span>
           {:else}
-          {formatNumber(totalCapital)}
+            {formatNumber(totalCapital)}
           {/if}
         </div>
         <p class="h-auto w-full">Capital</p>
@@ -115,26 +116,34 @@ isLoading = true;
             </p>
           </div>
 
-
           <div
-          class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
-        >
-
-          <button
-        class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 duration-300 ease-in-out"
-        style="box-shadow:0 1px 8px 0px #24b97d;"
-        ><span>
-          <img src="/images/print.png" class="w-6 h-6 object-contain" alt="">
-        </span>Export as Excel</button
-      >
-
-          <a href="/project/{$page.params.projectId}/capital/add">
+            class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
+          >
             <button
-              class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
+              class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 duration-300 ease-in-out"
               style="box-shadow:0 1px 8px 0px #24b97d;"
-              ><span>+</span>Add Capital</button
+              on:click={async () => {
+                const datas = await capitalStore.getAllWithoutFilter(
+                  Number($page.params.projectId)
+                );
+                await exportAsExcelFile(datas?.data, "capitals");
+              }}
+              ><span>
+                <img
+                  src="/images/print.png"
+                  class="w-6 h-6 object-contain"
+                  alt=""
+                />
+              </span>Export as Excel</button
             >
-          </a>
+
+            <a href="/project/{$page.params.projectId}/capital/add">
+              <button
+                class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
+                style="box-shadow:0 1px 8px 0px #24b97d;"
+                ><span>+</span>Add Capital</button
+              >
+            </a>
           </div>
         </div>
         <CapitalTable bind:capitals={$capitalStore} />
@@ -178,15 +187,23 @@ isLoading = true;
         <div
           class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
         >
-
-        <button
-        class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 duration-300 ease-in-out"
-        style="box-shadow:0 1px 8px 0px #24b97d;"
-        ><span>
-          <img src="/images/print.png" class="w-6 h-6 object-contain" alt="">
-        </span>Export as Excel</button
-      >
-
+          <button
+            class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 duration-300 ease-in-out"
+            style="box-shadow:0 1px 8px 0px #24b97d;"
+            on:click={async () => {
+              const datas = await saleStore.getAllWithoutFilter(
+                Number($page.params.projectId)
+              );
+              await exportAsExcelFile(datas?.data, "sales");
+            }}
+            ><span>
+              <img
+                src="/images/print.png"
+                class="w-6 h-6 object-contain"
+                alt=""
+              />
+            </span>Export as Excel</button
+          >
 
           <a href="/project/{$page.params.projectId}/sales/add">
             <button

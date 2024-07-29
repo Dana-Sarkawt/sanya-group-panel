@@ -7,6 +7,8 @@
   import { onMount } from "svelte";
   import { saleStore } from "$lib/Store/Sale.Store";
   let deleteModal = false;
+  let depositLoading = false;
+  let financialLoading = false;
   export let sales: Store<Database["public"]["Tables"]["Sales"]["Row"]> = {
     data: [],
     count: 0,
@@ -15,10 +17,17 @@
   let financial: Array<{ sale_id: number; financial_count: number }> = [];
 
   onMount(async () => {
-    // wait at least 1 second before fetching the deposits
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    await getDeposits();
-    await getFinancial();
+    depositLoading = true;
+    financialLoading = true;
+    try{
+      // wait at least 1 second before fetching the deposits
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await getDeposits();
+      await getFinancial();
+    }finally{
+      depositLoading = false;
+      financialLoading = false;
+    }
   });
 
   async function getDeposits() {
@@ -68,8 +77,12 @@
                   <p
                     class="w-auto h-6 rounded-full bg-orange-700 flex justify-center items-center px-2"
                   >
+                      {#if depositLoading}
+                      <span class="loader2"></span>
+                      {:else}
                     {deposits.find((d) => d.sale_id === sale.id)
                       ?.deposit_count ?? 0}
+                      {/if}
                   </p>
                 </div>
 
@@ -82,8 +95,13 @@
                   <p
                     class="w-auto h-6 rounded-full bg-blue-700 flex justify-center items-center px-2"
                   >
+                  {#if financialLoading}
+                      <span class="loader2"></span>
+                      {:else}
                     {financial.find((f) => f.sale_id === sale.id)
                       ?.financial_count ?? 0}
+
+                  {/if}
                   </p>
                 </div>
               </div>

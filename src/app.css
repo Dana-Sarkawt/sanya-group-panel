@@ -107,6 +107,19 @@ div[role="tooltip"] {
   animation: rotation 1s linear infinite;
 }
 
+.loader2 {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  border: 6px solid;
+  border-color: rgba(251, 193, 0, 0.15) rgba(251, 193, 0, 0.25)
+    rgba(251, 193, 0, 0.35) rgba(251, 193, 0, 0.5);
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);

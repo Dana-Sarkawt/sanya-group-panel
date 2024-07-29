@@ -4,7 +4,11 @@
   import type { Store } from "$lib/Models/Response/Store.Response.Model";
   import type { Database } from "$lib/Supabase/Types/database.types";
   import { page } from "$app/stores";
+  import { onMount } from "svelte";
+  import { preparationStore } from "$lib/Store/Preparation.Store";
   let deleteModal = false;
+  let depositLoading = false;
+  let financialLoading = false;
   export let preparations: Store<
     Database["public"]["Tables"]["Preparations"]["Row"]
   > = {
@@ -12,6 +16,42 @@
     count: 0,
     error: "",
   };
+
+  let deposits: Array<{ preparation_id: number; deposit_count: number }> = [];
+  let financial: Array<{ preparation_id: number; financial_count: number }> =
+    [];
+  onMount(async () => {
+    depositLoading = true;
+    financialLoading = true;
+    try {
+      // wait at least 1 second before fetching the deposits
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await getDeposits();
+      await getFinancial();
+    } finally {
+      depositLoading = false;
+      financialLoading = false;
+    }
+  });
+
+  async function getDeposits() {
+    const response = await preparationStore.getDepositsByPreparationIds(
+      preparations.data.map((preparation) => preparation.id)
+    );
+    if (!response) {
+      return;
+    }
+    deposits = response;
+  }
+  async function getFinancial() {
+    const response = await preparationStore.getFinancialByPreparationIds(
+      preparations.data.map((preparation) => preparation.id)
+    );
+    if (!response) {
+      return;
+    }
+    financial = response;
+  }
 </script>
 
 <div class="w-full h-auto flex justify-center items-center mx-2">
@@ -41,9 +81,15 @@
                 >
                   Deposit
 
-                  <p class="w-auto h-6 rounded-full bg-orange-700 flex justify-center items-center px-2">
-                    <!-- {$depositStore.data.filter((deposit) => deposit.sale_id === sale.id).length} -->
-                    999
+                  <p
+                    class="w-auto h-6 rounded-full bg-orange-700 flex justify-center items-center px-2"
+                  >
+                    {#if depositLoading}
+                      <span class="loader2"></span>
+                    {:else}
+                      {deposits.find((d) => d.preparation_id === preparation.id)
+                        ?.deposit_count ?? 0}
+                    {/if}
                   </p>
                 </div>
 
@@ -55,9 +101,16 @@
                 >
                   Financial Dues
 
-                  <p class="w-auto h-6 rounded-full bg-blue-700 flex justify-center items-center px-2">
-                    <!-- {$depositStore.data.filter((deposit) => deposit.sale_id === sale.id).length} -->
-                    999
+                  <p
+                    class="w-auto h-6 rounded-full bg-blue-700 flex justify-center items-center px-2"
+                  >
+                    {#if financialLoading}
+                      <span class="loader2"></span>
+                    {:else}
+                      {financial.find(
+                        (f) => f.preparation_id === preparation.id
+                      )?.financial_count ?? 0}
+                    {/if}
                   </p>
                 </div>
               </div>
@@ -65,7 +118,8 @@
             <td>
               <div class="flex h-auto w-auto items-center justify-center gap-2">
                 <a
-                  href="/project/{$page.params.projectId}/expense/preparation/edit/{preparation.id}"
+                  href="/project/{$page.params
+                    .projectId}/expense/preparation/edit/{preparation.id}"
                   class="bg-green-600 hover:bg-green-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
                 >
                   <img

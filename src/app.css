@@ -143,6 +143,11 @@ div[role="tooltip"] {
   }
 }
 
+/* .phone-input:focus {
+  border: none !important;
+  outline: none !important;
+} */
+
 
 /**
  * END  User Profile Letter Loading Style

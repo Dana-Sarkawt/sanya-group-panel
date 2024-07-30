@@ -90,7 +90,7 @@ export class RolesRepository implements IRolesRepository {
     try {
       const response = await Supabase.client
         .from("Roles")
-        .update({ deleted_at: new Date().toUTCString() })
+        .delete()
         .eq("id", id)
         .single();
       return response;

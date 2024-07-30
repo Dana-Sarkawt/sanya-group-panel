@@ -66,16 +66,30 @@
 
     <div class="w-full h-auto flex flex-col justify-center items-start">
       <p class="dark:text-white">Phone</p>
-      <input
-        type="text"
-        class="phone-input w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white focus:ring-1 {userRequest.phone
-          ? Phone.test(userRequest.phone)
-            ? 'focus:ring-green-500'
-            : 'focus:ring-red-500'
-          : 'focus:ring-1'}"
-        bind:value={userRequest.phone}
-        on:input={phoneField}
-      />
+
+      <div class="w-full bg-[#daffee] dark:bg-[#0d2621] flex rounded-xl border-0 dark:text-white">
+        <input
+          type="text"
+          class="phone-input w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white focus:ring-1 {userRequest.phone
+            ? Phone.test(userRequest.phone)
+              ? 'focus:ring-green-500'
+              : 'focus:ring-red-500'
+            : 'focus:ring-0'}"
+          bind:value={userRequest.phone}
+          on:input={phoneField}
+        />
+
+        <div class="w-auto h-auto flex justify-center items-center px-2">
+          <img src="/images/{userRequest.phone
+            ? Phone.test(userRequest.phone)
+              ? 'check.png'
+              : 'cross.png'
+            : 'cross.png'}" class="w-6 h-6 object-contain" alt="">
+        </div>
+
+      </div>
+
+
     </div>
 
     <div class="w-full h-auto flex flex-col justify-center items-start">

@@ -2,11 +2,11 @@
   import { goto } from "$app/navigation";
   import { User } from "$lib/Models/Request/User.Request.Model";
   import { authStore } from "$lib/Store/Auth.Store";
+  import { Email } from "$lib/Utils/Regex/Email.Regex";
+  import { Phone } from "$lib/Utils/Regex/Phone.Regex";
   import type { PageData } from "./$types";
   export let data: PageData;
   const userRequest = new User.Create();
-  const regexPhone = /^07\d{9}$/;
-
   async function addUser(request: User.Create) {
     try {
       const response = await authStore.create(request);
@@ -69,10 +69,10 @@
       <input
         type="text"
         class="phone-input w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white focus:ring-1 {userRequest.phone
-          ? regexPhone.test(userRequest.phone)
+          ? Phone.test(userRequest.phone)
             ? 'focus:ring-green-500'
             : 'focus:ring-red-500'
-          : 'focus:ring-0'}"
+          : 'focus:ring-1'}"
         bind:value={userRequest.phone}
         on:input={phoneField}
       />
@@ -82,7 +82,11 @@
       <p class="dark:text-white">E-mail</p>
       <input
         type="text"
-        class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
+        class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white focus:ring-1 {userRequest.email
+          ? Email.test(userRequest.email)
+            ? 'focus:ring-green-500'
+            : 'focus:ring-red-500'
+          : 'focus:ring-1'}"
         bind:value={userRequest.email}
       />
     </div>

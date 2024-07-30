@@ -1,9 +1,11 @@
 <script lang="ts">
+  import { financialDueStore } from "$lib/Store/FinancialDue.Store";
   import { page } from "$app/stores";
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
   import type { PageData } from "./$types";
   export let data: PageData;
   let deleteModal = false;
+  let deleteId: number = 0;
 </script>
 
 <div class=" w-full h-auto flex justify-center items-center">
@@ -69,7 +71,10 @@
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <a
                       class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-                      on:click={() => (deleteModal = true)}
+                      on:click={() => {
+                        deleteModal = true;
+                        deleteId = financial.id;
+                      }}
                     >
                       <img
                         src="/images/delete.png"
@@ -98,4 +103,4 @@
     </div>
   </div>
 </div>
-<DeleteModal bind:deleteModal />
+<DeleteModal bind:deleteModal Store={financialDueStore} id={deleteId} />

@@ -20,7 +20,7 @@
     </div>
 
     <div
-      class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] justify-between"
+      class="flex h-16 w-full items-center rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] justify-between"
     >
       <p
         class="h-12 w-auto flex justify-center items-center px-4 rounded-xl bg-[#D3F9E9] dark:bg-[#11433A] dark:text-white"

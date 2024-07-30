@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Overhaul } from '$lib/Models/Common/Overhaul.Common.Model';
+  import { Overhaul } from "$lib/Models/Common/Overhaul.Common.Model";
   import { exportAsExcelFile } from "$lib/Utils/ExportAsExcel.Utils";
   import { onMount } from "svelte";
   import SalesTable from "$lib/Components/ResponsiveTable/SalesTable.Component.svelte";
@@ -188,13 +188,21 @@
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
             <span class="text-gray-400">Deposit: </span>
-            {formatNumber(sales?.deposits?.overall_total_price ?? 0)}
+            {#if isLoading}
+              <span class="loader2"></span>
+            {:else}
+              {formatNumber(sales?.deposits?.overall_total_price ?? 0)}
+            {/if}
           </div>
           <div
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
             <span class="text-gray-400">Financial: </span>
-            {formatNumber(sales?.financials?.overall_total_price ?? 0)}
+            {#if isLoading}
+              <span class="loader2"></span>
+            {:else}
+              {formatNumber(sales?.financials?.overall_total_price ?? 0)}
+            {/if}
           </div>
         </div>
       </div>
@@ -211,19 +219,21 @@
         <div
           class="flex h-16 w-full items-center justify-end rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
         >
+          <div class="w-auto h-12 flex justify-center items-center gap-2">
+            <div
+              class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]"
+            >
+              <p>Deposit:</p>
+              <span>{sales?.deposits?.overall_total_price ?? 0}</span>
+            </div>
 
-        <div class="w-auto h-12 flex justify-center items-center gap-2">
-          <div class="w-auto h-12  text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]">
-            <p>Deposit:</p>
-            <span>{sales?.deposits?.overall_total_price ?? 0}</span>
+            <div
+              class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]"
+            >
+              <p>Financial:</p>
+              <span>{sales?.financials?.overall_total_price ?? 0}</span>
+            </div>
           </div>
-
-          <div class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]">
-            <p >Financial:</p>
-            <span>{sales?.financials?.overall_total_price ?? 0}</span>
-          </div>
-        </div>
-
 
           <button
             class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 text-[8px] md:text-lg duration-300 ease-in-out"

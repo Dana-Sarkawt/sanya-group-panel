@@ -19,6 +19,7 @@
   let workers: Overhaul = new Overhaul();
   let preparations: Overhaul = new Overhaul();
   onMount(async () => {
+    isLoading = true;
     try {
       totalDaily =
         (await dailyStore.getTotalPrice(Number($page.params.projectId))) ?? 0;
@@ -233,13 +234,21 @@
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
             <span class="text-gray-400">Deposit: </span>
-            {workers.deposits.overall_total_price}
+            {#if isLoading}
+              <span class="loader2"></span>
+            {:else}
+              {formatNumber(workers.deposits.overall_total_price)}
+            {/if}
           </div>
           <div
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
             <span class="text-gray-400">Financial: </span>
-            {workers.financials.overall_total_price}
+            {#if isLoading}
+              <span class="loader2"></span>
+            {:else}
+              {formatNumber(workers.financials.overall_total_price)}
+            {/if}
           </div>
         </div>
       </div>
@@ -261,15 +270,14 @@
               class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]"
             >
               <p>Deposit:</p>
-              <span>{formatNumber(workers.deposits.overall_total_price)}</span>
+              <span>{workers.deposits.overall_total_price}</span>
             </div>
 
             <div
               class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]"
             >
               <p>Financial:</p>
-              <span>{formatNumber(workers.financials.overall_total_price)}</span
-              >
+              <span>{workers.financials.overall_total_price}</span>
             </div>
           </div>
 
@@ -333,13 +341,21 @@
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
             <span class="text-gray-400">Deposit: </span>
-            {formatNumber(preparations.deposits.overall_total_price)}
+            {#if isLoading}
+              <span class="loader2"></span>
+            {:else}
+              {formatNumber(preparations.deposits.overall_total_price)}
+            {/if}
           </div>
           <div
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
             <span class="text-gray-400">Financial: </span>
-            {formatNumber(preparations.financials.overall_total_price)}
+            {#if isLoading}
+              <span class="loader2"></span>
+            {:else}
+              {formatNumber(preparations.financials.overall_total_price)}
+            {/if}
           </div>
         </div>
       </div>

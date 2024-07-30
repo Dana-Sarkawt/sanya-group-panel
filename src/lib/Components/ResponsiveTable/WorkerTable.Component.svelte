@@ -73,10 +73,12 @@
               <div class="w-full h-auto flex justify-center items-center gap-2">
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <div
-                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-orange-500 rounded-full px-4 font-bold text-white cursor-pointer gap-3"
+                  class="w-42 h-auto flex flex-col justify-center items-center bg-orange-500 rounded-xl px-4 font-bold text-white cursor-pointer p-2 gap-3"
                   on:click={() => goto(`/deposit/worker/${worker.id}`)}
                 >
-                  Deposit
+                  
+                <div class="w-auto h-auto flex justify-center items-center gap-2">
+                  <p>Deposit</p>
 
                   <p
                     class="w-auto h-2 md:h-6 rounded-full bg-orange-700 flex justify-center items-center px-2"
@@ -90,12 +92,23 @@
                   </p>
                 </div>
 
+                <div class="w-full h-auto flex justify-center items-center bg-orange-700 rounded-xl px-2">
+                  <p class="text-gray-300">Total: <span class="text-white">1200</span></p>
+                </div>
+
+                </div>
+
+
+
+
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <div
-                  class="w-42 h-4 md:h-8 flex justify-center items-center bg-blue-400 rounded-full px-4 font-bold text-white cursor-pointer gap-3"
+                  class="w-42 h-auto flex flex-col justify-center items-center bg-blue-400 rounded-xl px-4 font-bold text-white cursor-pointer p-2 gap-3"
                   on:click={() => goto(`/finance/worker/${worker.id}`)}
                 >
-                  Financial Dues
+                  
+                <div class="w-auto h-auto flex justify-center items-center gap-2">
+                  <p>Financial Dues</p>
 
                   <p
                     class="w-auto h-2 md:h-6 rounded-full bg-blue-700 flex justify-center items-center px-2"
@@ -108,6 +121,16 @@
                     {/if}
                   </p>
                 </div>
+
+                <div class="w-full h-auto flex justify-center items-center bg-blue-700 rounded-xl px-2">
+                  <p class="text-gray-300">Total: <span class="text-white">1200</span></p>
+                </div>
+
+                </div>
+
+
+
+
               </div>
             </td>
             <td>

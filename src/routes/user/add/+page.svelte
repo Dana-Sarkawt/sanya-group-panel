@@ -1,11 +1,11 @@
 <script lang="ts">
+	import { phone } from 'phone';
   import { goto } from "$app/navigation";
   import { User } from "$lib/Models/Request/User.Request.Model";
   import { authStore } from "$lib/Store/Auth.Store";
   import { Email } from "$lib/Utils/Regex/Email.Regex";
   import { Phone } from "$lib/Utils/Regex/Phone.Regex";
   import type { PageData } from "./$types";
-  import { phone } from "phone";
   export let data: PageData;
   const userRequest = new User.Create();
   async function addUser(request: User.Create) {

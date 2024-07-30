@@ -37,6 +37,27 @@
   }
 </script>
 
+
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<div class="w-full h-auto flex justify-center items-center md:px-44">
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y-missing-attribute -->
+  <a on:click={()=> window.history.back()} class="cursor-pointer">
+    <p
+      class="w-24 h-12 rounded-xl flex justify-center items-center bg-green-700 hover:bg-green-500 text-white duration-300 ease-in-out"
+    >
+      Back
+    </p>
+  </a>
+
+  <p
+    class="w-full h-auto text-2xl md:text-4xl dark:text-white text-center my-12"
+  ></p>
+</div>
+
+
+
 <p class="w-full h-auto text-4xl dark:text-white text-center my-12">
   Update Finance
 </p>

@@ -17,10 +17,10 @@ const createPreparationStore = () => {
   return {
     subscribe,
     set: async (
-      data: Store<Database["public"]["Tables"]["Preparations"]["Row"]>
+      data: Store<Database["public"]["Tables"]["Preparations"]["Row"]>,
     ) => set(data),
     create: async (
-      data: Database["public"]["Tables"]["Preparations"]["Insert"]
+      data: Database["public"]["Tables"]["Preparations"]["Insert"],
     ) => {
       try {
         const response =
@@ -84,7 +84,7 @@ const createPreparationStore = () => {
       try {
         const response =
           await preparationsRepository.readPreparationWithoutFilterAsync(
-            projectId
+            projectId,
           );
         if (response.error) {
           throw new Error(response.error.message);
@@ -101,7 +101,7 @@ const createPreparationStore = () => {
       try {
         const response =
           await preparationsRepository.readOverhaulDepositsByProjectIdAsync(
-            projectId
+            projectId,
           );
         if (response.error) {
           throw new Error(response.error.message);
@@ -115,7 +115,7 @@ const createPreparationStore = () => {
       try {
         const response =
           await preparationsRepository.readOverhaulFinancialsByProjectIdAsync(
-            projectId
+            projectId,
           );
         if (response.error) {
           throw new Error(response.error.message);
@@ -150,7 +150,7 @@ const createPreparationStore = () => {
       }
     },
     update: async (
-      data: Database["public"]["Tables"]["Preparations"]["Update"]
+      data: Database["public"]["Tables"]["Preparations"]["Update"],
     ) => {
       try {
         if (!data.id) {

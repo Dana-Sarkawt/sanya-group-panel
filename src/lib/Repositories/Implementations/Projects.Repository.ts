@@ -6,7 +6,7 @@ import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.M
 
 export class ProjectsRepository implements IProjectsRepository {
   async createProjectAsync(
-    request: Database["public"]["Tables"]["Projects"]["Insert"]
+    request: Database["public"]["Tables"]["Projects"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Projects"]["Row"]>
   > {
@@ -22,7 +22,7 @@ export class ProjectsRepository implements IProjectsRepository {
     }
   }
   async readProjectAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Projects"]["Row"]>
   > {
@@ -38,7 +38,7 @@ export class ProjectsRepository implements IProjectsRepository {
     }
   }
   async readProjectsAsync(
-    options?: GenericListOptions
+    options?: GenericListOptions,
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Projects"]["Row"]>
@@ -52,14 +52,14 @@ export class ProjectsRepository implements IProjectsRepository {
         .order("id", { ascending: true })
         .range(
           options?.page! * options?.limit!,
-          options?.limit! * (options?.page! + 1)
+          options?.limit! * (options?.page! + 1),
         );
       return response;
     } catch (error) {
       throw error;
     }
   }
-  async readProjectsWithoutFilterAsync(){
+  async readProjectsWithoutFilterAsync() {
     try {
       const response = await Supabase.client
         .from("Projects")
@@ -71,7 +71,7 @@ export class ProjectsRepository implements IProjectsRepository {
     }
   }
   async updateProjectAsync(
-    request: Database["public"]["Tables"]["Projects"]["Update"]
+    request: Database["public"]["Tables"]["Projects"]["Update"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Projects"]["Row"]>
   > {
@@ -88,7 +88,7 @@ export class ProjectsRepository implements IProjectsRepository {
     }
   }
   async deleteProjectAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Projects"]["Row"]>
   > {

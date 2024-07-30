@@ -91,21 +91,19 @@
         />
 
         <div class="w-auto h-auto flex justify-center items-center px-2">
-          <img
-            src="/images/{userRequest.phone
-              ? Phone.test(userRequest.phone)
-                ? 'check.png'
-                : 'cross.png'
-              : 'cross.png'}"
-            class="w-6 h-6 object-contain"
-            alt=""
-          />
+          <img src="/images/{userRequest.phone
+            ? Phone.test(userRequest.phone)
+              ? 'check.png'
+              : 'cross.png'
+            : 'question.png'}" class="w-6 h-6 object-contain" alt="">
         </div>
       </div>
     </div>
 
     <div class="w-full h-auto flex flex-col justify-center items-start">
+
       <p class="dark:text-white">E-mail</p>
+      <div class="w-full bg-[#daffee] dark:bg-[#0d2621] flex rounded-xl border-0 dark:text-white">
       <input
         type="text"
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white focus:ring-1 {userRequest.email
@@ -115,6 +113,18 @@
           : 'focus:ring-1'}"
         bind:value={userRequest.email}
       />
+
+      <div class="w-auto h-auto flex justify-center items-center px-2">
+        <img src="/images/{userRequest.email
+          ? Email.test(userRequest.email)
+            ? 'check.png'
+            : 'cross.png'
+          : 'question.png'}" class="w-6 h-6 object-contain" alt="">
+      </div>
+
+
+      </div>
+
     </div>
 
     <div class="w-full h-auto flex flex-col justify-center items-start">

@@ -92,7 +92,9 @@ const createWorkerStore = () => {
     getOverhaulDepositsByProjectId: async (projectId: number) => {
       try {
         const response =
-          await workersRepository.readOverhaulDepositsByProjectIdAsync(projectId);
+          await workersRepository.readOverhaulDepositsByProjectIdAsync(
+            projectId,
+          );
         if (response.error) {
           throw new Error(response.error.message);
         }
@@ -105,7 +107,7 @@ const createWorkerStore = () => {
       try {
         const response =
           await workersRepository.readOverhaulFinancialsByProjectIdAsync(
-            projectId
+            projectId,
           );
         if (response.error) {
           throw new Error(response.error.message);

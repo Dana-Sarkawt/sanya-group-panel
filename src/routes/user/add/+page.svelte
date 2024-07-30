@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { phone } from 'phone';
+  import { phone } from "phone";
   import { goto } from "$app/navigation";
   import { User } from "$lib/Models/Request/User.Request.Model";
   import { authStore } from "$lib/Store/Auth.Store";
@@ -13,12 +13,12 @@
       if (!phone(request.phone, { country: "IQ" }).isValid) {
         throw new Error("Invalid phone number");
       }
-      request.phone = phone(request.phone, { country: "IQ" })
+      const phoneData = phone(request.phone, { country: "IQ" })
         .phoneNumber as string;
       if (!Email.test(request.email)) {
         throw new Error("Invalid email");
       }
-      const response = await authStore.create(request);
+      const response = await authStore.create({ ...request, phone: phoneData });
       if (!response || response.error) {
         throw new Error("Failed to add user");
       }
@@ -91,40 +91,46 @@
         />
 
         <div class="w-auto h-auto flex justify-center items-center px-2">
-          <img src="/images/{userRequest.phone
-            ? Phone.test(userRequest.phone)
-              ? 'check.png'
-              : 'cross.png'
-            : 'question.png'}" class="w-6 h-6 object-contain" alt="">
+          <img
+            src="/images/{userRequest.phone
+              ? Phone.test(userRequest.phone)
+                ? 'check.png'
+                : 'cross.png'
+              : 'question.png'}"
+            class="w-6 h-6 object-contain"
+            alt=""
+          />
         </div>
       </div>
     </div>
 
     <div class="w-full h-auto flex flex-col justify-center items-start">
-
       <p class="dark:text-white">E-mail</p>
-      <div class="w-full bg-[#daffee] dark:bg-[#0d2621] flex rounded-xl border-0 dark:text-white">
-      <input
-        type="text"
-        class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white focus:ring-1 {userRequest.email
-          ? Email.test(userRequest.email)
-            ? 'focus:ring-green-500'
-            : 'focus:ring-red-500'
-          : 'focus:ring-1'}"
-        bind:value={userRequest.email}
-      />
+      <div
+        class="w-full bg-[#daffee] dark:bg-[#0d2621] flex rounded-xl border-0 dark:text-white"
+      >
+        <input
+          type="text"
+          class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white focus:ring-1 {userRequest.email
+            ? Email.test(userRequest.email)
+              ? 'focus:ring-green-500'
+              : 'focus:ring-red-500'
+            : 'focus:ring-1'}"
+          bind:value={userRequest.email}
+        />
 
-      <div class="w-auto h-auto flex justify-center items-center px-2">
-        <img src="/images/{userRequest.email
-          ? Email.test(userRequest.email)
-            ? 'check.png'
-            : 'cross.png'
-          : 'question.png'}" class="w-6 h-6 object-contain" alt="">
+        <div class="w-auto h-auto flex justify-center items-center px-2">
+          <img
+            src="/images/{userRequest.email
+              ? Email.test(userRequest.email)
+                ? 'check.png'
+                : 'cross.png'
+              : 'question.png'}"
+            class="w-6 h-6 object-contain"
+            alt=""
+          />
+        </div>
       </div>
-
-
-      </div>
-
     </div>
 
     <div class="w-full h-auto flex flex-col justify-center items-start">

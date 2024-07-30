@@ -90,9 +90,7 @@
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div
           class="w-full h-12 flex justify-between items-center px-4 text-black dark:text-white bg-white dark:bg-[#2e3e53] p-8 rounded-xl"
-          on:click={() => {
-            roleRequest = role;
-          }}
+         
         >
           <p>{role.name}</p>
 
@@ -100,7 +98,10 @@
           <!-- svelte-ignore a11y-no-static-element-interactions -->
           <div class="w-auto flex gap-2">
             <div
-              class="w-12 h-12 flex justify-center items-center gap-2 rounded-xl bg-[#167b53] hover:bg-[#209d6b] duration-300 ease-in-out"
+              class="w-12 h-12 flex justify-center items-center gap-2 rounded-xl bg-[#167b53] hover:bg-[#209d6b] duration-300 ease-in-out cursor-pointer"
+              on:click={() => {
+                roleRequest = role;
+              }}
             >
               <img
                 src="/images/edit.png"
@@ -111,7 +112,7 @@
 
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div
-              class="w-12 h-12 flex justify-center items-center gap-2 rounded-xl bg-[#c53232] hover:bg-[#e03f3f] duration-300 ease-in-out"
+              class="w-12 h-12 flex justify-center items-center gap-2 rounded-xl bg-[#c53232] hover:bg-[#e03f3f] duration-300 ease-in-out cursor-pointer"
               on:click={() => deleteStore(role.id)}
             >
               <img

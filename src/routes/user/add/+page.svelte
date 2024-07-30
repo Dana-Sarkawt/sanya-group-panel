@@ -5,10 +5,19 @@
   import { Email } from "$lib/Utils/Regex/Email.Regex";
   import { Phone } from "$lib/Utils/Regex/Phone.Regex";
   import type { PageData } from "./$types";
+  import { phone } from "phone";
   export let data: PageData;
   const userRequest = new User.Create();
   async function addUser(request: User.Create) {
     try {
+      if (!phone(request.phone, { country: "IQ" }).isValid) {
+        throw new Error("Invalid phone number");
+      }
+      request.phone = phone(request.phone, { country: "IQ" })
+        .phoneNumber as string;
+      if (!Email.test(request.email)) {
+        throw new Error("Invalid email");
+      }
       const response = await authStore.create(request);
       if (!response || response.error) {
         throw new Error("Failed to add user");

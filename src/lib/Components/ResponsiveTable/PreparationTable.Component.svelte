@@ -6,6 +6,7 @@
   import { page } from "$app/stores";
   import { onMount } from "svelte";
   import { preparationStore } from "$lib/Store/Preparation.Store";
+  import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
   let deleteModal = false;
   let depositLoading = false;
   let financialLoading = false;
@@ -17,9 +18,16 @@
     error: "",
   };
 
-  let deposits: Array<{ preparation_id: number; deposit_count: number }> = [];
-  let financial: Array<{ preparation_id: number; financial_count: number }> =
-    [];
+  let deposits: Array<{
+    preparation_id: number;
+    deposit_count: number;
+    total_price: number;
+  }> = [];
+  let financial: Array<{
+    preparation_id: number;
+    financial_count: number;
+    total_price: number;
+  }> = [];
   let deleteId: number = 0;
   onMount(async () => {
     depositLoading = true;
@@ -80,28 +88,38 @@
                   on:click={() =>
                     goto(`/deposit/preparation/${preparation.id}`)}
                 >
-                <div class="w-auto h-auto flex justify-center items-center gap-2">
-                  <p>Deposit</p>
-
-                  <p
-                    class="w-auto h-2 md:h-6 rounded-full bg-orange-700 flex justify-center items-center px-2"
+                  <div
+                    class="w-auto h-auto flex justify-center items-center gap-2"
                   >
-                    {#if depositLoading}
-                      <span class="loader2"></span>
-                    {:else}
-                      {deposits.find((d) => d.preparation_id === preparation.id)
-                        ?.deposit_count ?? 0}
-                    {/if}
-                  </p>
+                    <p>Deposit</p>
+
+                    <p
+                      class="w-auto h-2 md:h-6 rounded-full bg-orange-700 flex justify-center items-center px-2"
+                    >
+                      {#if depositLoading}
+                        <span class="loader2"></span>
+                      {:else}
+                        {deposits.find(
+                          (d) => d.preparation_id === preparation.id
+                        )?.deposit_count ?? 0}
+                      {/if}
+                    </p>
+                  </div>
+
+                  <div
+                    class="w-full h-auto flex justify-center items-center bg-orange-700 rounded-xl px-2"
+                  >
+                    <p class="text-gray-300">
+                      Total: <span class="text-white"
+                        >{formatNumber(
+                          deposits.find(
+                            (d) => d.preparation_id == preparation.id
+                          )?.total_price ?? 0
+                        )}</span
+                      >
+                    </p>
+                  </div>
                 </div>
-
-                <div class="w-full h-auto flex justify-center items-center bg-orange-700 rounded-xl px-2">
-                  <p class="text-gray-300">Total: <span class="text-white">1200</span></p>
-                </div>
-
-                </div>
-
-
 
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <div
@@ -109,30 +127,38 @@
                   on:click={() =>
                     goto(`/finance/preparation/${preparation.id}`)}
                 >
-                <div class="w-auto h-auto flex justify-center items-center gap-2">
-                  <p>Financial Dues</p>
-
-                  <p
-                    class="w-auto h-2 md:h-6 rounded-full bg-blue-700 flex justify-center items-center px-2"
+                  <div
+                    class="w-auto h-auto flex justify-center items-center gap-2"
                   >
-                    {#if financialLoading}
-                      <span class="loader2"></span>
-                    {:else}
-                      {financial.find(
-                        (f) => f.preparation_id === preparation.id
-                      )?.financial_count ?? 0}
-                    {/if}
-                  </p>
+                    <p>Financial Dues</p>
+
+                    <p
+                      class="w-auto h-2 md:h-6 rounded-full bg-blue-700 flex justify-center items-center px-2"
+                    >
+                      {#if financialLoading}
+                        <span class="loader2"></span>
+                      {:else}
+                        {financial.find(
+                          (f) => f.preparation_id === preparation.id
+                        )?.financial_count ?? 0}
+                      {/if}
+                    </p>
+                  </div>
+
+                  <div
+                    class="w-full h-auto flex justify-center items-center bg-blue-700 rounded-xl px-2"
+                  >
+                    <p class="text-gray-300">
+                      Total: <span class="text-white"
+                        >{formatNumber(
+                          financial.find(
+                            (f) => f.preparation_id == preparation.id
+                          )?.total_price ?? 0
+                        )}</span
+                      >
+                    </p>
+                  </div>
                 </div>
-
-                <div class="w-full h-auto flex justify-center items-center bg-blue-700 rounded-xl px-2">
-                  <p class="text-gray-300">Total: <span class="text-white">1200</span></p>
-                </div>
-
-                </div>
-
-
-
               </div>
             </td>
             <td>

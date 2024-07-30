@@ -3,6 +3,7 @@
   import { page } from "$app/stores";
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
   import type { PageData } from "./$types";
+  import { onMount } from "svelte";
   export let data: PageData;
   let deleteModal = false;
   let deleteId: number = 0;

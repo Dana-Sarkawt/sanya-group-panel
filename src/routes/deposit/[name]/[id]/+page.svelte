@@ -3,14 +3,17 @@
   import { page } from "$app/stores";
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
   import type { PageData } from "./$types";
-  import { onMount } from "svelte";
   export let data: PageData;
   let deleteModal = false;
   let deleteId: number = 0;
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="w-full h-auto flex justify-center items-center md:px-44">
-  <a href="/project/1/0">
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y-missing-attribute -->
+  <a on:click={()=> window.history.back()} class="cursor-pointer">
     <p
       class="w-24 h-12 rounded-xl flex justify-center items-center bg-green-700 hover:bg-green-500 text-white duration-300 ease-in-out"
     >
@@ -22,7 +25,6 @@
     class="w-full h-auto text-2xl md:text-4xl dark:text-white text-center my-12"
   ></p>
 </div>
-
 
 <div class=" w-full h-auto flex justify-center items-center">
   <div

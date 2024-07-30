@@ -72,7 +72,8 @@ const createProjectStore = () => {
     },
     getAllWithoutFilter: async () => {
       try {
-        const response = await projectsRepository.readProjectsWithoutFilterAsync();
+        const response =
+          await projectsRepository.readProjectsWithoutFilterAsync();
         if (response.error) {
           throw new Error(response.error.message);
         }

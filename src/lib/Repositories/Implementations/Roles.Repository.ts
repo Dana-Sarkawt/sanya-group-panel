@@ -6,7 +6,7 @@ import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.M
 
 export class RolesRepository implements IRolesRepository {
   async createRoleAsync(
-    request: Database["public"]["Tables"]["Roles"]["Insert"]
+    request: Database["public"]["Tables"]["Roles"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Roles"]["Row"]>
   > {
@@ -22,7 +22,7 @@ export class RolesRepository implements IRolesRepository {
     }
   }
   async readRoleAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Roles"]["Row"]>
   > {
@@ -38,7 +38,7 @@ export class RolesRepository implements IRolesRepository {
     }
   }
   async readRolesAsync(
-    options?: GenericListOptions
+    options?: GenericListOptions,
   ): Promise<
     PostgrestSingleResponse<Array<Database["public"]["Tables"]["Roles"]["Row"]>>
   > {
@@ -66,7 +66,7 @@ export class RolesRepository implements IRolesRepository {
     }
   }
   async updateRoleAsync(
-    request: Database["public"]["Tables"]["Roles"]["Update"]
+    request: Database["public"]["Tables"]["Roles"]["Update"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Roles"]["Row"]>
   > {
@@ -83,7 +83,7 @@ export class RolesRepository implements IRolesRepository {
     }
   }
   async deleteRoleAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Roles"]["Row"]>
   > {

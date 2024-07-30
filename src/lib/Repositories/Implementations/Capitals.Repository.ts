@@ -20,7 +20,7 @@ export class CapitalsRepository implements ICapitalsRepository {
     }
   }
   async createCapitalAsync(
-    request: Database["public"]["Tables"]["Capitals"]["Insert"]
+    request: Database["public"]["Tables"]["Capitals"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   > {
@@ -37,7 +37,7 @@ export class CapitalsRepository implements ICapitalsRepository {
     }
   }
   async readCapitalAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   > {
@@ -54,7 +54,7 @@ export class CapitalsRepository implements ICapitalsRepository {
     }
   }
   async readCapitalsAsync(
-    options?: GenericListOptions
+    options?: GenericListOptions,
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Capitals"]["Row"]>
@@ -74,7 +74,7 @@ export class CapitalsRepository implements ICapitalsRepository {
         .order("id", { ascending: false })
         .range(
           options?.page! * options?.limit!,
-          options?.limit! * (options?.page! + 1)
+          options?.limit! * (options?.page! + 1),
         );
     } catch (error) {
       throw error;
@@ -93,14 +93,14 @@ export class CapitalsRepository implements ICapitalsRepository {
 
       return response.data.reduce(
         (acc: number, capital: any) => acc + capital.price,
-        0
+        0,
       );
     } catch (error) {
       throw error;
     }
   }
   async updateCapitalAsync(
-    request: Database["public"]["Tables"]["Capitals"]["Update"]
+    request: Database["public"]["Tables"]["Capitals"]["Update"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   > {
@@ -118,7 +118,7 @@ export class CapitalsRepository implements ICapitalsRepository {
     }
   }
   async deleteCapitalAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Capitals"]["Row"]>
   > {

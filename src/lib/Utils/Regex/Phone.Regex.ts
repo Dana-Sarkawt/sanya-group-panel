@@ -1,1 +1,1 @@
-export const Phone = /^07\d{9}$/; 
+export const Phone = /^07\d{9}$/;

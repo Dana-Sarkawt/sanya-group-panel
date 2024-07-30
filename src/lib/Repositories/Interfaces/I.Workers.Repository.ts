@@ -4,38 +4,34 @@ import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 export interface IWorkersRepository {
   createWorkerAsync(
-    request: Database["public"]["Tables"]["Workers"]["Insert"]
+    request: Database["public"]["Tables"]["Workers"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Workers"]["Row"]>
   >;
   readWorkerAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Workers"]["Row"]>
   >;
   readWorkersAsync(
-    options?: GenericListOptions
+    options?: GenericListOptions,
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Workers"]["Row"]>
     >
   >;
   readOverhaulDepositsByProjectIdAsync(projectId: number): Promise<
-  PostgrestSingleResponse<
-    {
+    PostgrestSingleResponse<{
       overall_total_price: number;
       overall_count: number;
-    }
-  >
->;
-readOverhaulFinancialsByProjectIdAsync(projectId: number): Promise<
-  PostgrestSingleResponse<
-    {
+    }>
+  >;
+  readOverhaulFinancialsByProjectIdAsync(projectId: number): Promise<
+    PostgrestSingleResponse<{
       overall_total_price: number;
       overall_count: number;
-    }
-  >
->;
+    }>
+  >;
   readDepositsByWorkerIdsAsync(ids: number[]): Promise<
     PostgrestSingleResponse<
       Array<{
@@ -55,12 +51,12 @@ readOverhaulFinancialsByProjectIdAsync(projectId: number): Promise<
     >
   >;
   updateWorkerAsync(
-    request: Database["public"]["Tables"]["Workers"]["Update"]
+    request: Database["public"]["Tables"]["Workers"]["Update"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Workers"]["Row"]>
   >;
   deleteWorkerAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Workers"]["Row"]>
   >;

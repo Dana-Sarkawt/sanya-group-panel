@@ -51,9 +51,10 @@ const createFinancialDueStore = () => {
     },
     getAll: async (options?: GenericListOptions) => {
       try {
-        const response = await financialDuesRepository.readFinancialDuesAsync(options);
+        const response =
+          await financialDuesRepository.readFinancialDuesAsync(options);
         console.log("response", response);
-        
+
         if (response.error) {
           throw new Error(response.error.message);
         }

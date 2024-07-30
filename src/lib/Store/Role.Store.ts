@@ -67,8 +67,7 @@ const createRoleStore = () => {
     },
     getAllWithoutFilter: async () => {
       try {
-        const response =
-          await rolesRepository.readRolesWithoutFilterAsync();
+        const response = await rolesRepository.readRolesWithoutFilterAsync();
         if (response.error) {
           throw new Error(response.error.message);
         }

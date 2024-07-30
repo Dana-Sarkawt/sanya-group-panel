@@ -92,7 +92,7 @@ const createSaleStore = () => {
       try {
         const response =
           await salesRepository.readOverhaulFinancialsByProjectIdAsync(
-            projectId
+            projectId,
           );
         if (response.error) {
           throw new Error(response.error.message);
@@ -136,7 +136,7 @@ const createSaleStore = () => {
         }
         update((store) => {
           store.data = store.data.map((sale) =>
-            sale.id === data.id ? response.data : sale
+            sale.id === data.id ? response.data : sale,
           );
           return store;
         });

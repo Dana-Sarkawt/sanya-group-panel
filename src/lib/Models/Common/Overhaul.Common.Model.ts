@@ -1,9 +1,9 @@
-export class Overhaul{
-    deposits: OverhaulAttributes = new OverhaulAttributes();
-    financials: OverhaulAttributes = new OverhaulAttributes();
+export class Overhaul {
+  deposits: OverhaulAttributes = new OverhaulAttributes();
+  financials: OverhaulAttributes = new OverhaulAttributes();
 }
 
-class OverhaulAttributes{
-    overall_total_price: number = 0;
-    overall_count: number = 0;
+class OverhaulAttributes {
+  overall_total_price: number = 0;
+  overall_count: number = 0;
 }

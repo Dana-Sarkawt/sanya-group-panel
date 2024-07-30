@@ -8,6 +8,21 @@
   let deleteId: number = 0;
 </script>
 
+<div class="w-full h-auto flex justify-center items-center md:px-44">
+  <a href="/project/1/0">
+    <p
+      class="w-24 h-12 rounded-xl flex justify-center items-center bg-green-700 hover:bg-green-500 text-white duration-300 ease-in-out"
+    >
+      Back
+    </p>
+  </a>
+
+  <p
+    class="w-full h-auto text-2xl md:text-4xl dark:text-white text-center my-12"
+  ></p>
+</div>
+
+
 <div class=" w-full h-auto flex justify-center items-center">
   <div
     class="  flex h-[100vh] w-full flex-col justify-start items-center lg:mx-24"

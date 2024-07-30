@@ -76,8 +76,6 @@ tr:nth-child(even) {
   text-align: center;
 }
 
-
-
 .table {
   color: black;
 }
@@ -128,8 +126,7 @@ div[role="tooltip"] {
   display: inline-block;
   position: relative;
   border: 10px solid;
-  border-color: #e206651d #e2066539
-  #e2066558 #e206657b;
+  border-color: #e206651d #e2066539 #e2066558 #e206657b;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
@@ -142,12 +139,6 @@ div[role="tooltip"] {
     transform: rotate(360deg);
   }
 }
-
-/* .phone-input:focus {
-  border: none !important;
-  outline: none !important;
-} */
-
 
 /**
  * END  User Profile Letter Loading Style

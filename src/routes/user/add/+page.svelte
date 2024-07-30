@@ -63,7 +63,11 @@
       <p class="dark:text-white">Phone</p>
       <input
         type="text"
-        class="phone-input w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white focus:ring-1 {userRequest.phone ? regexPhone.test(userRequest.phone) ? "focus:ring-green-500":"focus:ring-red-500" :"focus:ring-0"}"
+        class="phone-input w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white focus:ring-1 {userRequest.phone
+          ? regexPhone.test(userRequest.phone)
+            ? 'focus:ring-green-500'
+            : 'focus:ring-red-500'
+          : 'focus:ring-0'}"
         bind:value={userRequest.phone}
         on:input={phoneField}
       />

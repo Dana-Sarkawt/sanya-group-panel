@@ -20,13 +20,18 @@
   }
   function phoneField(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    const currentValue = inputElement.value;
+    let currentValue = inputElement.value;
+
+    // Remove non-digit characters
+    currentValue = currentValue.replace(/\D/g, "");
 
     // Check the length of the input value
     if (currentValue.length > 11) {
-      inputElement.value = currentValue.slice(0, 11);
-      return;
+      currentValue = currentValue.slice(0, 11);
     }
+
+    // Update the input value
+    inputElement.value = currentValue;
   }
 </script>
 

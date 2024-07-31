@@ -79,7 +79,7 @@
     class="flex flex-col md:flex-row space-x-0 md:space-x-2 justify-center items-center  gap-4 mt-4"
   >
     <TabItem
-      open
+      open={true}
       activeClasses="w-60 h-28 bg-[#c62570a3] rounded-2xl text-white "
       inactiveClasses="w-60 h-28 bg-[#c6257080] rounded-2xl  text-white  "
       on:click={retrieveCapital}

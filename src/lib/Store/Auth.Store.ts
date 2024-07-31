@@ -1,9 +1,11 @@
 import type { User } from "$lib/Models/Request/User.Request.Model";
 import { AuthRepository } from "$lib/Repositories/Implementations/Auth.Repository";
+import { UsersRepository } from "$lib/Repositories/Implementations/Users.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
 import { get, writable } from "svelte/store";
 
 const authRepository = new AuthRepository();
+const usersRepository = new UsersRepository();
 
 const createAuthStore = () => {
   const { subscribe, set, update } = writable<
@@ -15,6 +17,18 @@ const createAuthStore = () => {
       set(data),
     create: async (request: User.Create) => {
       try {
+        const checkEmail = await usersRepository.readUserByEmailAsync(
+          request.email
+        );
+        if (checkEmail.data) {
+          throw new Error("Email already exists");
+        }
+        const checkPhone = await usersRepository.readUserByPhoneAsync(
+          request.phone
+        );
+        if (checkPhone.data) {
+          throw new Error("Phone number already exists");
+        }
         const response = await authRepository.createAsync(request);
         if (response.error) {
           throw new Error(response.error.message);

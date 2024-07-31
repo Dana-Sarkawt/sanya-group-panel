@@ -6,7 +6,7 @@ import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.M
 
 export class UsersRepository implements IUsersRepository {
   async createUserAsync(
-    request: Database["public"]["Tables"]["Users"]["Insert"],
+    request: Database["public"]["Tables"]["Users"]["Insert"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {
@@ -22,7 +22,7 @@ export class UsersRepository implements IUsersRepository {
     }
   }
   async readUserAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {
@@ -31,6 +31,7 @@ export class UsersRepository implements IUsersRepository {
         .from("Users")
         .select("*")
         .eq("id", id)
+        .is("deleted_at", null)
         .single();
       return response;
     } catch (error) {
@@ -38,7 +39,7 @@ export class UsersRepository implements IUsersRepository {
     }
   }
   async readUsersAsync(
-    options?: GenericListOptions,
+    options?: GenericListOptions
   ): Promise<
     PostgrestSingleResponse<Array<Database["public"]["Tables"]["Users"]["Row"]>>
   > {
@@ -46,11 +47,11 @@ export class UsersRepository implements IUsersRepository {
       const response = await Supabase.client
         .from("Users")
         .select("*", { count: "exact" })
-        .order("id", { ascending: false })
         .is("deleted_at", null)
+        .order("id", { ascending: false })
         .range(
           options?.page! * options?.limit!,
-          options?.limit! * (options?.page! + 1),
+          options?.limit! * (options?.page! + 1)
         );
       return response;
     } catch (error) {
@@ -69,8 +70,38 @@ export class UsersRepository implements IUsersRepository {
       throw error;
     }
   }
+  async readUserByEmailAsync(
+    email: string
+  ): Promise<
+    PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
+  > {
+    try {
+      const response = await Supabase.client
+        .from("Users")
+        .select("*")
+        .eq("email", email)
+        .is("deleted_at", null)
+        .single();
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async readUserByPhoneAsync(phone: string) {
+    try {
+      const response = await Supabase.client
+        .from("Users")
+        .select("*")
+        .eq("phone", phone)
+        .is("deleted_at", null)
+        .single();
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
   async updateUserAsync(
-    request: Database["public"]["Tables"]["Users"]["Update"],
+    request: Database["public"]["Tables"]["Users"]["Update"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {
@@ -87,7 +118,7 @@ export class UsersRepository implements IUsersRepository {
     }
   }
   async deleteUserAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {
@@ -98,6 +129,17 @@ export class UsersRepository implements IUsersRepository {
         .eq("id", id)
         .select("*")
         .single();
+      const authUserResponse = await fetch(`/api/user/delete`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: response.data?.user_uid }),
+      });
+      if (!authUserResponse.ok) {
+        throw new Error("Failed to delete user");
+      }
+      console.log(authUserResponse);
       return response;
     } catch (error) {
       throw error;

@@ -188,7 +188,7 @@
           <div
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
-            <span class="text-gray-400">Deposit: </span>
+            <span class="text-gray-400 text-xs">Deposit: </span>
             {#if isLoading}
               <span class="loader2"></span>
             {:else}
@@ -198,7 +198,7 @@
           <div
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
-            <span class="text-gray-400">Financial: </span>
+            <span class="text-gray-400 text-xs">Financial: </span>
             {#if isLoading}
               <span class="loader2"></span>
             {:else}

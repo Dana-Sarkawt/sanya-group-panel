@@ -6,6 +6,19 @@
     transition: all 0.3s ease-in-out !important;
 } */
 
+@font-face {
+  font-family: kurdish;
+  src: url(/fonts/bahij.ttf);
+}
+
+*,
+body {
+  font-family: kurdish !important;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 10px;

@@ -5,7 +5,8 @@ export namespace Deposit {
     description: string = "";
     price: number = 0;
     date: Date | string = moment(new Date()).format("YYYY-MM-DD");
-    [x: string]: number | string | Date;
+    image?: string = "";
+    [x: string]: number | string | Date | undefined;
   }
 
   export class Update {
@@ -13,6 +14,7 @@ export namespace Deposit {
     description: string = "";
     price: number = 0;
     date: Date | string = moment(new Date()).format("YYYY-MM-DD");
-    [x: string]: number | string | Date;
+    image?: string = "";
+    [x: string]: number | string | Date | undefined;
   }
 }

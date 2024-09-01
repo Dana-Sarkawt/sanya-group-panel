@@ -1,13 +1,23 @@
 <script lang="ts">
+  import { storageStore } from "$lib/Store/Storage.Store";
+  import { ImageCommon } from "$lib/Models/Common/Image.Common.Model";
   import { goto } from "$app/navigation";
   import { projectStore } from "$lib/Store/Project.Store";
   import { Status } from "$lib/Models/Enum/Status.Enum.Model";
   import { Project } from "$lib/Models/Request/Project.Request.Model";
+  import ImageField from "$lib/Components/ImageField.Component.svelte";
   const projectRequest = new Project.Create();
+  const image = new ImageCommon();
 
   async function addProject(request: Project.Create) {
     try {
-      console.log(request);
+      if(image.file && image.file.size > 0) {
+        const response = await storageStore.uploadImage(image.file);
+        if (!response) {
+          throw new Error("Failed to upload image");
+        }
+        request.image = response;
+      }
       const response = await projectStore.create(request);
       if (!response) {
         throw new Error("Failed to create project");
@@ -39,6 +49,7 @@
   <div
     class="w-[90%] md:w-[50%] h-auto p-10 bg-[#94DCBA] dark:bg-[#11433A] border border-[#11433A] dark:border-[#94DCBA] rounded-xl flex flex-col justify-center items-center gap-6"
   >
+    <ImageField {image} />
     <div class="w-full h-auto flex flex-col justify-center items-start">
       <p class="dark:text-white">Project Name</p>
       <input
@@ -64,7 +75,7 @@
 
     <button
       class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={() => addProject(projectRequest)}>Add Project</button
+      on:click={async () => addProject(projectRequest)}>Add Project</button
     >
   </div>
 </div>

@@ -1,3 +1,4 @@
+import { goto } from "$app/navigation";
 import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.Model";
 import type { Store } from "$lib/Models/Response/Store.Response.Model";
 import { ProjectsRepository } from "$lib/Repositories/Implementations/Projects.Repository";
@@ -18,7 +19,7 @@ const createProjectStore = () => {
     set: async (data: Store<Database["public"]["Tables"]["Projects"]["Row"]>) =>
       set(data),
     create: async (
-      data: Database["public"]["Tables"]["Projects"]["Insert"],
+      data: Database["public"]["Tables"]["Projects"]["Insert"]
     ) => {
       try {
         if (!data.name || data.name === "") {
@@ -35,7 +36,9 @@ const createProjectStore = () => {
         });
         return response;
       } catch (error) {
-        console.log(error);
+        if (error instanceof Error) {
+          console.error(error.message);
+        }
       }
     },
     get: async (id: number) => {
@@ -46,7 +49,9 @@ const createProjectStore = () => {
         }
         return response;
       } catch (error) {
-        console.log(error);
+        if (error instanceof Error) {
+          console.error(error.message);
+        }
       }
     },
     getAll: async (options?: GenericListOptions) => {
@@ -67,7 +72,9 @@ const createProjectStore = () => {
           pages: pages,
         };
       } catch (error) {
-        console.log(error);
+        if (error instanceof Error) {
+          console.error(error.message);
+        }
       }
     },
     getAllWithoutFilter: async () => {
@@ -82,11 +89,13 @@ const createProjectStore = () => {
           count: response.count ?? 0,
         };
       } catch (error) {
-        console.log(error);
+        if (error instanceof Error) {
+          console.error(error.message);
+        }
       }
     },
     update: async (
-      data: Database["public"]["Tables"]["Projects"]["Update"],
+      data: Database["public"]["Tables"]["Projects"]["Update"]
     ) => {
       try {
         if (!data.id) {
@@ -98,14 +107,16 @@ const createProjectStore = () => {
         }
         update((store) => {
           const index = store.data.findIndex(
-            (project) => project.id === data.id,
+            (project) => project.id === data.id
           );
           store.data[index] = response.data;
           return store;
         });
         return response;
       } catch (error) {
-        console.log(error);
+        if (error instanceof Error) {
+          console.error(error.message);
+        }
       }
     },
     delete: async (id: number) => {
@@ -122,7 +133,9 @@ const createProjectStore = () => {
         });
         return response;
       } catch (error) {
-        console.log(error);
+        if (error instanceof Error) {
+          console.error(error.message);
+        }
       }
     },
   };

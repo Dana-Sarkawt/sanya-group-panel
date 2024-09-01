@@ -3,6 +3,8 @@
   import type { Database } from "$lib/Supabase/Types/database.types";
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
   import { projectStore } from "$lib/Store/Project.Store";
+  import { Status } from "$lib/Models/Enum/Status.Enum.Model";
+  import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
 
   export let projects: Store<Database["public"]["Tables"]["Projects"]["Row"]> =
     {
@@ -18,6 +20,7 @@
   <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
     <thead>
       <tr>
+        <th scope="col">Image</th>
         <th scope="col">Project ID</th>
         <th scope="col">Project Name</th>
         <th scope="col">Status</th>
@@ -28,9 +31,36 @@
       {#if projects.count !== 0}
         {#each projects.data as project}
           <tr>
+            <td class="flex justify-center"
+              >
+              <img
+                src="{project.image ? `${VITE_SUPABASE_BUCKET_SANYA}${project.image}`:"/images/spark.png"}"
+                class="w-8 h-8 object-contain"
+                alt=""
+              />
+              </td
+            >
             <td>{project.id}</td>
             <td>{project.name}</td>
-            <td>{project.status}</td>
+            <td>
+              <div class="w-full flex justify-center rounded-xl">
+                <p
+                  class={`w-12 md:w-32 p-2 rounded-3xl font-medium text-white shadow-lg ${
+                    project.status === Status.Stopped
+                      ? "bg-gradient-to-b from-[#ff8f1f] to-[#d66b00] shadow-[0_4px_6px_-1px_rgba(214,107,0,0.5)]"
+                      : project.status === Status.Failed
+                        ? "bg-gradient-to-b from-[#b51717] to-[#8b1313] shadow-[0_4px_6px_-1px_rgba(139,19,19,0.5)]"
+                        : project.status === Status.In_Progress
+                          ? "bg-gradient-to-b from-[#1969c4] to-[#144b90] shadow-[0_4px_6px_-1px_rgba(20,75,144,0.5)]"
+                          : project.status === Status.Done
+                            ? "bg-gradient-to-b from-[#13983d] to-[#0f762e] shadow-[0_4px_6px_-1px_rgba(15,118,46,0.5)]"
+                            : ""
+                  }`}
+                >
+                  {project.status}
+                </p>
+              </div>
+            </td>
             <td>
               <!-- svelte-ignore a11y-no-static-element-interactions -->
               <div class="flex h-auto w-auto items-center justify-center gap-2">

@@ -35,7 +35,7 @@
               >
               <img
                 src="{project.image ? `${VITE_SUPABASE_BUCKET_SANYA}${project.image}`:"/images/spark.png"}"
-                class="w-8 h-8 object-contain"
+                class="w-10 h-10 object-contain"
                 alt=""
               />
               </td

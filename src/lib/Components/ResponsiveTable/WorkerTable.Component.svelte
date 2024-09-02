@@ -7,6 +7,7 @@
   import { workerStore } from "$lib/Store/Worker.Store";
   import { onMount } from "svelte";
   import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
+  import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
   let deleteModal = false;
   let depositLoading = false;
   let financialLoading = false;
@@ -15,8 +16,16 @@
     count: 0,
     error: "",
   };
-  let deposits: Array<{ worker_id: number; deposit_count: number, total_price: number }> = [];
-  let financial: Array<{ worker_id: number; financial_count: number, total_price: number }> = [];
+  let deposits: Array<{
+    worker_id: number;
+    deposit_count: number;
+    total_price: number;
+  }> = [];
+  let financial: Array<{
+    worker_id: number;
+    financial_count: number;
+    total_price: number;
+  }> = [];
   let deleteId: number = 0;
 
   onMount(async () => {
@@ -57,6 +66,7 @@
   <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
     <thead>
       <tr>
+        <th scope="col">Image</th>
         <th scope="col">ID</th>
         <th scope="col">Name</th>
         <th scope="col">New Action</th>
@@ -67,6 +77,15 @@
       {#if workers.count !== 0}
         {#each workers.data as worker}
           <tr>
+            <td class="flex justify-center items-center h-28">
+              <img
+                src={worker.image
+                  ? `${VITE_SUPABASE_BUCKET_SANYA}${worker.image}`
+                  : "/images/spark.png"}
+                class="w-10 h-10 object-contain rounded-lg"
+                alt=""
+              />
+            </td>
             <td>{worker.id}</td>
             <td>{worker.name}</td>
             <td>
@@ -98,10 +117,12 @@
                     class="w-full h-auto flex justify-center items-center bg-orange-700 rounded-xl px-2"
                   >
                     <p class="text-gray-300">
-                      Total: <span class="text-white">{formatNumber(
-                        deposits.find((d) => d.worker_id == worker.id)
-                          ?.total_price ?? 0
-                      )}</span>
+                      Total: <span class="text-white"
+                        >{formatNumber(
+                          deposits.find((d) => d.worker_id == worker.id)
+                            ?.total_price ?? 0
+                        )}</span
+                      >
                     </p>
                   </div>
                 </div>
@@ -132,10 +153,12 @@
                     class="w-full h-auto flex justify-center items-center bg-blue-700 rounded-xl px-2"
                   >
                     <p class="text-gray-300">
-                      Total: <span class="text-white">{formatNumber(
-                        financial.find((f) => f.worker_id == worker.id)
-                          ?.total_price ?? 0
-                      )}</span>
+                      Total: <span class="text-white"
+                        >{formatNumber(
+                          financial.find((f) => f.worker_id == worker.id)
+                            ?.total_price ?? 0
+                        )}</span
+                      >
                     </p>
                   </div>
                 </div>

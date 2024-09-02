@@ -5,6 +5,7 @@
   import moment from "moment";
   import { page } from "$app/stores";
   import { dailyStore } from "$lib/Store/Daily.Store";
+  import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
   let deleteModal = false;
   export let dailys: Store<Database["public"]["Tables"]["Dailys"]["Row"]> = {
     data: [],
@@ -18,6 +19,7 @@
   <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
     <thead>
       <tr>
+        <th scope="col">Image</th>
         <th scope="col">Description</th>
         <th scope="col">Price</th>
         <th scope="col">Date</th>
@@ -28,6 +30,15 @@
       {#if dailys.count !== 0}
         {#each dailys.data as daily}
           <tr>
+            <td class="flex justify-center">
+              <img
+                src={daily.image
+                  ? `${VITE_SUPABASE_BUCKET_SANYA}${daily.image}`
+                  : "/images/spark.png"}
+                class="w-10 h-10 object-contain rounded-lg"
+                alt=""
+              />
+            </td>
             <td>{daily.description}</td>
             <td>{daily.price}</td>
             <td>{moment(daily.date).format("YYYY-MM-DD")}</td>

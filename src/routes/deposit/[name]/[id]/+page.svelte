@@ -3,6 +3,7 @@
   import { page } from "$app/stores";
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
   import type { PageData } from "./$types";
+  import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
   export let data: PageData;
   let deleteModal = false;
   let deleteId: number = 0;
@@ -13,7 +14,7 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-missing-attribute -->
-  <a on:click={()=> window.history.back()} class="cursor-pointer">
+  <a on:click={() => window.history.back()} class="cursor-pointer">
     <p
       class="w-24 h-12 rounded-xl flex justify-center items-center bg-green-700 hover:bg-green-500 text-white duration-300 ease-in-out"
     >
@@ -67,6 +68,7 @@
       <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
         <thead>
           <tr>
+            <th scope="col">Image</th>
             <th scope="col">Description</th>
             <th scope="col">Price</th>
             <th scope="col">Date</th>
@@ -77,6 +79,15 @@
           {#if data.deposits?.count !== 0 && data.deposits?.data}
             {#each data.deposits.data as deposit}
               <tr>
+                <td class="flex justify-center items-center h-28">
+                  <img
+                    src={deposit.image
+                      ? `${VITE_SUPABASE_BUCKET_SANYA}${deposit.image}`
+                      : "/images/spark.png"}
+                    class="w-10 h-10 object-contain rounded-lg"
+                    alt=""
+                  />
+                </td>
                 <td>{deposit.description}</td>
                 <td>{deposit.price}</td>
                 <td>{deposit.date}</td>

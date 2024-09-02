@@ -1,4 +1,5 @@
 <script lang="ts">
+  import ImageField from "$lib/Components/ImageField.Component.svelte";
   import moment from "moment";
   import { goto } from "$app/navigation";
   import { financialDueStore } from "$lib/Store/FinancialDue.Store";
@@ -6,10 +7,14 @@
   import { FinancialDues } from "$lib/Models/Request/FinancialDues.Request.Model";
   import { onMount } from "svelte";
   import { FilterTextFieldToNumbers } from "$lib/Utils/FilterFields.Utils";
+  import { ImageCommon } from "$lib/Models/Common/Image.Common.Model";
+  import { storageStore } from "$lib/Store/Storage.Store";
   export let financialRequest = {
     ...new FinancialDues.Update(),
     [`${$page.params.name}_id`]: Number($page.params.id),
   };
+
+  const image = new ImageCommon();
 
   onMount(async () => {
     const finance = await financialDueStore.get(Number($page.params.financeId));
@@ -22,14 +27,23 @@
       price: finance.data.price as number,
       date: finance.data.date as string,
       id: finance.data.id,
+      image: finance.data.image as string,
     };
+    image.localUrl = finance.data.image as string;
   });
 
-  async function updateFinancial() {
+  async function updateFinancial(request: FinancialDues.Update) {
     try {
-      financialDueStore.update({
-        ...financialRequest,
-        date: moment(financialRequest.date).format("YYYY-MM-DD"),
+      if (image.file && image.file.size > 0) {
+        const response = await storageStore.uploadImage(image.file);
+        if (!response) {
+          throw new Error("Failed to upload image");
+        }
+        request.image = response;
+      }
+      await financialDueStore.update({
+        ...request,
+        date: moment(request.date).format("YYYY-MM-DD"),
       });
       goto(`/finance/${$page.params.name}/${$page.params.id}`);
     } catch (error) {
@@ -63,6 +77,7 @@
   <div
     class="w-[90%] md:w-[50%] h-auto p-10 bg-[#94DCBA] dark:bg-[#11433A] border border-[#11433A] dark:border-[#94DCBA] rounded-xl flex flex-col justify-center items-center gap-6"
   >
+    <ImageField {image} />
     <div class="w-full h-auto flex flex-col justify-center items-start">
       <p class="dark:text-white">Description</p>
       <textarea
@@ -92,7 +107,7 @@
 
     <button
       class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={updateFinancial}>Update Finance</button
+      on:click={() => updateFinancial(financialRequest)}>Update Finance</button
     >
   </div>
 </div>

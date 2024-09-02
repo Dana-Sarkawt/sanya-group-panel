@@ -7,6 +7,7 @@
   import { onMount } from "svelte";
   import { preparationStore } from "$lib/Store/Preparation.Store";
   import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
+  import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
   let deleteModal = false;
   let depositLoading = false;
   let financialLoading = false;
@@ -67,6 +68,7 @@
   <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
     <thead>
       <tr>
+        <th scope="col">Image</th>
         <th scope="col">ID</th>
         <th scope="col">Description</th>
         <th scope="col">New Action</th>
@@ -77,6 +79,15 @@
       {#if preparations.count !== 0}
         {#each preparations.data as preparation}
           <tr>
+            <td class="flex justify-center h-28 items-center"
+            >
+            <img
+              src="{preparation.image ? `${VITE_SUPABASE_BUCKET_SANYA}${preparation.image}`:"/images/spark.png"}"
+              class="w-10 h-10 object-contain rounded-lg"
+              alt=""
+            />
+            </td
+          >
             <td>{preparation.id}</td>
             <td>{preparation.description}</td>
             <td>

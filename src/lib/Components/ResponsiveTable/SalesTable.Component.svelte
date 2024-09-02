@@ -7,6 +7,7 @@
   import { onMount } from "svelte";
   import { saleStore } from "$lib/Store/Sale.Store";
   import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
+  import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
   let deleteModal = false;
   let depositLoading = false;
   let financialLoading = false;
@@ -64,6 +65,7 @@
   <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
     <thead>
       <tr>
+        <th scope="col">Image</th>
         <th scope="col">Description</th>
         <th scope="col">New Action</th>
         <th scope="col">Action</th>
@@ -73,6 +75,15 @@
       {#if sales.count !== 0}
         {#each sales.data as sale}
           <tr>
+            <td class="flex justify-center items-center h-28">
+              <img
+                src={sale.image
+                  ? `${VITE_SUPABASE_BUCKET_SANYA}${sale.image}`
+                  : "/images/spark.png"}
+                class="w-10 h-10 object-contain rounded-lg"
+                alt=""
+              />
+            </td>
             <td>{sale.description}</td>
             <td>
               <!-- svelte-ignore a11y-click-events-have-key-events -->

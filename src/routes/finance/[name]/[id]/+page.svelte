@@ -3,6 +3,7 @@
   import { page } from "$app/stores";
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
   import type { PageData } from "./$types";
+  import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
   export let data: PageData;
   let deleteModal = false;
   let deleteId: number = 0;
@@ -55,6 +56,7 @@
       <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
         <thead>
           <tr>
+            <th scope="col">Image</th>
             <th scope="col">Description</th>
             <th scope="col">Price</th>
             <th scope="col">Date</th>
@@ -65,6 +67,15 @@
           {#if data.financialDues?.count !== 0 && data.financialDues?.data}
             {#each data.financialDues.data as financial}
               <tr>
+                <td class="flex justify-center items-center">
+                  <img
+                    src={financial.image
+                      ? `${VITE_SUPABASE_BUCKET_SANYA}${financial.image}`
+                      : "/images/spark.png"}
+                    class="w-10 h-10 object-contain rounded-lg"
+                    alt=""
+                  />
+                </td>
                 <td>{financial.description}</td>
                 <td>{financial.price}</td>
                 <td>{financial.date}</td>

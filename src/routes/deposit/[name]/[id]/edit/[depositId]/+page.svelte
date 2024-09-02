@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { storageStore } from "$lib/Store/Storage.Store";
   import moment from "moment";
   import { goto } from "$app/navigation";
   import { depositStore } from "$lib/Store/Deposit.Store";
@@ -6,10 +7,13 @@
   import { Deposit } from "$lib/Models/Request/Deposit.Request.Model";
   import { onMount } from "svelte";
   import { FilterTextFieldToNumbers } from "$lib/Utils/FilterFields.Utils";
+  import { ImageCommon } from "$lib/Models/Common/Image.Common.Model";
+  import ImageField from "$lib/Components/ImageField.Component.svelte";
   export let depositRequest = {
     ...new Deposit.Update(),
     [`${$page.params.name}_id`]: Number($page.params.id),
   };
+  const image = new ImageCommon();
 
   onMount(async () => {
     const deposit = await depositStore.get(Number($page.params.depositId));
@@ -22,14 +26,23 @@
       price: deposit.data.price as number,
       date: deposit.data.date as string,
       id: deposit.data.id,
+      image: deposit.data.image as string,
     };
+    image.localUrl = deposit.data.image as string;
   });
 
-  async function UpdateDeposit() {
+  async function UpdateDeposit(request: Deposit.Update) {
     try {
-      depositStore.update({
-        ...depositRequest,
-        date: moment(depositRequest.date).format("YYYY-MM-DD"),
+      if (image.file && image.file.size > 0) {
+        const response = await storageStore.uploadImage(image.file);
+        if (!response) {
+          throw new Error("Failed to upload image");
+        }
+        request.image = response;
+      }
+      await depositStore.update({
+        ...request,
+        date: moment(request.date).format("YYYY-MM-DD"),
       });
       goto(`/deposit/${$page.params.name}/${$page.params.id}`);
     } catch (error) {
@@ -63,6 +76,7 @@
   <div
     class="w-[90%] md:w-[50%] h-auto p-10 bg-[#94DCBA] dark:bg-[#11433A] border border-[#11433A] dark:border-[#94DCBA] rounded-xl flex flex-col justify-center items-center gap-6"
   >
+    <ImageField {image} />
     <div class="w-full h-auto flex flex-col justify-center items-start">
       <p class="dark:text-white">Description</p>
       <textarea
@@ -92,7 +106,7 @@
 
     <button
       class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={UpdateDeposit}>Update Deposit</button
+      on:click={() => UpdateDeposit(depositRequest)}>Update Deposit</button
     >
   </div>
 </div>

@@ -1,12 +1,10 @@
 <script lang="ts">
-  import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
   import type { Store } from "$lib/Models/Response/Store.Response.Model";
   import type { Database } from "$lib/Supabase/Types/database.types";
-  import { onMount } from "svelte";
-  import { projectStore } from "$lib/Store/Project.Store";
   import { page } from "$app/stores";
   import { capitalStore } from "$lib/Store/Capital.Store";
+  import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
   export let capitals: Store<Database["public"]["Tables"]["Capitals"]["Row"]> =
     {
       data: [],
@@ -14,13 +12,14 @@
     };
 
   let deleteModal = false;
-  let deleteId:number = 0;
+  let deleteId: number = 0;
 </script>
 
 <div class="w-full h-auto flex justify-center items-center mx-2">
   <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
     <thead>
       <tr>
+        <th scope="col">Image</th>
         <th scope="col">Description</th>
         <th scope="col">Price</th>
         <th scope="col">Date</th>
@@ -31,6 +30,15 @@
       {#if capitals.count !== 0}
         {#each capitals.data as capital}
           <tr>
+            <td class="flex justify-center">
+              <img
+                src={capital.image
+                  ? `${VITE_SUPABASE_BUCKET_SANYA}${capital.image}`
+                  : "/images/spark.png"}
+                class="w-10 h-10 object-contain rounded-lg"
+                alt=""
+              />
+            </td>
             <td>{capital.description}</td>
             <td>{capital.price}</td>
             <td>{capital.date}</td>
@@ -57,7 +65,7 @@
                   on:click={() => {
                     deleteModal = true;
                     deleteId = capital.id;
-                    }}
+                  }}
                 >
                   <img
                     src="/images/delete.png"

@@ -6,11 +6,15 @@
   import { page } from "$app/stores";
   import { Daily } from "$lib/Models/Request/Daily.Request.Model";
   import { FilterTextFieldToNumbers } from "$lib/Utils/FilterFields.Utils";
+  import { ImageCommon } from "$lib/Models/Common/Image.Common.Model";
+  import { storageStore } from "$lib/Store/Storage.Store";
+  import ImageField from "$lib/Components/ImageField.Component.svelte";
 
   let dailyRequest = {
     ...new Daily.Update(),
     project_id: Number($page.params.projectId),
   };
+  const image = new ImageCommon();
 
   onMount(async () => {
     const daily = await dailyStore.get(Number($page.params.id));
@@ -23,14 +27,23 @@
       price: daily.data.price as number,
       date: daily.data.date as string,
       id: daily.data.id,
+      image: daily.data.image as string,
     };
+    image.localUrl = daily.data.image as string;
   });
 
-  async function UpdateDaily() {
+  async function UpdateDaily(request: Daily.Update) {
     try {
-      dailyStore.update({
-        ...dailyRequest,
-        date: moment(dailyRequest.date).format("YYYY-MM-DD"),
+      if (image.file && image.file.size > 0) {
+        const response = await storageStore.uploadImage(image.file);
+        if (!response) {
+          throw new Error("Failed to upload image");
+        }
+        request.image = response;
+      }
+      await dailyStore.update({
+        ...request,
+        date: moment(request.date).format("YYYY-MM-DD"),
       });
       goto(`/project/${$page.params.projectId}/expense/0`);
     } catch (error) {
@@ -59,6 +72,7 @@
   <div
     class="w-[90%] md:w-[50%] h-auto p-10 bg-[#94DCBA] dark:bg-[#11433A] border border-[#11433A] dark:border-[#94DCBA] rounded-xl flex flex-col justify-center items-center gap-6"
   >
+    <ImageField {image} />
     <div class="w-full h-auto flex flex-col justify-center items-start">
       <p class="dark:text-white">Description</p>
       <textarea
@@ -88,7 +102,7 @@
 
     <button
       class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={UpdateDaily}>Update Daily</button
+      on:click={() => UpdateDaily(dailyRequest)}>Update Daily</button
     >
   </div>
 </div>

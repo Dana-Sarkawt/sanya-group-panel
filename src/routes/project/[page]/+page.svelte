@@ -5,7 +5,20 @@
   import type { PageData } from "./$types";
   import ProjectTable from "$lib/Components/ResponsiveTable/ProjectTable.Component.svelte";
   import { exportAsExcelFile } from "$lib/Utils/ExportAsExcel.Utils";
+  import { onMount } from "svelte";
   export let data: PageData;
+  let Total: number = 0;
+  let isLoading = false;
+  onMount(async () => {
+    isLoading = true;
+    try {
+      Total = (await projectStore.getTotalPrice()) as number;
+    } catch (error) {
+      console.error(error);
+    } finally {
+      isLoading = false;
+    }
+  });
 </script>
 
 <div class=" w-full h-auto flex justify-center items-center">
@@ -28,7 +41,7 @@
         {/if}
       </div>
     </div> -->
-    
+
     <div
       class="flex h-[100vh] w-full flex-col justify-start items-center"
       id="subDiv"
@@ -42,48 +55,55 @@
       <div
         class="flex h-16 w-full items-center justify-between rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
       >
-      <div class=" h-auto text-xl rounded-full font-bold">
-        {#if false}
-          <span class="loaderPink"></span>
-        {:else}
-        <div class="w-auto flex justify-center items-center gap-3 dark:bg-[#0C2B25] p-2 rounded-lg">
-          
-          <p class="h-auto w-full text-center text-white text-[10px] md:text-lg">Revenues:</p>
-          <div class="h-full w-full dark:text-white text-center text-[10px] md:text-lg">0</div>
+        <div class=" h-auto text-xl rounded-full font-bold">
+          {#if isLoading}
+            <span class="loaderPink"></span>
+          {:else}
+            <div
+              class="w-auto flex justify-center items-center gap-3 dark:bg-[#0C2B25] p-2 rounded-lg"
+            >
+              <p
+                class="h-auto w-full text-center text-white text-[10px] md:text-lg"
+              >
+                Revenues:
+              </p>
+              <div
+                class="h-full w-full dark:text-white text-center text-[10px] md:text-lg"
+              >
+                {Total}
+              </div>
+            </div>
+          {/if}
         </div>
-        {/if}
-      </div>
 
-      <div class="w-auto flex gap-4">
-        <button
-          class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 text-[10px] md:text-lg duration-300 ease-in-out"
-          style="box-shadow:0 1px 8px 0px #24b97d;"
-          on:click={async () => {
-            const datas = await projectStore.getAllWithoutFilter();
-            await exportAsExcelFile(datas?.data, "projects");
-          }}
-          ><span>
-            <img
-              src="/images/print.png"
-              class="w-4 h-4 md:w-6 md:h-6 object-contain"
-              alt=""
-            />
-          </span>Export as Excel</button
-        >
-
-        <a href="/project/add" class="w-auto h-auto px-2 gap-2 flex rounded-lg bg-[#24b97d]  text-white justify-center items-center"
-        style="box-shadow:0 1px 8px 0px #24b97d;"
-        >
+        <div class="w-auto flex gap-4">
           <button
-            class="h-12 w-auto  text-[10px] md:text-lg"
-            
-            >Add Project</button
+            class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 text-[10px] md:text-lg duration-300 ease-in-out"
+            style="box-shadow:0 1px 8px 0px #24b97d;"
+            on:click={async () => {
+              const datas = await projectStore.getAllWithoutFilter();
+              await exportAsExcelFile(datas?.data, "projects");
+            }}
+            ><span>
+              <img
+                src="/images/print.png"
+                class="w-4 h-4 md:w-6 md:h-6 object-contain"
+                alt=""
+              />
+            </span>Export as Excel</button
           >
-          <span class="text-[10px] md:text-lg">+</span>
-        </a>
-      </div>
 
-       
+          <a
+            href="/project/add"
+            class="w-auto h-auto px-2 gap-2 flex rounded-lg bg-[#24b97d] text-white justify-center items-center"
+            style="box-shadow:0 1px 8px 0px #24b97d;"
+          >
+            <button class="h-12 w-auto text-[10px] md:text-lg"
+              >Add Project</button
+            >
+            <span class="text-[10px] md:text-lg">+</span>
+          </a>
+        </div>
       </div>
 
       <ProjectTable bind:projects={data.projects} />

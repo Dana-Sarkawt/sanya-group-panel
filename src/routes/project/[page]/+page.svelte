@@ -11,19 +11,22 @@
 <div class=" w-full h-auto flex justify-center items-center">
   <div class="flex w-full justify-center items-center h-auto flex-col lg:mx-24">
     <div
-      class="w-64 h-36 flex flex-col justify-center gap-2 bg-[#25478180] items-center rounded-xl"
+      class="w-64 h-28 flex flex-col justify-center gap-2 bg-[#25478180] items-center rounded-xl"
     >
       <div class="w-full flex ml-4">
         <img src="/images/revenue.png" class="w-8 h-8 object-contain" alt="" />
       </div>
       <div class=" h-auto text-xl rounded-full font-bold">
-        {#if true}
+        {#if false}
           <span class="loaderPink"></span>
         {:else}
-          <div class="h-12 w-12">0</div>
+        <div class="w-auto flex flex-col justify-center items-center">
+          
+          <div class="h-full w-full dark:text-white text-center">0</div>
+          <p class="h-auto w-full text-center text-white ">Revenues</p>
+        </div>
         {/if}
       </div>
-      <p class="h-auto w-full text-center text-white">Revenues</p>
     </div>
     <div
       class="flex h-[100vh] w-full flex-col justify-start items-center"

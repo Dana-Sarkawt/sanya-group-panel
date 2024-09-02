@@ -440,6 +440,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      calculate_total_price: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
       count_and_sum_financials_by_sales: {
         Args: {
           sale_ids: number[]

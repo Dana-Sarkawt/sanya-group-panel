@@ -94,6 +94,17 @@ const createProjectStore = () => {
         }
       }
     },
+    getTotalPrice: async () => {
+      try {
+        const response =
+          await projectsRepository.readTotalPriceOfProjectsAsync();
+        return response;
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error(error.message);
+        }
+      }
+    },
     update: async (
       data: Database["public"]["Tables"]["Projects"]["Update"]
     ) => {

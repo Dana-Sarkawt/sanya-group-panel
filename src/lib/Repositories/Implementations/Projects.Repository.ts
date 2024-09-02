@@ -6,7 +6,7 @@ import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.M
 
 export class ProjectsRepository implements IProjectsRepository {
   async createProjectAsync(
-    request: Database["public"]["Tables"]["Projects"]["Insert"],
+    request: Database["public"]["Tables"]["Projects"]["Insert"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Projects"]["Row"]>
   > {
@@ -22,7 +22,7 @@ export class ProjectsRepository implements IProjectsRepository {
     }
   }
   async readProjectAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Projects"]["Row"]>
   > {
@@ -38,7 +38,7 @@ export class ProjectsRepository implements IProjectsRepository {
     }
   }
   async readProjectsAsync(
-    options?: GenericListOptions,
+    options?: GenericListOptions
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Projects"]["Row"]>
@@ -52,7 +52,7 @@ export class ProjectsRepository implements IProjectsRepository {
         .order("id", { ascending: true })
         .range(
           options?.page! * options?.limit!,
-          options?.limit! * (options?.page! + 1),
+          options?.limit! * (options?.page! + 1)
         );
       return response;
     } catch (error) {
@@ -70,8 +70,19 @@ export class ProjectsRepository implements IProjectsRepository {
       throw error;
     }
   }
+  async readTotalPriceOfProjectsAsync(): Promise<number> {
+    try {
+      const response = await Supabase.client.rpc("calculate_total_price");
+      if (response.error) {
+        throw response.error;
+      }
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
   async updateProjectAsync(
-    request: Database["public"]["Tables"]["Projects"]["Update"],
+    request: Database["public"]["Tables"]["Projects"]["Update"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Projects"]["Row"]>
   > {
@@ -88,7 +99,7 @@ export class ProjectsRepository implements IProjectsRepository {
     }
   }
   async deleteProjectAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Projects"]["Row"]>
   > {

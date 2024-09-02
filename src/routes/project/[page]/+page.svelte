@@ -17,7 +17,7 @@
         <img src="/images/revenue.png" class="w-8 h-8 object-contain" alt="" />
       </div>
       <div class=" h-auto text-xl rounded-full font-bold">
-        {#if true}
+        {#if false}
           <span class="loaderPink"></span>
         {:else}
           <div class="h-12 w-12">0</div>

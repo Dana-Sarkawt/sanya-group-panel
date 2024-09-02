@@ -74,12 +74,12 @@
         <a href="/project/add" class="w-auto h-auto px-2 gap-2 flex rounded-lg bg-[#24b97d]  text-white justify-center items-center"
         style="box-shadow:0 1px 8px 0px #24b97d;"
         >
+        <span class="text-[10px] md:text-lg">+</span>
           <button
             class="h-12 w-auto  text-[10px] md:text-lg"
             
             >Add Project</button
           >
-          <span class="text-[10px] md:text-lg">+</span>
         </a>
       </div>
 

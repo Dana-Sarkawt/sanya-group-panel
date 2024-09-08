@@ -79,46 +79,24 @@
             class="w-auto h-auto px-2 gap-2 flex rounded-lg bg-[#24b97d] text-white justify-center items-center"
             style="box-shadow:0 1px 8px 0px #24b97d;"
           >
-            <span class="text-[10px] md:text-lg">+</span>
-            <button
-              class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 text-[10px] md:text-lg duration-300 ease-in-out"
-              style="box-shadow:0 1px 8px 0px #24b97d;"
-              on:click={async () => {
-                const datas = await projectStore.getAllWithoutFilter();
-                await exportAsExcelFile(datas?.data, "projects");
-              }}
-              ><span>
-                <img
-                  src="/images/print.png"
-                  class="w-4 h-4 md:w-6 md:h-6 object-contain"
-                  alt=""
-                />
-              </span>Export as Excel</button
+            <button class="h-12 w-auto text-[10px] md:text-lg"
+              >Add Project</button
             >
+            <span class="text-[10px] md:text-lg">+</span>
           </a>
         </div>
-
-        <a
-          href="/project/add"
-          class="w-auto h-auto px-2 gap-2 flex rounded-lg bg-[#24b97d] text-white justify-center items-center"
-          style="box-shadow:0 1px 8px 0px #24b97d;"
-        >
-          <button class="h-12 w-auto text-[10px] md:text-lg">Add Project</button
-          >
-          <span class="text-[10px] md:text-lg">+</span>
-        </a>
       </div>
-    </div>
 
-    <ProjectTable bind:projects={data.projects} />
+      <ProjectTable bind:projects={data.projects} />
 
-    <div class="w-full h-auto flex justify-center items-center py-12">
-      <Pagination
-        classType={typeof data.projects}
-        StoreData={data.projects}
-        currentPage={Number($page.params.page)}
-        name={"project"}
-      />
+      <div class="w-full h-auto flex justify-center items-center py-12">
+        <Pagination
+          classType={typeof data.projects}
+          StoreData={data.projects}
+          currentPage={Number($page.params.page)}
+          name={"project"}
+        />
+      </div>
     </div>
   </div>
 </div>

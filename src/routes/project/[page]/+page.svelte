@@ -41,10 +41,10 @@
             <span class="loaderPink"></span>
           {:else}
             <div
-              class="w-auto flex justify-center items-center gap-3 bg-[#f1f1f1] dark:bg-[#0C2B25] p-2 rounded-lg"
+              class="w-auto flex justify-center items-center gap-3 bg-[#D3F9E9] dark:bg-[#0C2B25] p-2 rounded-lg"
             >
               <p
-                class="h-auto w-full text-center dark:text-white text-[10px] md:text-lg"
+                class="h-auto w-full text-center text-[#1E4F3C] dark:text-white text-[10px] md:text-lg"
               >
                 Revenues:
               </p>

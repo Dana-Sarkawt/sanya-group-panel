@@ -5,6 +5,7 @@
   import { projectStore } from "$lib/Store/Project.Store";
   import { Status } from "$lib/Models/Enum/Status.Enum.Model";
   import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
+  import RevenueModal from "$lib/Components/RevenueModal.Component.svelte";
 
   export let projects: Store<Database["public"]["Tables"]["Projects"]["Row"]> =
     {
@@ -14,6 +15,7 @@
   let deleteId: number = 0;
 
   let deleteModal = false;
+  let revenueModal = false;
 </script>
 
 <div class="w-full h-auto flex justify-center items-center mx-2">
@@ -24,6 +26,7 @@
         <th scope="col">Project ID</th>
         <th scope="col">Project Name</th>
         <th scope="col">Status</th>
+        <th scope="col">New Action</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
@@ -61,6 +64,57 @@
                 </p>
               </div>
             </td>
+
+            <td>
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <div class="w-full h-auto flex justify-center items-center gap-2">
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <div
+                    class="w-42 h-auto flex flex-col justify-center items-center bg-orange-500 rounded-xl px-1 font-bold text-white cursor-pointer p-2 gap-3"
+                    
+                  >
+                    <div
+                      class="w-auto h-auto flex justify-center items-center gap-2"
+                    >
+                      <p>Deposit</p>
+                    </div>
+  
+                    <div
+                      class="w-full h-auto flex justify-center items-center bg-orange-700 rounded-xl px-2"
+                    >
+                      <p class="text-gray-300">
+                        Total: <span class="text-white"
+                          >d</span
+                        >
+                      </p>
+                    </div>
+                  </div>
+  
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <div
+                    class="w-42 h-auto flex flex-col justify-center items-center bg-blue-400 rounded-xl px-1 font-bold text-white cursor-pointer p-2 gap-3"
+                  >
+                    <div
+                      class="w-auto h-auto flex justify-center items-center gap-2"
+                    >
+                      <p>Financial</p>
+
+                    </div>
+  
+                    <div
+                      class="w-full h-auto flex justify-center items-center bg-blue-700 rounded-xl px-2"
+                    >
+                      <p class="text-gray-300">
+                        Total: <span class="text-white"
+                          >a</span
+                        >
+                      </p>
+                    </div>
+                  </div>
+                </div>
+            </td>
+
+
             <td>
               <!-- svelte-ignore a11y-no-static-element-interactions -->
               <div class="flex h-auto w-auto items-center justify-center gap-2">
@@ -99,6 +153,23 @@
                     alt=""
                   />
                 </a>
+                
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-missing-attribute -->
+                <a
+                  class="bg-purple-600 hover:bg-purple-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
+                  on:click={() => {
+                    revenueModal = true;
+                    deleteId = project.id;
+                  }}
+                >
+                  <img
+                    src="/images/incandout.png"
+                    class="w-4 h-4 md:h-8 md:w-8 object-contain"
+                    alt=""
+                  />
+                </a>
+
               </div>
             </td>
           </tr>
@@ -109,3 +180,10 @@
 </div>
 
 <DeleteModal bind:deleteModal Store={projectStore} id={deleteId} />
+
+<RevenueModal bind:revenueModal/>
+
+
+
+
+

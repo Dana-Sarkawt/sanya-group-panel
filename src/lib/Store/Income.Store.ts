@@ -15,26 +15,7 @@ const createIncomeStore = () => {
     return {
         subscribe,
         set: async (data: Store<Database["public"]["Tables"]["Income"]["Row"]>) => set(data),
-        create: async (data: Database["public"]["Tables"]["Income"]["Insert"]) => {
-            try {
-               
-                const response = await incomeRepository.createIncomeAsync(data);
-
-                if (response.error) {
-                    throw new Error(response.error.message);
-                }
-
-                update((store) => {
-                    store.data.push(response.data);
-                    store.count++;
-                    return store;
-                });
-
-                return response;
-            } catch (error) {
-                console.log(error);
-            }
-        },
+       
         get: async (id: number) => {
             try {
                 const response = await incomeRepository.readIncomeAsync(id);

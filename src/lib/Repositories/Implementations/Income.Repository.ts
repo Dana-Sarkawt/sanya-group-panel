@@ -5,8 +5,12 @@ import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import type { IIncomeRepository } from "../Interfaces/I.Income.Repository";
 
 export class IncomeRepository implements IIncomeRepository {
-  readIncomesWithoutFilterAsync(): Promise<PostgrestSingleResponse<Array<Database["public"]["Tables"]["Income"]["Row"]>>> {
-      throw new Error("Method not implemented.");
+  readIncomesWithoutFilterAsync(): Promise<
+    PostgrestSingleResponse<
+      Array<Database["public"]["Tables"]["Income"]["Row"]>
+    >
+  > {
+    throw new Error("Method not implemented.");
   }
   async createIncomeAsync(
     request: Database["public"]["Tables"]["Income"]["Insert"]
@@ -43,7 +47,9 @@ export class IncomeRepository implements IIncomeRepository {
   async readIncomesAsync(
     options?: GenericListOptions
   ): Promise<
-    PostgrestSingleResponse<Array<Database["public"]["Tables"]["Income"]["Row"]>>
+    PostgrestSingleResponse<
+      Array<Database["public"]["Tables"]["Income"]["Row"]>
+    >
   > {
     try {
       const response = Supabase.client
@@ -65,17 +71,14 @@ export class IncomeRepository implements IIncomeRepository {
       throw error;
     }
   }
-  
 
-async readOverallIncomeAsync(projectId: number): Promise<PostgrestSingleResponse<Array<Database["public"]["Tables"]["Income"]["Row"]>>> {
+  async createOverallIncomeAsync(projectId: number) {
     try {
-        const response = Supabase.client
-            .rpc("calculate_income", { project_id_input: projectId });
-
-            return await response as PostgrestSingleResponse<Array<Database["public"]["Tables"]["Income"]["Row"]>>;
-            
+      await Supabase.client.rpc("calculate_income", {
+        project_id_input: projectId,
+      });
     } catch (error) {
-        throw error;
+      throw error;
     }
-}
+  }
 }

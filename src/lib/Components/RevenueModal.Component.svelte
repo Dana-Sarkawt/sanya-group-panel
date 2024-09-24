@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { incomeStore } from "$lib/Store/Income.Store";
+  import { outcomeStore } from "$lib/Store/Outcome.Store";
     import { Button, Modal } from "flowbite-svelte";
     export let revenueModal: boolean = false;
     import { Tabs, TabItem } from 'flowbite-svelte';
@@ -10,8 +12,12 @@
     TableHead,
     TableHeadCell,
   } from "flowbite-svelte";
+  import { onMount } from "svelte";
   
-   
+   onMount(async () => {
+    await incomeStore.getAll();
+    await outcomeStore.getAll();
+   });
   </script>
   
   <Modal size="xl" title="Revenue Modal" bind:open={revenueModal}>
@@ -33,14 +39,14 @@
                 <TableHeadCell>Price</TableHeadCell>
               </TableHead>
               <TableBody tableBodyClass="divide-y text-center">
-                <!-- {#if capitals.count !== 0}
-                  {#each capitals.data as capital} -->
+                {#if $incomeStore.data.length > 0}
+                  {#each $incomeStore.data as income}
                     <TableBodyRow>
-                      <TableBodyCell>a</TableBodyCell>
-                      <TableBodyCell>45 000</TableBodyCell>
+                      <TableBodyCell>{income.date}</TableBodyCell>
+                      <TableBodyCell>{income.overall_price}</TableBodyCell>
                     </TableBodyRow>
-                  <!-- {/each}
-                {/if} -->
+                  {/each}
+                {/if}
               </TableBody>
             </Table>
           </div>
@@ -55,14 +61,14 @@
                 <TableHeadCell>Price</TableHeadCell>
               </TableHead>
               <TableBody tableBodyClass="divide-y text-center">
-                <!-- {#if capitals.count !== 0}
-                  {#each capitals.data as capital} -->
+                {#if $outcomeStore.data.length > 0}
+                  {#each $outcomeStore.data as outcome}
                     <TableBodyRow>
-                      <TableBodyCell>b</TableBodyCell>
-                      <TableBodyCell>20 000</TableBodyCell>
+                      <TableBodyCell>{outcome.date}</TableBodyCell>
+                      <TableBodyCell>{outcome.overall_price}</TableBodyCell>
                     </TableBodyRow>
-                  <!-- {/each}
-                {/if} -->
+                  {/each}
+                {/if}
               </TableBody>
             </Table>
           </div>

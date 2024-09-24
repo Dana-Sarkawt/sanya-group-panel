@@ -71,7 +71,7 @@
         <th scope="col">Image</th>
         <th scope="col">ID</th>
         <th scope="col">Description</th>
-        <th scope="col">New Action</th>
+        <!-- <th scope="col">New Action</th> -->
         <th scope="col">Action</th>
       </tr>
     </thead>
@@ -90,11 +90,11 @@
           >
             <td>{preparation.id}</td>
             <td>{preparation.description}</td>
-            <td>
+            <!-- <td> -->
               <!-- svelte-ignore a11y-no-static-element-interactions -->
-              <div class="w-full h-auto flex justify-center items-center gap-2">
+              <!-- <div class="w-full h-auto flex justify-center items-center gap-2"> -->
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <div
+                <!-- <div
                   class="w-42 h-auto flex flex-col justify-center items-center bg-orange-500 rounded-xl px-4 font-bold text-white cursor-pointer p-2 gap-3"
                   on:click={() =>
                     goto(`/deposit/preparation/${preparation.id}`)}
@@ -130,10 +130,10 @@
                       >
                     </p>
                   </div>
-                </div>
+                </div> -->
 
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <div
+                <!-- <div
                   class="w-42 h-auto flex flex-col justify-center items-center bg-blue-400 rounded-xl px-4 font-bold text-white cursor-pointer p-2 gap-3"
                   on:click={() =>
                     goto(`/finance/preparation/${preparation.id}`)}
@@ -170,8 +170,8 @@
                     </p>
                   </div>
                 </div>
-              </div>
-            </td>
+              </div> -->
+            <!-- </td> -->
             <td>
               <div class="flex h-auto w-auto items-center justify-center gap-2">
                 <a

@@ -213,6 +213,70 @@ export type Database = {
           },
         ]
       }
+      Income: {
+        Row: {
+          created_at: string
+          date: string | null
+          id: number
+          overall_price: number | null
+          project_id: number | null
+        }
+        Insert: {
+          created_at?: string
+          date?: string | null
+          id?: number
+          overall_price?: number | null
+          project_id?: number | null
+        }
+        Update: {
+          created_at?: string
+          date?: string | null
+          id?: number
+          overall_price?: number | null
+          project_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Income_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "Projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      Outcome: {
+        Row: {
+          created_at: string
+          date: string | null
+          id: number
+          overall_price: number | null
+          project_id: number | null
+        }
+        Insert: {
+          created_at?: string
+          date?: string | null
+          id?: number
+          overall_price?: number | null
+          project_id?: number | null
+        }
+        Update: {
+          created_at?: string
+          date?: string | null
+          id?: number
+          overall_price?: number | null
+          project_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Outcome_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "Projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       Preparations: {
         Row: {
           created_at: string
@@ -440,6 +504,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      calculate_income: {
+        Args: {
+          project_id_input: number
+        }
+        Returns: undefined
+      }
+      calculate_outcome: {
+        Args: {
+          project_id_input: number
+        }
+        Returns: undefined
+      }
       calculate_total_price: {
         Args: Record<PropertyKey, never>
         Returns: number

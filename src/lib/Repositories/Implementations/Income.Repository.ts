@@ -66,4 +66,16 @@ export class IncomeRepository implements IIncomeRepository {
     }
   }
   
+
+async readOverallIncomeAsync(projectId: number): Promise<PostgrestSingleResponse<Array<Database["public"]["Tables"]["Income"]["Row"]>>> {
+    try {
+        const response = Supabase.client
+            .rpc("calculate_income", { project_id_input: projectId });
+
+            return await response as PostgrestSingleResponse<Array<Database["public"]["Tables"]["Income"]["Row"]>>;
+            
+    } catch (error) {
+        throw error;
+    }
+}
 }

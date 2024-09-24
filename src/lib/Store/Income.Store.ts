@@ -44,3 +44,6 @@ const createIncomeStore = () => {
         },
     };
 }
+
+
+export const incomeStore = createIncomeStore();

@@ -34,19 +34,21 @@
       </div>
 
       <div
-        class="flex h-16 w-full items-center justify-between rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
+        class="flex h-auto w-full items-center justify-between rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
       >
         <div class=" h-auto text-xl rounded-full font-bold">
           {#if isLoading}
             <span class="loaderPink"></span>
           {:else}
+          <div class="w-auto h-auto flex justify-center items-center gap-2 flex-wrap">
+
             <div
               class="w-auto flex justify-center items-center gap-3 bg-[#D3F9E9] dark:bg-[#0C2B25] p-2 rounded-lg"
             >
               <p
                 class="h-auto w-full text-center text-[#1E4F3C] dark:text-white text-[10px] md:text-lg"
               >
-                Revenues:
+                Income:
               </p>
               <div
                 class="h-full w-full dark:text-white text-center text-[10px] md:text-lg"
@@ -54,6 +56,24 @@
                 {Total}
               </div>
             </div>
+
+
+            <div
+              class="w-auto flex justify-center items-center gap-3 bg-[#D3F9E9] dark:bg-[#0C2B25] p-2 rounded-lg"
+            >
+              <p
+                class="h-auto w-full text-center text-[#1E4F3C] dark:text-white text-[10px] md:text-lg"
+              >
+                Outcome:
+              </p>
+              <div
+                class="h-full w-full dark:text-white text-center text-[10px] md:text-lg"
+              >
+                {Total}
+              </div>
+            </div>
+
+          </div>
           {/if}
         </div>
 

@@ -26,7 +26,7 @@
         <th scope="col">Project ID</th>
         <th scope="col">Project Name</th>
         <th scope="col">Status</th>
-        <th scope="col">New Action</th>
+        <!-- <th scope="col">New Action</th> -->
         <th scope="col">Action</th>
       </tr>
     </thead>
@@ -65,11 +65,11 @@
               </div>
             </td>
 
-            <td>
+            <!-- <td> -->
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
-                <div class="w-full h-auto flex justify-center items-center gap-2">
+                <!-- <div class="w-full h-auto flex justify-center items-center gap-2"> -->
                   <!-- svelte-ignore a11y-click-events-have-key-events -->
-                  <div
+                  <!-- <div
                     class="w-42 h-auto flex flex-col justify-center items-center bg-orange-500 rounded-xl px-1 font-bold text-white cursor-pointer p-2 gap-3"
                     
                   >
@@ -88,10 +88,10 @@
                         >
                       </p>
                     </div>
-                  </div>
+                  </div> -->
   
                   <!-- svelte-ignore a11y-click-events-have-key-events -->
-                  <div
+                  <!-- <div
                     class="w-42 h-auto flex flex-col justify-center items-center bg-blue-400 rounded-xl px-1 font-bold text-white cursor-pointer p-2 gap-3"
                   >
                     <div
@@ -112,7 +112,7 @@
                     </div>
                   </div>
                 </div>
-            </td>
+            </td> -->
 
 
             <td>

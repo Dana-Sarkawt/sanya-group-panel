@@ -1,6 +1,7 @@
 <script lang="ts">
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
   import type { Store } from "$lib/Models/Response/Store.Response.Model";
+  import { capitalStore } from "$lib/Store/Capital.Store";
   import type { Database } from "$lib/Supabase/Types/database.types";
   import {
     Table,
@@ -16,6 +17,7 @@
       count: 0,
     };
   let deleteModal = false;
+  let deleteId: number = 0;
 </script>
 
 <div class="w-full h-auto bg-[#ffffff] dark:bg-[#081c18] p-4 rounded-b-xl">
@@ -54,7 +56,12 @@
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <a
                   class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full"
-                  on:click={() => (deleteModal = true)}
+                  on:click={() => {
+                    deleteModal = true;
+                    deleteId = capital.id;
+
+                  }
+                    }
                 >
                   <img
                     src="/images/delete.png"
@@ -71,4 +78,4 @@
   </Table>
 </div>
 
-<DeleteModal bind:deleteModal />
+<DeleteModal bind:deleteModal Store={capitalStore} id={deleteId} />

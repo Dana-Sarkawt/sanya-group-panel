@@ -156,3 +156,43 @@ div[role="tooltip"] {
 /**
  * END  User Profile Letter Loading Style
  */
+
+
+ .dark div[aria-modal="true"]>div>div{
+    background-color: #01271834 !important;
+    backdrop-filter: blur(10px);
+    color: white !important;
+ }
+ .dark div[aria-modal="true"]>div>div>div{
+    background-color: #01271834 !important;
+    backdrop-filter: blur(10px);
+    color: white !important;
+ }
+
+
+ div[aria-modal="true"]>div>div{
+  background-color: #ffffff96 !important;
+  backdrop-filter: blur(10px);
+  color: white !important;
+}
+
+
+ div[aria-modal="true"]>div>div>div{
+  background-color: #ffffff96 !important;
+  backdrop-filter: blur(10px);
+  color: white !important;
+}
+
+div[aria-modal="true"]>div>div>div>h3{
+  color: black !important;
+}
+.dark div[aria-modal="true"]>div>div>div>h3{
+  color: white !important;
+}
+
+div[aria-modal="true"]>div>div>div>button>svg{
+  fill: black !important;
+}
+.dark div[aria-modal="true"]>div>div>div>button>svg{
+  fill: white !important;
+}

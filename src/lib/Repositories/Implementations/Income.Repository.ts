@@ -54,8 +54,8 @@ export class IncomeRepository implements IIncomeRepository {
     try {
       const response = Supabase.client
         .from("Income")
-        .select("*", { count: "exact" })
-        .is("deleted_at", null);
+        .select("*", { count: "exact" });
+      // .is("deleted_at", null);
 
       if (options?.field && options?.equal) {
         response.eq(options.field, options.equal);
@@ -74,9 +74,10 @@ export class IncomeRepository implements IIncomeRepository {
 
   async createOverallIncomeAsync(projectId: number) {
     try {
-      await Supabase.client.rpc("calculate_income", {
+      const response = await Supabase.client.rpc("calculate_income", {
         project_id_input: projectId,
       });
+      console.log("Hello there", response);
     } catch (error) {
       throw error;
     }

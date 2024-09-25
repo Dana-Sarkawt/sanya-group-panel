@@ -51,7 +51,7 @@ export class OutcomeRepository implements IOutcomeRepository {
             const response = Supabase.client
                 .from("Outcome")
                 .select("*", { count: "exact" })
-                .is("deleted_at", null);
+                // .is("deleted_at", null);
 
             if (options?.field && options?.equal) {
                 response.eq(options.field, options.equal);
@@ -74,7 +74,7 @@ export class OutcomeRepository implements IOutcomeRepository {
             const response = Supabase.client
                 .from("Outcome")
                 .select("*", { count: "exact" })
-                .is("deleted_at", null);
+                // .is("deleted_at", null);
 
             return await response
                 .order("id", { ascending: false });

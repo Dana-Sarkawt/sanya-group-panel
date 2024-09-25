@@ -6,6 +6,7 @@
   import ProjectTable from "$lib/Components/ResponsiveTable/ProjectTable.Component.svelte";
   import { exportAsExcelFile } from "$lib/Utils/ExportAsExcel.Utils";
   import { onMount } from "svelte";
+  import { IncomeRepository } from "$lib/Repositories/Implementations/Income.Repository";
   export let data: PageData;
   let Total: number = 0;
   let isLoading = false;
@@ -13,6 +14,8 @@
     isLoading = true;
     try {
       Total = (await projectStore.getTotalPrice()) as number;
+
+      const response = await new IncomeRepository().createOverallIncomeAsync(108);
     } catch (error) {
       console.error(error);
     } finally {
@@ -40,40 +43,39 @@
           {#if isLoading}
             <span class="loaderPink"></span>
           {:else}
-          <div class="w-auto h-auto flex justify-center items-center gap-2 flex-wrap">
-
             <div
-              class="w-auto flex justify-center items-center gap-3 bg-[#D3F9E9] dark:bg-[#0C2B25] p-2 rounded-lg"
+              class="w-auto h-auto flex justify-center items-center gap-2 flex-wrap"
             >
-              <p
-                class="h-auto w-full text-center text-[#1E4F3C] dark:text-white text-[10px] md:text-lg"
-              >
-                Income:
-              </p>
               <div
-                class="h-full w-full dark:text-white text-center text-[10px] md:text-lg"
+                class="w-auto flex justify-center items-center gap-3 bg-[#D3F9E9] dark:bg-[#0C2B25] p-2 rounded-lg"
               >
-                {Total}
+                <p
+                  class="h-auto w-full text-center text-[#1E4F3C] dark:text-white text-[10px] md:text-lg"
+                >
+                  Income:
+                </p>
+                <div
+                  class="h-full w-full dark:text-white text-center text-[10px] md:text-lg"
+                >
+                  {Total}
+                </div>
+              </div>
+
+              <div
+                class="w-auto flex justify-center items-center gap-3 bg-[#D3F9E9] dark:bg-[#0C2B25] p-2 rounded-lg"
+              >
+                <p
+                  class="h-auto w-full text-center text-[#1E4F3C] dark:text-white text-[10px] md:text-lg"
+                >
+                  Outcome:
+                </p>
+                <div
+                  class="h-full w-full dark:text-white text-center text-[10px] md:text-lg"
+                >
+                  {Total}
+                </div>
               </div>
             </div>
-
-
-            <div
-              class="w-auto flex justify-center items-center gap-3 bg-[#D3F9E9] dark:bg-[#0C2B25] p-2 rounded-lg"
-            >
-              <p
-                class="h-auto w-full text-center text-[#1E4F3C] dark:text-white text-[10px] md:text-lg"
-              >
-                Outcome:
-              </p>
-              <div
-                class="h-full w-full dark:text-white text-center text-[10px] md:text-lg"
-              >
-                {Total}
-              </div>
-            </div>
-
-          </div>
           {/if}
         </div>
 

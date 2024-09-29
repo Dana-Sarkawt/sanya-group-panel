@@ -6,6 +6,8 @@
   import { Status } from "$lib/Models/Enum/Status.Enum.Model";
   import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
   import RevenueModal from "$lib/Components/RevenueModal.Component.svelte";
+  import { incomeStore } from "$lib/Store/Income.Store";
+  import { outcomeStore } from "$lib/Store/Outcome.Store";
 
   export let projects: Store<Database["public"]["Tables"]["Projects"]["Row"]> =
     {
@@ -16,6 +18,7 @@
 
   let deleteModal = false;
   let revenueModal = false;
+  let project_id = 0;
 </script>
 
 <div class="w-full h-auto flex justify-center items-center mx-2">
@@ -108,9 +111,22 @@
                 <!-- svelte-ignore a11y-missing-attribute -->
                 <a
                   class="bg-purple-600 hover:bg-purple-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-                  on:click={() => {
+                  on:click={async () => {
+                    await incomeStore.getAll({
+                      equal: project.id.toString(),
+                      field: "project_id",
+                      page: 0,
+                      limit: 10,
+                    });
+                    await outcomeStore.getAll({
+                      equal: project.id.toString(),
+                      field: "project_id",
+                      page: 0,
+                      limit: 10,
+                    });
+                    console.log("outcome",$outcomeStore);
+                    
                     revenueModal = true;
-                    deleteId = project.id;
                   }}
                 >
                   <img
@@ -130,4 +146,4 @@
 
 <DeleteModal bind:deleteModal Store={projectStore} id={deleteId} />
 
-<RevenueModal bind:revenueModal />
+<RevenueModal bind:revenueModal/>

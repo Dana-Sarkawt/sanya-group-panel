@@ -36,6 +36,13 @@ return {
                 throw new Error(response.error.message);
             }
 
+            const pages = Math.ceil(response.count ?? 0 / (options?.limit || 10));
+                set({
+                    data: response.data ?? [],
+                    count: response.count ?? 0,
+                    pages,
+                });
+
             return response;
         } catch (error) {
             console.log(error);

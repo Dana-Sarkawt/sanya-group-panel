@@ -18,13 +18,13 @@ const createAuthStore = () => {
     create: async (request: User.Create) => {
       try {
         const checkEmail = await usersRepository.readUserByEmailAsync(
-          request.email
+          request.email,
         );
         if (checkEmail.data) {
           throw new Error("Email already exists");
         }
         const checkPhone = await usersRepository.readUserByPhoneAsync(
-          request.phone
+          request.phone,
         );
         if (checkPhone.data) {
           throw new Error("Phone number already exists");

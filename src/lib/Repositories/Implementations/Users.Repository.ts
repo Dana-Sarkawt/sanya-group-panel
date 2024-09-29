@@ -6,7 +6,7 @@ import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.M
 
 export class UsersRepository implements IUsersRepository {
   async createUserAsync(
-    request: Database["public"]["Tables"]["Users"]["Insert"]
+    request: Database["public"]["Tables"]["Users"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {
@@ -22,7 +22,7 @@ export class UsersRepository implements IUsersRepository {
     }
   }
   async readUserAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {
@@ -39,7 +39,7 @@ export class UsersRepository implements IUsersRepository {
     }
   }
   async readUsersAsync(
-    options?: GenericListOptions
+    options?: GenericListOptions,
   ): Promise<
     PostgrestSingleResponse<Array<Database["public"]["Tables"]["Users"]["Row"]>>
   > {
@@ -51,7 +51,7 @@ export class UsersRepository implements IUsersRepository {
         .order("id", { ascending: false })
         .range(
           options?.page! * options?.limit!,
-          options?.limit! * (options?.page! + 1)
+          options?.limit! * (options?.page! + 1),
         );
       return response;
     } catch (error) {
@@ -71,7 +71,7 @@ export class UsersRepository implements IUsersRepository {
     }
   }
   async readUserByEmailAsync(
-    email: string
+    email: string,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {
@@ -101,7 +101,7 @@ export class UsersRepository implements IUsersRepository {
     }
   }
   async updateUserAsync(
-    request: Database["public"]["Tables"]["Users"]["Update"]
+    request: Database["public"]["Tables"]["Users"]["Update"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {
@@ -118,7 +118,7 @@ export class UsersRepository implements IUsersRepository {
     }
   }
   async deleteUserAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   > {

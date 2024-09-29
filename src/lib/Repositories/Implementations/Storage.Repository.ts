@@ -7,7 +7,10 @@ export class StorageRepository implements IStorageRepository {
     try {
       const response = await Supabase.client.storage
         .from("Sanya")
-        .upload(`${folderName ?? "public/"}${moment().format("YY-MM-DD:HH:mm:ss")}${image.name}`, image);
+        .upload(
+          `${folderName ?? "public/"}${moment().format("YY-MM-DD:HH:mm:ss")}${image.name}`,
+          image,
+        );
       if (response.error) {
         throw new Error(response.error.message);
       }

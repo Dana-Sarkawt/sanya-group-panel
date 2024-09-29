@@ -12,7 +12,7 @@ const server = createClient<Database>(
       autoRefreshToken: false,
       persistSession: false,
     },
-  }
+  },
 );
 
 export const DELETE: RequestHandler = async ({ locals, params, request }) => {

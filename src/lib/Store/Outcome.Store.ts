@@ -7,50 +7,51 @@ import { writable } from "svelte/store";
 const outcomeRepository = new OutcomeRepository();
 
 const createOutcomeStore = () => {
-    const { subscribe, set } = writable<Store<Database["public"]["Tables"]["Outcome"]["Row"]>>({
-        data: [],
-        count: 0,
-    });
+  const { subscribe, set } = writable<
+    Store<Database["public"]["Tables"]["Outcome"]["Row"]>
+  >({
+    data: [],
+    count: 0,
+  });
 
-return {
+  return {
     subscribe,
-    set: async (data: Store< Database["public"]["Tables"]["Outcome"]["Row"] >) => set(data),
+    set: async (data: Store<Database["public"]["Tables"]["Outcome"]["Row"]>) =>
+      set(data),
     get: async (id: number) => {
-        try {
-            const response = await outcomeRepository.readOutcomeAsync(id);
+      try {
+        const response = await outcomeRepository.readOutcomeAsync(id);
 
-            if (response.error) {
-                throw new Error(response.error.message);
-            }
-
-            return response;
-        } catch (error) {
-            console.log(error);
+        if (response.error) {
+          throw new Error(response.error.message);
         }
+
+        return response;
+      } catch (error) {
+        console.log(error);
+      }
     },
     getAll: async (options?: GenericListOptions) => {
-        try {
-            const response = await outcomeRepository.readOutcomesAsync(options);
+      try {
+        const response = await outcomeRepository.readOutcomesAsync(options);
 
-            if (response.error) {
-                throw new Error(response.error.message);
-            }
-
-            const pages = Math.ceil(response.count ?? 0 / (options?.limit || 10));
-                set({
-                    data: response.data ?? [],
-                    count: response.count ?? 0,
-                    pages,
-                });
-
-            return response;
-        } catch (error) {
-            console.log(error);
+        if (response.error) {
+          throw new Error(response.error.message);
         }
+
+        const pages = Math.ceil(response.count ?? 0 / (options?.limit || 10));
+        set({
+          data: response.data ?? [],
+          count: response.count ?? 0,
+          pages,
+        });
+
+        return response;
+      } catch (error) {
+        console.log(error);
+      }
     },
+  };
 };
-
-
-}
 
 export const outcomeStore = createOutcomeStore();

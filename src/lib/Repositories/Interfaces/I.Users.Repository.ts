@@ -4,32 +4,32 @@ import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 export interface IUsersRepository {
   createUserAsync(
-    request: Database["public"]["Tables"]["Users"]["Insert"]
+    request: Database["public"]["Tables"]["Users"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   >;
   readUserAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   >;
   readUsersAsync(
-    options?: GenericListOptions
+    options?: GenericListOptions,
   ): Promise<
     PostgrestSingleResponse<Array<Database["public"]["Tables"]["Users"]["Row"]>>
   >;
   readUserByEmailAsync(
-    email: string
+    email: string,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   >;
   updateUserAsync(
-    request: Database["public"]["Tables"]["Users"]["Update"]
+    request: Database["public"]["Tables"]["Users"]["Update"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   >;
   deleteUserAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Users"]["Row"]>
   >;

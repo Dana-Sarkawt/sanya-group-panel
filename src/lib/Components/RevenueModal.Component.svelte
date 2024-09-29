@@ -15,9 +15,14 @@
   import { onMount } from "svelte";
   
    onMount(async () => {
-    await incomeStore.getAll();
+    let income = await incomeStore.getAll();
     await outcomeStore.getAll();
+    console.log(income, "income");
+    
    });
+
+
+   
   </script>
   
   <Modal size="xl" title="Revenue Modal" bind:open={revenueModal}>

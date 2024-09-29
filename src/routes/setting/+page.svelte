@@ -69,19 +69,19 @@
   <div class="w-full h-auto flex flex-col justify-center items-start gap-2">
 
     <div class="w-full h-auto flex justify-between items-center">
-        <p class="dark:text-white">Role Name</p>
+        <p class="dark:text-white text-black">Role Name</p>
         <button class="w-20 h-12 rounded-xl bg-blue-500 hover:bg-blue-400 ease-in-out duration-300 text-white" on:click={clearInput}>Reset</button>
     </div>
 
     <input
       type="text"
       bind:value={roleRequest.name}
-      class="w-full h-12 border-0 rounded-xl bg-[#f1f1f1] dark:bg-[#151c26]"
+      class="w-full h-12 border-0 rounded-xl bg-[#f1f1f1] dark:bg-[#123d3745]"
     />
   </div>
 
   <div
-    class="w-full h-[200px] overflow-y-auto bg-[#f1f1f1] dark:bg-[#151c26] p-4 rounded-xl flex flex-col justify-start items-center gap-2"
+    class="w-full h-[200px] overflow-y-auto bg-[#f1f1f1] dark:bg-[#123d3745] p-4 rounded-xl flex flex-col justify-start items-center gap-2"
   >
     {#if $roleStore.data}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -89,7 +89,7 @@
       {#each $roleStore.data as role}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div
-          class="w-full h-12 flex justify-between items-center px-4 text-black dark:text-white bg-white dark:bg-[#2e3e53] p-8 rounded-xl"
+          class="w-full h-12 flex justify-between items-center px-4 text-black dark:text-white bg-white dark:bg-[#123d37] p-8 rounded-xl"
          
         >
           <p>{role.name}</p>

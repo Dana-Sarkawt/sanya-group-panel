@@ -37,6 +37,8 @@ const createIncomeStore = () => {
                     throw new Error(response.error.message);
                 }
 
+                
+                
                 return response;
             } catch (error) {
                 console.log(error);

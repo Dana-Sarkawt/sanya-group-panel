@@ -7,6 +7,7 @@
   import { exportAsExcelFile } from "$lib/Utils/ExportAsExcel.Utils";
   import { onMount } from "svelte";
   import { IncomeRepository } from "$lib/Repositories/Implementations/Income.Repository";
+  import { OutcomeRepository } from "$lib/Repositories/Implementations/Outcome.Repository";
   export let data: PageData;
   let Total: number = 0;
   let isLoading = false;
@@ -16,6 +17,7 @@
       Total = (await projectStore.getTotalPrice()) as number;
 
       const response = await new IncomeRepository().createOverallIncomeAsync(108);
+      await new OutcomeRepository().readOverallOutcomeAsync(108);
     } catch (error) {
       console.error(error);
     } finally {

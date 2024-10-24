@@ -34,6 +34,10 @@
     { name: "Arabic", code: "ar", flag: "/images/ar.png" },
     { name: "Kurdish", code: "ckb", flag: "/images/ckb.png" },
   ];
+
+  function getIconColor(isActive: boolean) {
+    return isActive ? "currentColor" : "gray";
+  }
 </script>
 
 <div class="w-full h-auto flex justify-center items-center gap-2">
@@ -96,34 +100,109 @@
         {activeClass}
         {nonActiveClass}
         class="navbarContainer"
-        ulClass="bg-transparent dark:bg-transparent md:bg-transparent dark:md:bg-transparent border-0 mt-4  flex items-center flex-col p-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 text-xs lg:text-md xl:text-lg shrink-10"
+        ulClass="bg-transparent dark:bg-transparent md:bg-transparent dark:md:bg-transparent border-0 mt-4 flex items-center flex-col p-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 text-xs lg:text-md xl:text-lg shrink-10"
       >
         <NavLi
           href="/project/0"
-          class={activeUrl.startsWith("/project")
-            ? activeClass
-            : nonActiveClass}
-          on:click={toggleNavBar}>Project</NavLi
+          class={`${activeUrl.startsWith("/project") ? activeClass : nonActiveClass} flex flex-col items-center justify-center transition-all duration-300 ease-in-out`}
+          on:click={toggleNavBar}
         >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke={getIconColor(activeUrl.startsWith("/project"))}
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+            ></path>
+          </svg>
+          <span
+            class="mt-1 text-xs transition-opacity duration-300 ease-in-out"
+            class:opacity-0={!activeUrl.startsWith("/project")}>Project</span
+          >
+        </NavLi>
 
         <NavLi
           href="/user/0"
-          class={activeUrl.startsWith("/user") ? activeClass : nonActiveClass}
-          on:click={toggleNavBar}>Users</NavLi
+          class={`${activeUrl.startsWith("/user") ? activeClass : nonActiveClass} flex flex-col items-center justify-center transition-all duration-300 ease-in-out`}
+          on:click={toggleNavBar}
         >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke={getIconColor(activeUrl.startsWith("/user"))}
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+            ></path>
+          </svg>
+          <span
+            class="mt-1 text-xs transition-opacity duration-300 ease-in-out"
+            class:opacity-0={!activeUrl.startsWith("/user")}>Users</span
+          >
+        </NavLi>
 
         <NavLi
           href="/setting"
-          class={activeUrl.startsWith("/setting")
-            ? activeClass
-            : nonActiveClass}
-          on:click={toggleNavBar}>Setting</NavLi
+          class={`${activeUrl.startsWith("/setting") ? activeClass : nonActiveClass} flex flex-col items-center justify-center transition-all duration-300 ease-in-out`}
+          on:click={toggleNavBar}
         >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke={getIconColor(activeUrl.startsWith("/setting"))}
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+            ></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+            ></path>
+          </svg>
+          <span
+            class="mt-1 text-xs transition-opacity duration-300 ease-in-out"
+            class:opacity-0={!activeUrl.startsWith("/setting")}>Setting</span
+          >
+        </NavLi>
 
-        <!-- <NavLi href="/setting">Setting</NavLi> -->
-        <NavLi class="cursor-pointer" on:click={() => authStore.logout()}
-          >Logout</NavLi
+        <NavLi
+          class="cursor-pointer flex flex-col items-center justify-center transition-all duration-300 ease-in-out"
+          on:click={() => authStore.logout()}
         >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+            ></path>
+          </svg>
+          <span class="mt-1 text-xs">Logout</span>
+        </NavLi>
 
         <DarkMode
           class="text-lg"

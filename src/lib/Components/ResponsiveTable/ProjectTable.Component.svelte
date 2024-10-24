@@ -10,8 +10,6 @@
 
   let selectedImage: string = "";
   let imageDialog = false;
-  import { incomeStore } from "$lib/Store/Income.Store";
-  import { outcomeStore } from "$lib/Store/Outcome.Store";
 
   export let projects: Store<Database["public"]["Tables"]["Projects"]["Row"]> =
     {
@@ -106,7 +104,7 @@
                 <!-- svelte-ignore a11y-missing-attribute -->
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <a
-                  class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
+                  class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full cursor-pointer"
                   on:click={() => {
                     deleteModal = true;
                     deleteId = project.id;
@@ -114,35 +112,6 @@
                 >
                   <img
                     src="/images/delete.png"
-                    class="w-4 h-4 md:h-8 md:w-8 object-contain"
-                    alt=""
-                  />
-                </a>
-
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-missing-attribute -->
-                <a
-                  class="bg-purple-600 hover:bg-purple-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-                  on:click={async () => {
-                    await incomeStore.getAll({
-                      equal: project.id.toString(),
-                      field: "project_id",
-                      page: 0,
-                      limit: 10,
-                    });
-                    await outcomeStore.getAll({
-                      equal: project.id.toString(),
-                      field: "project_id",
-                      page: 0,
-                      limit: 10,
-                    });
-                    console.log("outcome", $outcomeStore);
-
-                    revenueModal = true;
-                  }}
-                >
-                  <img
-                    src="/images/incandout.png"
                     class="w-4 h-4 md:h-8 md:w-8 object-contain"
                     alt=""
                   />

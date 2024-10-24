@@ -5,16 +5,17 @@
   import { onMount } from "svelte";
   import { page } from "$app/stores";
   import { authStore } from "$lib/Store/Auth.Store";
+  import { locale } from "svelte-i18n";
   $: activeUrl = $page.url.pathname;
 
   export let data;
-   let isLoading = true;
+  let isLoading = true;
 
   let { supabase, session } = data;
   $: ({ supabase, session } = data);
 
   onMount(() => {
-    try{
+    try {
       isLoading = true;
       const { data } = supabase.auth.onAuthStateChange((event, newSession) => {
         checkAuth();
@@ -23,8 +24,7 @@
         }
       });
       return () => data.subscription.unsubscribe();
-
-    }finally{
+    } finally {
       isLoading = false;
     }
   });
@@ -38,6 +38,8 @@
 </script>
 
 {#if activeUrl !== "/login"}
-  <Navbar bind:isLoading={isLoading}/>
+  <Navbar bind:isLoading />
 {/if}
-<slot></slot>
+<div dir={$locale === "en" ? "ltr" : "rtl"}>
+  <slot></slot>
+</div>

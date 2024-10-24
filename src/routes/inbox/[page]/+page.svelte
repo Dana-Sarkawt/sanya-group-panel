@@ -65,12 +65,12 @@
         </div>
       </div>
 
-      <InboxTable bind:inboxItems={data.inboxes} />
+      <InboxTable bind:inboxes={data.inboxes} />
 
       <div class="w-full h-auto flex justify-center items-center py-12">
         <Pagination
-          classType={typeof data.inboxItems}
-          StoreData={data.inboxItems}
+          classType={typeof data.inboxes}
+          StoreData={data.inboxes}
           currentPage={Number($page.params.page)}
           name={"inbox"}
         />
@@ -101,4 +101,3 @@
     }
   }
 </style>
-

@@ -6,7 +6,7 @@
   export let open = false;
 </script>
 
-<Modal bind:open size="xl" outsideclose={true}>
+<Modal bind:open size="lg" outsideclose={true}>
   <svelte:fragment slot="header">
     <div class="w-full h-auto flex justify-end items-center">
       <h1>{$_("image-view")}</h1>

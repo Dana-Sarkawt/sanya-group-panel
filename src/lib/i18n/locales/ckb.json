@@ -114,5 +114,13 @@
   "image-view": "بینەری وێنە",
   "close": "داخستن",
   "id": "Id",
-  "financial-dues": "باجی دارایی"
+  "financial-dues": "باجی دارایی",
+  "project": "پرۆژە",
+  "inbox": "داهات",
+  "users": "بەکارهێنەران",
+  "logout": "دەرچوون",
+  "setting": "دۆخ",
+  "inbox-table": "خشتەی ئیمەیڵ",
+  "confirm-delete": "Confim سڕینەوە",
+  "deleted-at": "سڕاوەتەوە At"
 }

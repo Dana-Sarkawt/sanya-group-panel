@@ -115,5 +115,13 @@
   "image-view": "Image Viewer",
   "close": "Close",
   "id": "Id",
-  "financial-dues": "Financial Dues"
+  "financial-dues": "Financial Dues",
+  "project": "Project",
+  "inbox": "Inbox",
+  "users": "Users",
+  "logout": "Logout",
+  "setting": "Setting",
+  "inbox-table": "Inbox Table",
+  "confirm-delete": "Confim Delete",
+  "deleted-at": "Deleted At"
 }

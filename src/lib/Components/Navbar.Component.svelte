@@ -13,13 +13,16 @@
   import { Tooltip, Img } from "flowbite-svelte";
   import { Button } from "flowbite-svelte";
   import { authStore } from "$lib/Store/Auth.Store";
-  import { locale } from "svelte-i18n";
+  import { _, locale } from "svelte-i18n";
 
   $: activeUrl = $page.url.pathname;
   let activeClass =
     "text-white bg-green-700 md:bg-transparent md:text-green-700 md:dark:text-green-300 dark:bg-green-600 md:dark:bg-transparent duration-300 ease-in-out";
   let nonActiveClass =
     "text-white hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 dark:text-white md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent duration-300 ease-in-out";
+
+  // Add these classes for responsive text
+  let textClass = "hidden sm:inline-block text-[10px] lg:text-xs xl:text-sm";
 
   export let isLoading;
 
@@ -43,14 +46,14 @@
 <div class="w-full h-auto flex justify-center items-center gap-2">
   <Navbar
     let:NavContainer
-    class="bg-transparent dark:bg-transparent  w-full md:w-auto"
+    class="bg-transparent dark:bg-transparent w-full md:w-auto flex justify-between items-center"
   >
     <NavContainer
-      class="[box-shadow:_0_1px_5px_#24b97d] border px-5 h-26 rounded-lg md:rounded-full border-[#24b97d] bg-[#24b97d7e] dark:bg-[#11433A] text-white"
+      class="[box-shadow:_0_1px_5px_#24b97d] border px-2 sm:px-5 h-20 sm:h-26 rounded-lg md:rounded-full border-[#24b97d] bg-[#24b97d7e] dark:bg-[#11433A] text-white"
     >
       <NavBrand href="/" class="">
         <span
-          class="[text-shadow:_0_1px_15px_#24b97d] text-[#0e714a] dark:text-[#24b97d] self-center whitespace-nowrap text-sm lg:text-xl font-semibold mr-12"
+          class="[text-shadow:_0_1px_15px_#24b97d] text-[#0e714a] dark:text-[#24b97d] self-center whitespace-nowrap text-xs sm:text-sm lg:text-xl font-semibold mr-2 sm:mr-12"
           >Sanya Group</span
         >
       </NavBrand>
@@ -99,8 +102,8 @@
         {activeUrl}
         {activeClass}
         {nonActiveClass}
-        class="navbarContainer"
-        ulClass="bg-transparent dark:bg-transparent md:bg-transparent dark:md:bg-transparent border-0 mt-4 flex items-center flex-col p-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 text-xs lg:text-md xl:text-lg shrink-10"
+        class="navbarContainer z-50 dark:bg-[#11433A] bg-[#85DBB8] md:dark:bg-transparent md:bg-transparent md:rounded-none rounded-b-lg"
+        ulClass="bg-transparent dark:bg-transparent md:bg-transparent dark:md:bg-transparent border-0 mt-4 flex items-center flex-col p-4 md:flex-row md:space-x-2 lg:space-x-8 rtl:space-x-reverse md:mt-0 text-xs lg:text-sm xl:text-base shrink-10"
       >
         <NavLi
           href="/project/0"
@@ -108,7 +111,7 @@
           on:click={toggleNavBar}
         >
           <svg
-            class="w-6 h-6"
+            class="w-4 h-4 sm:w-6 sm:h-6"
             fill="none"
             stroke={getIconColor(activeUrl.startsWith("/project"))}
             viewBox="0 0 24 24"
@@ -122,17 +125,18 @@
             ></path>
           </svg>
           <span
-            class="mt-1 text-xs transition-opacity duration-300 ease-in-out"
-            class:opacity-0={!activeUrl.startsWith("/project")}>Project</span
+            class={`mt-1 transition-opacity duration-300 ease-in-out ${textClass}`}
+            class:opacity-0={!activeUrl.startsWith("/project")}
+            >{$_("project")}</span
           >
         </NavLi>
         <NavLi
-          href="/inbox"
+          href="/inbox/0"
           class={`${activeUrl.startsWith("/inbox") ? activeClass : nonActiveClass} flex flex-col items-center justify-center transition-all duration-300 ease-in-out`}
           on:click={toggleNavBar}
         >
           <svg
-            class="w-6 h-6"
+            class="w-4 h-4 sm:w-6 sm:h-6"
             fill="none"
             stroke={getIconColor(activeUrl.startsWith("/inbox"))}
             viewBox="0 0 24 24"
@@ -146,8 +150,9 @@
             ></path>
           </svg>
           <span
-            class="mt-1 text-xs transition-opacity duration-300 ease-in-out"
-            class:opacity-0={!activeUrl.startsWith("/inbox")}>Inbox</span
+            class={`mt-1 transition-opacity duration-300 ease-in-out ${textClass}`}
+            class:opacity-0={!activeUrl.startsWith("/inbox")}
+            >{$_("inbox")}</span
           >
         </NavLi>
 
@@ -157,7 +162,7 @@
           on:click={toggleNavBar}
         >
           <svg
-            class="w-6 h-6"
+            class="w-4 h-4 sm:w-6 sm:h-6"
             fill="none"
             stroke={getIconColor(activeUrl.startsWith("/user"))}
             viewBox="0 0 24 24"
@@ -171,8 +176,8 @@
             ></path>
           </svg>
           <span
-            class="mt-1 text-xs transition-opacity duration-300 ease-in-out"
-            class:opacity-0={!activeUrl.startsWith("/user")}>Users</span
+            class={`mt-1 transition-opacity duration-300 ease-in-out ${textClass}`}
+            class:opacity-0={!activeUrl.startsWith("/user")}>{$_("users")}</span
           >
         </NavLi>
 
@@ -182,7 +187,7 @@
           on:click={toggleNavBar}
         >
           <svg
-            class="w-6 h-6"
+            class="w-4 h-4 sm:w-6 sm:h-6"
             fill="none"
             stroke={getIconColor(activeUrl.startsWith("/setting"))}
             viewBox="0 0 24 24"
@@ -202,8 +207,9 @@
             ></path>
           </svg>
           <span
-            class="mt-1 text-xs transition-opacity duration-300 ease-in-out"
-            class:opacity-0={!activeUrl.startsWith("/setting")}>Setting</span
+            class={`mt-1 transition-opacity duration-300 ease-in-out ${textClass}`}
+            class:opacity-0={!activeUrl.startsWith("/setting")}
+            >{$_("setting")}</span
           >
         </NavLi>
 
@@ -212,7 +218,7 @@
           on:click={() => authStore.logout()}
         >
           <svg
-            class="w-6 h-6"
+            class="w-4 h-4 sm:w-6 sm:h-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -225,24 +231,27 @@
               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
             ></path>
           </svg>
-          <span class="mt-1 text-xs">Logout</span>
+          <span
+            class={`mt-1 transition-opacity duration-300 ease-in-out ${textClass}`}
+            >{$_("logout")}</span
+          >
         </NavLi>
 
         <DarkMode
           class="text-lg"
-          btnClass="text-gray-500 dark:text-gray-400  rounded-lg text-sm p-2.5 "
+          btnClass="text-gray-500 dark:text-gray-400 rounded-lg text-sm p-2.5"
         >
           <img
             src="/images/sun.png"
             slot="lightIcon"
-            class="w-4 md:w-8 object-cover"
+            class="w-4 sm:w-6 md:w-8 object-cover"
             alt=""
           />
 
           <img
             src="/images/moon.png"
             slot="darkIcon"
-            class="w-4 md:w-8 object-cover"
+            class="w-4 sm:w-6 md:w-8 object-cover"
             alt=""
           />
         </DarkMode>
@@ -250,14 +259,14 @@
           ><Img
             class="rounded-full object-contain"
             src={languages.find((lang) => lang.code === $locale)?.flag}
-            width={35}
-            height={35}
+            width={25}
+            height={25}
           /></button
         >
         <Dropdown class="w-36">
           {#each languages as language}
             <DropdownItem
-              class="flex items-center"
+              class="flex items-center text-xs sm:text-sm font-medium dark:text-white text-black"
               on:click={() => {
                 locale.set(language.code);
                 localStorage.setItem("lang", language.code);
@@ -277,7 +286,7 @@
   </Navbar>
 
   <div
-    class="w-24 h-24 rounded-full [box-shadow:_0_1px_5px_#24b97d] border border-[#24b97d] bg-[#24b97d7e] dark:bg-[#11433A] hidden md:flex justify-center items-center text-4xl text-white cursor-pointer"
+    class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full [box-shadow:_0_1px_5px_#24b97d] border border-[#24b97d] bg-[#24b97d7e] dark:bg-[#11433A] hidden md:flex justify-center items-center text-2xl sm:text-3xl md:text-4xl text-white cursor-pointer"
   >
     {#if (isLoading && !$authStore) || $authStore?.name === undefined}
       <span class="loader"></span>
@@ -288,7 +297,7 @@
         .join("")}
     {/if}
   </div>
-  <Tooltip defaultClass="py-2 px-3 text-sm font-medium"
+  <Tooltip defaultClass="py-2 px-3 text-xs sm:text-sm font-medium"
     >{$authStore?.name}</Tooltip
   >
 </div>

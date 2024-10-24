@@ -122,5 +122,7 @@
   "setting": "دۆخ",
   "inbox-table": "خشتەی ئیمەیڵ",
   "confirm-delete": "Confim سڕینەوە",
-  "deleted-at": "سڕاوەتەوە At"
+  "deleted-at": "سڕاوەتەوە At",
+  "add-inbox-item": "بابەتی ئیمەیڵ زیاد بکە",
+  "not-available": "بەردەست نییە"
 }

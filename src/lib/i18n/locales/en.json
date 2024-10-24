@@ -123,5 +123,7 @@
   "setting": "Setting",
   "inbox-table": "Inbox Table",
   "confirm-delete": "Confim Delete",
-  "deleted-at": "Deleted At"
+  "deleted-at": "Deleted At",
+  "add-inbox-item": "Add Inbox Item",
+  "not-available": "Not Available"
 }

@@ -122,5 +122,7 @@
   "setting": "جلسة",
   "inbox-table": "جدول البريد الوارد",
   "confirm-delete": "تأكيد الحذف",
-  "deleted-at": "تم الحذف عند"
+  "deleted-at": "تم الحذف عند",
+  "add-inbox-item": "إضافة عنصر البريد الوارد",
+  "not-available": "غير متوفر"
 }

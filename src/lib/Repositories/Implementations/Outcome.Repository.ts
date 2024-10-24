@@ -8,6 +8,9 @@ export class OutcomeRepository implements IOutcomeRepository {
     createOutcomeAsync(request: Database["public"]["Tables"]["Outcome"]["Insert"]): Promise<PostgrestSingleResponse<Database["public"]["Tables"]["Outcome"]["Row"]>> {
         throw new Error("Method not implemented.");
     }
+    createOverallOutcomeAsync(p0: number, response: void, request: Database["public"]["Tables"]["Outcome"]["Insert"]): Promise<PostgrestSingleResponse<Database["public"]["Tables"]["Outcome"]["Row"]>> {
+        throw new Error("Method not implemented.");
+    }
     readOutcomesByWorkerIdAsync(workerId: number): Promise<PostgrestSingleResponse<Array<Database["public"]["Tables"]["Outcome"]["Row"]>>> {
         throw new Error("Method not implemented.");
     }

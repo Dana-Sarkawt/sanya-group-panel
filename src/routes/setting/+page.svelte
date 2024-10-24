@@ -77,12 +77,12 @@
     <input
       type="text"
       bind:value={roleRequest.name}
-      class="w-full h-12 border-0 rounded-xl bg-[#f1f1f1] dark:bg-[#151c26]"
+      class="w-full h-12 border-0 rounded-xl bg-[#f1f1f1] dark:bg-[#123d3745]"
     />
   </div>
 
   <div
-    class="w-full h-[200px] overflow-y-auto bg-[#f1f1f1] dark:bg-[#151c26] p-4 rounded-xl flex flex-col justify-start items-center gap-2"
+    class="w-full h-[200px] overflow-y-auto bg-[#f1f1f1] dark:bg-[#123d3745] p-4 rounded-xl flex flex-col justify-start items-center gap-2"
   >
     {#if $roleStore.data}
       <!-- svelte-ignore a11y-click-events-have-key-events -->

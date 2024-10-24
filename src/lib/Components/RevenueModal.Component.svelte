@@ -1,10 +1,9 @@
 <script lang="ts">
   import { incomeStore } from "$lib/Store/Income.Store";
   import { outcomeStore } from "$lib/Store/Outcome.Store";
-    import { Button, Modal } from "flowbite-svelte";
-    export let revenueModal: boolean = false;
-    import { Tabs, TabItem } from 'flowbite-svelte';
-    import {
+  import { Button, Modal } from "flowbite-svelte";
+  import { Tabs, TabItem } from "flowbite-svelte";
+  import {
     Table,
     TableBody,
     TableBodyCell,
@@ -14,6 +13,7 @@
   } from "flowbite-svelte";
   import { onMount } from "svelte";
   import { _ } from "svelte-i18n";
+  export let revenueModal: boolean = false;
   
    onMount(async () => {
     await incomeStore.getAll();
@@ -53,32 +53,30 @@
           </div>
         </TabItem>
 
+    <TabItem title="Outcome">
+      <div class="w-full h-auto bg-[#ffffff] dark:bg-[#081c18] rounded-b-xl">
+        <Table striped={true}>
+          <TableHead theadClass="bg-white dark:bg-[#212121] text-center">
+            <TableHeadCell>Outcome Date</TableHeadCell>
+            <TableHeadCell>Price</TableHeadCell>
+          </TableHead>
+          <TableBody tableBodyClass="divide-y text-center">
+            {#if $outcomeStore.data.length > 0}
+              {#each $outcomeStore.data as outcome}
+                <TableBodyRow>
+                  <TableBodyCell>{outcome.date}</TableBodyCell>
+                  <TableBodyCell>{outcome.overall_price}</TableBodyCell>
+                </TableBodyRow>
+              {/each}
+            {/if}
+          </TableBody>
+        </Table>
+      </div>
+    </TabItem>
+  </Tabs>
 
-        <TabItem title="Outcome">
-          <div class="w-full h-auto bg-[#ffffff] dark:bg-[#081c18] rounded-b-xl">
-            <Table striped={true}>
-              <TableHead theadClass="bg-white dark:bg-[#212121] text-center">
-                <TableHeadCell>Outcome Date</TableHeadCell>
-                <TableHeadCell>Price</TableHeadCell>
-              </TableHead>
-              <TableBody tableBodyClass="divide-y text-center">
-                {#if $outcomeStore.data.length > 0}
-                  {#each $outcomeStore.data as outcome}
-                    <TableBodyRow>
-                      <TableBodyCell>{outcome.date}</TableBodyCell>
-                      <TableBodyCell>{outcome.overall_price}</TableBodyCell>
-                    </TableBodyRow>
-                  {/each}
-                {/if}
-              </TableBody>
-            </Table>
-          </div>
-        </TabItem>
-       
-      </Tabs>
-
-    <svelte:fragment slot="footer">
-      <!-- <Button
+  <svelte:fragment slot="footer">
+    <!-- <Button
         class="w-full h-12 bg-red-500 dark:bg-red-500 hover:bg-red-400 dark:hover:bg-red-400 rounded-xl duration-300 ease-in-out"
         >No</Button
       >
@@ -86,6 +84,5 @@
         class="w-full h-12 bg-green-500 dark:bg-green-500 hover:bg-green-400 dark:hover:bg-green-400 rounded-xl duration-300 ease-in-out"
        >Yes</Button
       > -->
-    </svelte:fragment>
-  </Modal>
-  
+  </svelte:fragment>
+</Modal>

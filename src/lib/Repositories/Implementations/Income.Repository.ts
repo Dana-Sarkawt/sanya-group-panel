@@ -13,7 +13,7 @@ export class IncomeRepository implements IIncomeRepository {
     throw new Error("Method not implemented.");
   }
   async createIncomeAsync(
-    request: Database["public"]["Tables"]["Income"]["Insert"]
+    request: Database["public"]["Tables"]["Income"]["Insert"],
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Income"]["Row"]>
   > {
@@ -29,7 +29,7 @@ export class IncomeRepository implements IIncomeRepository {
     }
   }
   async readIncomeAsync(
-    id: number
+    id: number,
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Income"]["Row"]>
   > {
@@ -45,7 +45,7 @@ export class IncomeRepository implements IIncomeRepository {
     }
   }
   async readIncomesAsync(
-    options?: GenericListOptions
+    options?: GenericListOptions,
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Income"]["Row"]>
@@ -65,7 +65,7 @@ export class IncomeRepository implements IIncomeRepository {
         .order("id", { ascending: false })
         .range(
           options?.page! * options?.limit!,
-          options?.limit! * (options?.page! + 1)
+          options?.limit! * (options?.page! + 1),
         );
     } catch (error) {
       throw error;

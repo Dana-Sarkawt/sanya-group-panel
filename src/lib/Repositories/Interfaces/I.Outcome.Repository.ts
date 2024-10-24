@@ -14,7 +14,8 @@ export interface IOutcomeRepository {
         PostgrestSingleResponse<Database["public"]["Tables"]["Outcome"]["Row"]>
     >;
     readOutcomesAsync(
-        options?: GenericListOptions
+        options?: GenericListOptions,
+        inbox_id?: number,
     ): Promise<
         PostgrestSingleResponse<Array<Database["public"]["Tables"]["Outcome"]["Row"]>>
     >;

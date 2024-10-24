@@ -7,7 +7,7 @@ import { writable } from "svelte/store";
 const outcomeRepository = new OutcomeRepository();
 
 const createOutcomeStore = () => {
-  const { subscribe, set } = writable<
+  const { subscribe, set, update } = writable<
     Store<Database["public"]["Tables"]["Outcome"]["Row"]>
   >({
     data: [],
@@ -18,6 +18,23 @@ const createOutcomeStore = () => {
     subscribe,
     set: async (data: Store<Database["public"]["Tables"]["Outcome"]["Row"]>) =>
       set(data),
+    create: async (data: Database["public"]["Tables"]["Outcome"]["Insert"]) => {
+      try {
+        const response = await outcomeRepository.createOutcomeAsync(data);
+
+        if (response.error) {
+          throw new Error(response.error.message);
+        }
+
+        update((state) => ({
+          ...state,
+          data: [response.data, ...state.data],
+        }));
+        return response;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     get: async (id: number) => {
       try {
         const response = await outcomeRepository.readOutcomeAsync(id);
@@ -31,9 +48,12 @@ const createOutcomeStore = () => {
         console.log(error);
       }
     },
-    getAll: async (options?: GenericListOptions) => {
+    getAll: async (options?: GenericListOptions, inbox_id?: number) => {
       try {
-        const response = await outcomeRepository.readOutcomesAsync(options);
+        const response = await outcomeRepository.readOutcomesAsync(
+          options,
+          inbox_id
+        );
 
         if (response.error) {
           throw new Error(response.error.message);

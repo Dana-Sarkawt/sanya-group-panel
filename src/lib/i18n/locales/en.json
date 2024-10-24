@@ -125,5 +125,14 @@
   "confirm-delete": "Confim Delete",
   "deleted-at": "Deleted At",
   "add-inbox-item": "Add Inbox Item",
-  "not-available": "Not Available"
+  "not-available": "Not Available",
+  "edit": "Edit",
+  "no-description": "No Description",
+  "income": "Income",
+  "overhaul-price": "Overhaul Price",
+  "no-date": "No Date",
+  "no-price": "No Price",
+  "add-income": "Add Income",
+  "cancel": "Cancel",
+  "add-outcome": "Add Outcome"
 }

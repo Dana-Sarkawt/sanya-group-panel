@@ -123,6 +123,15 @@
   "inbox-table": "خشتەی ئیمەیڵ",
   "confirm-delete": "Confim سڕینەوە",
   "deleted-at": "سڕاوەتەوە At",
-  "add-inbox-item": "بابەتی ئیمەیڵ زیاد بکە",
-  "not-available": "بەردەست نییە"
+  "add-inbox-item": "Inbox زیاد بکە",
+  "not-available": "بەردەست نییە",
+  "edit": "بژارکردن",
+  "no-description": "بێ وەسف",
+  "income": "داهات",
+  "overhaul-price": "نرخی گشتی",
+  "no-date": "بێ بەروار",
+  "no-price": "نرخی دیاریکراوی نییە",
+  "add-income": "زیادکردنی داهات",
+  "cancel": "ڕەتکردنەوە",
+  "add-outcome": "زیادکردنی دەرئەنجام"
 }

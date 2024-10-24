@@ -15,6 +15,7 @@ export interface IIncomeRepository {
   >;
   readIncomesAsync(
     options?: GenericListOptions,
+    inbox_id?: number,
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Income"]["Row"]>

@@ -124,5 +124,14 @@
   "confirm-delete": "تأكيد الحذف",
   "deleted-at": "تم الحذف عند",
   "add-inbox-item": "إضافة عنصر البريد الوارد",
-  "not-available": "غير متوفر"
+  "not-available": "غير متوفر",
+  "edit": "يحرر",
+  "no-description": "لا يوجد وصف",
+  "income": "دخل",
+  "overhaul-price": "سعر الإصلاح",
+  "no-date": "لا يوجد تاريخ",
+  "no-price": "لا يوجد سعر",
+  "add-income": "أضف الدخل",
+  "cancel": "يلغي",
+  "add-outcome": "إضافة النتيجة"
 }

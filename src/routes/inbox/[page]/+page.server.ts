@@ -6,6 +6,7 @@ export async function load({ params, url }) {
     limit: 10,
     page: page,
   });
+  
   return {
     inboxes,
   };

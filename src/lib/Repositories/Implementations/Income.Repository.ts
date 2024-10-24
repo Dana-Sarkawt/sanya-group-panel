@@ -46,6 +46,7 @@ export class IncomeRepository implements IIncomeRepository {
   }
   async readIncomesAsync(
     options?: GenericListOptions,
+    inbox_id?: number,
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Income"]["Row"]>
@@ -55,10 +56,13 @@ export class IncomeRepository implements IIncomeRepository {
       const response = Supabase.client
         .from("Income")
         .select("*", { count: "exact" });
-      // .is("deleted_at", null);
+      // .is("deleted_at", null); 
 
       if (options?.field && options?.equal) {
         response.eq(options.field, options.equal);
+      }
+      if (inbox_id) {
+        response.eq("inbox", inbox_id);
       }
 
       return await response

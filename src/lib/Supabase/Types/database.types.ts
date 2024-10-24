@@ -213,34 +213,61 @@ export type Database = {
           },
         ]
       }
+      Inbox: {
+        Row: {
+          created_at: string
+          deleted_at: string | null
+          description: string | null
+          id: number
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_at?: string | null
+          description?: string | null
+          id?: number
+          title: string
+        }
+        Update: {
+          created_at?: string
+          deleted_at?: string | null
+          description?: string | null
+          id?: number
+          title?: string
+        }
+        Relationships: []
+      }
       Income: {
         Row: {
           created_at: string
           date: string | null
+          deleted_at: string | null
           id: number
+          inbox: number | null
           overall_price: number | null
-          project_id: number | null
         }
         Insert: {
           created_at?: string
           date?: string | null
+          deleted_at?: string | null
           id?: number
+          inbox?: number | null
           overall_price?: number | null
-          project_id?: number | null
         }
         Update: {
           created_at?: string
           date?: string | null
+          deleted_at?: string | null
           id?: number
+          inbox?: number | null
           overall_price?: number | null
-          project_id?: number | null
         }
         Relationships: [
           {
-            foreignKeyName: "Income_project_id_fkey"
-            columns: ["project_id"]
+            foreignKeyName: "Income_inbox_fkey"
+            columns: ["inbox"]
             isOneToOne: false
-            referencedRelation: "Projects"
+            referencedRelation: "Inbox"
             referencedColumns: ["id"]
           },
         ]
@@ -249,30 +276,33 @@ export type Database = {
         Row: {
           created_at: string
           date: string | null
+          deleted_at: string | null
           id: number
+          inbox: number | null
           overall_price: number | null
-          project_id: number | null
         }
         Insert: {
           created_at?: string
           date?: string | null
+          deleted_at?: string | null
           id?: number
+          inbox?: number | null
           overall_price?: number | null
-          project_id?: number | null
         }
         Update: {
           created_at?: string
           date?: string | null
+          deleted_at?: string | null
           id?: number
+          inbox?: number | null
           overall_price?: number | null
-          project_id?: number | null
         }
         Relationships: [
           {
-            foreignKeyName: "Outcome_project_id_fkey"
-            columns: ["project_id"]
+            foreignKeyName: "Outcome_inbox_fkey"
+            columns: ["inbox"]
             isOneToOne: false
-            referencedRelation: "Projects"
+            referencedRelation: "Inbox"
             referencedColumns: ["id"]
           },
         ]
@@ -453,13 +483,6 @@ export type Database = {
             columns: ["role"]
             isOneToOne: false
             referencedRelation: "Roles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "Users_user_uid_fkey"
-            columns: ["user_uid"]
-            isOneToOne: true
-            referencedRelation: "users"
             referencedColumns: ["id"]
           },
         ]
@@ -743,4 +766,19 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof PublicSchema["CompositeTypes"]
+    | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
+    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never

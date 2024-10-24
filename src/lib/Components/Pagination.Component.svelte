@@ -3,8 +3,9 @@
   import type { Filtration } from "$lib/Models/Common/Filteration.Common.Model";
   import { Pagination, type LinkType } from "flowbite-svelte";
   import { onMount } from "svelte";
+  import { _ } from "svelte-i18n";
 
-  export let classType;
+  export let classType: any;
   export let filter: Filtration<typeof classType> = {
     page: 0,
     limit: 10,
@@ -95,15 +96,14 @@
     on:click={(event) => {
       setPage(event);
     }}
-    icon
   >
     <svelte:fragment slot="prev">
-      <span class="sr-only">Previous</span>
-      <p>Previous</p>
+      <span class="sr-only">{$_("previous")}</span>
+      <p>{$_("previous")}</p>
     </svelte:fragment>
     <svelte:fragment slot="next">
-      <span class="sr-only">Next</span>
-      <p>Next</p>
+      <span class="sr-only">{$_("next")}</span>
+      <p>{$_("next")}</p>
     </svelte:fragment>
   </Pagination>
 {/if}

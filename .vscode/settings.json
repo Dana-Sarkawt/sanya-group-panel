@@ -1,9 +1,5 @@
 {
-  "cSpell.words": [
-    "Dailys",
-    "datas",
-    "Postgrest",
-    "Sanya",
-    "Supabase"
-  ]
+  "cSpell.words": ["Dailys", "datas", "Postgrest", "Sanya", "Supabase"],
+  "i18n-ally.localesPaths": ["src/lib/i18n", "src/lib/i18n/locales"],
+  "i18n-ally.keystyle": "flat"
 }

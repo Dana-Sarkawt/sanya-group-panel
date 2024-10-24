@@ -2,6 +2,7 @@
   import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
   import { ImageCommon } from "$lib/Models/Common/Image.Common.Model";
   import { Dropzone } from "flowbite-svelte";
+  import { _ } from "svelte-i18n";
 
   export let image: ImageCommon | undefined = new ImageCommon();
 
@@ -46,8 +47,10 @@
       /></svg
     >
     <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-      <span class="font-semibold">Click to upload</span> or drag and drop
+      <span class="font-semibold">{$_("click-to-upload")}</span> {$_("or-drag-and-drop")}
     </p>
-    <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG</p>
+    <p class="text-xs text-gray-500 dark:text-gray-400">
+      {$_("svg-png-jpg")}
+    </p>
   {/if}
 </Dropzone>

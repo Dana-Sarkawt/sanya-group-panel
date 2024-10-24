@@ -5,23 +5,10 @@
   import type { PageData } from "./$types";
   import ProjectTable from "$lib/Components/ResponsiveTable/ProjectTable.Component.svelte";
   import { exportAsExcelFile } from "$lib/Utils/ExportAsExcel.Utils";
-  import { onMount } from "svelte";
-  import { IncomeRepository } from "$lib/Repositories/Implementations/Income.Repository";
+  import { _ } from "svelte-i18n";
   export let data: PageData;
   let Total: number = 0;
   let isLoading = false;
-  onMount(async () => {
-    isLoading = true;
-    try {
-      Total = (await projectStore.getTotalPrice()) as number;
-
-      const response = await new IncomeRepository().createOverallIncomeAsync(108);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      isLoading = false;
-    }
-  });
 </script>
 
 <div class=" w-full h-auto flex justify-center items-center">
@@ -33,7 +20,7 @@
       <div
         class="flex h-24 w-full items-center justify-start pl-2 text-4xl text-[#0F4E35] dark:text-white font-bold"
       >
-        Projects Table
+        {$_("projects-table")}
       </div>
 
       <div
@@ -52,7 +39,7 @@
                 <p
                   class="h-auto w-full text-center text-[#1E4F3C] dark:text-white text-[10px] md:text-lg"
                 >
-                  Income:
+                  {$_("income:")}
                 </p>
                 <div
                   class="h-full w-full dark:text-white text-center text-[10px] md:text-lg"
@@ -67,7 +54,7 @@
                 <p
                   class="h-auto w-full text-center text-[#1E4F3C] dark:text-white text-[10px] md:text-lg"
                 >
-                  Outcome:
+                  {$_("outcome:")}
                 </p>
                 <div
                   class="h-full w-full dark:text-white text-center text-[10px] md:text-lg"
@@ -93,17 +80,18 @@
                 class="w-4 h-4 md:w-6 md:h-6 object-contain"
                 alt=""
               />
-            </span>Export as Excel</button
-          >
+            </span>
+            {$_("export-as-excel")}
+          </button>
 
           <a
             href="/project/add"
             class="w-auto h-auto px-2 gap-2 flex rounded-lg bg-[#24b97d] text-white justify-center items-center"
             style="box-shadow:0 1px 8px 0px #24b97d;"
           >
-            <button class="h-12 w-auto text-[10px] md:text-lg"
-              >Add Project</button
-            >
+            <button class="h-12 w-auto text-[10px] md:text-lg">
+              {$_("add-project")}
+            </button>
             <span class="text-[10px] md:text-lg">+</span>
           </a>
         </div>

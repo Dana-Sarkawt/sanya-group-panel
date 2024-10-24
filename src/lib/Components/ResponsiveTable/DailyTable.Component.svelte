@@ -6,7 +6,12 @@
   import { page } from "$app/stores";
   import { dailyStore } from "$lib/Store/Daily.Store";
   import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
+  import { _ } from "svelte-i18n";
+  import ImageDialog from "../ImageDialog.Component.svelte";
   let deleteModal = false;
+  let selectedImage: string = "";
+  let imageDialog = false;
+
   export let dailys: Store<Database["public"]["Tables"]["Dailys"]["Row"]> = {
     data: [],
     count: 0,
@@ -19,11 +24,11 @@
   <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
     <thead>
       <tr>
-        <th scope="col">Image</th>
-        <th scope="col">Description</th>
-        <th scope="col">Price</th>
-        <th scope="col">Date</th>
-        <th scope="col">Action</th>
+        <th scope="col">{$_("image")}</th>
+        <th scope="col">{$_("description")}</th>
+        <th scope="col">{$_("price")}</th>
+        <th scope="col">{$_("date")}</th>
+        <th scope="col">{$_("action")}</th>
       </tr>
     </thead>
     <tbody>
@@ -31,13 +36,23 @@
         {#each dailys.data as daily}
           <tr>
             <td class="flex justify-center">
-              <img
-                src={daily.image
-                  ? `${VITE_SUPABASE_BUCKET_SANYA}${daily.image}`
-                  : "/images/spark.png"}
-                class="w-10 h-10 object-contain rounded-lg"
-                alt=""
-              />
+              <div class="relative group">
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+                <img
+                  src={daily.image
+                    ? `${VITE_SUPABASE_BUCKET_SANYA}${daily.image}`
+                    : "/images/spark.png"}
+                  class="w-10 h-10 object-contain rounded-lg transition-all duration-300 group-hover:scale-150 group-hover:z-10 cursor-pointer"
+                  alt={daily.image}
+                  on:click={() => {
+                    selectedImage = daily.image
+                      ? `${VITE_SUPABASE_BUCKET_SANYA}${daily.image}`
+                      : "/images/spark.png";
+                    imageDialog = true;
+                  }}
+                />
+              </div>
             </td>
             <td>{daily.description}</td>
             <td>{daily.price}</td>
@@ -82,3 +97,4 @@
 </div>
 
 <DeleteModal bind:deleteModal Store={dailyStore} id={deleteId} />
+<ImageDialog bind:image={selectedImage} bind:open={imageDialog} />

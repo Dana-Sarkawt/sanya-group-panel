@@ -7,12 +7,15 @@
   import { ImageCommon } from "$lib/Models/Common/Image.Common.Model";
   import { storageStore } from "$lib/Store/Storage.Store";
   import ImageField from "$lib/Components/ImageField.Component.svelte";
+  import { _ } from "svelte-i18n";
+  import { Spinner } from "flowbite-svelte";
 
   let saleRequest = {
     ...new Sale.Update(),
     project_id: Number($page.params.projectId),
   };
   const image = new ImageCommon();
+  let isLoading = false;
 
   onMount(async () => {
     const sale = await saleStore.get(Number($page.params.id));
@@ -29,7 +32,9 @@
   });
 
   async function updateSale(request: Sale.Update) {
+    if (isLoading) return;
     try {
+      isLoading = true;
       if (image.file && image.file.size > 0) {
         const response = await storageStore.uploadImage(image.file);
         if (!response) {
@@ -44,6 +49,8 @@
       goto(`/project/${$page.params.projectId}/0`);
     } catch (error) {
       console.log(error);
+    } finally {
+      isLoading = false;
     }
   }
 </script>
@@ -53,14 +60,14 @@
     <p
       class="w-24 h-12 rounded-xl flex justify-center items-center bg-green-700 hover:bg-green-500 text-white duration-300 ease-in-out"
     >
-      Back
+      {$_("back")}
     </p>
   </a>
 
   <p
     class="w-full h-auto text-2xl md:text-4xl dark:text-white text-center my-12"
   >
-    Update Sale
+    {$_("update-sale")}
   </p>
 </div>
 
@@ -70,16 +77,22 @@
   >
     <ImageField {image} />
     <div class="w-full h-auto flex flex-col justify-center items-start">
-      <p class="dark:text-white">Description</p>
+      <p class="dark:text-white">{$_("description")}</p>
       <textarea
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
         bind:value={saleRequest.description}
       />
     </div>
 
-    <button
-      class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={() => updateSale(saleRequest)}>Update Sale</button
+    {#if !isLoading}
+      <button
+        class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
+        on:click={() => updateSale(saleRequest)}
     >
+        {$_("update-sale")}
+      </button>
+    {:else}
+      <Spinner size={6} color="green" />
+    {/if}
   </div>
 </div>

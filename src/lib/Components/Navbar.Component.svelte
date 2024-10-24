@@ -5,11 +5,15 @@
     NavLi,
     NavUl,
     NavHamburger,
+    Dropdown,
+    DropdownItem,
   } from "flowbite-svelte";
   import { page } from "$app/stores";
   import { DarkMode } from "flowbite-svelte";
-  import { Tooltip } from "flowbite-svelte";
+  import { Tooltip, Img } from "flowbite-svelte";
+  import { Button } from "flowbite-svelte";
   import { authStore } from "$lib/Store/Auth.Store";
+  import { locale } from "svelte-i18n";
 
   $: activeUrl = $page.url.pathname;
   let activeClass =
@@ -24,6 +28,12 @@
     document.querySelector(".navbarContainer")?.removeAttribute("tabindex");
     document.querySelector(".navbarContainer")?.removeAttribute("role");
   }
+
+  let languages = [
+    { name: "English", code: "en", flag: "/images/en.png" },
+    { name: "Arabic", code: "ar", flag: "/images/ar.png" },
+    { name: "Kurdish", code: "ckb", flag: "/images/ckb.png" },
+  ];
 </script>
 
 <div class="w-full h-auto flex justify-center items-center gap-2">
@@ -55,7 +65,6 @@
       </div>
 
       <NavHamburger
-        class
         menuClass="text-[#104e35] dark:text-white"
         onClick={() => {
           if (
@@ -105,7 +114,9 @@
 
         <NavLi
           href="/setting"
-          class={activeUrl.startsWith("/setting") ? activeClass : nonActiveClass}
+          class={activeUrl.startsWith("/setting")
+            ? activeClass
+            : nonActiveClass}
           on:click={toggleNavBar}>Setting</NavLi
         >
 
@@ -132,6 +143,32 @@
             alt=""
           />
         </DarkMode>
+        <button class="uppercase w-fit"
+          ><Img
+            class="rounded-full object-contain"
+            src={languages.find((lang) => lang.code === $locale)?.flag}
+            width={35}
+            height={35}
+          /></button
+        >
+        <Dropdown class="w-36">
+          {#each languages as language}
+            <DropdownItem
+              class="flex items-center"
+              on:click={() => {
+                locale.set(language.code);
+                localStorage.setItem("lang", language.code);
+              }}
+            >
+              <img
+                src={language.flag}
+                alt={language.name}
+                class="w-5 h-5 mr-2 rounded-full"
+              />
+              {language.name}
+            </DropdownItem>
+          {/each}
+        </Dropdown>
       </NavUl>
     </NavContainer>
   </Navbar>

@@ -4,6 +4,8 @@
 
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
   import { userStore } from "$lib/Store/User.Store";
+  import { _ } from "svelte-i18n";
+  import ImageDialog from "../ImageDialog.Component.svelte";
 
   export let users: Store<Database["public"]["Tables"]["Users"]["Row"]> = {
     data: [],
@@ -12,16 +14,19 @@
 
   let deleteId: number = 0;
   let deleteModal = false;
+
+  let selectedImage: string = "";
+  let imageDialog = false;
 </script>
 
 <div class="w-full h-auto flex justify-center items-center mx-2">
   <table class="table w-[100%] text-white text-[5px] md:text-lg rounded-xl">
     <thead>
       <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Email</th>
-        <th scope="col">Action</th>
+        <th scope="col">{$_("name")}</th>
+        <th scope="col">{$_("phone")}</th>
+        <th scope="col">{$_("email")}</th>
+        <th scope="col">{$_("action")}</th>
       </tr>
     </thead>
     <tbody>
@@ -71,3 +76,4 @@
 </div>
 
 <DeleteModal bind:deleteModal Store={userStore} id={deleteId} />
+<ImageDialog bind:image={selectedImage} bind:open={imageDialog} />

@@ -3,6 +3,7 @@
   import { roleStore } from "$lib/Store/Role.Store";
   import { Button, Modal } from "flowbite-svelte";
   import { Role } from "$lib/Models/Request/Role.Request.Model";
+  import { _ } from "svelte-i18n";
 
   let roleModal = false;
   let roleRequest: Role.Change = new Role.Change();
@@ -34,11 +35,9 @@
     }
   }
 
- 
-    function clearInput() {
-        roleRequest = new Role.Change();
-    }
-
+  function clearInput() {
+    roleRequest = new Role.Change();
+  }
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -67,10 +66,12 @@
 
 <Modal title="Create Role" bind:open={roleModal}>
   <div class="w-full h-auto flex flex-col justify-center items-start gap-2">
-
     <div class="w-full h-auto flex justify-between items-center">
-        <p class="dark:text-white">Role Name</p>
-        <button class="w-20 h-12 rounded-xl bg-blue-500 hover:bg-blue-400 ease-in-out duration-300 text-white" on:click={clearInput}>Reset</button>
+      <p class="dark:text-white">Role Name</p>
+      <button
+        class="w-20 h-12 rounded-xl bg-blue-500 hover:bg-blue-400 ease-in-out duration-300 text-white"
+        on:click={clearInput}>Reset</button
+      >
     </div>
 
     <input
@@ -90,7 +91,6 @@
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div
           class="w-full h-12 flex justify-between items-center px-4 text-black dark:text-white bg-white dark:bg-[#2e3e53] p-8 rounded-xl"
-         
         >
           <p>{role.name}</p>
 
@@ -130,7 +130,9 @@
   <svelte:fragment slot="footer">
     <Button
       class="w-full h-12 bg-green-500 dark:bg-green-500 hover:bg-green-400 dark:hover:bg-green-400 rounded-xl duration-300 ease-in-out"
-      on:click={() => changeRole(roleRequest)}>Submit</Button
+      on:click={() => changeRole(roleRequest)}
     >
+      {$_("submit")}
+    </Button>
   </svelte:fragment>
 </Modal>

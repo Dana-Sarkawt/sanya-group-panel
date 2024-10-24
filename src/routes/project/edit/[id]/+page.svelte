@@ -8,6 +8,7 @@
   import ImageField from "$lib/Components/ImageField.Component.svelte";
   import { ImageCommon } from "$lib/Models/Common/Image.Common.Model";
   import { storageStore } from "$lib/Store/Storage.Store";
+  import { _ } from "svelte-i18n";
   let projectRequest = new Project.Update();
   const image = new ImageCommon();
 
@@ -51,14 +52,14 @@
     <p
       class="w-24 h-12 rounded-xl flex justify-center items-center bg-green-700 hover:bg-green-500 text-white duration-300 ease-in-out"
     >
-      Back
+      {$_("back")}
     </p>
   </a>
 
   <p
     class="w-full h-auto text-2xl md:text-4xl dark:text-white text-center my-12"
   >
-    Update Project
+    {$_("update-project")}
   </p>
 </div>
 
@@ -68,7 +69,7 @@
   >
     <ImageField {image} />
     <div class="w-full h-auto flex flex-col justify-center items-start">
-      <p class="dark:text-white">Project Name</p>
+      <p class="dark:text-white">{$_("project-name")}</p>
       <input
         type="text"
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
@@ -77,7 +78,7 @@
     </div>
 
     <div class="w-full h-auto flex flex-col justify-center items-start">
-      <p class="dark:text-white">Status</p>
+      <p class="dark:text-white">{$_("status")}</p>
       <select
         name=""
         id=""
@@ -92,7 +93,9 @@
 
     <button
       class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={() => UpdateProject(projectRequest)}>Update Project</button
+      on:click={() => UpdateProject(projectRequest)}
     >
+      {$_("update-project")}
+    </button>
   </div>
 </div>

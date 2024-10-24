@@ -13,6 +13,7 @@
     TableHeadCell,
   } from "flowbite-svelte";
   import { onMount } from "svelte";
+  import { _ } from "svelte-i18n";
   
    onMount(async () => {
     await incomeStore.getAll();
@@ -35,8 +36,8 @@
           <div class="w-full h-auto bg-[#ffffff] dark:bg-[#081c18] rounded-b-xl">
             <Table striped={true}>
               <TableHead theadClass="bg-white dark:bg-[#212121] text-center">
-                <TableHeadCell>Income Date</TableHeadCell>
-                <TableHeadCell>Price</TableHeadCell>
+                <TableHeadCell>{$_("income-date")}</TableHeadCell>
+                <TableHeadCell>{$_("price")}</TableHeadCell>
               </TableHead>
               <TableBody tableBodyClass="divide-y text-center">
                 {#if $incomeStore.data.length > 0}

@@ -6,15 +6,20 @@
   import { ImageCommon } from "$lib/Models/Common/Image.Common.Model";
   import { storageStore } from "$lib/Store/Storage.Store";
   import ImageField from "$lib/Components/ImageField.Component.svelte";
+  import { _ } from "svelte-i18n";
+  import { Spinner } from "flowbite-svelte";
 
   const workerRequest = {
     ...new Worker.Create(),
     project_id: Number($page.params.projectId),
   };
   const image = new ImageCommon();
+  let isLoading = false;
 
   async function addWorker(request: Worker.Create) {
+    if (isLoading) return;
     try {
+      isLoading = true;
       if (image.file && image.file.size > 0) {
         const response = await storageStore.uploadImage(image.file);
         if (!response) {
@@ -27,6 +32,8 @@
       goto(`/project/${$page.params.projectId}/expense/0`);
     } catch (error) {
       console.log(error);
+    } finally {
+      isLoading = false;
     }
   }
 </script>
@@ -36,14 +43,14 @@
     <p
       class="w-24 h-12 rounded-xl flex justify-center items-center bg-green-700 hover:bg-green-500 text-white duration-300 ease-in-out"
     >
-      Back
+      {$_("back")}
     </p>
   </a>
 
   <p
     class="w-full h-auto text-2xl md:text-4xl dark:text-white text-center my-12"
   >
-    Add Worker
+    {$_("add-worker")}
   </p>
 </div>
 
@@ -53,7 +60,7 @@
   >
     <ImageField {image} />
     <div class="w-full h-auto flex flex-col justify-center items-start">
-      <p class="dark:text-white">Name</p>
+      <p class="dark:text-white">{$_("name")}</p>
       <input
         type="text"
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
@@ -61,9 +68,15 @@
       />
     </div>
 
-    <button
-      class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={() => addWorker(workerRequest)}>Add Worker</button
-    >
+    {#if !isLoading}
+      <button
+        class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
+        on:click={() => addWorker(workerRequest)}
+      >
+        {$_("add-worker")}
+      </button>
+    {:else}
+      <Spinner size={6} color="green" />
+    {/if}
   </div>
 </div>

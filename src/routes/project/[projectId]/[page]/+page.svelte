@@ -11,6 +11,7 @@
   import Pagination from "$lib/Components/Pagination.Store.Component.svelte";
   import { goto } from "$app/navigation";
   import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
+  import { _ } from "svelte-i18n";
   let totalCapital = 0;
   let isLoading = false;
   let sales: Overhaul = new Overhaul();
@@ -62,7 +63,7 @@
     <p
       class="w-24 h-12 rounded-xl flex justify-center items-center bg-green-700 hover:bg-green-500 text-white duration-300 ease-in-out"
     >
-      Back
+      {$_("back")}
     </p>
   </a>
 
@@ -100,7 +101,7 @@
             {formatNumber(totalCapital)}
           {/if}
         </div>
-        <p class="h-auto w-full">Capital</p>
+        <p class="h-auto w-full">{$_("capital")}</p>
       </div>
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"
@@ -109,7 +110,7 @@
         <div
           class="flex h-24 w-full items-center justify-start pl-2 text-4xl text-[#0F4E35] dark:text-white font-bold"
         >
-          Capital Table
+          {$_("capital-table")}
         </div>
 
         <div
@@ -120,7 +121,7 @@
               class="h-12 w-auto flex justify-center items-center px-4 rounded-xl bg-[#D3F9E9] dark:bg-[#11433A] dark:text-white"
             >
               <span class="text-[#1e4f3b] dark:text-[#54cc9c] pr-4 font-bold"
-                >Total:</span
+                >{$_("total:")}</span
               >
               {Number(totalCapital).toFixed(2)}
             </p>
@@ -144,14 +145,16 @@
                   class="w-2 h-2 md:w-6 md:h-6 object-contain"
                   alt=""
                 />
-              </span>Export as Excel</button
-            >
+              </span>
+              {$_("export-as-excel")}
+            </button>
 
             <a href="/project/{$page.params.projectId}/capital/add">
               <button
                 class="h-12 rounded-lg bg-[#24b97d] px-4 text-white text-[8px] md:text-lg"
                 style="box-shadow:0 1px 8px 0px #24b97d;"
-                ><span>+</span>Add Capital</button
+                ><span>+</span>
+                {$_("add-capital")}</button
               >
             </a>
           </div>
@@ -182,13 +185,13 @@
           class="w-6 h-6 object-contain absolute mb-16 ml-3"
           alt=""
         />
-        <p class="h-auto w-full text-xl font-bold">Sales</p>
+        <p class="h-auto w-full text-xl font-bold">{$_("sales")}</p>
 
         <div class="w-full h-auto flex justify-center items-center gap-2">
           <div
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
-            <span class="text-gray-400 text-xs">Deposit: </span>
+            <span class="text-gray-400 text-xs">{$_("deposit:")} </span>
             {#if isLoading}
               <span class="loader2"></span>
             {:else}
@@ -198,7 +201,7 @@
           <div
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
-            <span class="text-gray-400 text-xs">Financial: </span>
+            <span class="text-gray-400 text-xs">{$_("financial:")} </span>
             {#if isLoading}
               <span class="loader2"></span>
             {:else}
@@ -214,7 +217,7 @@
         <div
           class="flex h-24 w-full items-center justify-start pl-2 text-4xl text-[#0F4E35] dark:text-white font-bold"
         >
-          Sale Table
+          {$_("sale-table")}
         </div>
 
         <div
@@ -224,14 +227,14 @@
             <div
               class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]"
             >
-              <p>Deposit:</p>
+              <p>{$_("deposit:")}</p>
               <span>{sales?.deposits?.overall_total_price ?? 0}</span>
             </div>
 
             <div
               class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]"
             >
-              <p>Financial:</p>
+              <p>{$_("financial:")}</p>
               <span>{sales?.financials?.overall_total_price ?? 0}</span>
             </div>
           </div>
@@ -251,14 +254,16 @@
                 class="w-2 h-2 md:w-6 md:h-6 object-contain"
                 alt=""
               />
-            </span>Export as Excel</button
-          >
+            </span>
+            {$_("export-as-excel")}
+          </button>
 
           <a href="/project/{$page.params.projectId}/sales/add">
             <button
               class="h-12 rounded-lg bg-[#24b97d] px-4 text-white text-[8px] md:text-lg"
               style="box-shadow:0 1px 8px 0px #24b97d;"
-              ><span>+</span> Add Sale</button
+              ><span>+</span>
+              {$_("add-sale")}</button
             >
           </a>
         </div>
@@ -288,7 +293,7 @@
           class="w-6 h-6 object-contain absolute mb-16 ml-3"
           alt=""
         />
-        <p class="h-auto w-full text-xl font-bold">Expense</p>
+        <p class="h-auto w-full text-xl font-bold">{$_("expense")}</p>
       </div>
     </TabItem>
   </Tabs>

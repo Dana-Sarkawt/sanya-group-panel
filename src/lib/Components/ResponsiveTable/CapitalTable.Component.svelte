@@ -5,11 +5,16 @@
   import { page } from "$app/stores";
   import { capitalStore } from "$lib/Store/Capital.Store";
   import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
+  import { _ } from "svelte-i18n";
+  import ImageDialog from "../ImageDialog.Component.svelte";
   export let capitals: Store<Database["public"]["Tables"]["Capitals"]["Row"]> =
     {
       data: [],
       count: 0,
     };
+
+  let selectedImage: string = "";
+  let imageDialog = false;
 
   let deleteModal = false;
   let deleteId: number = 0;
@@ -19,11 +24,11 @@
   <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
     <thead>
       <tr>
-        <th scope="col">Image</th>
-        <th scope="col">Description</th>
-        <th scope="col">Price</th>
-        <th scope="col">Date</th>
-        <th scope="col">Action</th>
+        <th scope="col">{$_("image")}</th>
+        <th scope="col">{$_("description")}</th>
+        <th scope="col">{$_("price")}</th>
+        <th scope="col">{$_("date")}</th>
+        <th scope="col">{$_("action")}</th>
       </tr>
     </thead>
     <tbody>
@@ -31,13 +36,23 @@
         {#each capitals.data as capital}
           <tr>
             <td class="flex justify-center">
-              <img
-                src={capital.image
-                  ? `${VITE_SUPABASE_BUCKET_SANYA}${capital.image}`
-                  : "/images/spark.png"}
-                class="w-10 h-10 object-contain rounded-lg"
-                alt=""
-              />
+              <div class="relative group">
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+                <img
+                  src={capital.image
+                    ? `${VITE_SUPABASE_BUCKET_SANYA}${capital.image}`
+                    : "/images/spark.png"}
+                  class="w-10 h-10 object-contain rounded-lg transition-all duration-300 group-hover:scale-150 group-hover:z-10 cursor-pointer"
+                  alt={capital.image}
+                  on:click={() => {
+                    selectedImage = capital.image
+                      ? `${VITE_SUPABASE_BUCKET_SANYA}${capital.image}`
+                      : "/images/spark.png";
+                    imageDialog = true;
+                  }}
+                />
+              </div>
             </td>
             <td>{capital.description}</td>
             <td>{capital.price}</td>
@@ -83,3 +98,5 @@
 </div>
 
 <DeleteModal bind:deleteModal Store={capitalStore} id={deleteId} />
+
+<ImageDialog bind:image={selectedImage} bind:open={imageDialog} />

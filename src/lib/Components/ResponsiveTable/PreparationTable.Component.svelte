@@ -8,6 +8,8 @@
   import { preparationStore } from "$lib/Store/Preparation.Store";
   import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
   import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
+  import { _ } from "svelte-i18n";
+  import ImageDialog from "../ImageDialog.Component.svelte";
   let deleteModal = false;
   let depositLoading = false;
   let financialLoading = false;
@@ -18,6 +20,8 @@
     count: 0,
     error: "",
   };
+  let selectedImage: string = "";
+  let imageDialog = false;
 
   let deposits: Array<{
     preparation_id: number;
@@ -68,110 +72,38 @@
   <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
     <thead>
       <tr>
-        <th scope="col">Image</th>
-        <th scope="col">ID</th>
-        <th scope="col">Description</th>
+        <th scope="col">{$_("image")}</th>
+        <th scope="col">{$_("id")}</th>
+        <th scope="col">{$_("description")}</th>
         <!-- <th scope="col">New Action</th> -->
-        <th scope="col">Action</th>
+        <th scope="col">{$_("action")}</th>
       </tr>
     </thead>
     <tbody>
       {#if preparations.count !== 0}
         {#each preparations.data as preparation}
           <tr>
-            <td class="flex justify-center h-28 items-center"
-            >
-            <img
-              src="{preparation.image ? `${VITE_SUPABASE_BUCKET_SANYA}${preparation.image}`:"/images/spark.png"}"
-              class="w-10 h-10 object-contain rounded-lg"
-              alt=""
-            />
-            </td
-          >
+            <td class="flex justify-center h-28 items-center">
+              <div class="relative group">
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+                <img
+                  src={preparation.image
+                    ? `${VITE_SUPABASE_BUCKET_SANYA}${preparation.image}`
+                    : "/images/spark.png"}
+                  class="w-10 h-10 object-contain rounded-lg transition-all duration-300 group-hover:scale-150 group-hover:z-10 cursor-pointer"
+                  alt={preparation.image}
+                  on:click={() => {
+                    selectedImage = preparation.image
+                      ? `${VITE_SUPABASE_BUCKET_SANYA}${preparation.image}`
+                      : "/images/spark.png";
+                    imageDialog = true;
+                  }}
+                />
+              </div>
+            </td>
             <td>{preparation.id}</td>
             <td>{preparation.description}</td>
-            <!-- <td> -->
-              <!-- svelte-ignore a11y-no-static-element-interactions -->
-              <!-- <div class="w-full h-auto flex justify-center items-center gap-2"> -->
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- <div
-                  class="w-42 h-auto flex flex-col justify-center items-center bg-orange-500 rounded-xl px-4 font-bold text-white cursor-pointer p-2 gap-3"
-                  on:click={() =>
-                    goto(`/deposit/preparation/${preparation.id}`)}
-                >
-                  <div
-                    class="w-auto h-auto flex justify-center items-center gap-2"
-                  >
-                    <p>Deposit</p>
-
-                    <p
-                      class="w-auto h-2 md:h-6 rounded-full bg-orange-700 flex justify-center items-center px-2"
-                    >
-                      {#if depositLoading}
-                        <span class="loader2"></span>
-                      {:else}
-                        {deposits.find(
-                          (d) => d.preparation_id === preparation.id
-                        )?.deposit_count ?? 0}
-                      {/if}
-                    </p>
-                  </div>
-
-                  <div
-                    class="w-full h-auto flex justify-center items-center bg-orange-700 rounded-xl px-2"
-                  >
-                    <p class="text-gray-300">
-                      Total: <span class="text-white"
-                        >{formatNumber(
-                          deposits.find(
-                            (d) => d.preparation_id == preparation.id
-                          )?.total_price ?? 0
-                        )}</span
-                      >
-                    </p>
-                  </div>
-                </div> -->
-
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- <div
-                  class="w-42 h-auto flex flex-col justify-center items-center bg-blue-400 rounded-xl px-4 font-bold text-white cursor-pointer p-2 gap-3"
-                  on:click={() =>
-                    goto(`/finance/preparation/${preparation.id}`)}
-                >
-                  <div
-                    class="w-auto h-auto flex justify-center items-center gap-2"
-                  >
-                    <p>Financial Dues</p>
-
-                    <p
-                      class="w-auto h-2 md:h-6 rounded-full bg-blue-700 flex justify-center items-center px-2"
-                    >
-                      {#if financialLoading}
-                        <span class="loader2"></span>
-                      {:else}
-                        {financial.find(
-                          (f) => f.preparation_id === preparation.id
-                        )?.financial_count ?? 0}
-                      {/if}
-                    </p>
-                  </div>
-
-                  <div
-                    class="w-full h-auto flex justify-center items-center bg-blue-700 rounded-xl px-2"
-                  >
-                    <p class="text-gray-300">
-                      Total: <span class="text-white"
-                        >{formatNumber(
-                          financial.find(
-                            (f) => f.preparation_id == preparation.id
-                          )?.total_price ?? 0
-                        )}</span
-                      >
-                    </p>
-                  </div>
-                </div>
-              </div> -->
-            <!-- </td> -->
             <td>
               <div class="flex h-auto w-auto items-center justify-center gap-2">
                 <a
@@ -211,3 +143,4 @@
 </div>
 
 <DeleteModal bind:deleteModal Store={preparationStore} id={deleteId} />
+<ImageDialog bind:image={selectedImage} bind:open={imageDialog} />

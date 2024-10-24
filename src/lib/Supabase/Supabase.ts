@@ -1,9 +1,9 @@
 import { createClient } from "@supabase/supabase-js";
-import type { Database } from "./Types/database.types";
 import {
   VITE_SUPABASE_ANON_KEY,
   VITE_SUPABASE_API_URL,
 } from "$env/static/public";
+import type { Database } from "./Types/database.types";
 
 export namespace Supabase {
   export const client = createClient<Database>(

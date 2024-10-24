@@ -10,6 +10,8 @@
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
   import type { Database } from "$lib/Supabase/Types/database.types";
   import type { Store } from "$lib/Models/Response/Store.Response.Model";
+  import { saleStore } from "$lib/Store/Sale.Store";
+  import { _ } from "svelte-i18n";
   let deleteModal = false;
   export let sales: Store<Database["public"]["Tables"]["Sales"]["Row"]> = {
     data: [],
@@ -22,9 +24,9 @@
 >
   <Table striped={true}>
     <TableHead theadClass="bg-white dark:bg-[#212121] text-center">
-      <TableHeadCell>Description</TableHeadCell>
-      <TableHeadCell>New Action</TableHeadCell>
-      <TableHeadCell>Action</TableHeadCell>
+      <TableHeadCell>{$_("description")}</TableHeadCell>
+      <TableHeadCell>{$_("new-action")}</TableHeadCell>
+      <TableHeadCell>{$_("action")}</TableHeadCell>
     </TableHead>
     <TableBody tableBodyClass="divide-y text-center">
       {#if sales.count !== 0}
@@ -80,4 +82,4 @@
   </Table>
 </div>
 
-<DeleteModal bind:deleteModal />
+<DeleteModal bind:deleteModal Store={saleStore} />

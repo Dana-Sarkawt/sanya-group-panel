@@ -6,9 +6,17 @@
   import { Email } from "$lib/Utils/Regex/Email.Regex";
   import { Phone } from "$lib/Utils/Regex/Phone.Regex";
   import type { PageData } from "./$types";
+  import { _ } from "svelte-i18n";
+  import { onMount } from "svelte";
+  import { Spinner } from 'flowbite-svelte';
+
   export let data: PageData;
   const userRequest = new User.Create();
+  let isLoading = false;
+
   async function addUser(request: User.Create) {
+    if (isLoading) return;
+    isLoading = true;
     try {
       if (!phone(request.phone, { country: "IQ" }).isValid) {
         throw new Error("Invalid phone number");
@@ -25,8 +33,11 @@
       goto("/user/0");
     } catch (error) {
       console.log(error);
+    } finally {
+      isLoading = false;
     }
   }
+
   function phoneField(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     let currentValue = inputElement.value;
@@ -49,14 +60,14 @@
     <p
       class="w-24 h-12 rounded-xl flex justify-center items-center bg-green-700 hover:bg-green-500 text-white duration-300 ease-in-out"
     >
-      Back
+      {$_("back")}  
     </p>
   </a>
 
   <p
     class="w-full h-auto text-2xl md:text-4xl dark:text-white text-center my-12"
   >
-    Add User
+    {$_("add-user")}
   </p>
 </div>
 
@@ -65,7 +76,7 @@
     class="w-[90%] md:w-[50%] h-auto p-10 bg-[#94DCBA] dark:bg-[#11433A] border border-[#11433A] dark:border-[#94DCBA] rounded-xl flex flex-col justify-center items-center gap-6"
   >
     <div class="w-full h-auto flex flex-col justify-center items-start">
-      <p class="dark:text-white">Name</p>
+      <p class="dark:text-white">{$_("name")}</p>
       <input
         type="text"
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
@@ -74,7 +85,7 @@
     </div>
 
     <div class="w-full h-auto flex flex-col justify-center items-start">
-      <p class="dark:text-white">Phone</p>
+      <p class="dark:text-white">{$_("phone")}</p>
 
       <div
         class="w-full bg-[#daffee] dark:bg-[#0d2621] flex rounded-xl border-0 dark:text-white"
@@ -105,7 +116,7 @@
     </div>
 
     <div class="w-full h-auto flex flex-col justify-center items-start">
-      <p class="dark:text-white">E-mail</p>
+      <p class="dark:text-white">{$_("email")}</p>
       <div
         class="w-full bg-[#daffee] dark:bg-[#0d2621] flex rounded-xl border-0 dark:text-white"
       >
@@ -134,7 +145,7 @@
     </div>
 
     <div class="w-full h-auto flex flex-col justify-center items-start">
-      <p class="dark:text-white">Password</p>
+      <p class="dark:text-white">{$_("password")}</p>
       <input
         type="password"
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
@@ -143,7 +154,7 @@
     </div>
 
     <div class="w-full h-auto flex flex-col justify-center items-start">
-      <p class="dark:text-white">Role</p>
+      <p class="dark:text-white">{$_("role")}</p>
       <select
         name=""
         id=""
@@ -151,7 +162,7 @@
         bind:value={userRequest.role}
       >
         {#if data.roles}
-          <option value="">None</option>
+          <option value="">{$_("none")}</option>
           {#each data.roles.data as role}
             <option value={role.id}>{role.name}</option>
           {/each}
@@ -160,8 +171,15 @@
     </div>
 
     <button
-      class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={() => addUser(userRequest)}>Add User</button
+      class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center"
+      on:click={() => addUser(userRequest)}
+      disabled={isLoading}
     >
+      {#if isLoading}
+        <Spinner size="6" color="white" />
+      {:else}
+        {$_("add-user")}
+      {/if}
+    </button>
   </div>
 </div>

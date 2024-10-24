@@ -8,6 +8,8 @@
   import { saleStore } from "$lib/Store/Sale.Store";
   import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
   import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
+  import { _ } from "svelte-i18n";
+  import ImageDialog from "../ImageDialog.Component.svelte";
   let deleteModal = false;
   let depositLoading = false;
   let financialLoading = false;
@@ -26,6 +28,8 @@
     total_price: number;
   }> = [];
   let deleteId: number = 0;
+  let selectedImage: string = "";
+  let imageDialog = false;
 
   onMount(async () => {
     depositLoading = true;
@@ -65,10 +69,10 @@
   <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
     <thead>
       <tr>
-        <th scope="col">Image</th>
-        <th scope="col">Description</th>
-        <th scope="col">New Action</th>
-        <th scope="col">Action</th>
+        <th scope="col">{$_("image")}</th>
+        <th scope="col">{$_("description")}</th>
+        <th scope="col">{$_("new-action")}</th>
+        <th scope="col">{$_("action")}</th>
       </tr>
     </thead>
     <tbody>
@@ -76,13 +80,23 @@
         {#each sales.data as sale}
           <tr>
             <td class="flex justify-center items-center h-28">
-              <img
-                src={sale.image
-                  ? `${VITE_SUPABASE_BUCKET_SANYA}${sale.image}`
-                  : "/images/spark.png"}
-                class="w-10 h-10 object-contain rounded-lg"
-                alt=""
-              />
+              <div class="relative group">
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+                <img
+                  src={sale.image
+                    ? `${VITE_SUPABASE_BUCKET_SANYA}${sale.image}`
+                    : "/images/spark.png"}
+                  class="w-10 h-10 object-contain rounded-lg transition-all duration-300 group-hover:scale-150 group-hover:z-10 cursor-pointer"
+                  alt={sale.image}
+                  on:click={() => {
+                    selectedImage = sale.image
+                      ? `${VITE_SUPABASE_BUCKET_SANYA}${sale.image}`
+                      : "/images/spark.png";
+                    imageDialog = true;
+                  }}
+                />
+              </div>
             </td>
             <td>{sale.description}</td>
             <td>
@@ -97,7 +111,7 @@
                   <div
                     class="w-auto h-auto flex justify-center items-center gap-2"
                   >
-                    <p>Deposit</p>
+                    <p>{$_("deposit")}</p>
 
                     <p
                       class="w-auto h-2 md:h-6 rounded-full bg-orange-700 flex justify-center items-center px-2"
@@ -115,7 +129,8 @@
                     class="w-full h-auto flex justify-center items-center bg-orange-700 rounded-xl px-2"
                   >
                     <p class="text-gray-300">
-                      Total: <span class="text-white"
+                      {$_("total:")}
+                      <span class="text-white"
                         >{formatNumber(
                           deposits.find((d) => d.sale_id == sale.id)
                             ?.total_price ?? 0
@@ -132,7 +147,7 @@
                   <div
                     class="w-auto h-auto flex justify-center items-center gap-2"
                   >
-                    <p>Financial Dues</p>
+                    <p>{$_("financial-dues")}</p>
 
                     <p
                       class="w-auto h-2 md:h-6 rounded-full bg-blue-700 flex justify-center items-center px-2"
@@ -150,7 +165,8 @@
                     class="w-full h-auto flex justify-center items-center bg-blue-700 rounded-xl px-2"
                   >
                     <p class="text-gray-300">
-                      Total: <span class="text-white"
+                      {$_("total:")}
+                      <span class="text-white"
                         >{formatNumber(
                           financial.find((f) => f.sale_id == sale.id)
                             ?.total_price ?? 0
@@ -200,3 +216,4 @@
 </div>
 
 <DeleteModal bind:deleteModal Store={saleStore} id={deleteId} />
+<ImageDialog bind:image={selectedImage} bind:open={imageDialog} />

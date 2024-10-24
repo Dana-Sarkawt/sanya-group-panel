@@ -11,6 +11,7 @@
     TableHead,
     TableHeadCell,
   } from "flowbite-svelte";
+  import { _ } from "svelte-i18n";
   export let capitals: Store<Database["public"]["Tables"]["Capitals"]["Row"]> =
     {
       data: [],
@@ -23,10 +24,10 @@
 <div class="w-full h-auto bg-[#ffffff] dark:bg-[#081c18] p-4 rounded-b-xl">
   <Table striped={true}>
     <TableHead theadClass="bg-white dark:bg-[#212121] text-center">
-      <TableHeadCell>Description</TableHeadCell>
-      <TableHeadCell>Price</TableHeadCell>
-      <TableHeadCell>Date</TableHeadCell>
-      <TableHeadCell>Action</TableHeadCell>
+      <TableHeadCell>{$_("description")}</TableHeadCell>
+      <TableHeadCell>{$_("price")}</TableHeadCell>
+      <TableHeadCell>{$_("date")}</TableHeadCell>
+      <TableHeadCell>{$_("action")}</TableHeadCell>
     </TableHead>
     <TableBody tableBodyClass="divide-y text-center">
       {#if capitals.count !== 0}

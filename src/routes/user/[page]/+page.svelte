@@ -5,6 +5,7 @@
   import Pagination from "$lib/Components/Pagination.Component.svelte";
   import { page } from "$app/stores";
   import { exportAsExcelFile } from "$lib/Utils/ExportAsExcel.Utils";
+  import { _ } from "svelte-i18n";
   export let data: PageData;
 </script>
 
@@ -16,7 +17,7 @@
     <div
       class="flex h-24 w-full items-center justify-start pl-2 text-4xl text-[#0F4E35] dark:text-white font-bold"
     >
-      Users Table
+      {$_("users-table")}
     </div>
 
     <div
@@ -31,14 +32,15 @@
         }}
         ><span>
           <img src="/images/print.png" class="w-6 h-6 object-contain" alt="" />
-        </span>Export as Excel</button
-      >
+        </span>
+        {$_("export-as-excel")}
+      </button>
 
       <a href="/user/add">
         <button
           class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
           style="box-shadow:0 1px 8px 0px #24b97d;"
-          ><span>+</span> Add User</button
+          ><span>+</span> {$_("add-user")}</button
         >
       </a>
     </div>

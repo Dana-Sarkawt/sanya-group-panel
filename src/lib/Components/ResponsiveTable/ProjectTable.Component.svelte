@@ -6,6 +6,11 @@
   import { Status } from "$lib/Models/Enum/Status.Enum.Model";
   import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
   import RevenueModal from "$lib/Components/RevenueModal.Component.svelte";
+  import { _ } from "svelte-i18n";
+  import ImageDialog from "../ImageDialog.Component.svelte";
+
+  let selectedImage: string = "";
+  let imageDialog = false;
 
   export let projects: Store<Database["public"]["Tables"]["Projects"]["Row"]> =
     {
@@ -22,27 +27,36 @@
   <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
     <thead>
       <tr>
-        <th scope="col">Image</th>
-        <th scope="col">Project ID</th>
-        <th scope="col">Project Name</th>
-        <th scope="col">Status</th>
-        <!-- <th scope="col">New Action</th> -->
-        <th scope="col">Action</th>
+        <th scope="col">{$_("image")}</th>
+        <th scope="col">{$_("project-id")}</th>
+        <th scope="col">{$_("project-name")}</th>
+        <th scope="col">{$_("status")}</th>
+        <th scope="col">{$_("action")}</th>
       </tr>
     </thead>
     <tbody>
       {#if projects.count !== 0}
         {#each projects.data as project}
           <tr>
-            <td class="flex justify-center"
-              >
-              <img
-                src="{project.image ? `${VITE_SUPABASE_BUCKET_SANYA}${project.image}`:"/images/spark.png"}"
-                class="w-10 h-10 object-contain rounded-lg"
-                alt=""
-              />
-              </td
-            >
+            <td class="flex justify-center">
+              <div class="relative group">
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+                <img
+                  src={project.image
+                    ? `${VITE_SUPABASE_BUCKET_SANYA}${project.image}`
+                    : "/images/spark.png"}
+                  class="w-10 h-10 object-contain rounded-lg transition-all duration-300 group-hover:scale-150 group-hover:z-10 cursor-pointer"
+                  alt={project.image}
+                  on:click={() => {
+                    selectedImage = project.image
+                      ? `${VITE_SUPABASE_BUCKET_SANYA}${project.image}`
+                      : "/images/spark.png";
+                    imageDialog = true;
+                  }}
+                />
+              </div>
+            </td>
             <td>{project.id}</td>
             <td>{project.name}</td>
             <td>
@@ -64,57 +78,6 @@
                 </p>
               </div>
             </td>
-
-            <!-- <td> -->
-                <!-- svelte-ignore a11y-no-static-element-interactions -->
-                <!-- <div class="w-full h-auto flex justify-center items-center gap-2"> -->
-                  <!-- svelte-ignore a11y-click-events-have-key-events -->
-                  <!-- <div
-                    class="w-42 h-auto flex flex-col justify-center items-center bg-orange-500 rounded-xl px-1 font-bold text-white cursor-pointer p-2 gap-3"
-                    
-                  >
-                    <div
-                      class="w-auto h-auto flex justify-center items-center gap-2"
-                    >
-                      <p>Deposit</p>
-                    </div>
-  
-                    <div
-                      class="w-full h-auto flex justify-center items-center bg-orange-700 rounded-xl px-2"
-                    >
-                      <p class="text-gray-300">
-                        Total: <span class="text-white"
-                          >d</span
-                        >
-                      </p>
-                    </div>
-                  </div> -->
-  
-                  <!-- svelte-ignore a11y-click-events-have-key-events -->
-                  <!-- <div
-                    class="w-42 h-auto flex flex-col justify-center items-center bg-blue-400 rounded-xl px-1 font-bold text-white cursor-pointer p-2 gap-3"
-                  >
-                    <div
-                      class="w-auto h-auto flex justify-center items-center gap-2"
-                    >
-                      <p>Financial</p>
-
-                    </div>
-  
-                    <div
-                      class="w-full h-auto flex justify-center items-center bg-blue-700 rounded-xl px-2"
-                    >
-                      <p class="text-gray-300">
-                        Total: <span class="text-white"
-                          >a</span
-                        >
-                      </p>
-                    </div>
-                  </div>
-                </div>
-            </td> -->
-
-
             <td>
               <!-- svelte-ignore a11y-no-static-element-interactions -->
               <div class="flex h-auto w-auto items-center justify-center gap-2">
@@ -153,7 +116,7 @@
                     alt=""
                   />
                 </a>
-                
+
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-missing-attribute -->
                 <a
@@ -169,7 +132,6 @@
                     alt=""
                   />
                 </a>
-
               </div>
             </td>
           </tr>
@@ -181,9 +143,6 @@
 
 <DeleteModal bind:deleteModal Store={projectStore} id={deleteId} />
 
-<RevenueModal bind:revenueModal/>
+<RevenueModal bind:revenueModal />
 
-
-
-
-
+<ImageDialog bind:image={selectedImage} bind:open={imageDialog} />

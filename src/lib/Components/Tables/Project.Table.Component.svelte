@@ -10,6 +10,8 @@
     TableHeadCell,
   } from "flowbite-svelte";
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
+  import { projectStore } from "$lib/Store/Project.Store";
+  import { _ } from "svelte-i18n";
 
   export let projects: Store<Database["public"]["Tables"]["Projects"]["Row"]> =
     {
@@ -17,16 +19,16 @@
       count: 0,
     };
 
-    let deleteModal = false;
+  let deleteModal = false;
 </script>
 
 <div class="w-full h-auto bg-[#ffffff] dark:bg-[#081c18] p-4 rounded-b-xl">
-  <Table striped={true} >
+  <Table striped={true}>
     <TableHead theadClass="bg-white dark:bg-[#212121] text-center">
-      <TableHeadCell>Project ID</TableHeadCell>
-      <TableHeadCell>Project Name</TableHeadCell>
-      <TableHeadCell>Status</TableHeadCell>
-      <TableHeadCell>Action</TableHeadCell>
+      <TableHeadCell>{$_("project-id")}</TableHeadCell>
+      <TableHeadCell>{$_("project-name")}</TableHeadCell>
+      <TableHeadCell>{$_("status")}</TableHeadCell>
+      <TableHeadCell>{$_("action")}</TableHeadCell>
     </TableHead>
     <TableBody tableBodyClass="divide-y text-center">
       {#if projects.count !== 0}
@@ -72,11 +74,7 @@
   </Table>
 </div>
 
-
-<DeleteModal bind:deleteModal={deleteModal} />
-
-
+<DeleteModal bind:deleteModal Store={projectStore} />
 
 <style>
-
 </style>

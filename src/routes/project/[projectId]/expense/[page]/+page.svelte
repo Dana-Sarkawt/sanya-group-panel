@@ -13,6 +13,7 @@
   import { Tabs, TabItem } from "flowbite-svelte";
   import { exportAsExcelFile } from "$lib/Utils/ExportAsExcel.Utils";
   import { Overhaul } from "$lib/Models/Common/Overhaul.Common.Model";
+  import { _ } from "svelte-i18n";
 
   let totalDaily = 0;
   let isLoading = false;
@@ -107,7 +108,7 @@
     <p
       class="w-24 h-12 rounded-xl flex justify-center items-center bg-green-700 hover:bg-green-500 text-white duration-300 ease-in-out"
     >
-      Back
+      {$_("back")}
     </p>
   </a>
 
@@ -145,7 +146,7 @@
             {formatNumber(totalDaily)}
           {/if}
         </div>
-        <p class="h-auto w-full">Daily</p>
+        <p class="h-auto w-full">{$_("daily")}</p>
       </div>
 
       <div
@@ -155,7 +156,7 @@
         <div
           class="flex h-24 w-full items-center justify-start pl-2 text-4xl text-[#0F4E35] dark:text-white font-bold"
         >
-          Daily Table
+          {$_("daily-table")}
         </div>
 
         <div
@@ -166,7 +167,7 @@
               class="h-12 w-auto flex justify-center items-center px-4 rounded-xl bg-[#D3F9E9] dark:bg-[#11433A] dark:text-white"
             >
               <span class="text-[#1e4f3b] dark:text-[#54cc9c] pr-4 font-bold"
-                >Total:</span
+                >{$_("total:")}</span
               >
               {totalDaily.toFixed(2)}
             </p>
@@ -190,15 +191,17 @@
                   class="w-2 h-2 md:w-6 md:h-6 object-contain"
                   alt=""
                 />
-              </span>Export as Excel</button
-            >
+              </span>
+              {$_("export-as-excel")}
+            </button>
 
             <a href="/project/{$page.params.projectId}/expense/daily/add">
               <button
                 class=" h-12 rounded-lg bg-[#24b97d] p-2 md:px-4 text-white w-auto text-[8px] md:text-lg"
                 style="box-shadow:0 1px 8px 0px #24b97d;"
-                ><span>+</span>Add Daily</button
-              >
+                ><span>+</span>
+                {$_("add-daily")}
+              </button>
             </a>
           </div>
         </div>
@@ -228,13 +231,13 @@
           class="w-6 h-6 object-contain absolute mb-16 ml-3"
           alt=""
         />
-        <p class="h-auto w-full text-xl font-bold">Worker</p>
+        <p class="h-auto w-full text-xl font-bold">{$_("worker")}</p>
 
         <div class="w-full h-auto flex justify-center items-center gap-2">
           <div
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
-            <span class="text-gray-400 text-xs">Deposit: </span>
+            <span class="text-gray-400 text-xs">{$_("deposit:")} </span>
             {#if isLoading}
               <span class="loader2"></span>
             {:else}
@@ -244,7 +247,7 @@
           <div
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
-            <span class="text-gray-400 text-xs">Financial: </span>
+            <span class="text-gray-400 text-xs">{$_("financial:")} </span>
             {#if isLoading}
               <span class="loader2"></span>
             {:else}
@@ -260,7 +263,7 @@
         <div
           class="flex h-24 w-full items-center justify-start pl-2 text-4xl text-[#0F4E35] dark:text-white font-bold"
         >
-          Worker Table
+          {$_("worker-table")}
         </div>
 
         <div
@@ -270,14 +273,14 @@
             <div
               class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]"
             >
-              <p>Deposit:</p>
+              <p>{$_("deposit:")}</p>
               <span>{workers.deposits.overall_total_price}</span>
             </div>
 
             <div
               class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]"
             >
-              <p>Financial:</p>
+              <p>{$_("financial:")}</p>
               <span>{workers.financials.overall_total_price}</span>
             </div>
           </div>
@@ -297,15 +300,17 @@
                 class="w-2 h-2 md:w-6 md:h-6 object-contain"
                 alt=""
               />
-            </span>Export as Excel</button
-          >
+            </span>
+            {$_("export-as-excel")}
+          </button>
 
           <a href="/project/{$page.params.projectId}/expense/worker/add">
             <button
               class="h-12 rounded-lg bg-[#24b97d] px-4 text-white w-auto text-[8px] md:text-lg"
               style="box-shadow:0 1px 8px 0px #24b97d;"
-              ><span>+</span> Add Worker</button
-            >
+              ><span>+</span>
+              {$_("add-worker")}
+            </button>
           </a>
         </div>
 
@@ -335,13 +340,13 @@
           class="w-6 h-6 object-contain absolute mb-16 ml-3"
           alt=""
         />
-        <p class="h-auto w-full text-xl font-bold">Preparation</p>
+        <p class="h-auto w-full text-xl font-bold">{$_("preparation")}</p>
 
         <div class="w-full h-auto flex justify-center items-center gap-2">
           <div
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
-            <span class="text-gray-400 text-xs">Deposit: </span>
+            <span class="text-gray-400 text-xs">{$_("deposit:")} </span>
             {#if isLoading}
               <span class="loader2"></span>
             {:else}
@@ -351,7 +356,7 @@
           <div
             class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
           >
-            <span class="text-gray-400 text-xs">Financial: </span>
+            <span class="text-gray-400 text-xs">{$_("financial:")} </span>
             {#if isLoading}
               <span class="loader2"></span>
             {:else}
@@ -367,7 +372,7 @@
         <div
           class="flex h-24 w-full items-center justify-start pl-2 text-4xl text-[#0F4E35] dark:text-white font-bold"
         >
-          Preparation Table
+          {$_("preparation-table")}
         </div>
 
         <div
@@ -377,14 +382,14 @@
             <div
               class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]"
             >
-              <p>Deposit:</p>
+              <p>{$_("deposit:")}</p>
               <span>{preparations.deposits.overall_total_price}</span>
             </div>
 
             <div
               class="w-auto h-12 text-[8px] md:text-lg flex justify-center items-center gap-2 px-2 rounded-lg dark:text-white bg-[#f1f1f1] dark:bg-[#123d37]"
             >
-              <p>Financial:</p>
+              <p>{$_("financial:")}</p>
               <span>{preparations.financials.overall_total_price}</span>
             </div>
           </div>
@@ -404,15 +409,17 @@
                 class="w-2 h-2 md:w-6 md:h-6 object-contain"
                 alt=""
               />
-            </span>Export as Excel</button
-          >
+            </span>
+            {$_("export-as-excel")}
+          </button>
 
           <a href="/project/{$page.params.projectId}/expense/preparation/add">
             <button
               class="h-12 rounded-lg bg-[#24b97d] px-4 text-white text-[8px] md:text-lg"
               style="box-shadow:0 1px 8px 0px #24b97d;"
-              ><span>+</span> Add Preparation</button
-            >
+              ><span>+</span>
+              {$_("add-preparation")}
+            </button>
           </a>
         </div>
         <PreparationTable bind:preparations={$preparationStore} />

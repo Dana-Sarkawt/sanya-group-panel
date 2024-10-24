@@ -11,6 +11,8 @@
   } from "flowbite-svelte";
 
   import DeleteModal from "$lib/Components/DeleteModal.Component.svelte";
+  import { userStore } from "$lib/Store/User.Store";
+  import { _ } from "svelte-i18n";
 
   export let users: Store<Database["public"]["Tables"]["Users"]["Row"]> = {
     data: [],
@@ -23,10 +25,10 @@
 <div class="w-full h-auto bg-[#ffffff] dark:bg-[#081c18] p-4 rounded-b-xl">
   <Table striped={true}>
     <TableHead theadClass="bg-white dark:bg-[#212121] text-center">
-      <TableHeadCell>Name</TableHeadCell>
-      <TableHeadCell>Phone</TableHeadCell>
-      <TableHeadCell>Email</TableHeadCell>
-      <TableHeadCell>Action</TableHeadCell>
+      <TableHeadCell>{$_("name")}</TableHeadCell>
+      <TableHeadCell>{$_("phone")}</TableHeadCell>
+      <TableHeadCell>{$_("email")}</TableHeadCell>
+      <TableHeadCell>{$_("action")}</TableHeadCell>
     </TableHead>
     <TableBody tableBodyClass="divide-y text-center">
       {#if users.count !== 0}
@@ -50,7 +52,8 @@
                 </a>
                 <a
                   href="edit/1"
-                  class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full" on:click={() => (deleteModal = true)}
+                  class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full"
+                  on:click={() => (deleteModal = true)}
                 >
                   <img
                     src="/images/delete.png"
@@ -67,5 +70,4 @@
   </Table>
 </div>
 
-
-<DeleteModal bind:deleteModal={deleteModal} />
+<DeleteModal bind:deleteModal Store={userStore} />

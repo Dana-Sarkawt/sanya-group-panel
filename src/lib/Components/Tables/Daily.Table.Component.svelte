@@ -99,4 +99,4 @@
 </div>
 
 
-<DeleteModal bind:deleteModal={deleteModal} />
+<!-- <DeleteModal bind:deleteModal={deleteModal} bi/> -->

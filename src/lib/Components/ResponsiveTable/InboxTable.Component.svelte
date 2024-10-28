@@ -10,6 +10,8 @@
   import { outcomeStore } from "$lib/Store/Outcome.Store";
   import moment from "moment";
   import type { InboxEntity } from "$lib/Models/Entity/Inbox.Entity.Model";
+  import type { OutcomeEntity } from "$lib/Models/Entity/Outcome.Entity.Model";
+  import type { IncomeEntity } from "$lib/Models/Entity/Income.Entity.Model";
 
   export let inboxes: Store<InboxEntity> = {
     data: [],
@@ -71,7 +73,15 @@
 
   async function handleCreateIncome() {
     try {
-      await incomeStore.create(createIncome);
+      const response = await incomeStore.create(createIncome);
+      inboxes.data = inboxes.data.map((inbox) =>
+        inbox.id === createIncome.inbox
+          ? {
+              ...inbox,
+              income: [...inbox.income, response?.data as IncomeEntity],
+            }
+          : inbox
+      );
     } catch (error) {
       console.error(error);
     } finally {
@@ -82,7 +92,14 @@
   async function handleCreateOutcome() {
     try {
       const response = await outcomeStore.create(createOutcome);
-      
+      inboxes.data = inboxes.data.map((inbox) =>
+        inbox.id === createOutcome.inbox
+          ? {
+              ...inbox,
+              outcome: [...inbox.outcome, response?.data as OutcomeEntity],
+            }
+          : inbox
+      );
     } catch (error) {
       console.error(error);
     } finally {

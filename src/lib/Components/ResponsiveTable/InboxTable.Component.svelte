@@ -81,7 +81,8 @@
 
   async function handleCreateOutcome() {
     try {
-      await outcomeStore.create(createOutcome);
+      const response = await outcomeStore.create(createOutcome);
+      
     } catch (error) {
       console.error(error);
     } finally {
@@ -97,6 +98,8 @@
         <th scope="col">{$_("id")}</th>
         <th scope="col">{$_("title")}</th>
         <th scope="col">{$_("description")}</th>
+        <th scope="col">{$_("income")}</th>
+        <th scope="col">{$_("outcome")}</th>
         <th scope="col">{$_("action")}</th>
       </tr>
     </thead>
@@ -107,6 +110,18 @@
             <td>{inbox.id}</td>
             <td>{inbox.title}</td>
             <td>{inbox.description || $_("no-description")}</td>
+            <td
+              >{inbox.income.reduce(
+                (acc, curr) => acc + curr.overall_price,
+                0
+              )}</td
+            >
+            <td
+              >{inbox.outcome.reduce(
+                (acc, curr) => acc + curr.overall_price,
+                0
+              )}</td
+            >
             <!-- svelte-ignore a11y-no-static-element-interactions -->
             <td class="flex h-auto w-auto items-center justify-center gap-2">
               <button

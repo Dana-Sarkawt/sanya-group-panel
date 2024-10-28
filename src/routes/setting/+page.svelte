@@ -54,14 +54,7 @@
     <p>Role</p>
   </div>
 
-  <a href="#">
-    <div
-      class="w-[300px] h-[300px] rounded-lg bg-[#228c62] dark:bg-[#0F4E35] hover:bg-[#33b883] dark:hover:bg-[#1e9163] flex flex-col justify-center items-center text-white text-2xl duration-300 ease-in-out"
-    >
-      <img src="" alt="" />
-      <p>Language</p>
-    </div>
-  </a>
+  
 </div>
 
 <Modal title="Create Role" bind:open={roleModal}>

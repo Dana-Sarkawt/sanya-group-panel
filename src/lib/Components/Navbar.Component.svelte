@@ -22,7 +22,6 @@
     "text-white hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 dark:text-white md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent duration-300 ease-in-out";
 
   // Add these classes for responsive text
-  let textClass = "hidden sm:inline-block text-[10px] lg:text-xs xl:text-sm";
 
   export let isLoading;
 
@@ -107,7 +106,7 @@
       >
         <NavLi
           href="/project/0"
-          class={`${activeUrl.startsWith("/project") ? activeClass : nonActiveClass} flex flex-col items-center justify-center transition-all duration-300 ease-in-out`}
+          class={`${activeUrl.startsWith("/project") ? activeClass : nonActiveClass} flex md:flex-col gap-4 md:gap-0 items-center justify-center transition-all duration-300 ease-in-out`}
           on:click={toggleNavBar}
         >
           <svg
@@ -125,14 +124,13 @@
             ></path>
           </svg>
           <span
-            class={`mt-1 transition-opacity duration-300 ease-in-out ${textClass}`}
-            class:opacity-0={!activeUrl.startsWith("/project")}
+            class={`mt-1 transition-opacity duration-300 ease-in-out ${activeUrl.startsWith("/project") ? "flex" : "flex md:hidden"}`}
             >{$_("project")}</span
           >
         </NavLi>
         <NavLi
           href="/inbox/0"
-          class={`${activeUrl.startsWith("/inbox") ? activeClass : nonActiveClass} flex flex-col items-center justify-center transition-all duration-300 ease-in-out`}
+          class={`${activeUrl.startsWith("/inbox") ? activeClass : nonActiveClass} flex md:flex-col gap-4 md:gap-0 items-center justify-center transition-all duration-300 ease-in-out`}
           on:click={toggleNavBar}
         >
           <svg
@@ -150,15 +148,14 @@
             ></path>
           </svg>
           <span
-            class={`mt-1 transition-opacity duration-300 ease-in-out ${textClass}`}
-            class:opacity-0={!activeUrl.startsWith("/inbox")}
+            class={`mt-1 transition-opacity duration-300 ease-in-out ${activeUrl.startsWith("/inbox") ? "flex" : "flex md:hidden"}`}
             >{$_("inbox")}</span
           >
         </NavLi>
 
         <NavLi
           href="/user/0"
-          class={`${activeUrl.startsWith("/user") ? activeClass : nonActiveClass} flex flex-col items-center justify-center transition-all duration-300 ease-in-out`}
+          class={`${activeUrl.startsWith("/user") ? activeClass : nonActiveClass} flex md:flex-col gap-4 md:gap-0 items-center justify-center transition-all duration-300 ease-in-out`}
           on:click={toggleNavBar}
         >
           <svg
@@ -176,14 +173,14 @@
             ></path>
           </svg>
           <span
-            class={`mt-1 transition-opacity duration-300 ease-in-out ${textClass}`}
-            class:opacity-0={!activeUrl.startsWith("/user")}>{$_("users")}</span
+            class={`mt-1 transition-opacity duration-300 ease-in-out ${activeUrl.startsWith("/user") ? "flex" : "flex md:hidden"}`}
+          >{$_("users")}</span
           >
         </NavLi>
 
         <NavLi
           href="/setting"
-          class={`${activeUrl.startsWith("/setting") ? activeClass : nonActiveClass} flex flex-col items-center justify-center transition-all duration-300 ease-in-out`}
+          class={`${activeUrl.startsWith("/setting") ? activeClass : nonActiveClass} flex md:flex-col gap-4 md:gap-0 items-center justify-center transition-all duration-300 ease-in-out`}
           on:click={toggleNavBar}
         >
           <svg
@@ -207,14 +204,13 @@
             ></path>
           </svg>
           <span
-            class={`mt-1 transition-opacity duration-300 ease-in-out ${textClass}`}
-            class:opacity-0={!activeUrl.startsWith("/setting")}
-            >{$_("setting")}</span
-          >
+          class={`mt-1 ${activeUrl.startsWith("/setting") ? "flex" : "flex md:hidden"} transition-all duration-300 ease-in-out`}
+          >{$_("setting")}</span
+        >
         </NavLi>
 
         <NavLi
-          class="cursor-pointer flex flex-col items-center justify-center transition-all duration-300 ease-in-out"
+          class="cursor-pointer flex md:flex-col gap-4 md:gap-0 items-center justify-center transition-all duration-300 ease-in-out"
           on:click={() => authStore.logout()}
         >
           <svg
@@ -232,7 +228,7 @@
             ></path>
           </svg>
           <span
-            class={`mt-1 transition-opacity duration-300 ease-in-out ${textClass}`}
+            class={`mt-1 transition-opacity duration-300 ease-in-out flex md:hidden`}
             >{$_("logout")}</span
           >
         </NavLi>

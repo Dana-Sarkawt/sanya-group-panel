@@ -9,6 +9,7 @@
   import { _ } from "svelte-i18n";
   import { onMount } from "svelte";
   import { Spinner } from 'flowbite-svelte';
+  import { toastStore } from "$lib/Store/Toast.Store";
 
   export let data: PageData;
   const userRequest = new User.Create();
@@ -19,20 +20,23 @@
     isLoading = true;
     try {
       if (!phone(request.phone, { country: "IQ" }).isValid) {
-        throw new Error("Invalid phone number");
+        toastStore.error($_("invalid-phone-number"));
+        throw new Error($_("invalid-phone-number"));
       }
       const phoneData = phone(request.phone, { country: "IQ" })
         .phoneNumber as string;
       if (!Email.test(request.email)) {
-        throw new Error("Invalid email");
+        toastStore.error($_("invalid-email"));
+        throw new Error($_("invalid-email"));
       }
       const response = await authStore.create({ ...request, phone: phoneData });
       if (!response || response.error) {
-        throw new Error("Failed to add user");
+        toastStore.error($_("failed-to-add-user"));
+        throw new Error($_("failed-to-add-user"));
       }
       goto("/user/0");
     } catch (error) {
-      console.log(error);
+      toastStore.error($_("failed-to-add-user"));
     } finally {
       isLoading = false;
     }

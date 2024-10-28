@@ -10,6 +10,8 @@
   import { outcomeStore } from "$lib/Store/Outcome.Store";
   import moment from "moment";
   import type { InboxEntity } from "$lib/Models/Entity/Inbox.Entity.Model";
+  import type { OutcomeEntity } from "$lib/Models/Entity/Outcome.Entity.Model";
+  import type { IncomeEntity } from "$lib/Models/Entity/Income.Entity.Model";
 
   export let inboxes: Store<InboxEntity> = {
     data: [],
@@ -71,7 +73,15 @@
 
   async function handleCreateIncome() {
     try {
-      await incomeStore.create(createIncome);
+      const response = await incomeStore.create(createIncome);
+      inboxes.data = inboxes.data.map((inbox) =>
+        inbox.id === createIncome.inbox
+          ? {
+              ...inbox,
+              income: [...inbox.income, response?.data as IncomeEntity],
+            }
+          : inbox
+      );
     } catch (error) {
       console.error(error);
     } finally {
@@ -81,7 +91,15 @@
 
   async function handleCreateOutcome() {
     try {
-      await outcomeStore.create(createOutcome);
+      const response = await outcomeStore.create(createOutcome);
+      inboxes.data = inboxes.data.map((inbox) =>
+        inbox.id === createOutcome.inbox
+          ? {
+              ...inbox,
+              outcome: [...inbox.outcome, response?.data as OutcomeEntity],
+            }
+          : inbox
+      );
     } catch (error) {
       console.error(error);
     } finally {
@@ -97,6 +115,8 @@
         <th scope="col">{$_("id")}</th>
         <th scope="col">{$_("title")}</th>
         <th scope="col">{$_("description")}</th>
+        <th scope="col">{$_("income")}</th>
+        <th scope="col">{$_("outcome")}</th>
         <th scope="col">{$_("action")}</th>
       </tr>
     </thead>
@@ -107,6 +127,18 @@
             <td>{inbox.id}</td>
             <td>{inbox.title}</td>
             <td>{inbox.description || $_("no-description")}</td>
+            <td
+              >{inbox.income.reduce(
+                (acc, curr) => acc + curr.overall_price,
+                0
+              )}</td
+            >
+            <td
+              >{inbox.outcome.reduce(
+                (acc, curr) => acc + curr.overall_price,
+                0
+              )}</td
+            >
             <!-- svelte-ignore a11y-no-static-element-interactions -->
             <td class="flex h-auto w-auto items-center justify-center gap-2">
               <button

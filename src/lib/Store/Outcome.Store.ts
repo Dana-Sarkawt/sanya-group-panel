@@ -2,7 +2,9 @@ import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.M
 import type { Store } from "$lib/Models/Response/Store.Response.Model";
 import { OutcomeRepository } from "$lib/Repositories/Implementations/Outcome.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
+import { toastStore } from "./Toast.Store";
+import { _ } from "svelte-i18n";
 
 const outcomeRepository = new OutcomeRepository();
 
@@ -23,6 +25,7 @@ const createOutcomeStore = () => {
         const response = await outcomeRepository.createOutcomeAsync(data);
 
         if (response.error) {
+          toastStore.error(get(_)("failed-to-create-outcome"));
           throw new Error(response.error.message);
         }
 
@@ -30,9 +33,10 @@ const createOutcomeStore = () => {
           ...state,
           data: [response.data, ...state.data],
         }));
+        toastStore.success(get(_)("outcome-created-successfully"));
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-create-outcome"));
       }
     },
     get: async (id: number) => {
@@ -40,12 +44,13 @@ const createOutcomeStore = () => {
         const response = await outcomeRepository.readOutcomeAsync(id);
 
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-outcome"));
           throw new Error(response.error.message);
         }
 
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-outcome"));
       }
     },
     getAll: async (options?: GenericListOptions, inbox_id?: number) => {
@@ -56,6 +61,7 @@ const createOutcomeStore = () => {
         );
 
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-outcome"));
           throw new Error(response.error.message);
         }
 
@@ -68,7 +74,7 @@ const createOutcomeStore = () => {
 
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-outcome"));
       }
     },
   };

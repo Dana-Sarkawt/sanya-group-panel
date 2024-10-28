@@ -50,6 +50,8 @@ export class InboxRepository implements IInboxRepository {
             count: "exact",
           }
         )
+        .is("outcome.deleted_at", null)
+        .is("income.deleted_at", null)
         .is("deleted_at", null);
 
       if (options?.field && options?.equal) {

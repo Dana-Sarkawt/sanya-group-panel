@@ -115,6 +115,7 @@ const createCapitalStore = () => {
           toastStore.error(get(_)("failed-to-update-capital"));
           throw new Error(response.error.message);
         }
+        toastStore.success(get(_)("capital-updated-successfully"));
         update((store) => {
           store.data = store.data.map((item) =>
             item.id === response.data.id ? response.data : item,

@@ -1,5 +1,7 @@
 import { StorageRepository } from "$lib/Repositories/Implementations/Storage.Repository";
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
+import { toastStore } from "./Toast.Store";
+import { _ } from "svelte-i18n";
 
 const storageRepository = new StorageRepository();
 
@@ -12,6 +14,7 @@ const createStorageStore = () => {
       try {
         const url = await storageRepository.uploadImageAsync(image);
         set(url);
+        toastStore.success(get(_)("image-uploaded-successfully"));
         return url;
       } catch (error) {
         throw error;
@@ -21,6 +24,7 @@ const createStorageStore = () => {
       try {
         await storageRepository.deleteImageAsync(id);
         set("");
+        toastStore.success(get(_)("image-deleted-successfully"));
       } catch (error) {
         throw error;
       }

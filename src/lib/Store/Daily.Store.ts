@@ -2,7 +2,9 @@ import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.M
 import type { Store } from "$lib/Models/Response/Store.Response.Model";
 import { DailysRepository } from "$lib/Repositories/Implementations/Dailys.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
+import { toastStore } from "./Toast.Store";
+import { _ } from "svelte-i18n";
 
 const dailysRepository = new DailysRepository();
 
@@ -23,9 +25,11 @@ const createDailyStore = () => {
         const response = await dailysRepository.createDailyAsync(data);
 
         if (response.error) {
+          toastStore.error(get(_)("failed-to-create-daily"));
           throw new Error(response.error.message);
         }
 
+        toastStore.success(get(_)("daily-created-successfully"));
         update((store) => {
           store.data.push(response.data);
           store.count++;
@@ -34,7 +38,7 @@ const createDailyStore = () => {
 
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-create-daily"));
       }
     },
     get: async (id: number) => {
@@ -42,20 +46,21 @@ const createDailyStore = () => {
         const response = await dailysRepository.readDailyAsync(id);
 
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-daily"));
           throw new Error(response.error.message);
         }
 
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-daily"));
       }
     },
     getAll: async (options?: GenericListOptions) => {
       try {
         const response = await dailysRepository.readDailysAsync(options);
-        console.log("response", response);
 
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-daily"));
           throw new Error(response.error.message);
         }
 
@@ -73,7 +78,7 @@ const createDailyStore = () => {
           pages: pages,
         };
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-daily"));
       }
     },
     getAllWithoutFilter: async (projectId: number) => {
@@ -81,6 +86,7 @@ const createDailyStore = () => {
         const response =
           await dailysRepository.readDailysWithoutFilterAsync(projectId);
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-daily"));
           throw new Error(response.error.message);
         }
         return {
@@ -88,7 +94,7 @@ const createDailyStore = () => {
           count: response.count ?? 0,
         };
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-daily"));
       }
     },
     getTotalPrice: async (projectId: number) => {
@@ -98,7 +104,7 @@ const createDailyStore = () => {
 
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-daily"));
       }
     },
     update: async (data: Database["public"]["Tables"]["Dailys"]["Update"]) => {
@@ -106,9 +112,11 @@ const createDailyStore = () => {
         const response = await dailysRepository.updateDailyAsync(data);
 
         if (response.error) {
+          toastStore.error(get(_)("failed-to-update-daily"));
           throw new Error(response.error.message);
         }
 
+        toastStore.success(get(_)("daily-updated-successfully"));
         update((store) => {
           const index = store.data.findIndex((x) => x.id === data.id);
           store.data[index] = response.data;
@@ -117,7 +125,7 @@ const createDailyStore = () => {
 
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-update-daily"));
       }
     },
     delete: async (id: number) => {
@@ -125,9 +133,11 @@ const createDailyStore = () => {
         const response = await dailysRepository.deleteDailyAsync(id);
 
         if (response.error) {
+          toastStore.error(get(_)("failed-to-delete-daily"));
           throw new Error(response.error.message);
         }
 
+        toastStore.success(get(_)("daily-deleted-successfully"));
         update((store) => {
           store.data = store.data.filter((x) => x.id !== id);
           store.count--;
@@ -136,7 +146,7 @@ const createDailyStore = () => {
 
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-delete-daily"));
       }
     },
   };

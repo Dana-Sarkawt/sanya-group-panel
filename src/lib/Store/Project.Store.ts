@@ -3,7 +3,9 @@ import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.M
 import type { Store } from "$lib/Models/Response/Store.Response.Model";
 import { ProjectsRepository } from "$lib/Repositories/Implementations/Projects.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
-import { writable } from "svelte/store";
+import { _ } from "svelte-i18n";
+import { get, writable } from "svelte/store";
+import { toastStore } from "./Toast.Store";
 
 const projectsRepository = new ProjectsRepository();
 
@@ -23,12 +25,15 @@ const createProjectStore = () => {
     ) => {
       try {
         if (!data.name || data.name === "") {
-          throw new Error("Name is required");
+          toastStore.error(get(_)("name-is-required"));
+          throw new Error(get(_)("name-is-required"));
         }
         const response = await projectsRepository.createProjectAsync(data);
         if (response.error) {
+          toastStore.error(get(_)("failed-to-create-project"));
           throw new Error(response.error.message);
         }
+        toastStore.success(get(_)("project-created-successfully"));
         update((store) => {
           store.data.push(response.data);
           store.count++;
@@ -36,28 +41,26 @@ const createProjectStore = () => {
         });
         return response;
       } catch (error) {
-        if (error instanceof Error) {
-          console.error(error.message);
-        }
+        toastStore.error(get(_)("failed-to-create-project"));
       }
     },
     get: async (id: number) => {
       try {
         const response = await projectsRepository.readProjectAsync(id);
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-project"));
           throw new Error(response.error.message);
         }
         return response;
       } catch (error) {
-        if (error instanceof Error) {
-          console.error(error.message);
-        }
+        toastStore.error(get(_)("failed-to-get-project"));
       }
     },
     getAll: async (options?: GenericListOptions) => {
       try {
         const response = await projectsRepository.readProjectsAsync(options);
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-project"));
           throw new Error(response.error.message);
         }
         const pages = Math.ceil(response.count! / (options?.limit! ?? 10));
@@ -72,9 +75,7 @@ const createProjectStore = () => {
           pages: pages,
         };
       } catch (error) {
-        if (error instanceof Error) {
-          console.error(error.message);
-        }
+        toastStore.error(get(_)("failed-to-get-project"));
       }
     },
     getAllWithoutFilter: async () => {
@@ -82,6 +83,7 @@ const createProjectStore = () => {
         const response =
           await projectsRepository.readProjectsWithoutFilterAsync();
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-project"));
           throw new Error(response.error.message);
         }
         return {
@@ -89,9 +91,7 @@ const createProjectStore = () => {
           count: response.count ?? 0,
         };
       } catch (error) {
-        if (error instanceof Error) {
-          console.error(error.message);
-        }
+        toastStore.error(get(_)("failed-to-get-project"));
       }
     },
     getTotalPrice: async () => {
@@ -100,9 +100,7 @@ const createProjectStore = () => {
           await projectsRepository.readTotalPriceOfProjectsAsync();
         return response;
       } catch (error) {
-        if (error instanceof Error) {
-          console.error(error.message);
-        }
+        toastStore.error(get(_)("failed-to-get-project"));
       }
     },
     update: async (
@@ -110,10 +108,12 @@ const createProjectStore = () => {
     ) => {
       try {
         if (!data.id) {
-          throw new Error("ID is required");
+          toastStore.error(get(_)("id-is-required"));
+          throw new Error(get(_)("id-is-required"));
         }
         const response = await projectsRepository.updateProjectAsync(data);
         if (response.error) {
+          toastStore.error(get(_)("failed-to-update-project"));
           throw new Error(response.error.message);
         }
         update((store) => {
@@ -125,15 +125,14 @@ const createProjectStore = () => {
         });
         return response;
       } catch (error) {
-        if (error instanceof Error) {
-          console.error(error.message);
-        }
+        toastStore.error(get(_)("failed-to-update-project"));
       }
     },
     delete: async (id: number) => {
       try {
         const response = await projectsRepository.deleteProjectAsync(id);
         if (response.error) {
+          toastStore.error(get(_)("failed-to-delete-project"));
           throw new Error(response.error.message);
         }
         update((store) => {
@@ -144,9 +143,7 @@ const createProjectStore = () => {
         });
         return response;
       } catch (error) {
-        if (error instanceof Error) {
-          console.error(error.message);
-        }
+        toastStore.error(get(_)("failed-to-delete-project"));
       }
     },
   };

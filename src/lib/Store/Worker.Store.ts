@@ -2,7 +2,9 @@ import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.M
 import type { Store } from "$lib/Models/Response/Store.Response.Model";
 import { WorkersRepository } from "$lib/Repositories/Implementations/Workers.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
+import { toastStore } from "./Toast.Store";
+import { _ } from "svelte-i18n";
 
 const workersRepository = new WorkersRepository();
 
@@ -21,11 +23,13 @@ const createWorkerStore = () => {
     create: async (data: Database["public"]["Tables"]["Workers"]["Insert"]) => {
       try {
         if (!data.name || data.name === "") {
-          throw new Error("Name is required");
+          toastStore.error(get(_)("name-is-required"));
+          throw new Error(get(_)("name-is-required"));
         }
         const response = await workersRepository.createWorkerAsync(data);
 
         if (response.error) {
+          toastStore.error(get(_)("failed-to-create-worker"));
           throw new Error(response.error.message);
         }
 
@@ -37,7 +41,7 @@ const createWorkerStore = () => {
 
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-create-worker"));
       }
     },
     get: async (id: number) => {
@@ -50,7 +54,7 @@ const createWorkerStore = () => {
 
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-worker"));
       }
     },
     getAll: async (options?: GenericListOptions) => {
@@ -71,7 +75,7 @@ const createWorkerStore = () => {
 
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-workers"));
       }
     },
     getAllWithoutFilter: async (projectId: number) => {
@@ -86,35 +90,35 @@ const createWorkerStore = () => {
           count: response.count ?? 0,
         };
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-workers"));
       }
     },
     getOverhaulDepositsByProjectId: async (projectId: number) => {
       try {
         const response =
           await workersRepository.readOverhaulDepositsByProjectIdAsync(
-            projectId,
+            projectId
           );
         if (response.error) {
           throw new Error(response.error.message);
         }
         return response.data;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-overhaul-deposits"));
       }
     },
     getOverhaulFinancialsByProjectId: async (projectId: number) => {
       try {
         const response =
           await workersRepository.readOverhaulFinancialsByProjectIdAsync(
-            projectId,
+            projectId
           );
         if (response.error) {
           throw new Error(response.error.message);
         }
         return response.data;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-overhaul-financials"));
       }
     },
     getDepositsByWorkerIds: async (ids: number[]) => {
@@ -126,7 +130,7 @@ const createWorkerStore = () => {
         }
         return response.data;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-deposits"));
       }
     },
     getFinancialByWorkerIds: async (ids: number[]) => {
@@ -138,7 +142,7 @@ const createWorkerStore = () => {
         }
         return response.data;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-financials"));
       }
     },
     update: async (data: Database["public"]["Tables"]["Workers"]["Update"]) => {
@@ -146,9 +150,10 @@ const createWorkerStore = () => {
         const response = await workersRepository.updateWorkerAsync(data);
 
         if (response.error) {
+          toastStore.error(get(_)("failed-to-update-worker"));
           throw new Error(response.error.message);
         }
-
+        toastStore.success(get(_)("worker-updated-successfully"));
         update((store) => {
           const index = store.data.findIndex((item) => item.id === data.id);
           store.data[index] = response.data;
@@ -157,7 +162,7 @@ const createWorkerStore = () => {
 
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-update-worker"));
       }
     },
     delete: async (id: number) => {
@@ -165,8 +170,10 @@ const createWorkerStore = () => {
         const response = await workersRepository.deleteWorkerAsync(id);
 
         if (response.error) {
+          toastStore.error(get(_)("failed-to-delete-worker"));
           throw new Error(response.error.message);
         }
+        toastStore.success(get(_)("worker-deleted-successfully"));
 
         update((store) => {
           store.data = store.data.filter((item) => item.id !== id);
@@ -174,7 +181,7 @@ const createWorkerStore = () => {
           return store;
         });
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-delete-worker"));
       }
     },
   };

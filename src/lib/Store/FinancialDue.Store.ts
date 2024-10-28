@@ -2,7 +2,9 @@ import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.M
 import type { Store } from "$lib/Models/Response/Store.Response.Model";
 import { FinancialDuesRepository } from "$lib/Repositories/Implementations/FinancialDues.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
+import { toastStore } from "./Toast.Store";
+import { _ } from "svelte-i18n";
 
 const financialDuesRepository = new FinancialDuesRepository();
 
@@ -25,8 +27,10 @@ const createFinancialDueStore = () => {
         const response =
           await financialDuesRepository.createFinancialDueAsync(data);
         if (response.error) {
+          toastStore.error(get(_)("failed-to-create-financial-due"));
           throw new Error(response.error.message);
         }
+        toastStore.success(get(_)("financial-due-created-successfully"));
         update((store) => {
           store.data.push(response.data);
           store.count++;
@@ -34,7 +38,7 @@ const createFinancialDueStore = () => {
         });
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-create-financial-due"));
       }
     },
     get: async (id: number) => {
@@ -42,20 +46,20 @@ const createFinancialDueStore = () => {
         const response =
           await financialDuesRepository.readFinancialDueAsync(id);
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-financial-due"));
           throw new Error(response.error.message);
         }
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-financial-due"));
       }
     },
     getAll: async (options?: GenericListOptions) => {
       try {
         const response =
           await financialDuesRepository.readFinancialDuesAsync(options);
-        console.log("response", response);
-
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-financial-due"));
           throw new Error(response.error.message);
         }
         const pages = Math.ceil(response.count! / (options?.limit! ?? 10));
@@ -70,7 +74,7 @@ const createFinancialDueStore = () => {
           pages,
         };
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-financial-due"));
       }
     },
     update: async (
@@ -80,8 +84,10 @@ const createFinancialDueStore = () => {
         const response =
           await financialDuesRepository.updateFinancialDueAsync(data);
         if (response.error) {
+          toastStore.error(get(_)("failed-to-update-financial-due"));
           throw new Error(response.error.message);
         }
+        toastStore.success(get(_)("financial-due-updated-successfully"));
         update((store) => {
           store.data = store.data.map((financialDue) =>
             financialDue.id === response.data.id ? response.data : financialDue,
@@ -90,7 +96,7 @@ const createFinancialDueStore = () => {
         });
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-update-financial-due"));
       }
     },
     delete: async (id: number) => {
@@ -98,8 +104,10 @@ const createFinancialDueStore = () => {
         const response =
           await financialDuesRepository.deleteFinancialDueAsync(id);
         if (response.error) {
+          toastStore.error(get(_)("failed-to-delete-financial-due"));
           throw new Error(response.error.message);
         }
+        toastStore.success(get(_)("financial-due-deleted-successfully"));
         update((store) => {
           store.data = store.data.filter(
             (financialDue) => financialDue.id !== id,
@@ -109,7 +117,7 @@ const createFinancialDueStore = () => {
         });
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-delete-financial-due"));
       }
     },
   };

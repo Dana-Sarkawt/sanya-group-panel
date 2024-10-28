@@ -2,7 +2,9 @@ import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.M
 import type { Store } from "$lib/Models/Response/Store.Response.Model";
 import { PreparationsRepository } from "$lib/Repositories/Implementations/Preparations.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
-import { writable } from "svelte/store";
+import { _ } from "svelte-i18n";
+import { get, writable } from "svelte/store";
+import { toastStore } from "./Toast.Store";
 
 const preparationsRepository = new PreparationsRepository();
 
@@ -27,9 +29,10 @@ const createPreparationStore = () => {
           await preparationsRepository.createPreparationAsync(data);
 
         if (response.error) {
+          toastStore.error(get(_)("failed-to-create-preparation"));
           throw new Error(response.error.message);
         }
-
+        toastStore.success(get(_)("preparation-created-successfully"));
         update((store) => {
           store.data.push(response.data);
           store.count++;
@@ -38,7 +41,7 @@ const createPreparationStore = () => {
 
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-create-preparation"));
       }
     },
     get: async (id: number) => {
@@ -46,12 +49,13 @@ const createPreparationStore = () => {
         const response = await preparationsRepository.readPreparationAsync(id);
 
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-preparation"));
           throw new Error(response.error.message);
         }
 
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-preparation"));
       }
     },
     getAll: async (options?: GenericListOptions) => {
@@ -60,11 +64,12 @@ const createPreparationStore = () => {
           await preparationsRepository.readPreparationsAsync(options);
 
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-preparation"));
           throw new Error(response.error.message);
         }
 
         const pages = Math.ceil(response.count! / (options?.limit! ?? 10));
-
+        toastStore.success(get(_)("preparation-list-retrieved-successfully"));
         set({
           data: response.data,
           count: response.count ?? 0,
@@ -77,7 +82,7 @@ const createPreparationStore = () => {
           pages: pages,
         };
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-preparation"));
       }
     },
     getAllWithoutFilter: async (projectId: number) => {
@@ -87,6 +92,7 @@ const createPreparationStore = () => {
             projectId,
           );
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-preparation"));
           throw new Error(response.error.message);
         }
         return {
@@ -94,7 +100,7 @@ const createPreparationStore = () => {
           count: response.count ?? 0,
         };
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-preparation"));
       }
     },
     getOverhaulDepositsByProjectId: async (projectId: number) => {
@@ -104,11 +110,12 @@ const createPreparationStore = () => {
             projectId,
           );
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-preparation"));
           throw new Error(response.error.message);
         }
         return response.data;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-preparation"));
       }
     },
     getOverhaulFinancialsByProjectId: async (projectId: number) => {
@@ -118,11 +125,12 @@ const createPreparationStore = () => {
             projectId,
           );
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-preparation"));
           throw new Error(response.error.message);
         }
         return response.data;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-preparation"));
       }
     },
     getDepositsByPreparationIds: async (ids: number[]) => {
@@ -130,11 +138,12 @@ const createPreparationStore = () => {
         const response =
           await preparationsRepository.readDepositsByPreparationIdsAsync(ids);
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-preparation"));
           throw new Error(response.error.message);
         }
         return response.data;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-preparation"));
       }
     },
     getFinancialByPreparationIds: async (ids: number[]) => {
@@ -142,11 +151,12 @@ const createPreparationStore = () => {
         const response =
           await preparationsRepository.readFinancialByPreparationIdsAsync(ids);
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-preparation"));
           throw new Error(response.error.message);
         }
         return response.data;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-preparation"));
       }
     },
     update: async (
@@ -154,16 +164,18 @@ const createPreparationStore = () => {
     ) => {
       try {
         if (!data.id) {
-          throw new Error("ID is required");
+          toastStore.error(get(_)("id-is-required"));
+          throw new Error(get(_)("id-is-required"));
         }
 
         const response =
           await preparationsRepository.updatePreparationAsync(data);
 
         if (response.error) {
+          toastStore.error(get(_)("failed-to-update-preparation"));
           throw new Error(response.error.message);
         }
-
+        toastStore.success(get(_)("preparation-updated-successfully"));
         update((store) => {
           const index = store.data.findIndex((x) => x.id === data.id);
           store.data[index] = response.data;
@@ -172,7 +184,7 @@ const createPreparationStore = () => {
 
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-update-preparation"));
       }
     },
     delete: async (id: number) => {
@@ -181,10 +193,12 @@ const createPreparationStore = () => {
           await preparationsRepository.deletePreparationAsync(id);
 
         if (response.error) {
+          toastStore.error(get(_)("failed-to-delete-preparation"));
           throw new Error(response.error.message);
         }
+        toastStore.success(get(_)("preparation-deleted-successfully"));
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-delete-preparation"));
       }
     },
   };

@@ -3,6 +3,8 @@ import type { Store } from "$lib/Models/Response/Store.Response.Model";
 import { UsersRepository } from "$lib/Repositories/Implementations/Users.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
 import { get, writable } from "svelte/store";
+import { toastStore } from "./Toast.Store";
+import { _ } from "svelte-i18n";
 
 const usersRepository = new UsersRepository();
 
@@ -20,15 +22,19 @@ const createUserStore = () => {
     create: async (data: Database["public"]["Tables"]["Users"]["Insert"]) => {
       try {
         if (!data.email || data.email === "") {
-          throw new Error("Email is required");
+          toastStore.error(get(_)("email-is-required"));
+          throw new Error(get(_)("email-is-required"));
         }
         if (!data.phone || data.phone === "") {
-          throw new Error("Phone is required");
+          toastStore.error(get(_)("phone-is-required"));
+          throw new Error(get(_)("phone-is-required"));
         }
         const response = await usersRepository.createUserAsync(data);
         if (response.error) {
+          toastStore.error(get(_)("failed-to-create-user"));
           throw new Error(response.error.message);
         }
+        toastStore.success(get(_)("user-created-successfully"));
         update((store) => {
           store.data.push(response.data);
           store.count++;
@@ -36,7 +42,7 @@ const createUserStore = () => {
         });
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-create-user"));
       }
     },
     get: async (id: number) => {
@@ -47,7 +53,7 @@ const createUserStore = () => {
         }
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-user"));
       }
     },
     getAll: async (options?: GenericListOptions) => {
@@ -65,7 +71,7 @@ const createUserStore = () => {
           count: response.count ?? 0,
         };
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-user"));
       }
     },
     getAllWithoutFilter: async () => {
@@ -79,24 +85,29 @@ const createUserStore = () => {
           count: response.count ?? 0,
         };
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-user"));
       }
     },
     update: async (data: Database["public"]["Tables"]["Users"]["Update"]) => {
       try {
         if (!data.id || data.id === 0) {
-          throw new Error("ID is required");
+          toastStore.error(get(_)("id-is-required"));
+          throw new Error(get(_)("id-is-required"));
         }
         if (!data.email || data.email === "") {
-          throw new Error("Email is required");
+          toastStore.error(get(_)("email-is-required"));
+          throw new Error(get(_)("email-is-required"));
         }
         if (!data.phone || data.phone === "") {
-          throw new Error("Phone is required");
+          toastStore.error(get(_)("phone-is-required"));
+          throw new Error(get(_)("phone-is-required"));
         }
         const response = await usersRepository.updateUserAsync(data);
         if (response.error) {
+          toastStore.error(get(_)("failed-to-update-user"));
           throw new Error(response.error.message);
         }
+        toastStore.success(get(_)("user-updated-successfully"));
         update((store) => {
           const index = store.data.findIndex((user) => user.id === data.id);
           store.data[index] = response.data;
@@ -104,7 +115,7 @@ const createUserStore = () => {
         });
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-update-user"));
       }
     },
     delete: async (id: number) => {
@@ -113,6 +124,7 @@ const createUserStore = () => {
         if (response.error) {
           throw new Error(response.error.message);
         }
+        toastStore.success(get(_)("user-deleted-successfully"));
         update((store) => {
           store.data = store.data.filter((user) => user.id !== id);
           store.count--;
@@ -120,7 +132,7 @@ const createUserStore = () => {
         });
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-delete-user"));
       }
     },
   };

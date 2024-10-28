@@ -212,4 +212,11 @@ export class OutcomeRepository implements IOutcomeRepository {
       throw error;
     }
   }
+  async deleteOutcomeAsync(id: number): Promise<void> {
+    try {
+      await Supabase.client.from("Outcome").delete().eq("id", id);
+    } catch (error) {
+      throw error;
+    }
+  }
 }

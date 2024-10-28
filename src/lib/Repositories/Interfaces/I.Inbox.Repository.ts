@@ -1,4 +1,5 @@
 import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.Model";
+import type { InboxEntity } from "$lib/Models/Entity/Inbox.Entity.Model";
 import type { Database } from "$lib/Supabase/Types/database.types";
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 
@@ -6,30 +7,30 @@ export interface IInboxRepository {
   createInboxAsync(
     request: Database["public"]["Tables"]["Inbox"]["Insert"]
   ): Promise<
-    PostgrestSingleResponse<Database["public"]["Tables"]["Inbox"]["Row"]>
+    PostgrestSingleResponse<InboxEntity>
   >;
 
   readInboxAsync(
     id: number
   ): Promise<
-    PostgrestSingleResponse<Database["public"]["Tables"]["Inbox"]["Row"]>
+    PostgrestSingleResponse<InboxEntity>
   >;
 
   readInboxesAsync(
     options?: GenericListOptions
   ): Promise<
-    PostgrestSingleResponse<Array<Database["public"]["Tables"]["Inbox"]["Row"]>>
+    PostgrestSingleResponse<InboxEntity[]>
   >;
 
   updateInboxAsync(
     request: Database["public"]["Tables"]["Inbox"]["Update"]
   ): Promise<
-    PostgrestSingleResponse<Database["public"]["Tables"]["Inbox"]["Row"]>
+    PostgrestSingleResponse<InboxEntity>
   >;
 
   deleteInboxAsync(
     id: number
   ): Promise<
-    PostgrestSingleResponse<Database["public"]["Tables"]["Inbox"]["Row"]>
+    void
   >;
 }

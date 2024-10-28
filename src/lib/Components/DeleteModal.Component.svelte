@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { toastStore } from "$lib/Store/Toast.Store";
   import { Button, Modal } from "flowbite-svelte";
   import { _ } from "svelte-i18n";
   export let deleteModal: boolean = false;
@@ -10,14 +11,18 @@
       await Store.delete(id);
       window.location.reload();
     } catch (error) {
-      console.error(error);
+      toastStore.error($_("failed-to-delete-item"));
     } finally {
       deleteModal = false;
     }
   }
 </script>
 
-<Modal title="Delete Alert" bind:open={deleteModal}>
+<Modal
+  title="Delete Alert"
+  bind:open={deleteModal}
+  dialogClass="fixed top-0 start-0 end-0 h-modal md:inset-0 md:h-full z-[1000] w-full p-4 flex"
+>
   <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
     <span class="text-red-500">{$_("do-you-want-to-delete")}</span>
   </p>

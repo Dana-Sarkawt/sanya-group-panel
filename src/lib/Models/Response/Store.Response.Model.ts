@@ -3,4 +3,5 @@ export class Store<T> {
   error?: string = "";
   count: number = 0;
   pages?: number = 0;
+  filters?: any;
 }

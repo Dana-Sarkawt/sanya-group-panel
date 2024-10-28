@@ -13,7 +13,7 @@ export class IncomeRepository implements IIncomeRepository {
     throw new Error("Method not implemented.");
   }
   async createIncomeAsync(
-    request: Database["public"]["Tables"]["Income"]["Insert"],
+    request: Database["public"]["Tables"]["Income"]["Insert"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Income"]["Row"]>
   > {
@@ -29,7 +29,7 @@ export class IncomeRepository implements IIncomeRepository {
     }
   }
   async readIncomeAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Income"]["Row"]>
   > {
@@ -46,7 +46,7 @@ export class IncomeRepository implements IIncomeRepository {
   }
   async readIncomesAsync(
     options?: GenericListOptions,
-    inbox_id?: number,
+    inbox_id?: number
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Income"]["Row"]>
@@ -55,8 +55,8 @@ export class IncomeRepository implements IIncomeRepository {
     try {
       const response = Supabase.client
         .from("Income")
-        .select("*", { count: "exact" });
-      // .is("deleted_at", null); 
+        .select("*", { count: "exact" })
+        .is("deleted_at", null);
 
       if (options?.field && options?.equal) {
         response.eq(options.field, options.equal);
@@ -69,7 +69,7 @@ export class IncomeRepository implements IIncomeRepository {
         .order("id", { ascending: false })
         .range(
           options?.page! * options?.limit!,
-          options?.limit! * (options?.page! + 1),
+          options?.limit! * (options?.page! + 1)
         );
     } catch (error) {
       throw error;
@@ -82,6 +82,13 @@ export class IncomeRepository implements IIncomeRepository {
         project_id_input: projectId,
       });
       console.log("Hello there", response);
+    } catch (error) {
+      throw error;
+    }
+  }
+  async deleteIncomeAsync(id: number): Promise<void> {
+    try {
+      await Supabase.client.from("Income").delete().eq("id", id);
     } catch (error) {
       throw error;
     }

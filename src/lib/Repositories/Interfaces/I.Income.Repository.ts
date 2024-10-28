@@ -27,4 +27,5 @@ export interface IIncomeRepository {
     >
   >;
   createOverallIncomeAsync(projectId: number): Promise<void>;
+  deleteIncomeAsync(id: number): Promise<void>;
 }

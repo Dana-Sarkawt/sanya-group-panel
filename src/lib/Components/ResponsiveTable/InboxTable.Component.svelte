@@ -5,12 +5,13 @@
   import type { Store } from "$lib/Models/Response/Store.Response.Model";
   import type { Database } from "$lib/Supabase/Types/database.types";
   import DeleteModal from "../DeleteModal.Component.svelte";
-  import { Tooltip, Modal, Button, Input } from "flowbite-svelte";
+  import { Modal, Button, Input } from "flowbite-svelte";
   import { incomeStore } from "$lib/Store/Income.Store";
   import { outcomeStore } from "$lib/Store/Outcome.Store";
   import moment from "moment";
+  import type { InboxEntity } from "$lib/Models/Entity/Inbox.Entity.Model";
 
-  export let inboxes: Store<Database["public"]["Tables"]["Inbox"]["Row"]> = {
+  export let inboxes: Store<InboxEntity> = {
     data: [],
     count: 0,
   };
@@ -128,7 +129,7 @@
                   alt=""
                 />
               </button>
-              <!-- <a
+              <a
                 href="edit/{inbox.id}"
                 class="bg-yellow-600 hover:bg-yellow-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
               >
@@ -137,7 +138,7 @@
                   class="w-4 h-4 md:h-8 md:w-8 object-contain"
                   alt=""
                 />
-              </a> -->
+              </a>
               <!-- svelte-ignore a11y-missing-attribute -->
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <button
@@ -222,6 +223,17 @@
               </td>
             </tr>
           {/each}
+          <tr class="font-bold bg-gray-700">
+            <td>{$_("total")}</td>
+            <td></td>
+            <td
+              >{$incomeStore.data.reduce(
+                (sum, income) => sum + (income.overall_price || 0),
+                0
+              )}</td
+            >
+            <td>-</td>
+          </tr>
         {/if}
       </tbody>
     </table>
@@ -286,6 +298,17 @@
               </td>
             </tr>
           {/each}
+          <tr class="font-bold bg-gray-700">
+            <td>{$_("total")}</td>
+            <td>-</td>
+            <td
+              >{$outcomeStore.data.reduce(
+                (sum, outcome) => sum + (outcome.overall_price || 0),
+                0
+              )}</td
+            >
+            <td>-</td>
+          </tr>
         {/if}
       </tbody>
     </table>
@@ -298,7 +321,6 @@
   outsideclose
   size="md"
 >
-
   <div class="w-full h-auto flex justify-center items-center gap-2 flex-col">
     <div class="w-full h-auto flex flex-col justify-center items-start gap-2">
       <p class="dark:text-white">{$_("income-date")}</p>

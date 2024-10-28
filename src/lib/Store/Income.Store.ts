@@ -2,7 +2,9 @@ import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.M
 import type { Store } from "$lib/Models/Response/Store.Response.Model";
 import { IncomeRepository } from "$lib/Repositories/Implementations/Income.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
+import { toastStore } from "$lib/Store/Toast.Store";
+import { _ } from "svelte-i18n";
 
 const incomeRepository = new IncomeRepository();
 
@@ -20,21 +22,22 @@ const createIncomeStore = () => {
       set(data),
     create: async (data: Database["public"]["Tables"]["Income"]["Insert"]) => {
       try {
-        console.log("data", data);
-        
         const response = await incomeRepository.createIncomeAsync(data);
 
         if (response.error) {
+          toastStore.error(response.error.message);
           throw new Error(response.error.message);
         }
+
         update((state) => ({
           ...state,
           data: [response.data, ...state.data],
         }));
 
+        toastStore.success(get(_)("income-created-successfully"));
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-create-income"));
       }
     },
 
@@ -43,12 +46,13 @@ const createIncomeStore = () => {
         const response = await incomeRepository.readIncomeAsync(id);
 
         if (response.error) {
+          toastStore.error(response.error.message);
           throw new Error(response.error.message);
         }
 
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-income"));
       }
     },
     getAll: async (options?: GenericListOptions, inbox_id?: number) => {
@@ -59,6 +63,7 @@ const createIncomeStore = () => {
         );
 
         if (response.error) {
+          toastStore.error(response.error.message);
           throw new Error(response.error.message);
         }
 
@@ -67,11 +72,22 @@ const createIncomeStore = () => {
           data: response.data ?? [],
           count: response.count ?? 0,
           pages,
+          filters: options,
         });
 
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-incomes"));
+      }
+    },
+    delete: async (id: number) => {
+      try {
+        const response = await incomeRepository.deleteIncomeAsync(id);
+
+        toastStore.success(get(_)("income-deleted-successfully"));
+        return response;
+      } catch (error) {
+        toastStore.error(get(_)("failed-to-delete-income"));
       }
     },
   };

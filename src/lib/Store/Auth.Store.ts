@@ -3,6 +3,8 @@ import { AuthRepository } from "$lib/Repositories/Implementations/Auth.Repositor
 import { UsersRepository } from "$lib/Repositories/Implementations/Users.Repository";
 import type { Database } from "$lib/Supabase/Types/database.types";
 import { get, writable } from "svelte/store";
+import { toastStore } from "./Toast.Store";
+import { _ } from "svelte-i18n";
 
 const authRepository = new AuthRepository();
 const usersRepository = new UsersRepository();
@@ -21,34 +23,38 @@ const createAuthStore = () => {
           request.email,
         );
         if (checkEmail.data) {
-          throw new Error("Email already exists");
+          toastStore.error(get(_)("email-already-exists"));
+          throw new Error(get(_)("email-already-exists"));
         }
         const checkPhone = await usersRepository.readUserByPhoneAsync(
           request.phone,
         );
         if (checkPhone.data) {
-          throw new Error("Phone number already exists");
+          toastStore.error(get(_)("phone-number-already-exists"));
+          throw new Error(get(_)("phone-number-already-exists"));
         }
         const response = await authRepository.createAsync(request);
         if (response.error) {
+          toastStore.error(get(_)("failed-to-create-user"));
           throw new Error(response.error.message);
         }
+        toastStore.success(get(_)("user-created-successfully"));
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-create-user"));
       }
     },
     get: async () => {
       try {
         const response = await authRepository.getUserAsync();
         if (response.error) {
+          toastStore.error(get(_)("failed-to-get-user"));
           throw new Error(response.error.message);
         }
         set(response.data);
-        console.log(response.data);
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-get-user"));
         set(null);
         return null;
       }
@@ -57,12 +63,13 @@ const createAuthStore = () => {
       try {
         const response = await authRepository.loginAsync(email, password);
         if (response.error) {
+          toastStore.error(get(_)("failed-to-login"));
           throw new Error(response.error.message);
         }
         set(response.data);
         return response;
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-login"));
         set(null);
       }
     },
@@ -71,7 +78,7 @@ const createAuthStore = () => {
         await authRepository.logoutAsync();
         set(null);
       } catch (error) {
-        console.log(error);
+        toastStore.error(get(_)("failed-to-logout"));
         set(null);
       }
     },

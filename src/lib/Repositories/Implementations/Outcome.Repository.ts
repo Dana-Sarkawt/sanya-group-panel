@@ -127,7 +127,7 @@ export class OutcomeRepository implements IOutcomeRepository {
       }
 
       return await response
-        .order("id", { ascending: false })
+        .order("date", { ascending: false })
         .range(
           options?.page! * options?.limit!,
           options?.limit! * (options?.page! + 1)

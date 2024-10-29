@@ -1,10 +1,6 @@
 <script lang="ts">
-  import { page } from "$app/stores";
-  import Pagination from "$lib/Components/Pagination.Component.svelte";
-  import type { PageData } from "./$types";
   import InboxTable from "$lib/Components/ResponsiveTable/InboxTable.Component.svelte";
   import { _ } from "svelte-i18n";
-  export let data: PageData;
 </script>
 
 <div class="w-full h-auto flex justify-center items-center">
@@ -13,16 +9,7 @@
       class="flex h-[100vh] w-full flex-col justify-start items-center mt-20"
       id="subDiv"
     >
-      <InboxTable bind:inboxes={data.inboxes} />
-
-      <div class="w-full h-auto flex justify-center items-center py-12">
-        <Pagination
-          classType={typeof data.inboxes}
-          StoreData={data.inboxes}
-          currentPage={Number($page.params.page)}
-          name={"inbox"}
-        />
-      </div>
+      <InboxTable />
     </div>
   </div>
 </div>

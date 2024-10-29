@@ -1,43 +1,36 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
-  import { inboxStore } from "$lib/Store/Inbox.Store";
   import { onMount } from "svelte";
-  import type { Store } from "$lib/Models/Response/Store.Response.Model";
   import type { Database } from "$lib/Supabase/Types/database.types";
   import DeleteModal from "../DeleteModal.Component.svelte";
   import { Modal, Button, Input } from "flowbite-svelte";
   import { incomeStore } from "$lib/Store/Income.Store";
   import { outcomeStore } from "$lib/Store/Outcome.Store";
   import moment from "moment";
-  import type { InboxEntity } from "$lib/Models/Entity/Inbox.Entity.Model";
-  import type { OutcomeEntity } from "$lib/Models/Entity/Outcome.Entity.Model";
-  import type { IncomeEntity } from "$lib/Models/Entity/Income.Entity.Model";
   import { Tabs, TabItem } from "flowbite-svelte";
-
-  export let inboxes: Store<InboxEntity> = {
-    data: [],
-    count: 0,
-  };
+  import TabsPagination from "../TabsPagination.Component.svelte";
 
   let isMobile: boolean;
   let delete_id = 0;
   let Store: any;
   let deleteModal = false;
-  let incomeModal = false;
-  let outcomeModal = false;
   let incomeAddModal = false;
   let outcomeAddModal = false;
-  let outcomeUpdateModal = false;
   let createIncome: Database["public"]["Tables"]["Income"]["Insert"] = {
-    date: "",
+    date: moment().format("YYYY-MM-DD"),
     overall_price: 0,
   };
   let createOutcome: Database["public"]["Tables"]["Outcome"]["Insert"] = {
-    date: "",
+    date: moment().format("YYYY-MM-DD"),
     overall_price: 0,
+  };
+  let filter = {
+    page: 0,
+    limit: 10,
   };
   onMount(async () => {
     await handleIncome();
+    await handleOutcome();
     const checkMobile = () => {
       isMobile = window.innerWidth <= 768;
     };
@@ -47,30 +40,20 @@
   });
 
   async function handleIncome() {
-    await incomeStore.getAll({
-      page: 0,
-      limit: 10,
-    });
+    await incomeStore.getAll(filter);
   }
 
   async function handleOutcome() {
-    await outcomeStore.getAll({
-      page: 0,
-      limit: 10,
-    });
+    await outcomeStore.getAll(filter);
   }
 
   async function handleCreateIncome() {
     try {
-      const response = await incomeStore.create(createIncome);
-      inboxes.data = inboxes.data.map((inbox) =>
-        inbox.id === createIncome.inbox
-          ? {
-              ...inbox,
-              income: [...inbox.income, response?.data as IncomeEntity],
-            }
-          : inbox
-      );
+      await incomeStore.create(createIncome);
+      createIncome = {
+        date: "",
+        overall_price: 0,
+      };
     } catch (error) {
       console.error(error);
     } finally {
@@ -80,15 +63,11 @@
 
   async function handleCreateOutcome() {
     try {
-      const response = await outcomeStore.create(createOutcome);
-      inboxes.data = inboxes.data.map((inbox) =>
-        inbox.id === createOutcome.inbox
-          ? {
-              ...inbox,
-              outcome: [...inbox.outcome, response?.data as OutcomeEntity],
-            }
-          : inbox
-      );
+      await outcomeStore.create(createOutcome);
+      createOutcome = {
+        date: "",
+        overall_price: 0,
+      };
     } catch (error) {
       console.error(error);
     } finally {
@@ -183,9 +162,13 @@
         </tbody>
       </table>
     </div>
+    <div class="w-full h-auto flex justify-center items-center py-12">
+      <TabsPagination StoreData={$outcomeStore} Store={outcomeStore} {filter} />
+    </div>
   </TabItem>
 
   <TabItem
+    open={true}
     title={$_("income")}
     on:click={async () => {
       await handleIncome();
@@ -264,6 +247,9 @@
           {/if}
         </tbody>
       </table>
+    </div>
+    <div class="w-full h-auto flex justify-center items-center py-12">
+      <TabsPagination StoreData={$incomeStore} Store={incomeStore} {filter} />
     </div>
   </TabItem>
 </Tabs>

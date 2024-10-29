@@ -129,7 +129,7 @@
           >
         </NavLi>
         <NavLi
-          href="/inbox/0"
+          href="/inbox"
           class={`${activeUrl.startsWith("/inbox") ? activeClass : nonActiveClass} flex md:flex-col gap-4 md:gap-0 items-center justify-center transition-all duration-300 ease-in-out`}
           on:click={toggleNavBar}
         >
@@ -174,7 +174,7 @@
           </svg>
           <span
             class={`mt-1 transition-opacity duration-300 ease-in-out ${activeUrl.startsWith("/user") ? "flex" : "flex md:hidden"}`}
-          >{$_("users")}</span
+            >{$_("users")}</span
           >
         </NavLi>
 
@@ -204,9 +204,9 @@
             ></path>
           </svg>
           <span
-          class={`mt-1 ${activeUrl.startsWith("/setting") ? "flex" : "flex md:hidden"} transition-all duration-300 ease-in-out`}
-          >{$_("setting")}</span
-        >
+            class={`mt-1 ${activeUrl.startsWith("/setting") ? "flex" : "flex md:hidden"} transition-all duration-300 ease-in-out`}
+            >{$_("setting")}</span
+          >
         </NavLi>
 
         <NavLi

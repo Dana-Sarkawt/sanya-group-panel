@@ -64,7 +64,8 @@ const createIncomeStore = () => {
           throw new Error(response.error.message);
         }
 
-        const pages = Math.ceil(response.count ?? 0 / (options?.limit || 10));
+        const pages = Math.ceil((response.count ?? 0) / (options?.limit || 10));
+
         set({
           data: response.data ?? [],
           count: response.count ?? 0,

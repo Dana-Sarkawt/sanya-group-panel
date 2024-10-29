@@ -53,6 +53,22 @@ const createOutcomeStore = () => {
         toastStore.error(get(_)("failed-to-get-outcome"));
       }
     },
+    update: async (data: Database["public"]["Tables"]["Outcome"]["Update"]) => {
+      try {
+        const response = await outcomeRepository.updateOutcomeAsync(data);
+
+        update((store) => {
+          store.data = store.data.map((item) =>
+            item?.id === response.data?.id ? response.data : item
+          );
+          return store;
+        });
+        toastStore.success(get(_)("outcome-updated-successfully"));
+        return response;
+      } catch (error) {
+        toastStore.error(get(_)("failed-to-update-outcome"));
+      }
+    },
     getAll: async (options?: GenericListOptions) => {
       try {
         const response = await outcomeRepository.readOutcomesAsync(options);

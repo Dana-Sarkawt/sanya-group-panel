@@ -190,6 +190,24 @@ export class OutcomeRepository implements IOutcomeRepository {
     }
   }
 
+  async updateOutcomeAsync(
+    data: Database["public"]["Tables"]["Outcome"]["Update"]
+  ): Promise<
+    PostgrestSingleResponse<Database["public"]["Tables"]["Outcome"]["Row"]>
+  > {
+    try {
+      const response = await Supabase.client
+        .from("Outcome")
+        .update(data)
+        .eq("id", data.id!)
+        .select("*")
+        .single();
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async readOverallOutcomeAsync(
     projectId: number
   ): Promise<

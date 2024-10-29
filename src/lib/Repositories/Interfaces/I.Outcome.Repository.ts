@@ -86,5 +86,10 @@ export interface IOutcomeRepository {
       Array<Database["public"]["Tables"]["Outcome"]["Row"]>
     >
   >;
+  updateOutcomeAsync(
+    data: Database["public"]["Tables"]["Outcome"]["Update"]
+  ): Promise<
+    PostgrestSingleResponse<Database["public"]["Tables"]["Outcome"]["Row"]>
+  >;
   deleteOutcomeAsync(id: number): Promise<void>;
 }

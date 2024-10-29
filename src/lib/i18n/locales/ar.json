@@ -248,5 +248,14 @@
   "invalid-phone-number": "رقم الهاتف غير صالح",
   "invalid-email": "بريد إلكتروني غير صالح",
   "failed-to-add-user": "فشلت إضافة المستخدم",
-  "update-outcome": "تحديث النتيجة مشروط"
+  "update-outcome": "تحديث النتيجة مشروط",
+  "failed-to-update-income": "فشل تحديث الدخل",
+  "income-updated-successfully": "تم تحديث الدخل بنجاح",
+  "outcome-updated-successfully": "تم تحديث النتيجة بنجاح",
+  "failed-to-update-outcome": "فشل تحديث النتيجة",
+  "update-income": "تحديث الدخل",
+  "outcome-date": "تاريخ النتيجة",
+  "update": "تحديث",
+  "loading": "تحميل",
+  "total-outcome-tooltip": "النتيجة الإجمالية"
 }

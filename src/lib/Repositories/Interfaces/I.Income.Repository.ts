@@ -3,19 +3,20 @@ import type { Database } from "$lib/Supabase/Types/database.types";
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 export interface IIncomeRepository {
+  createOverallIncomeAsync(projectId: number): Promise<void>;
   createIncomeAsync(
-    request: Database["public"]["Tables"]["Income"]["Insert"],
+    request: Database["public"]["Tables"]["Income"]["Insert"]
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Income"]["Row"]>
   >;
   readIncomeAsync(
-    id: number,
+    id: number
   ): Promise<
     PostgrestSingleResponse<Database["public"]["Tables"]["Income"]["Row"]>
   >;
   readIncomesAsync(
     options?: GenericListOptions,
-    inbox_id?: number,
+    inbox_id?: number
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Income"]["Row"]>
@@ -26,6 +27,10 @@ export interface IIncomeRepository {
       Array<Database["public"]["Tables"]["Income"]["Row"]>
     >
   >;
-  createOverallIncomeAsync(projectId: number): Promise<void>;
+  updateIncomeAsync(
+    data: Database["public"]["Tables"]["Income"]["Update"]
+  ): Promise<
+    PostgrestSingleResponse<Database["public"]["Tables"]["Income"]["Row"]>
+  >;
   deleteIncomeAsync(id: number): Promise<void>;
 }

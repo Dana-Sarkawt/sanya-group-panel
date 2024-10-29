@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import { Pagination, type LinkType } from "flowbite-svelte";
   import { onMount } from "svelte";
   import { _ } from "svelte-i18n";
@@ -12,17 +11,23 @@
   export let Store: any;
   let currentPage: number = 0;
   let pageCount: LinkType[] = [];
+  export let isTableLoading = false;
 
   onMount(() => {
-    fetchData();
+    debouncedFetchData();
   });
 
   async function fetchData() {
+    isTableLoading = true;
     try {
       updatePageCount();
       Store.getAll(filter);
     } catch (e) {
       console.log(e);
+    } finally {
+      setTimeout(() => {
+        isTableLoading = false;
+      }, 300);
     }
   }
 
@@ -60,7 +65,7 @@
     }
     currentPage += 1;
     filter.page = currentPage;
-    fetchData();
+    debouncedFetchData();
   };
 
   const setPage = async (event: MouseEvent) => {
@@ -69,15 +74,25 @@
     if (page === currentPage) return;
     currentPage = page;
     filter.page = currentPage;
-    fetchData();
+    debouncedFetchData();
   };
 
   $: {
     if (currentPage) {
       filter.page = currentPage;
-      fetchData();
+      debouncedFetchData();
     }
   }
+
+  function debounce(func: any, wait: number) {
+    let timeout: any;
+    return (...args: any[]) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), wait);
+    };
+  }
+
+  const debouncedFetchData = debounce(fetchData, 10);
 </script>
 
 {#if StoreData && (StoreData.pages ?? 0) > 1}

@@ -78,6 +78,21 @@ const createIncomeStore = () => {
         toastStore.error(get(_)("failed-to-get-incomes"));
       }
     },
+    update: async (data: Database["public"]["Tables"]["Income"]["Update"]) => {
+      try {
+        const response = await incomeRepository.updateIncomeAsync(data);
+        update((store) => {
+          store.data = store.data.map((item) =>
+            item?.id === response.data?.id ? response.data : item
+          );
+          return store;
+        });
+        toastStore.success(get(_)("income-updated-successfully"));
+        return response;
+      } catch (error) {
+        toastStore.error(get(_)("failed-to-update-income"));
+      }
+    },
     delete: async (id: number) => {
       try {
         const response = await incomeRepository.deleteIncomeAsync(id);

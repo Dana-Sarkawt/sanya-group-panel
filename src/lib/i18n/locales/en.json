@@ -249,5 +249,14 @@
   "invalid-phone-number": "Invalid phone number",
   "invalid-email": "Invalid email",
   "failed-to-add-user": "Failed to add user",
-  "update-outcome": "Update Outcome Modal"
+  "update-outcome": "Update Outcome Modal",
+  "income-updated-successfully": "Income updated successfully",
+  "failed-to-update-income": "Failed to update income",
+  "outcome-updated-successfully": "Outcome updated successfully",
+  "failed-to-update-outcome": "Failed to update outcome",
+  "update-income": "Update Income",
+  "outcome-date": "Outcome Date",
+  "update": "Update",
+  "loading": "Loading",
+  "total-outcome-tooltip": "Total Outcome"
 }

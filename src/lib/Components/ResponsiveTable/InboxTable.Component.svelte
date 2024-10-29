@@ -9,6 +9,8 @@
   import moment from "moment";
   import { Tabs, TabItem } from "flowbite-svelte";
   import TabsPagination from "../TabsPagination.Component.svelte";
+  import { Tooltip } from "flowbite-svelte";
+  import { Spinner } from "flowbite-svelte";
 
   let isMobile: boolean;
   let delete_id = 0;
@@ -16,6 +18,8 @@
   let deleteModal = false;
   let incomeAddModal = false;
   let outcomeAddModal = false;
+  let incomeUpdateModal = false;
+  let outcomeUpdateModal = false;
   let createIncome: Database["public"]["Tables"]["Income"]["Insert"] = {
     date: moment().format("YYYY-MM-DD"),
     overall_price: 0,
@@ -24,10 +28,26 @@
     date: moment().format("YYYY-MM-DD"),
     overall_price: 0,
   };
+  let updateIncome: Database["public"]["Tables"]["Income"]["Update"] = {
+    id: 0,
+    date: "",
+    overall_price: 0,
+  };
+  let updateOutcome: Database["public"]["Tables"]["Outcome"]["Update"] = {
+    id: 0,
+    date: "",
+    overall_price: 0,
+  };
   let filter = {
     page: 0,
     limit: 10,
   };
+  let isAddingIncome = false;
+  let isAddingOutcome = false;
+  let isUpdatingIncome = false;
+  let isUpdatingOutcome = false;
+  let isTableLoading = false;
+
   onMount(async () => {
     await handleIncome();
     await handleOutcome();
@@ -40,15 +60,31 @@
   });
 
   async function handleIncome() {
-    await incomeStore.getAll(filter);
+    isTableLoading = true;
+    try {
+      await incomeStore.getAll(filter);
+    } finally {
+      setTimeout(() => {
+        isTableLoading = false;
+      }, 300);
+    }
   }
 
   async function handleOutcome() {
-    await outcomeStore.getAll(filter);
+    isTableLoading = true;
+    try {
+      await outcomeStore.getAll(filter);
+    } finally {
+      setTimeout(() => {
+        isTableLoading = false;
+      }, 300);
+    }
   }
 
   async function handleCreateIncome() {
+    if (isAddingIncome) return;
     try {
+      isAddingIncome = true;
       await incomeStore.create(createIncome);
       createIncome = {
         date: "",
@@ -57,12 +93,15 @@
     } catch (error) {
       console.error(error);
     } finally {
+      isAddingIncome = false;
       incomeAddModal = false;
     }
   }
 
   async function handleCreateOutcome() {
+    if (isAddingOutcome) return;
     try {
+      isAddingOutcome = true;
       await outcomeStore.create(createOutcome);
       createOutcome = {
         date: "",
@@ -71,7 +110,44 @@
     } catch (error) {
       console.error(error);
     } finally {
+      isAddingOutcome = false;
       outcomeAddModal = false;
+    }
+  }
+
+  async function handleUpdateIncome() {
+    if (isUpdatingIncome) return;
+    try {
+      isUpdatingIncome = true;
+      await incomeStore.update(updateIncome);
+      updateIncome = {
+        id: 0,
+        date: "",
+        overall_price: 0,
+      };
+    } catch (error) {
+      console.error(error);
+    } finally {
+      isUpdatingIncome = false;
+      incomeUpdateModal = false;
+    }
+  }
+
+  async function handleUpdateOutcome() {
+    if (isUpdatingOutcome) return;
+    try {
+      isUpdatingOutcome = true;
+      await outcomeStore.update(updateOutcome);
+      updateOutcome = {
+        id: 0,
+        date: "",
+        overall_price: 0,
+      };
+    } catch (error) {
+      console.error(error);
+    } finally {
+      isUpdatingOutcome = false;
+      outcomeUpdateModal = false;
     }
   }
 </script>
@@ -85,85 +161,130 @@
   <TabItem
     title={$_("outcome")}
     on:click={async () => {
+      filter.page = 0;
       await handleOutcome();
     }}
   >
-    <div class="w-full h-auto flex justify-start items-center">
+    <div class="w-full h-auto flex justify-start items-center gap-4">
       <Button on:click={() => (outcomeAddModal = true)} color="green"
         >+ {$_("add-outcome")}</Button
       >
+      <div class="relative group">
+        <div class="flex items-center gap-2">
+          <div
+            class="flex items-center gap-2 bg-gray-800/50 hover:bg-gray-800/70 transition-all duration-200 px-4 py-2 rounded-lg"
+          >
+            <span class="text-white font-medium">{$_("total")}:</span>
+            <span class="text-green-400 font-bold">
+              {$outcomeStore.data.reduce(
+                (acc, curr) => acc + (curr.overall_price || 0),
+                0
+              )}
+            </span>
+          </div>
+          <Tooltip>{$_("total-outcome-tooltip")}</Tooltip>
+        </div>
+      </div>
     </div>
     <div class="w-full h-auto flex justify-center items-center mx-2 mt-4">
-      <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
-        <thead>
-          <tr>
-            <th scope="col">{$_("id")}</th>
-            <th scope="col">{$_("date")}</th>
-            <th scope="col">{$_("overhaul-price")}</th>
-            <th scope="col">{$_("action")}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {#if $outcomeStore.count !== 0}
-            {#each $outcomeStore.data as outcome}
+      <div class="relative w-full">
+        {#if isTableLoading}
+          <div
+            class="absolute inset-0 flex items-center justify-center bg-gray-900/20 backdrop-blur-sm rounded-xl z-10 transition-all duration-300"
+          >
+            <Spinner size="8" color="green" />
+          </div>
+        {/if}
+        <div
+          class="transition-opacity duration-300"
+          class:opacity-50={isTableLoading}
+        >
+          <table
+            class="table w-full text-white text-[5px] md:text-lg rounded-xl"
+          >
+            <thead>
               <tr>
-                <td>{outcome.id}</td>
-                <td>
-                  {outcome.date
-                    ? moment(outcome.date).format("DD/MM/YYYY")
-                    : $_("no-date")}
-                </td>
-                <td>{outcome.overall_price ?? $_("no-price")}</td>
-                <!-- svelte-ignore a11y-no-static-element-interactions -->
-                <td
-                  class="flex h-auto w-auto items-center justify-center gap-2"
-                >
-                  <!-- <a
-                    href="edit/{outcome.id}"
-                    class="bg-yellow-600 hover:bg-yellow-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-                  >
-                    <img
-                      src="/images/edit.png"
-                      class="w-4 h-4 md:h-8 md:w-8 object-contain"
-                      alt=""
-                    />
-                  </a> -->
-                  <!-- svelte-ignore a11y-missing-attribute -->
-                  <!-- svelte-ignore a11y-click-events-have-key-events -->
-                  <button
-                    class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full cursor-pointer"
-                    on:click={() => {
-                      deleteModal = true;
-                      delete_id = outcome.id;
-                      Store = outcomeStore;
-                    }}
-                  >
-                    <img
-                      src="/images/delete.png"
-                      class="w-4 h-4 md:h-8 md:w-8 object-contain"
-                      alt=""
-                    />
-                  </button>
-                </td>
+                <th scope="col">{$_("id")}</th>
+                <th scope="col">{$_("date")}</th>
+                <th scope="col">{$_("overhaul-price")}</th>
+                <th scope="col">{$_("action")}</th>
               </tr>
-            {/each}
-            <tr class="font-bold bg-gray-700">
-              <td>{$_("total")}</td>
-              <td>-</td>
-              <td
-                >{$outcomeStore.data.reduce(
-                  (sum, outcome) => sum + (outcome.overall_price || 0),
-                  0
-                )}</td
-              >
-              <td>-</td>
-            </tr>
-          {/if}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {#if $outcomeStore.count !== 0}
+                {#each $outcomeStore.data as outcome}
+                  <tr>
+                    <td>{outcome.id}</td>
+                    <td>
+                      {outcome.date
+                        ? moment(outcome.date).format("DD/MM/YYYY")
+                        : $_("no-date")}
+                    </td>
+                    <td>{outcome.overall_price ?? $_("no-price")}</td>
+                    <!-- svelte-ignore a11y-no-static-element-interactions -->
+                    <td
+                      class="flex h-auto w-auto items-center justify-center gap-2"
+                    >
+                      <button
+                        class="bg-sky-600 hover:bg-sky-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
+                        on:click={() => {
+                          outcomeUpdateModal = true;
+                          updateOutcome = {
+                            id: outcome.id,
+                            date: outcome.date,
+                            overall_price: outcome.overall_price,
+                          };
+                        }}
+                      >
+                        <img
+                          src="/images/edit.png"
+                          class="w-4 h-4 md:h-8 md:w-8 object-contain"
+                          alt=""
+                        />
+                      </button>
+                      <!-- svelte-ignore a11y-missing-attribute -->
+                      <!-- svelte-ignore a11y-click-events-have-key-events -->
+                      <button
+                        class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full cursor-pointer"
+                        on:click={() => {
+                          deleteModal = true;
+                          delete_id = outcome.id;
+                          Store = outcomeStore;
+                        }}
+                      >
+                        <img
+                          src="/images/delete.png"
+                          class="w-4 h-4 md:h-8 md:w-8 object-contain"
+                          alt=""
+                        />
+                      </button>
+                    </td>
+                  </tr>
+                {/each}
+                <tr class="font-bold bg-gray-700">
+                  <td>{$_("total")}</td>
+                  <td>-</td>
+                  <td
+                    >{$outcomeStore.data.reduce(
+                      (sum, outcome) => sum + (outcome.overall_price || 0),
+                      0
+                    )}</td
+                  >
+                  <td>-</td>
+                </tr>
+              {/if}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <div class="w-full h-auto flex justify-center items-center py-12">
-      <TabsPagination StoreData={$outcomeStore} Store={outcomeStore} {filter} />
+      <TabsPagination
+        StoreData={$outcomeStore}
+        Store={outcomeStore}
+        {filter}
+        bind:isTableLoading
+      />
     </div>
   </TabItem>
 
@@ -171,85 +292,132 @@
     open={true}
     title={$_("income")}
     on:click={async () => {
+      filter.page = 0;
       await handleIncome();
     }}
   >
     <div class="w-full h-auto flex justify-start items-center">
-      <Button on:click={() => (incomeAddModal = true)} color="green"
-        >+ {$_("add-income")}</Button
-      >
+      <div class="w-full h-auto flex justify-start items-center gap-4">
+        <Button on:click={() => (incomeAddModal = true)} color="green"
+          >+ {$_("add-income")}</Button
+        >
+        <div class="relative group">
+          <div class="flex items-center gap-2">
+            <div
+              class="flex items-center gap-2 bg-gray-800/50 hover:bg-gray-800/70 transition-all duration-200 px-4 py-2 rounded-lg"
+            >
+              <span class="text-white font-medium">{$_("total")}:</span>
+              <span class="text-green-400 font-bold">
+                {$incomeStore.data.reduce(
+                  (acc, curr) => acc + (curr.overall_price || 0),
+                  0
+                )}
+              </span>
+            </div>
+            <Tooltip>{$_("total-outcome-tooltip")}</Tooltip>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="w-full h-auto flex justify-center items-center mx-2 mt-4">
-      <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
-        <thead>
-          <tr>
-            <th scope="col">{$_("id")}</th>
-            <th scope="col">{$_("date")}</th>
-            <th scope="col">{$_("overhaul-price")}</th>
-            <th scope="col">{$_("action")}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {#if $incomeStore.count !== 0}
-            {#each $incomeStore.data as income}
+      <div class="relative w-full">
+        {#if isTableLoading}
+          <div
+            class="absolute inset-0 flex items-center justify-center bg-gray-900/20 backdrop-blur-sm rounded-xl z-10 transition-all duration-300"
+          >
+            <Spinner size="8" color="green" />
+          </div>
+        {/if}
+        <div
+          class="transition-opacity duration-300"
+          class:opacity-50={isTableLoading}
+        >
+          <table
+            class="table w-full text-white text-[5px] md:text-lg rounded-xl"
+          >
+            <thead>
               <tr>
-                <td>{income.id}</td>
-                <td>
-                  {income.date
-                    ? moment(income.date).format("DD/MM/YYYY")
-                    : $_("no-date")}
-                </td>
-                <td>{income.overall_price ?? $_("no-price")}</td>
-                <!-- svelte-ignore a11y-no-static-element-interactions -->
-                <td
-                  class="flex h-auto w-auto items-center justify-center gap-2"
-                >
-                  <!-- <a
-                    href="edit/{income.id}"
-                    class="bg-yellow-600 hover:bg-yellow-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-                  >
-                    <img
-                      src="/images/edit.png"
-                      class="w-4 h-4 md:h-8 md:w-8 object-contain"
-                      alt=""
-                    />
-                  </a> -->
-                  <!-- svelte-ignore a11y-missing-attribute -->
-                  <!-- svelte-ignore a11y-click-events-have-key-events -->
-                  <button
-                    class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full cursor-pointer"
-                    on:click={() => {
-                      deleteModal = true;
-                      delete_id = income.id;
-                      Store = incomeStore;
-                    }}
-                  >
-                    <img
-                      src="/images/delete.png"
-                      class="w-4 h-4 md:h-8 md:w-8 object-contain"
-                      alt=""
-                    />
-                  </button>
-                </td>
+                <th scope="col">{$_("id")}</th>
+                <th scope="col">{$_("date")}</th>
+                <th scope="col">{$_("overhaul-price")}</th>
+                <th scope="col">{$_("action")}</th>
               </tr>
-            {/each}
-            <tr class="font-bold bg-gray-700">
-              <td>{$_("total")}</td>
-              <td></td>
-              <td
-                >{$incomeStore.data.reduce(
-                  (sum, income) => sum + (income.overall_price || 0),
-                  0
-                )}</td
-              >
-              <td>-</td>
-            </tr>
-          {/if}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {#if $incomeStore.count !== 0}
+                {#each $incomeStore.data as income}
+                  <tr>
+                    <td>{income.id}</td>
+                    <td>
+                      {income.date
+                        ? moment(income.date).format("DD/MM/YYYY")
+                        : $_("no-date")}
+                    </td>
+                    <td>{income.overall_price ?? $_("no-price")}</td>
+                    <!-- svelte-ignore a11y-no-static-element-interactions -->
+                    <td
+                      class="flex h-auto w-auto items-center justify-center gap-2"
+                    >
+                      <button
+                        class="bg-sky-600 hover:bg-sky-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
+                        on:click={() => {
+                          incomeUpdateModal = true;
+                          updateIncome = {
+                            id: income.id,
+                            date: income.date,
+                            overall_price: income.overall_price,
+                          };
+                        }}
+                      >
+                        <img
+                          src="/images/edit.png"
+                          class="w-4 h-4 md:h-8 md:w-8 object-contain"
+                          alt=""
+                        />
+                      </button>
+                      <!-- svelte-ignore a11y-missing-attribute -->
+                      <!-- svelte-ignore a11y-click-events-have-key-events -->
+                      <button
+                        class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full cursor-pointer"
+                        on:click={() => {
+                          deleteModal = true;
+                          delete_id = income.id;
+                          Store = incomeStore;
+                        }}
+                      >
+                        <img
+                          src="/images/delete.png"
+                          class="w-4 h-4 md:h-8 md:w-8 object-contain"
+                          alt=""
+                        />
+                      </button>
+                    </td>
+                  </tr>
+                {/each}
+                <tr class="font-bold bg-gray-700">
+                  <td>{$_("total")}</td>
+                  <td></td>
+                  <td
+                    >{$incomeStore.data.reduce(
+                      (sum, income) => sum + (income.overall_price || 0),
+                      0
+                    )}</td
+                  >
+                  <td>-</td>
+                </tr>
+              {/if}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <div class="w-full h-auto flex justify-center items-center py-12">
-      <TabsPagination StoreData={$incomeStore} Store={incomeStore} {filter} />
+      <TabsPagination
+        StoreData={$incomeStore}
+        Store={incomeStore}
+        {filter}
+        bind:isTableLoading
+      />
     </div>
   </TabItem>
 </Tabs>
@@ -277,12 +445,20 @@
     </div>
   </div>
   <svelte:fragment slot="footer">
-    <Button on:click={handleCreateIncome} color="green"
-      >{$_("add-income")}</Button
+    <Button
+      on:click={handleCreateIncome}
+      color="green"
+      disabled={isAddingIncome}
     >
-    <Button on:click={() => (incomeAddModal = false)} color="red"
-      >{$_("cancel")}</Button
+      {isAddingIncome ? $_("loading") : $_("add-income")}
+    </Button>
+    <Button
+      on:click={() => (incomeAddModal = false)}
+      color="red"
+      disabled={isAddingIncome}
     >
+      {$_("cancel")}
+    </Button>
   </svelte:fragment>
 </Modal>
 
@@ -307,16 +483,62 @@
     </div>
   </div>
   <svelte:fragment slot="footer">
-    <Button on:click={handleCreateOutcome} color="green"
-      >{$_("add-outcome")}</Button
+    <Button
+      on:click={handleCreateOutcome}
+      color="green"
+      disabled={isAddingOutcome}
     >
-    <Button on:click={() => (outcomeAddModal = false)} color="red"
-      >{$_("cancel")}</Button
+      {isAddingOutcome ? $_("loading") : $_("add-outcome")}
+    </Button>
+    <Button
+      on:click={() => (outcomeAddModal = false)}
+      color="red"
+      disabled={isAddingOutcome}
     >
+      {$_("cancel")}
+    </Button>
   </svelte:fragment>
 </Modal>
 
-<!-- <Modal
+<Modal
+  title={$_("update-income")}
+  bind:open={incomeUpdateModal}
+  outsideclose
+  size="md"
+>
+  <div class="w-full h-auto flex justify-center items-center gap-2 flex-col">
+    <div class="w-full h-auto flex flex-col justify-center items-start gap-2">
+      <p class="dark:text-white">{$_("income-date")}</p>
+      <Input
+        placeholder={$_("date")}
+        bind:value={updateIncome.date}
+        type="date"
+      />
+    </div>
+    <div class="w-full h-auto flex flex-col justify-center items-start gap-2">
+      <p class="dark:text-white">{$_("price")}</p>
+      <Input bind:value={updateIncome.overall_price} type="number" />
+    </div>
+  </div>
+  <svelte:fragment slot="footer">
+    <Button
+      on:click={handleUpdateIncome}
+      color="green"
+      disabled={isUpdatingIncome}
+    >
+      {isUpdatingIncome ? $_("loading") : $_("update")}
+    </Button>
+    <Button
+      on:click={() => (incomeUpdateModal = false)}
+      color="red"
+      disabled={isUpdatingIncome}
+    >
+      {$_("cancel")}
+    </Button>
+  </svelte:fragment>
+</Modal>
+
+<Modal
   title={$_("update-outcome")}
   bind:open={outcomeUpdateModal}
   outsideclose
@@ -327,21 +549,29 @@
       <p class="dark:text-white">{$_("outcome-date")}</p>
       <Input
         placeholder={$_("date")}
-        bind:value={createOutcome.date}
+        bind:value={updateOutcome.date}
         type="date"
       />
     </div>
     <div class="w-full h-auto flex flex-col justify-center items-start gap-2">
       <p class="dark:text-white">{$_("price")}</p>
-      <Input bind:value={createOutcome.overall_price} type="number" />
+      <Input bind:value={updateOutcome.overall_price} type="number" />
     </div>
   </div>
   <svelte:fragment slot="footer">
-    <Button on:click={handleCreateOutcome} color="green"
-      >{$_("add-outcome")}</Button
+    <Button
+      on:click={handleUpdateOutcome}
+      color="green"
+      disabled={isUpdatingOutcome}
     >
-    <Button on:click={() => (outcomeAddModal = false)} color="red"
-      >{$_("cancel")}</Button
+      {isUpdatingOutcome ? $_("loading") : $_("update")}
+    </Button>
+    <Button
+      on:click={() => (outcomeUpdateModal = false)}
+      color="red"
+      disabled={isUpdatingOutcome}
     >
+      {$_("cancel")}
+    </Button>
   </svelte:fragment>
-</Modal> -->
+</Modal>

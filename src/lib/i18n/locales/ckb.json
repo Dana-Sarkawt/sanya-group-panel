@@ -248,5 +248,14 @@
   "invalid-phone-number": "ژمارەی تەلەفۆنی نادروست",
   "invalid-email": "ئیمەیڵی نادروست",
   "failed-to-add-user": "شکستی هێنا لە زیادکردنی بەکارهێنەر",
-  "update-outcome": "مۆداڵی دەرئەنجام نوێکردنەوە"
+  "update-outcome": "مۆداڵی دەرئەنجام نوێکردنەوە",
+  "failed-to-update-income": "شکستی هێنا لە نوێکردنەوەی داهات",
+  "income-updated-successfully": "داهات بە سەرکەوتوویی نوێکرایەوە",
+  "outcome-updated-successfully": "ئەنجامەکە بە سەرکەوتوویی نوێکرایەوە",
+  "failed-to-update-outcome": "شکستی هێنا لە نوێکردنەوەی ئەنجامەکە",
+  "update-income": "نوێکردنەوەی داهات",
+  "outcome-date": "بەرواری دەرئەنجام",
+  "update": "نوێکردنەوە",
+  "loading": "چاوەرێبکە",
+  "total-outcome-tooltip": "کۆی گشتی دەرئەنجام"
 }

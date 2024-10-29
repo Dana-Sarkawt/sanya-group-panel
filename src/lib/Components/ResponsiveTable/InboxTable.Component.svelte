@@ -359,6 +359,7 @@
                       class="flex h-auto w-auto items-center justify-center gap-2"
                     >
                       <button
+                        id="update-button-{income.id}"
                         class="bg-sky-600 hover:bg-sky-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
                         on:click={() => {
                           incomeUpdateModal = true;
@@ -375,9 +376,13 @@
                           alt=""
                         />
                       </button>
+                      <Tooltip triggeredBy={`#update-button-${income.id}`}>
+                        {$_("edit")}
+                      </Tooltip>
                       <!-- svelte-ignore a11y-missing-attribute -->
                       <!-- svelte-ignore a11y-click-events-have-key-events -->
                       <button
+                        id={`delete-button-${income.id}`}
                         class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full cursor-pointer"
                         on:click={() => {
                           deleteModal = true;
@@ -391,6 +396,9 @@
                           alt=""
                         />
                       </button>
+                      <Tooltip triggeredBy={`#delete-button-${income.id}`}>
+                        {$_("delete")}
+                      </Tooltip>
                     </td>
                   </tr>
                 {/each}

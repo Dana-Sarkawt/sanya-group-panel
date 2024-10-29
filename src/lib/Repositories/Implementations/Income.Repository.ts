@@ -45,8 +45,7 @@ export class IncomeRepository implements IIncomeRepository {
     }
   }
   async readIncomesAsync(
-    options?: GenericListOptions,
-    inbox_id?: number
+    options?: GenericListOptions
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Income"]["Row"]>
@@ -60,9 +59,6 @@ export class IncomeRepository implements IIncomeRepository {
 
       if (options?.field && options?.equal) {
         response.eq(options.field, options.equal);
-      }
-      if (inbox_id) {
-        response.eq("inbox", inbox_id);
       }
 
       return await response

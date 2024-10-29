@@ -248,5 +248,6 @@
   "role-deleted-successfully": "Role deleted successfully",
   "invalid-phone-number": "Invalid phone number",
   "invalid-email": "Invalid email",
-  "failed-to-add-user": "Failed to add user"
+  "failed-to-add-user": "Failed to add user",
+  "update-outcome": "Update Outcome Modal"
 }

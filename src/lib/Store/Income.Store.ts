@@ -55,12 +55,9 @@ const createIncomeStore = () => {
         toastStore.error(get(_)("failed-to-get-income"));
       }
     },
-    getAll: async (options?: GenericListOptions, inbox_id?: number) => {
+    getAll: async (options?: GenericListOptions) => {
       try {
-        const response = await incomeRepository.readIncomesAsync(
-          options,
-          inbox_id
-        );
+        const response = await incomeRepository.readIncomesAsync(options);
 
         if (response.error) {
           toastStore.error(response.error.message);

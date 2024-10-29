@@ -110,8 +110,7 @@ export class OutcomeRepository implements IOutcomeRepository {
     }
   }
   async readOutcomesAsync(
-    options?: GenericListOptions,
-    inbox_id?: number
+    options?: GenericListOptions
   ): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Outcome"]["Row"]>
@@ -125,9 +124,6 @@ export class OutcomeRepository implements IOutcomeRepository {
 
       if (options?.field && options?.equal) {
         response.eq(options.field, options.equal);
-      }
-      if (inbox_id) {
-        response.eq("inbox", inbox_id);
       }
 
       return await response

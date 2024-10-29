@@ -247,5 +247,6 @@
   "role-deleted-successfully": "تم حذف الدور بنجاح",
   "invalid-phone-number": "رقم الهاتف غير صالح",
   "invalid-email": "بريد إلكتروني غير صالح",
-  "failed-to-add-user": "فشلت إضافة المستخدم"
+  "failed-to-add-user": "فشلت إضافة المستخدم",
+  "update-outcome": "تحديث النتيجة مشروط"
 }

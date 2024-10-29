@@ -53,12 +53,9 @@ const createOutcomeStore = () => {
         toastStore.error(get(_)("failed-to-get-outcome"));
       }
     },
-    getAll: async (options?: GenericListOptions, inbox_id?: number) => {
+    getAll: async (options?: GenericListOptions) => {
       try {
-        const response = await outcomeRepository.readOutcomesAsync(
-          options,
-          inbox_id
-        );
+        const response = await outcomeRepository.readOutcomesAsync(options);
 
         if (response.error) {
           toastStore.error(get(_)("failed-to-get-outcome"));

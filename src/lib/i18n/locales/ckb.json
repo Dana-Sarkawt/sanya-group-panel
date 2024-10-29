@@ -247,5 +247,6 @@
   "role-deleted-successfully": "ڕۆڵ بە سەرکەوتوویی سڕایەوە",
   "invalid-phone-number": "ژمارەی تەلەفۆنی نادروست",
   "invalid-email": "ئیمەیڵی نادروست",
-  "failed-to-add-user": "شکستی هێنا لە زیادکردنی بەکارهێنەر"
+  "failed-to-add-user": "شکستی هێنا لە زیادکردنی بەکارهێنەر",
+  "update-outcome": "مۆداڵی دەرئەنجام نوێکردنەوە"
 }

@@ -12,6 +12,7 @@
   import type { InboxEntity } from "$lib/Models/Entity/Inbox.Entity.Model";
   import type { OutcomeEntity } from "$lib/Models/Entity/Outcome.Entity.Model";
   import type { IncomeEntity } from "$lib/Models/Entity/Income.Entity.Model";
+  import { Tabs, TabItem } from "flowbite-svelte";
 
   export let inboxes: Store<InboxEntity> = {
     data: [],
@@ -108,96 +109,175 @@
   }
 </script>
 
-<div class="w-full h-auto flex justify-center items-center mx-2">
-  <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
-    <thead>
-      <tr>
-        <th scope="col">{$_("id")}</th>
-        <th scope="col">{$_("title")}</th>
-        <th scope="col">{$_("description")}</th>
-        <th scope="col">{$_("income")}</th>
-        <th scope="col">{$_("outcome")}</th>
-        <th scope="col">{$_("action")}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {#if inboxes.count !== 0}
-        {#each inboxes.data as inbox}
+<Tabs
+  divider={false}
+  activeClasses="rounded-full h-12 w-24 bg-green-500 text-white"
+  inactiveClasses="rounded-full h-12 w-24 bg-gray-500/20 dark:text-white"
+  contentClass="bg-transparent p-4"
+>
+  <TabItem open title={$_("income")}>
+    <div class="w-full h-auto flex justify-start items-center">
+      <Button on:click={() => (outcomeAddModal = true)} color="green"
+        >+ {$_("add-outcome")}</Button
+      >
+    </div>
+    <div class="w-full h-auto flex justify-center items-center mx-2 mt-4">
+      <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
+        <thead>
           <tr>
-            <td>{inbox.id}</td>
-            <td>{inbox.title}</td>
-            <td>{inbox.description || $_("no-description")}</td>
-            <td
-              >{inbox.income.reduce(
-                (acc, curr) => acc + curr.overall_price,
-                0
-              )}</td
-            >
-            <td
-              >{inbox.outcome.reduce(
-                (acc, curr) => acc + curr.overall_price,
-                0
-              )}</td
-            >
-            <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <td class="flex h-auto w-auto items-center justify-center gap-2">
-              <button
-                on:click={() => handleIncome(inbox.id)}
-                class="bg-green-600 hover:bg-green-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-              >
-                <img
-                  src="/images/income.png"
-                  class="w-4 h-4 md:h-8 md:w-8 object-contain"
-                  alt=""
-                />
-              </button>
-              <button
-                on:click={() => handleOutcome(inbox.id)}
-                class="bg-blue-600 hover:bg-blue-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-              >
-                <img
-                  src="/images/outcome.png"
-                  class="w-4 h-4 md:h-8 md:w-8 object-contain"
-                  alt=""
-                />
-              </button>
-              <a
-                href="edit/{inbox.id}"
-                class="bg-yellow-600 hover:bg-yellow-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-              >
-                <img
-                  src="/images/edit.png"
-                  class="w-4 h-4 md:h-8 md:w-8 object-contain"
-                  alt=""
-                />
-              </a>
-              <!-- svelte-ignore a11y-missing-attribute -->
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
-              <button
-                class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full cursor-pointer"
-                on:click={() => {
-                  deleteModal = true;
-                  Store = inboxStore;
-                  delete_id = inbox.id;
-                }}
-              >
-                <img
-                  src="/images/delete.png"
-                  class="w-4 h-4 md:h-8 md:w-8 object-contain"
-                  alt=""
-                />
-              </button>
-            </td>
+            <th scope="col">{$_("id")}</th>
+            <th scope="col">{$_("date")}</th>
+            <th scope="col">{$_("overhaul-price")}</th>
+            <th scope="col">{$_("action")}</th>
           </tr>
-        {/each}
-      {/if}
-    </tbody>
-  </table>
-</div>
+        </thead>
+        <tbody>
+          {#if $outcomeStore.count !== 0}
+            {#each $outcomeStore.data as outcome}
+              <tr>
+                <td>{outcome.id}</td>
+                <td>
+                  {outcome.date
+                    ? moment(outcome.date).format("DD/MM/YYYY")
+                    : $_("no-date")}
+                </td>
+                <td>{outcome.overall_price ?? $_("no-price")}</td>
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <td
+                  class="flex h-auto w-auto items-center justify-center gap-2"
+                >
+                  <!-- <a
+                    href="edit/{outcome.id}"
+                    class="bg-yellow-600 hover:bg-yellow-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
+                  >
+                    <img
+                      src="/images/edit.png"
+                      class="w-4 h-4 md:h-8 md:w-8 object-contain"
+                      alt=""
+                    />
+                  </a> -->
+                  <!-- svelte-ignore a11y-missing-attribute -->
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <button
+                    class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full cursor-pointer"
+                    on:click={() => {
+                      deleteModal = true;
+                      delete_id = outcome.id;
+                      Store = outcomeStore;
+                    }}
+                  >
+                    <img
+                      src="/images/delete.png"
+                      class="w-4 h-4 md:h-8 md:w-8 object-contain"
+                      alt=""
+                    />
+                  </button>
+                </td>
+              </tr>
+            {/each}
+            <tr class="font-bold bg-gray-700">
+              <td>{$_("total")}</td>
+              <td>-</td>
+              <td
+                >{$outcomeStore.data.reduce(
+                  (sum, outcome) => sum + (outcome.overall_price || 0),
+                  0
+                )}</td
+              >
+              <td>-</td>
+            </tr>
+          {/if}
+        </tbody>
+      </table>
+    </div>
+  </TabItem>
+
+  <TabItem title={$_("outcome")}>
+    <div class="w-full h-auto flex justify-start items-center">
+      <Button on:click={() => (incomeAddModal = true)} color="green"
+        >+ {$_("add-income")}</Button
+      >
+    </div>
+    <div class="w-full h-auto flex justify-center items-center mx-2 mt-4">
+      <table class="table w-full text-white text-[5px] md:text-lg rounded-xl">
+        <thead>
+          <tr>
+            <th scope="col">{$_("id")}</th>
+            <th scope="col">{$_("date")}</th>
+            <th scope="col">{$_("overhaul-price")}</th>
+            <th scope="col">{$_("action")}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {#if $incomeStore.count !== 0}
+            {#each $incomeStore.data as income}
+              <tr>
+                <td>{income.id}</td>
+                <td>
+                  {income.date
+                    ? moment(income.date).format("DD/MM/YYYY")
+                    : $_("no-date")}
+                </td>
+                <td>{income.overall_price ?? $_("no-price")}</td>
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <td
+                  class="flex h-auto w-auto items-center justify-center gap-2"
+                >
+                  <!-- <a
+                    href="edit/{income.id}"
+                    class="bg-yellow-600 hover:bg-yellow-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
+                  >
+                    <img
+                      src="/images/edit.png"
+                      class="w-4 h-4 md:h-8 md:w-8 object-contain"
+                      alt=""
+                    />
+                  </a> -->
+                  <!-- svelte-ignore a11y-missing-attribute -->
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <button
+                    class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full cursor-pointer"
+                    on:click={() => {
+                      deleteModal = true;
+                      delete_id = income.id;
+                      Store = incomeStore;
+                    }}
+                  >
+                    <img
+                      src="/images/delete.png"
+                      class="w-4 h-4 md:h-8 md:w-8 object-contain"
+                      alt=""
+                    />
+                  </button>
+                </td>
+              </tr>
+            {/each}
+            <tr class="font-bold bg-gray-700">
+              <td>{$_("total")}</td>
+              <td></td>
+              <td
+                >{$incomeStore.data.reduce(
+                  (sum, income) => sum + (income.overall_price || 0),
+                  0
+                )}</td
+              >
+              <td>-</td>
+            </tr>
+          {/if}
+        </tbody>
+      </table>
+    </div>
+  </TabItem>
+</Tabs>
 
 <DeleteModal bind:deleteModal {Store} id={delete_id} />
 
-<Modal title={$_("income")} bind:open={incomeModal} outsideclose size="xl">
+<Modal
+  title={$_("income")}
+  bind:open={incomeModal}
+  outsideclose
+  class="h-screen"
+>
   <div class="w-full h-auto flex justify-start items-center">
     <Button on:click={() => (incomeAddModal = true)} color="green"
       >+ {$_("add-income")}</Button
@@ -272,7 +352,12 @@
   </div>
 </Modal>
 
-<Modal title={$_("outcome")} bind:open={outcomeModal} outsideclose size="xl">
+<Modal
+  title={$_("outcome")}
+  bind:open={outcomeModal}
+  outsideclose
+  class="h-screen"
+>
   <div class="w-full h-auto flex justify-start items-center">
     <Button on:click={() => (outcomeAddModal = true)} color="green"
       >+ {$_("add-outcome")}</Button

@@ -78,6 +78,15 @@ const createIncomeStore = () => {
         toastStore.error(get(_)("failed-to-get-incomes"));
       }
     },
+    getTotal: async () => {
+      try {
+        const response = await incomeRepository.readIncomesTotalAsync();
+        return response.data?.total ?? 0;
+      } catch (error) {
+        toastStore.error(get(_)("failed-to-get-incomes-total"));
+        return 0;
+      }
+    },
     update: async (data: Database["public"]["Tables"]["Income"]["Update"]) => {
       try {
         const response = await incomeRepository.updateIncomeAsync(data);

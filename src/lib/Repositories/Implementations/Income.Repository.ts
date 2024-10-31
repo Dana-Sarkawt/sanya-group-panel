@@ -6,9 +6,9 @@ import type { IIncomeRepository } from "../Interfaces/I.Income.Repository";
 
 export class IncomeRepository implements IIncomeRepository {
   readIncomesWithoutFilterAsync(): Promise<
-  PostgrestSingleResponse<
-  Array<Database["public"]["Tables"]["Income"]["Row"]>
-  >
+    PostgrestSingleResponse<
+      Array<Database["public"]["Tables"]["Income"]["Row"]>
+    >
   > {
     throw new Error("Method not implemented.");
   }
@@ -53,14 +53,14 @@ export class IncomeRepository implements IIncomeRepository {
   > {
     try {
       const response = Supabase.client
-      .from("Income")
+        .from("Income")
         .select("*", { count: "exact" })
         .is("deleted_at", null);
-        
+
       if (options?.field && options?.equal) {
         response.eq(options.field, options.equal);
       }
-      
+
       return await response
         .order("date", { ascending: false })
         .range(
@@ -70,6 +70,23 @@ export class IncomeRepository implements IIncomeRepository {
     } catch (error) {
       throw error;
     }
+  }
+  async readIncomesTotalAsync(): Promise<
+    PostgrestSingleResponse<{ total: number }>
+  > {
+    // You have to enable the aggregate functions in the supabase console
+    const response = await Supabase.client
+      .from("Income")
+      .select("total:overall_price.sum()")
+      .is("deleted_at", null)
+      .returns<{ total: number }>()
+      .single();
+
+    if (response.error) {
+      throw response.error;
+    }
+
+    return response;
   }
   async updateIncomeAsync(
     data: Database["public"]["Tables"]["Income"]["Update"]

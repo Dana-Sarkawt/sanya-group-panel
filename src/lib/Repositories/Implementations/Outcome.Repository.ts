@@ -26,73 +26,6 @@ export class OutcomeRepository implements IOutcomeRepository {
       throw error;
     }
   }
-  createOverallOutcomeAsync(
-    p0: number,
-    response: void,
-    request: Database["public"]["Tables"]["Outcome"]["Insert"]
-  ): Promise<
-    PostgrestSingleResponse<Database["public"]["Tables"]["Outcome"]["Row"]>
-  > {
-    throw new Error("Method not implemented.");
-  }
-  readOutcomesByWorkerIdAsync(
-    workerId: number
-  ): Promise<
-    PostgrestSingleResponse<
-      Array<Database["public"]["Tables"]["Outcome"]["Row"]>
-    >
-  > {
-    throw new Error("Method not implemented.");
-  }
-  readOutcomesByWorkerIdsAsync(
-    workerIds: number[]
-  ): Promise<
-    PostgrestSingleResponse<
-      Array<Database["public"]["Tables"]["Outcome"]["Row"]>
-    >
-  > {
-    throw new Error("Method not implemented.");
-  }
-  readOutcomesByProjectIdAndWorkerIdAsync(
-    projectId: number,
-    workerId: number
-  ): Promise<
-    PostgrestSingleResponse<
-      Array<Database["public"]["Tables"]["Outcome"]["Row"]>
-    >
-  > {
-    throw new Error("Method not implemented.");
-  }
-  readOutcomesByProjectIdsAndWorkerIdsAsync(
-    projectIds: number[],
-    workerIds: number[]
-  ): Promise<
-    PostgrestSingleResponse<
-      Array<Database["public"]["Tables"]["Outcome"]["Row"]>
-    >
-  > {
-    throw new Error("Method not implemented.");
-  }
-  readOutcomesByProjectIdAndWorkerIdsAsync(
-    projectId: number,
-    workerIds: number[]
-  ): Promise<
-    PostgrestSingleResponse<
-      Array<Database["public"]["Tables"]["Outcome"]["Row"]>
-    >
-  > {
-    throw new Error("Method not implemented.");
-  }
-  readOutcomesByWorkerIdAndProjectIdsAsync(
-    workerId: number,
-    projectIds: number[]
-  ): Promise<
-    PostgrestSingleResponse<
-      Array<Database["public"]["Tables"]["Outcome"]["Row"]>
-    >
-  > {
-    throw new Error("Method not implemented.");
-  }
   async readOutcomeAsync(
     id: number
   ): Promise<
@@ -152,44 +85,23 @@ export class OutcomeRepository implements IOutcomeRepository {
       throw error;
     }
   }
-  async readOutcomesByProjectIdAsync(
-    projectId: number
-  ): Promise<
-    PostgrestSingleResponse<
-      Array<Database["public"]["Tables"]["Outcome"]["Row"]>
-    >
+  async readOutcomesTotalAsync(): Promise<
+    PostgrestSingleResponse<{ total: number }>
   > {
-    try {
-      const response = Supabase.client
-        .from("Outcome")
-        .select("*")
-        .eq("project_id", projectId);
+    // You have to enable the aggregate functions in the supabase console
+    const response = await Supabase.client
+      .from("Outcome")
+      .select("total:overall_price.sum()")
+      .is("deleted_at", null)
+      .returns<{ total: number }>()
+      .single();
 
-      return await response.order("id", { ascending: false });
-    } catch (error) {
-      throw error;
+    if (response.error) {
+      throw response.error;
     }
+
+    return response;
   }
-
-  async readOutcomesByProjectIdsAsync(
-    projectIds: number[]
-  ): Promise<
-    PostgrestSingleResponse<
-      Array<Database["public"]["Tables"]["Outcome"]["Row"]>
-    >
-  > {
-    try {
-      const response = Supabase.client
-        .from("Outcome")
-        .select("*")
-        .in("project_id", projectIds);
-
-      return await response.order("id", { ascending: false });
-    } catch (error) {
-      throw error;
-    }
-  }
-
   async updateOutcomeAsync(
     data: Database["public"]["Tables"]["Outcome"]["Update"]
   ): Promise<

@@ -258,5 +258,8 @@
   "outcome-date": "Outcome Date",
   "update": "Update",
   "loading": "Loading",
-  "total-outcome-tooltip": "Total Outcome"
+  "total-outcome-tooltip": "Total Outcome",
+  "failed-to-get-incomes-total": "Failed to get Incomes Totals",
+  "failed-to-get-outcomes-total": "Failed to get Outcomes Total",
+  "total-income-tooltip": "Total Income"
 }

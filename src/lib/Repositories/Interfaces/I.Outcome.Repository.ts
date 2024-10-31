@@ -26,66 +26,7 @@ export interface IOutcomeRepository {
       Array<Database["public"]["Tables"]["Outcome"]["Row"]>
     >
   >;
-  readOutcomesByProjectIdAsync(
-    projectId: number
-  ): Promise<
-    PostgrestSingleResponse<
-      Array<Database["public"]["Tables"]["Outcome"]["Row"]>
-    >
-  >;
-  readOutcomesByProjectIdsAsync(
-    projectIds: number[]
-  ): Promise<
-    PostgrestSingleResponse<
-      Array<Database["public"]["Tables"]["Outcome"]["Row"]>
-    >
-  >;
-  readOutcomesByWorkerIdAsync(
-    workerId: number
-  ): Promise<
-    PostgrestSingleResponse<
-      Array<Database["public"]["Tables"]["Outcome"]["Row"]>
-    >
-  >;
-  readOutcomesByWorkerIdsAsync(
-    workerIds: number[]
-  ): Promise<
-    PostgrestSingleResponse<
-      Array<Database["public"]["Tables"]["Outcome"]["Row"]>
-    >
-  >;
-  readOutcomesByProjectIdAndWorkerIdAsync(
-    projectId: number,
-    workerId: number
-  ): Promise<
-    PostgrestSingleResponse<
-      Array<Database["public"]["Tables"]["Outcome"]["Row"]>
-    >
-  >;
-  readOutcomesByProjectIdsAndWorkerIdsAsync(
-    projectIds: number[],
-    workerIds: number[]
-  ): Promise<
-    PostgrestSingleResponse<
-      Array<Database["public"]["Tables"]["Outcome"]["Row"]>
-    >
-  >;
-  readOutcomesByProjectIdAndWorkerIdsAsync(
-    projectId: number,
-    workerIds: number[]
-  ): Promise<
-    PostgrestSingleResponse<
-      Array<Database["public"]["Tables"]["Outcome"]["Row"]>
-    >
-  >;
-  readOutcomesByWorkerIdAndProjectIdsAsync(
-    workerId: number,
-    projectIds: number[]
-  ): Promise<
-    PostgrestSingleResponse<
-      Array<Database["public"]["Tables"]["Outcome"]["Row"]>
-    >
-  >;
+  readOutcomesTotalAsync(): Promise<PostgrestSingleResponse<{ total: number }>>;
   updateOutcomeAsync(
     data: Database["public"]["Tables"]["Outcome"]["Update"]
   ): Promise<

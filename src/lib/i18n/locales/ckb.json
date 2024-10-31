@@ -257,5 +257,8 @@
   "outcome-date": "بەرواری دەرئەنجام",
   "update": "نوێکردنەوە",
   "loading": "چاوەرێبکە",
-  "total-outcome-tooltip": "کۆی گشتی دەرئەنجام"
+  "total-outcome-tooltip": "کۆی گشتی دەرئەنجام",
+  "failed-to-get-incomes-total": "شکستی هێنا لە بەدەستهێنانی کۆی داهات",
+  "failed-to-get-outcomes-total": "شکستی هێنا لە بەدەستهێنانی کۆی گشتی دەرئەنجامەکان",
+  "total-income-tooltip": "کۆی گشتی داهات"
 }

@@ -53,6 +53,15 @@ const createOutcomeStore = () => {
         toastStore.error(get(_)("failed-to-get-outcome"));
       }
     },
+    getTotal: async () => {
+      try {
+        const response = await outcomeRepository.readOutcomesTotalAsync();
+        return response.data?.total ?? 0;
+      } catch (error) {
+        toastStore.error(get(_)("failed-to-get-outcomes-total"));
+        return 0;
+      }
+    },
     update: async (data: Database["public"]["Tables"]["Outcome"]["Update"]) => {
       try {
         const response = await outcomeRepository.updateOutcomeAsync(data);

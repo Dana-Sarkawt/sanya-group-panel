@@ -22,6 +22,7 @@ export interface IIncomeRepository {
       Array<Database["public"]["Tables"]["Income"]["Row"]>
     >
   >;
+  readIncomesTotalAsync(): Promise<PostgrestSingleResponse<{ total: number }>>;
   readIncomesWithoutFilterAsync(): Promise<
     PostgrestSingleResponse<
       Array<Database["public"]["Tables"]["Income"]["Row"]>

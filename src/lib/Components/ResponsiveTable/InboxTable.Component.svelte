@@ -15,6 +15,8 @@
   let isMobile: boolean;
   let delete_id = 0;
   let Store: any;
+  let totalIncome: number = 0;
+  let totalOutcome: number = 0;
   let deleteModal = false;
   let incomeAddModal = false;
   let outcomeAddModal = false;
@@ -63,6 +65,7 @@
     isTableLoading = true;
     try {
       await incomeStore.getAll(filter);
+      totalIncome = await incomeStore.getTotal();
     } finally {
       setTimeout(() => {
         isTableLoading = false;
@@ -74,6 +77,7 @@
     isTableLoading = true;
     try {
       await outcomeStore.getAll(filter);
+      totalOutcome = await outcomeStore.getTotal();
     } finally {
       setTimeout(() => {
         isTableLoading = false;
@@ -90,6 +94,7 @@
         date: "",
         overall_price: 0,
       };
+      totalIncome = await incomeStore.getTotal();
     } catch (error) {
       console.error(error);
     } finally {
@@ -107,6 +112,7 @@
         date: "",
         overall_price: 0,
       };
+      totalOutcome = await outcomeStore.getTotal();
     } catch (error) {
       console.error(error);
     } finally {
@@ -125,6 +131,7 @@
         date: "",
         overall_price: 0,
       };
+      totalIncome = await incomeStore.getTotal();
     } catch (error) {
       console.error(error);
     } finally {
@@ -143,6 +150,7 @@
         date: "",
         overall_price: 0,
       };
+      totalOutcome = await outcomeStore.getTotal();
     } catch (error) {
       console.error(error);
     } finally {
@@ -176,10 +184,7 @@
           >
             <span class="text-white font-medium">{$_("total")}:</span>
             <span class="text-green-400 font-bold">
-              {$outcomeStore.data.reduce(
-                (acc, curr) => acc + (curr.overall_price || 0),
-                0
-              )}
+              {Math.abs(totalOutcome).toLocaleString()}
             </span>
           </div>
           <Tooltip>{$_("total-outcome-tooltip")}</Tooltip>
@@ -220,7 +225,11 @@
                         ? moment(outcome.date).format("DD/MM/YYYY")
                         : $_("no-date")}
                     </td>
-                    <td>{outcome.overall_price ?? $_("no-price")}</td>
+                    <td
+                      >{outcome.overall_price
+                        ? Math.abs(outcome.overall_price).toLocaleString()
+                        : $_("no-price")}</td
+                    >
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
                     <td
                       class="flex h-auto w-auto items-center justify-center gap-2"
@@ -265,10 +274,12 @@
                   <td>{$_("total")}</td>
                   <td>-</td>
                   <td
-                    >{$outcomeStore.data.reduce(
-                      (sum, outcome) => sum + (outcome.overall_price || 0),
-                      0
-                    )}</td
+                    >{Math.abs(
+                      $outcomeStore.data.reduce(
+                        (sum, outcome) => sum + (outcome.overall_price || 0),
+                        0
+                      )
+                    ).toLocaleString()}</td
                   >
                   <td>-</td>
                 </tr>
@@ -308,13 +319,10 @@
             >
               <span class="text-white font-medium">{$_("total")}:</span>
               <span class="text-green-400 font-bold">
-                {$incomeStore.data.reduce(
-                  (acc, curr) => acc + (curr.overall_price || 0),
-                  0
-                )}
+                {Math.abs(totalIncome).toLocaleString()}
               </span>
             </div>
-            <Tooltip>{$_("total-outcome-tooltip")}</Tooltip>
+            <Tooltip>{$_("total-income-tooltip")}</Tooltip>
           </div>
         </div>
       </div>
@@ -353,7 +361,11 @@
                         ? moment(income.date).format("DD/MM/YYYY")
                         : $_("no-date")}
                     </td>
-                    <td>{income.overall_price ?? $_("no-price")}</td>
+                    <td
+                      >{income.overall_price
+                        ? Math.abs(income.overall_price).toLocaleString()
+                        : $_("no-price")}</td
+                    >
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
                     <td
                       class="flex h-auto w-auto items-center justify-center gap-2"
@@ -406,10 +418,12 @@
                   <td>{$_("total")}</td>
                   <td></td>
                   <td
-                    >{$incomeStore.data.reduce(
-                      (sum, income) => sum + (income.overall_price || 0),
-                      0
-                    )}</td
+                    >{Math.abs(
+                      $incomeStore.data.reduce(
+                        (sum, income) => sum + (income.overall_price || 0),
+                        0
+                      )
+                    ).toLocaleString()}</td
                   >
                   <td>-</td>
                 </tr>

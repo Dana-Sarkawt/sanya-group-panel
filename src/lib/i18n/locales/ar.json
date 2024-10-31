@@ -257,5 +257,8 @@
   "outcome-date": "تاريخ النتيجة",
   "update": "تحديث",
   "loading": "تحميل",
-  "total-outcome-tooltip": "النتيجة الإجمالية"
+  "total-outcome-tooltip": "النتيجة الإجمالية",
+  "failed-to-get-incomes-total": "فشل الحصول على إجماليات الدخل",
+  "failed-to-get-outcomes-total": "فشل في الحصول على إجمالي النتائج",
+  "total-income-tooltip": "إجمالي الدخل"
 }

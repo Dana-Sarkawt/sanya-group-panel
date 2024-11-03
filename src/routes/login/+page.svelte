@@ -3,6 +3,7 @@
   import { onMount } from "svelte";
   import { Authentication } from "$lib/Models/Request/Authentication.Request.Model";
   import { authStore } from "$lib/Store/Auth.Store";
+  import { _ } from "svelte-i18n";
 
   const loginRequest = new Authentication.Login();
 
@@ -41,8 +42,9 @@
     class="w-[90%] md:w-[50%] h-auto p-10 bg-[#94DCBA] dark:bg-[#11433A] border border-[#11433A] dark:border-[#94DCBA] rounded-xl flex flex-col justify-center items-center gap-6"
   >
     <div class="w-full h-auto flex flex-col justify-center items-start">
-      <p class="dark:text-white">Email</p>
+      <p class="dark:text-white">{$_("email")}</p>
       <input
+        dir="ltr"
         type="text"
         bind:value={loginRequest.email}
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
@@ -50,8 +52,9 @@
     </div>
 
     <div class="w-full h-auto flex flex-col justify-center items-start">
-      <p class="dark:text-white">Password</p>
+      <p class="dark:text-white">{$_("password")}</p>
       <input
+        dir="ltr"
         type="password"
         bind:value={loginRequest.password}
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
@@ -68,7 +71,9 @@
 
     <button
       class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={() => login(loginRequest)}>Login</button
+      on:click={() => login(loginRequest)}
     >
+      {$_("login")}
+    </button>
   </div>
 </div>

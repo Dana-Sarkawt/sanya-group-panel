@@ -72,8 +72,8 @@
   "svg-png-jpg": "SVG-PNG-JPG",
   "click-to-upload": "بۆ بارکردن کلیک بکە",
   "or-drag-and-drop": "یان ڕاکێشان و دابەزاندن",
-  "previous": "پریڤۆیۆس",
-  "next": "داهاتوو",
+  "previous": "پێشووتر",
+  "next": "دواتر",
   "income-date": "بەرواری داها��",
   "projects-table": "خشتەی پڕۆژەکان",
   "income:": "داهات:",
@@ -260,5 +260,7 @@
   "total-outcome-tooltip": "کۆی گشتی دەرئەنجام",
   "failed-to-get-incomes-total": "شکستی هێنا لە بەدەستهێنانی کۆی داهات",
   "failed-to-get-outcomes-total": "شکستی هێنا لە بەدەستهێنانی کۆی گشتی دەرئەنجامەکان",
-  "total-income-tooltip": "کۆی گشتی داهات"
+  "total-income-tooltip": "کۆی گشتی داهات",
+  "login": "چوونەژوورەوە",
+  "view": "لێکۆلینەوە"
 }

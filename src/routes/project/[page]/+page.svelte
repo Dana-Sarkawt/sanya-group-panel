@@ -7,7 +7,6 @@
   import { exportAsExcelFile } from "$lib/Utils/ExportAsExcel.Utils";
   import { _ } from "svelte-i18n";
   export let data: PageData;
-  let Total: number = 0;
   let isLoading = false;
 </script>
 
@@ -26,7 +25,7 @@
       <div
         class="flex h-auto w-full items-center justify-between rounded-t-lg p-2 dark:bg-[#081c18] bg-[#ffffff] gap-2"
       >
-        <div class=" h-auto text-xl rounded-full font-bold">
+        <!-- <div class=" h-auto text-xl rounded-full font-bold">
           {#if isLoading}
             <span class="loaderPink"></span>
           {:else}
@@ -64,7 +63,7 @@
               </div>
             </div>
           {/if}
-        </div>
+        </div> -->
 
         <div class="w-auto flex gap-4">
           <button

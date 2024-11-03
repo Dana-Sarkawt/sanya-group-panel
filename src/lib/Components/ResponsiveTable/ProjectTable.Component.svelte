@@ -7,6 +7,7 @@
   import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
   import { _ } from "svelte-i18n";
   import ImageDialog from "../ImageDialog.Component.svelte";
+  import { Tooltip } from 'flowbite-svelte';
 
   let selectedImage: string = "";
   let imageDialog = false;
@@ -82,6 +83,7 @@
               <!-- svelte-ignore a11y-no-static-element-interactions -->
               <div class="flex h-auto w-auto items-center justify-center gap-2">
                 <a
+                  id="view-button-{project.id}"
                   href="/project/{project.id}/0"
                   class="bg-blue-600 hover:bg-blue-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
                 >
@@ -91,7 +93,12 @@
                     alt=""
                   />
                 </a>
+                <Tooltip triggeredBy={`#view-button-${project.id}`}>
+                  {$_("view")}
+                </Tooltip>
+
                 <a
+                  id="edit-button-{project.id}"
                   href="edit/{project.id}"
                   class="bg-green-600 hover:bg-green-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
                 >
@@ -101,9 +108,13 @@
                     alt=""
                   />
                 </a>
-                <!-- svelte-ignore a11y-missing-attribute -->
+                <Tooltip triggeredBy={`#edit-button-${project.id}`}>
+                  {$_("edit")}
+                </Tooltip>
+
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <a
+                  id="delete-button-{project.id}"
                   class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full cursor-pointer"
                   on:click={() => {
                     deleteModal = true;
@@ -116,6 +127,9 @@
                     alt=""
                   />
                 </a>
+                <Tooltip triggeredBy={`#delete-button-${project.id}`}>
+                  {$_("delete")}
+                </Tooltip>
               </div>
             </td>
           </tr>

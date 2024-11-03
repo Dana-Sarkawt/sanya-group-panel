@@ -11,7 +11,6 @@
   import { page } from "$app/stores";
   import { DarkMode } from "flowbite-svelte";
   import { Tooltip, Img } from "flowbite-svelte";
-  import { Button } from "flowbite-svelte";
   import { authStore } from "$lib/Store/Auth.Store";
   import { _, locale } from "svelte-i18n";
 

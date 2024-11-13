@@ -52,7 +52,7 @@
       <NavBrand href="/" class="">
         <span
           class="[text-shadow:_0_1px_15px_#24b97d] text-[#0e714a] dark:text-[#24b97d] self-center whitespace-nowrap text-xs sm:text-sm lg:text-xl font-semibold mr-2 sm:mr-12"
-          >Sanya Group</span
+          >Sanay Group</span
         >
       </NavBrand>
 

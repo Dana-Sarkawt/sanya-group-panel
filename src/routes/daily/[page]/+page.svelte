@@ -1,35 +1,31 @@
 <script lang="ts">
+	import DailyTable from '$lib/Components/ResponsiveTable/DailyTable.Component.svelte';
+	import { Button, Dropdown, DropdownItem } from 'flowbite-svelte';
+	let dropDownOpen = false;
+	let openSearch = false;
+	let search: string = '';
+	// let filter: Filtration<ApolloRequestModels.ApolloGet> = {
+	// 	limit: 10,
+	// 	page: 0,
+	// 	options: new ApolloRequestModels.ApolloGet()
+	// };
+</script>
 
-    import DailyTable from '$lib/Components/ResponsiveTable/DailyTable.Component.svelte';
-            import { Button, Dropdown, DropdownItem } from 'flowbite-svelte';
-            let dropDownOpen = false;
-            let openSearch = false;
-            let search: string = '';
-            // let filter: Filtration<ApolloRequestModels.ApolloGet> = {
-            // 	limit: 10,
-            // 	page: 0,
-            // 	options: new ApolloRequestModels.ApolloGet()
-            // };
-        </script>
-        
-        
-        <div class=" w-full h-auto flex justify-center items-center ">
-        
-            <div
-                class="  flex h-[100vh] w-full flex-col justify-start items-center"
-                id="subDiv"
-            >
-                <div class="flex h-24 w-full items-center justify-start pl-2 text-4xl text-[#0F4E35] dark:text-white font-bold " >
-                    Daily Table
-                </div>
-            
-                <div
-                        class="flex h-16 w-full items-center justify-between rounded-t-lg  p-2 dark:bg-[#081c18] bg-[#ffffff]"
-                >
-                    <!-- <div class="flex h-auto w-auto items-center justify-center gap-2"> -->
-                        <!-- svelte-ignore a11y_click_events_have_key_events -->
-                        <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-                        <!-- <img
+<div class=" flex h-auto w-full items-center justify-center">
+	<div class="  flex h-[100vh] w-full flex-col items-center justify-start" id="subDiv">
+		<div
+			class="flex h-24 w-full items-center justify-start pl-2 text-4xl font-bold text-[#0F4E35] dark:text-white"
+		>
+			Daily Table
+		</div>
+
+		<div
+			class="flex h-16 w-full items-center justify-between rounded-t-lg bg-[#ffffff] p-2 dark:bg-[#081c18]"
+		>
+			<!-- <div class="flex h-auto w-auto items-center justify-center gap-2"> -->
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+			<!-- <img
                             src="/images/search.png"
                             class="h-8 w-8 cursor-pointer object-contain duration-300 ease-in-out"
                             alt=""
@@ -57,30 +53,26 @@
                                 >
                         </Dropdown>
                     </div> -->
-            
-    
-                    <div class="w-auto h-12 flex justify-center items-center gap-2">
-                        
-                        <p class="h-12 w-auto flex justify-center items-center px-4 rounded-xl bg-[#D3F9E9] dark:bg-[#11433A] dark:text-white">
-                            <span class="text-[#1e4f3b] dark:text-[#54cc9c] pr-4 font-bold">Total:</span>
-                            312000</p>
-                    </div>
-    
-    
-                    <a href="/daily/add">
-                        <button
-                            class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
-                            style="box-shadow:0 1px 8px 0px #24b97d;"><span>+</span>Add Daily</button
-                        >
-                    </a>
-                </div>
-            
-            
-            <!-- <CapitalTable/> -->
 
-            <DailyTable/>
-            
-            </div>
-        </div>
-        
+			<div class="flex h-12 w-auto items-center justify-center gap-2">
+				<p
+					class="flex h-12 w-auto items-center justify-center rounded-xl bg-[#D3F9E9] px-4 dark:bg-[#11433A] dark:text-white"
+				>
+					<span class="pr-4 font-bold text-[#1e4f3b] dark:text-[#54cc9c]">Total:</span>
+					312000
+				</p>
+			</div>
 
+			<a href="/daily/add">
+				<button
+					class="h-12 rounded-lg bg-[#24b97d] px-4 text-white"
+					style="box-shadow:0 1px 8px 0px #24b97d;"><span>+</span>Add Daily</button
+				>
+			</a>
+		</div>
+
+		<!-- <CapitalTable/> -->
+
+		<DailyTable />
+	</div>
+</div>

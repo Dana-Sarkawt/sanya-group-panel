@@ -1,133 +1,117 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { roleStore } from "$lib/Store/Role.Store";
-  import { Button, Modal } from "flowbite-svelte";
-  import { Role } from "$lib/Models/Request/Role.Request.Model";
-  import { _ } from "svelte-i18n";
+	import { onMount } from 'svelte';
+	import { roleStore } from '$lib/Store/Role.Store';
+	import { Button, Modal } from 'flowbite-svelte';
+	import { Role } from '$lib/Models/Request/Role.Request.Model';
+	import { _ } from 'svelte-i18n';
 
-  let roleModal = $state(false);
-  let roleRequest: Role.Change = $state(new Role.Change());
-  onMount(async () => {
-    await roleStore.getAll();
-  });
+	let roleModal = $state(false);
+	let roleRequest: Role.Change = $state(new Role.Change());
+	onMount(async () => {
+		await roleStore.getAll();
+	});
 
-  async function changeRole(request: Role.Change) {
-    try {
-      request.id
-        ? await roleStore.update(roleRequest)
-        : await roleStore.create(roleRequest);
-      window.location.reload();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      roleModal = false;
-    }
-  }
+	async function changeRole(request: Role.Change) {
+		try {
+			request.id ? await roleStore.update(roleRequest) : await roleStore.create(roleRequest);
+			window.location.reload();
+		} catch (error) {
+			console.error(error);
+		} finally {
+			roleModal = false;
+		}
+	}
 
-  async function deleteStore(id: number) {
-    try {
-      await roleStore.delete(id);
-      window.location.reload();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      roleModal = false;
-    }
-  }
+	async function deleteStore(id: number) {
+		try {
+			await roleStore.delete(id);
+			window.location.reload();
+		} catch (error) {
+			console.error(error);
+		} finally {
+			roleModal = false;
+		}
+	}
 
-  function clearInput() {
-    roleRequest = new Role.Change();
-  }
+	function clearInput() {
+		roleRequest = new Role.Change();
+	}
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div
-  class="w-full h-auto flex flex-wrap justify-center items-start pt-12 gap-4"
->
-  <!-- svelte-ignore a11y_click_events_have_key_events -->
-  <div
-    class="w-[300px] h-[300px] rounded-lg bg-[#228c62] dark:bg-[#0F4E35] hover:bg-[#33b883] dark:hover:bg-[#1e9163] flex flex-col justify-center items-center text-white text-2xl duration-300 ease-in-out cursor-pointer"
-    onclick={() => (roleModal = true)}
-  >
-    <img src="" alt="" />
-    <p>Role</p>
-  </div>
-
-  
+<div class="flex h-auto w-full flex-wrap items-start justify-center gap-4 pt-12">
+	<!-- svelte-ignore a11y_click_events_have_key_events -->
+	<div
+		class="flex h-[300px] w-[300px] cursor-pointer flex-col items-center justify-center rounded-lg bg-[#228c62] text-2xl text-white duration-300 ease-in-out hover:bg-[#33b883] dark:bg-[#0F4E35] dark:hover:bg-[#1e9163]"
+		onclick={() => (roleModal = true)}
+	>
+		<img src="" alt="" />
+		<p>Role</p>
+	</div>
 </div>
 
 <Modal title="Create Role" bind:open={roleModal}>
-  <div class="w-full h-auto flex flex-col justify-center items-start gap-2">
-    <div class="w-full h-auto flex justify-between items-center">
-      <p class="dark:text-white">Role Name</p>
-      <button
-        class="w-20 h-12 rounded-xl bg-blue-500 hover:bg-blue-400 ease-in-out duration-300 text-white"
-        onclick={clearInput}>Reset</button
-      >
-    </div>
+	<div class="flex h-auto w-full flex-col items-start justify-center gap-2">
+		<div class="flex h-auto w-full items-center justify-between">
+			<p class="dark:text-white">Role Name</p>
+			<button
+				class="h-12 w-20 rounded-xl bg-blue-500 text-white duration-300 ease-in-out hover:bg-blue-400"
+				onclick={clearInput}>Reset</button
+			>
+		</div>
 
-    <input
-      type="text"
-      bind:value={roleRequest.name}
-      class="w-full h-12 border-0 rounded-xl bg-[#f1f1f1] dark:bg-[#123d3745]"
-    />
-  </div>
+		<input
+			type="text"
+			bind:value={roleRequest.name}
+			class="h-12 w-full rounded-xl border-0 bg-[#f1f1f1] dark:bg-[#123d3745]"
+		/>
+	</div>
 
-  <div
-    class="w-full h-[200px] overflow-y-auto bg-[#f1f1f1] dark:bg-[#123d3745] p-4 rounded-xl flex flex-col justify-start items-center gap-2"
-  >
-    {#if $roleStore.data}
-      <!-- svelte-ignore a11y_click_events_have_key_events -->
-      <!-- svelte-ignore a11y_no_static_element_interactions -->
-      {#each $roleStore.data as role}
-        <!-- svelte-ignore a11y_click_events_have_key_events -->
-        <div
-          class="w-full h-12 flex justify-between items-center px-4 text-black dark:text-white bg-white dark:bg-[#2e3e53] p-8 rounded-xl"
-        >
-          <p>{role.name}</p>
+	<div
+		class="flex h-[200px] w-full flex-col items-center justify-start gap-2 overflow-y-auto rounded-xl bg-[#f1f1f1] p-4 dark:bg-[#123d3745]"
+	>
+		{#if $roleStore.data}
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<!-- svelte-ignore a11y_no_static_element_interactions -->
+			{#each $roleStore.data as role}
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
+				<div
+					class="flex h-12 w-full items-center justify-between rounded-xl bg-white p-8 px-4 text-black dark:bg-[#2e3e53] dark:text-white"
+				>
+					<p>{role.name}</p>
 
-          <!-- svelte-ignore a11y_click_events_have_key_events -->
-          <!-- svelte-ignore a11y_no_static_element_interactions -->
-          <div class="w-auto flex gap-2">
-            <div
-              class="w-12 h-12 flex justify-center items-center gap-2 rounded-xl bg-[#167b53] hover:bg-[#209d6b] duration-300 ease-in-out cursor-pointer"
-              onclick={() => {
-                roleRequest = role;
-              }}
-            >
-              <img
-                src="/images/edit.png"
-                class="w-6 h-6 object-contain"
-                alt=""
-              />
-            </div>
+					<!-- svelte-ignore a11y_click_events_have_key_events -->
+					<!-- svelte-ignore a11y_no_static_element_interactions -->
+					<div class="flex w-auto gap-2">
+						<div
+							class="flex h-12 w-12 cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#167b53] duration-300 ease-in-out hover:bg-[#209d6b]"
+							onclick={() => {
+								roleRequest = role;
+							}}
+						>
+							<img src="/images/edit.png" class="h-6 w-6 object-contain" alt="" />
+						</div>
 
-            <!-- svelte-ignore a11y_click_events_have_key_events -->
-            <div
-              class="w-12 h-12 flex justify-center items-center gap-2 rounded-xl bg-[#c53232] hover:bg-[#e03f3f] duration-300 ease-in-out cursor-pointer"
-              onclick={() => deleteStore(role.id)}
-            >
-              <img
-                src="/images/delete.png"
-                class="w-6 h-6 object-contain"
-                alt=""
-              />
-            </div>
-          </div>
-        </div>
-      {/each}
-    {/if}
-  </div>
+						<!-- svelte-ignore a11y_click_events_have_key_events -->
+						<div
+							class="flex h-12 w-12 cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#c53232] duration-300 ease-in-out hover:bg-[#e03f3f]"
+							onclick={() => deleteStore(role.id)}
+						>
+							<img src="/images/delete.png" class="h-6 w-6 object-contain" alt="" />
+						</div>
+					</div>
+				</div>
+			{/each}
+		{/if}
+	</div>
 
-  {#snippet footer()}
-  
-      <Button
-        class="w-full h-12 bg-green-500 dark:bg-green-500 hover:bg-green-400 dark:hover:bg-green-400 rounded-xl duration-300 ease-in-out"
-        on:click={() => changeRole(roleRequest)}
-      >
-        {$_("submit")}
-      </Button>
-    
-  {/snippet}
+	{#snippet footer()}
+		<Button
+			class="h-12 w-full rounded-xl bg-green-500 duration-300 ease-in-out hover:bg-green-400 dark:bg-green-500 dark:hover:bg-green-400"
+			on:click={() => changeRole(roleRequest)}
+		>
+			{$_('submit')}
+		</Button>
+	{/snippet}
 </Modal>

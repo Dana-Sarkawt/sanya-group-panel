@@ -1,8 +1,8 @@
-import { roleStore } from "$lib/Store/Role.Store";
+import { roleStore } from '$lib/Store/Role.Store';
 
 export async function load() {
-  const roles = await roleStore.getAll();
-  return {
-    roles,
-  };
+	const roles = await roleStore.getAll();
+	return {
+		roles
+	};
 }

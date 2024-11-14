@@ -14,12 +14,16 @@
   import { userStore } from "$lib/Store/User.Store";
   import { _ } from "svelte-i18n";
 
-  export let users: Store<Database["public"]["Tables"]["Users"]["Row"]> = {
+  interface Props {
+    users?: Store<Database["public"]["Tables"]["Users"]["Row"]>;
+  }
+
+  let { users = {
     data: [],
     count: 0,
-  };
+  } }: Props = $props();
 
-  let deleteModal = false;
+  let deleteModal = $state(false);
 </script>
 
 <div class="w-full h-auto bg-[#ffffff] dark:bg-[#081c18] p-4 rounded-b-xl">
@@ -53,7 +57,7 @@
                 <a
                   href="edit/1"
                   class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full"
-                  on:click={() => (deleteModal = true)}
+                  onclick={() => (deleteModal = true)}
                 >
                   <img
                     src="/images/delete.png"

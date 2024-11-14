@@ -7,21 +7,23 @@
   import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
   import { _ } from "svelte-i18n";
   import ImageDialog from "../ImageDialog.Component.svelte";
-  import { Tooltip } from 'flowbite-svelte';
+  import { Tooltip } from "flowbite-svelte";
 
-  let selectedImage: string = "";
-  let imageDialog = false;
+  let selectedImage: string = $state("");
+  let imageDialog = $state(false);
 
-  export let projects: Store<Database["public"]["Tables"]["Projects"]["Row"]> =
-    {
+  interface Props {
+    projects?: Store<Database["public"]["Tables"]["Projects"]["Row"]>;
+  }
+
+  let {
+    projects = $bindable({
       data: [],
       count: 0,
-    };
-  let deleteId: number = 0;
-
-  let deleteModal = false;
-  let revenueModal = false;
-  let project_id = 0;
+    }),
+  }: Props = $props();
+  let deleteId: number = $state(0);
+  let deleteModal = $state(false);
 </script>
 
 <div class="w-full h-auto flex justify-center items-center mx-2">
@@ -41,15 +43,15 @@
           <tr>
             <td class="flex justify-center">
               <div class="relative group">
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
+                <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
                 <img
                   src={project.image
                     ? `${VITE_SUPABASE_BUCKET_SANYA}${project.image}`
                     : "/images/spark.png"}
                   class="w-10 h-10 object-contain rounded-lg transition-all duration-300 group-hover:scale-150 group-hover:z-10 cursor-pointer"
                   alt={project.image}
-                  on:click={() => {
+                  onclick={() => {
                     selectedImage = project.image
                       ? `${VITE_SUPABASE_BUCKET_SANYA}${project.image}`
                       : "/images/spark.png";
@@ -80,7 +82,7 @@
               </div>
             </td>
             <td>
-              <!-- svelte-ignore a11y-no-static-element-interactions -->
+              <!-- svelte-ignore a11y_no_static_element_interactions -->
               <div class="flex h-auto w-auto items-center justify-center gap-2">
                 <a
                   id="view-button-{project.id}"
@@ -112,11 +114,11 @@
                   {$_("edit")}
                 </Tooltip>
 
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
                 <a
                   id="delete-button-{project.id}"
                   class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full cursor-pointer"
-                  on:click={() => {
+                  onclick={() => {
                     deleteModal = true;
                     deleteId = project.id;
                   }}

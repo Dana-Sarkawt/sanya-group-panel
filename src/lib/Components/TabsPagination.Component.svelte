@@ -1,17 +1,28 @@
 <script lang="ts">
+  import { run } from "svelte/legacy";
+
   import { Pagination, type LinkType } from "flowbite-svelte";
   import { onMount } from "svelte";
   import { _ } from "svelte-i18n";
 
-  export let filter = {
-    page: 0,
-    limit: 10,
-  };
-  export let StoreData: any;
-  export let Store: any;
-  let currentPage: number = 0;
-  let pageCount: LinkType[] = [];
-  export let isTableLoading = false;
+  let currentPage: number = $state(0);
+  let pageCount: LinkType[] = $state([]);
+  interface Props {
+    filter?: any;
+    StoreData: any;
+    Store: any;
+    isTableLoading?: boolean;
+  }
+
+  let {
+    filter = $bindable({
+      page: 0,
+      limit: 10,
+    }),
+    StoreData,
+    Store,
+    isTableLoading = $bindable(false),
+  }: Props = $props();
 
   onMount(() => {
     debouncedFetchData();
@@ -59,7 +70,7 @@
     fetchData();
   };
 
-  const next = async () => {
+  const nextAction = async () => {
     if (currentPage == StoreData.pages! - 1) {
       return;
     }
@@ -77,11 +88,6 @@
     debouncedFetchData();
   };
 
-  $: if (currentPage) {
-    filter.page = currentPage;
-    debouncedFetchData();
-  }
-
   function debounce(func: any, wait: number) {
     let timeout: any;
     return (...args: any[]) => {
@@ -91,6 +97,12 @@
   }
 
   const debouncedFetchData = debounce(fetchData, 10);
+  run(() => {
+    if (currentPage) {
+      filter.page = currentPage;
+      debouncedFetchData();
+    }
+  });
 </script>
 
 {#if StoreData && (StoreData.pages ?? 0) > 1}
@@ -101,18 +113,21 @@
     pages={pageCount}
     large
     on:previous={previous}
-    on:next={next}
+    on:next={nextAction}
     on:click={(event) => {
       setPage(event);
     }}
   >
-    <svelte:fragment slot="prev">
-      <span class="sr-only">{$_("previous")}</span>
-      <p>{$_("previous")}</p>
-    </svelte:fragment>
-    <svelte:fragment slot="next">
-      <span class="sr-only">{$_("next")}</span>
-      <p>{$_("next")}</p>
-    </svelte:fragment>
+    {@render prev()}
+    {@render next()}
   </Pagination>
 {/if}
+
+{#snippet prev()}
+  <span class="sr-only">{$_("previous")}</span>
+  <p>{$_("previous")}</p>
+{/snippet}
+{#snippet next()}
+  <span class="sr-only">{$_("next")}</span>
+  <p>{$_("next")}</p>
+{/snippet}

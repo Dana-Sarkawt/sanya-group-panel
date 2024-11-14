@@ -12,9 +12,9 @@
   import { goto } from "$app/navigation";
   import { formatNumber } from "$lib/Utils/ConvertNumbers.Utils";
   import { _ } from "svelte-i18n";
-  let totalCapital = 0;
-  let isLoading = false;
-  let sales: Overhaul = new Overhaul();
+  let totalCapital = $state(0);
+  let isLoading = $state(false);
+  let sales: Overhaul = $state(new Overhaul());
   onMount(async () => {
     isLoading = true;
     try {
@@ -85,24 +85,26 @@
       inactiveClasses="w-60 h-28 bg-[#c6257080] rounded-2xl  text-white  "
       on:click={retrieveCapital}
     >
-      <div
-        slot="title"
-        class="w-full h-full flex flex-col justify-center gap-2"
-      >
-        <img
-          src="/images/capital.png"
-          class="w-6 h-6 object-contain absolute mb-16 ml-3"
-          alt=""
-        />
-        <div class=" h-auto text-xl rounded-full font-bold mt-4">
-          {#if isLoading}
-            <span class="loaderPink"></span>
-          {:else}
-            {formatNumber(totalCapital)}
-          {/if}
+      {#snippet title()}
+            <div
+          
+          class="w-full h-full flex flex-col justify-center gap-2"
+        >
+          <img
+            src="/images/capital.png"
+            class="w-6 h-6 object-contain absolute mb-16 ml-3"
+            alt=""
+          />
+          <div class=" h-auto text-xl rounded-full font-bold mt-4">
+            {#if isLoading}
+              <span class="loaderPink"></span>
+            {:else}
+              {formatNumber(totalCapital)}
+            {/if}
+          </div>
+          <p class="h-auto w-full">{$_("capital")}</p>
         </div>
-        <p class="h-auto w-full">{$_("capital")}</p>
-      </div>
+          {/snippet}
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"
         id="subDiv"
@@ -133,7 +135,7 @@
             <button
               class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 text-[8px] md:text-lg duration-300 ease-in-out"
               style="box-shadow:0 1px 8px 0px #24b97d;"
-              on:click={async () => {
+              onclick={async () => {
                 const datas = await capitalStore.getAllWithoutFilter(
                   Number($page.params.projectId)
                 );
@@ -176,40 +178,42 @@
       inactiveClasses="w-60 h-28 bg-[#21ACD659] rounded-2xl text-white "
       on:click={retrieveSales}
     >
-      <div
-        slot="title"
-        class="w-full h-full flex flex-col justify-end pb-3 gap-2"
-      >
-        <img
-          src="/images/sale.png"
-          class="w-6 h-6 object-contain absolute mb-16 ml-3"
-          alt=""
-        />
-        <p class="h-auto w-full text-xl font-bold">{$_("sales")}</p>
+      {#snippet title()}
+            <div
+          
+          class="w-full h-full flex flex-col justify-end pb-3 gap-2"
+        >
+          <img
+            src="/images/sale.png"
+            class="w-6 h-6 object-contain absolute mb-16 ml-3"
+            alt=""
+          />
+          <p class="h-auto w-full text-xl font-bold">{$_("sales")}</p>
 
-        <div class="w-full h-auto flex justify-center items-center gap-2">
-          <div
-            class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
-          >
-            <span class="text-gray-400 text-xs">{$_("deposit:")} </span>
-            {#if isLoading}
-              <span class="loader2"></span>
-            {:else}
-              {formatNumber(sales?.deposits?.overall_total_price ?? 0)}
-            {/if}
-          </div>
-          <div
-            class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
-          >
-            <span class="text-gray-400 text-xs">{$_("financial:")} </span>
-            {#if isLoading}
-              <span class="loader2"></span>
-            {:else}
-              {formatNumber(sales?.financials?.overall_total_price ?? 0)}
-            {/if}
+          <div class="w-full h-auto flex justify-center items-center gap-2">
+            <div
+              class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
+            >
+              <span class="text-gray-400 text-xs">{$_("deposit:")} </span>
+              {#if isLoading}
+                <span class="loader2"></span>
+              {:else}
+                {formatNumber(sales?.deposits?.overall_total_price ?? 0)}
+              {/if}
+            </div>
+            <div
+              class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
+            >
+              <span class="text-gray-400 text-xs">{$_("financial:")} </span>
+              {#if isLoading}
+                <span class="loader2"></span>
+              {:else}
+                {formatNumber(sales?.financials?.overall_total_price ?? 0)}
+              {/if}
+            </div>
           </div>
         </div>
-      </div>
+          {/snippet}
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"
         id="subDiv"
@@ -242,7 +246,7 @@
           <button
             class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 text-[8px] md:text-lg duration-300 ease-in-out"
             style="box-shadow:0 1px 8px 0px #24b97d;"
-            on:click={async () => {
+            onclick={async () => {
               const datas = await saleStore.getAllWithoutFilter(
                 Number($page.params.projectId)
               );
@@ -284,17 +288,19 @@
       inactiveClasses="w-60 h-28 bg-[#886DFF4d] rounded-2xl text-white "
       on:click={() => goto(`/project/${$page.params.projectId}/expense/0`)}
     >
-      <div
-        slot="title"
-        class="w-full h-full flex flex-col justify-center gap-2"
-      >
-        <img
-          src="/images/increase.png"
-          class="w-6 h-6 object-contain absolute mb-16 ml-3"
-          alt=""
-        />
-        <p class="h-auto w-full text-xl font-bold">{$_("expense")}</p>
-      </div>
+      {#snippet title()}
+            <div
+          
+          class="w-full h-full flex flex-col justify-center gap-2"
+        >
+          <img
+            src="/images/increase.png"
+            class="w-6 h-6 object-contain absolute mb-16 ml-3"
+            alt=""
+          />
+          <p class="h-auto w-full text-xl font-bold">{$_("expense")}</p>
+        </div>
+          {/snippet}
     </TabItem>
   </Tabs>
 </div>

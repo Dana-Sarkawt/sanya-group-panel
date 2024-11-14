@@ -11,12 +11,12 @@
   import { _ } from "svelte-i18n";
   import { Spinner } from "flowbite-svelte";
 
-  const capitalRequest = {
+  const capitalRequest = $state({
     ...new Capital.Create(),
     project_id: Number($page.params.projectId),
-  };
+  });
   const image = new ImageCommon();
-  let isLoading = false;
+  let isLoading = $state(false);
 
   async function addCapital(request: Capital.Create) {
     if (isLoading) return;
@@ -68,7 +68,7 @@
       <textarea
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
         bind:value={capitalRequest.description}
-      />
+></textarea>
     </div>
 
     <div class="w-full h-auto flex flex-col justify-center items-start">
@@ -77,7 +77,7 @@
         type="text"
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
         bind:value={capitalRequest.price}
-        on:input={FilterTextFieldToNumbers}
+        oninput={FilterTextFieldToNumbers}
       />
     </div>
 
@@ -93,7 +93,7 @@
     {#if !isLoading}
       <button
         class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-        on:click={() => addCapital(capitalRequest)}
+        onclick={() => addCapital(capitalRequest)}
     >
       {$_("add-capital")}
       </button>

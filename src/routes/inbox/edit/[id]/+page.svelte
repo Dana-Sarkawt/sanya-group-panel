@@ -6,7 +6,7 @@
   import { page } from "$app/stores";
   import { onMount } from "svelte";
 
-  const inboxRequest = new Inbox.Update();
+  const inboxRequest = $state(new Inbox.Update());
   const id = Number($page.params.id);
 
   onMount(async () => {
@@ -71,12 +71,12 @@
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
         rows="4"
         bind:value={inboxRequest.description}
-      />
+></textarea>
     </div>
 
     <button
       class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={async () => updateInbox(inboxRequest)}
+      onclick={async () => updateInbox(inboxRequest)}
     >
       {$_("update-inbox")}
     </button>

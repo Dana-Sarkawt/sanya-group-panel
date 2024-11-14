@@ -7,17 +7,23 @@
   import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
   import { _ } from "svelte-i18n";
   import ImageDialog from "../ImageDialog.Component.svelte";
-  export let capitals: Store<Database["public"]["Tables"]["Capitals"]["Row"]> =
-    {
+  interface Props {
+    capitals?: Store<Database["public"]["Tables"]["Capitals"]["Row"]>;
+  }
+
+  let {
+    capitals = $bindable({
       data: [],
       count: 0,
-    };
+      error: "",
+    }),
+  }: Props = $props();
 
-  let selectedImage: string = "";
-  let imageDialog = false;
+  let selectedImage: string = $state("");
+  let imageDialog = $state(false);
 
-  let deleteModal = false;
-  let deleteId: number = 0;
+  let deleteModal = $state(false);
+  let deleteId: number = $state(0);
 </script>
 
 <div class="w-full h-auto flex justify-center items-center mx-2">
@@ -37,15 +43,15 @@
           <tr>
             <td class="flex justify-center">
               <div class="relative group">
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
+                <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
                 <img
                   src={capital.image
                     ? `${VITE_SUPABASE_BUCKET_SANYA}${capital.image}`
                     : "/images/spark.png"}
                   class="w-10 h-10 object-contain rounded-lg transition-all duration-300 group-hover:scale-150 group-hover:z-10 cursor-pointer"
                   alt={capital.image}
-                  on:click={() => {
+                  onclick={() => {
                     selectedImage = capital.image
                       ? `${VITE_SUPABASE_BUCKET_SANYA}${capital.image}`
                       : "/images/spark.png";
@@ -59,9 +65,9 @@
             <td>{capital.date}</td>
 
             <td>
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
-              <!-- svelte-ignore a11y-no-static-element-interactions -->
-              <!-- svelte-ignore a11y-missing-attribute -->
+              <!-- svelte-ignore a11y_click_events_have_key_events -->
+              <!-- svelte-ignore a11y_no_static_element_interactions -->
+              <!-- svelte-ignore a11y_missing_attribute -->
               <div class="flex h-auto w-auto items-center justify-center gap-2">
                 <a
                   href="/project/{$page.params
@@ -74,10 +80,10 @@
                     alt=""
                   />
                 </a>
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
                 <a
                   class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-                  on:click={() => {
+                  onclick={() => {
                     deleteModal = true;
                     deleteId = capital.id;
                   }}

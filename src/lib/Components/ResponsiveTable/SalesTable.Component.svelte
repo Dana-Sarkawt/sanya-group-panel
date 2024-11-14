@@ -10,26 +10,33 @@
   import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
   import { _ } from "svelte-i18n";
   import ImageDialog from "../ImageDialog.Component.svelte";
-  let deleteModal = false;
-  let depositLoading = false;
-  let financialLoading = false;
-  export let sales: Store<Database["public"]["Tables"]["Sales"]["Row"]> = {
-    data: [],
-    count: 0,
-  };
+  let deleteModal = $state(false);
+  let depositLoading = $state(false);
+  let financialLoading = $state(false);
+  interface Props {
+    sales?: Store<Database["public"]["Tables"]["Sales"]["Row"]>;
+  }
+
+  let {
+    sales = $bindable({
+      data: [],
+      count: 0,
+      error: "",
+    }),
+  }: Props = $props();
   let deposits: Array<{
     sale_id: number;
     deposit_count: number;
     total_price: number;
-  }> = [];
+  }> = $state([]);
   let financial: Array<{
     sale_id: number;
     financial_count: number;
     total_price: number;
-  }> = [];
-  let deleteId: number = 0;
-  let selectedImage: string = "";
-  let imageDialog = false;
+  }> = $state([]);
+  let deleteId: number = $state(0);
+  let selectedImage: string = $state("");
+  let imageDialog = $state(false);
 
   onMount(async () => {
     depositLoading = true;
@@ -81,15 +88,15 @@
           <tr>
             <td class="flex justify-center items-center h-28">
               <div class="relative group">
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
+                <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
                 <img
                   src={sale.image
                     ? `${VITE_SUPABASE_BUCKET_SANYA}${sale.image}`
                     : "/images/spark.png"}
                   class="w-10 h-10 object-contain rounded-lg transition-all duration-300 group-hover:scale-150 group-hover:z-10 cursor-pointer"
                   alt={sale.image}
-                  on:click={() => {
+                  onclick={() => {
                     selectedImage = sale.image
                       ? `${VITE_SUPABASE_BUCKET_SANYA}${sale.image}`
                       : "/images/spark.png";
@@ -100,13 +107,13 @@
             </td>
             <td>{sale.description}</td>
             <td>
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
-              <!-- svelte-ignore a11y-no-static-element-interactions -->
+              <!-- svelte-ignore a11y_click_events_have_key_events -->
+              <!-- svelte-ignore a11y_no_static_element_interactions -->
               <div class="w-full h-auto flex justify-center items-center gap-2">
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
                 <div
                   class="w-42 h-auto flex flex-col justify-center items-center bg-orange-500 rounded-lg px-4 font-bold text-white cursor-pointer p-2 gap-3"
-                  on:click={() => goto(`/deposit/sale/${sale.id}`)}
+                  onclick={() => goto(`/deposit/sale/${sale.id}`)}
                 >
                   <div
                     class="w-auto h-auto flex justify-center items-center gap-2"
@@ -142,7 +149,7 @@
 
                 <div
                   class="w-42 h-auto flex flex-col justify-center items-center bg-blue-400 rounded-lg px-4 font-bold text-white cursor-pointer p-2 gap-3"
-                  on:click={() => goto(`/finance/sale/${sale.id}`)}
+                  onclick={() => goto(`/finance/sale/${sale.id}`)}
                 >
                   <div
                     class="w-auto h-auto flex justify-center items-center gap-2"
@@ -190,12 +197,12 @@
                     alt=""
                   />
                 </a>
-                <!-- svelte-ignore a11y-missing-attribute -->
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <!-- svelte-ignore a11y_missing_attribute -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
+                <!-- svelte-ignore a11y_no_static_element_interactions -->
                 <a
                   class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-                  on:click={() => {
+                  onclick={() => {
                     deleteModal = true;
                     deleteId = sale.id;
                   }}

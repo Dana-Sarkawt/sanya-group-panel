@@ -9,12 +9,12 @@
   import { _ } from "svelte-i18n";
   import { Spinner } from "flowbite-svelte";
 
-  let workerRequest = {
+  let workerRequest = $state({
     ...new Worker.Update(),
     project_id: Number($page.params.projectId),
-  };
+  });
   const image = new ImageCommon();
-  let isLoading = false;
+  let isLoading = $state(false);
   onMount(async () => {
     const worker = await workerStore.get(Number($page.params.id));
     if (!worker) {
@@ -84,7 +84,7 @@
     {#if !isLoading}
       <button
         class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-        on:click={() => UpdateWorker(workerRequest)}
+        onclick={() => UpdateWorker(workerRequest)}
     >
         {$_("update-worker")}
       </button>

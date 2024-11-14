@@ -5,7 +5,7 @@
   import { _ } from "svelte-i18n";
   import { toastStore } from "$lib/Store/Toast.Store";
 
-  const inboxRequest = new Inbox.Create();
+  const inboxRequest = $state(new Inbox.Create());
 
   async function addInbox(request: Inbox.Create) {
     try {
@@ -56,12 +56,12 @@
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
         rows="4"
         bind:value={inboxRequest.description}
-      />
+></textarea>
     </div>
 
     <button
       class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={async () => addInbox(inboxRequest)}
+      onclick={async () => addInbox(inboxRequest)}
     >
       {$_("add-inbox")}
     </button>

@@ -5,7 +5,7 @@
   import { authStore } from "$lib/Store/Auth.Store";
   import { _ } from "svelte-i18n";
 
-  const loginRequest = new Authentication.Login();
+  const loginRequest = $state(new Authentication.Login());
 
   onMount(async () => {
     await checkAuth();
@@ -34,7 +34,7 @@
 </script>
 
 <p class="w-full h-auto text-4xl dark:text-white text-center my-12 font-bold">
-  Sanya Group
+  Sanay Group
 </p>
 
 <div class="w-full h-auto flex justify-center items-center">
@@ -71,7 +71,7 @@
 
     <button
       class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={() => login(loginRequest)}
+      onclick={() => login(loginRequest)}
     >
       {$_("login")}
     </button>

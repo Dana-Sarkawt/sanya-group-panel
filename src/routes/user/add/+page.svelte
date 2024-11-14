@@ -11,9 +11,13 @@
   import { Spinner } from 'flowbite-svelte';
   import { toastStore } from "$lib/Store/Toast.Store";
 
-  export let data: PageData;
-  const userRequest = new User.Create();
-  let isLoading = false;
+  interface Props {
+    data: PageData;
+  }
+
+  let { data }: Props = $props();
+  const userRequest = $state(new User.Create());
+  let isLoading = $state(false);
 
   async function addUser(request: User.Create) {
     if (isLoading) return;
@@ -102,7 +106,7 @@
               : 'focus:ring-red-500'
             : 'focus:ring-0'}"
           bind:value={userRequest.phone}
-          on:input={phoneField}
+          oninput={phoneField}
         />
 
         <div class="w-auto h-auto flex justify-center items-center px-2">
@@ -176,7 +180,7 @@
 
     <button
       class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center"
-      on:click={() => addUser(userRequest)}
+      onclick={() => addUser(userRequest)}
       disabled={isLoading}
     >
       {#if isLoading}

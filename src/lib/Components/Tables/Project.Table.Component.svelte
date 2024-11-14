@@ -13,13 +13,16 @@
   import { projectStore } from "$lib/Store/Project.Store";
   import { _ } from "svelte-i18n";
 
-  export let projects: Store<Database["public"]["Tables"]["Projects"]["Row"]> =
-    {
+  interface Props {
+    projects?: Store<Database["public"]["Tables"]["Projects"]["Row"]>;
+  }
+
+  let { projects = {
       data: [],
       count: 0,
-    };
+    } }: Props = $props();
 
-  let deleteModal = false;
+  let deleteModal = $state(false);
 </script>
 
 <div class="w-full h-auto bg-[#ffffff] dark:bg-[#081c18] p-4 rounded-b-xl">
@@ -38,9 +41,9 @@
             <TableBodyCell>{project.name}</TableBodyCell>
             <TableBodyCell>{project.status}</TableBodyCell>
             <TableBodyCell>
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
-              <!-- svelte-ignore a11y-no-static-element-interactions -->
-              <!-- svelte-ignore a11y-missing-attribute -->
+              <!-- svelte-ignore a11y_click_events_have_key_events -->
+              <!-- svelte-ignore a11y_no_static_element_interactions -->
+              <!-- svelte-ignore a11y_missing_attribute -->
               <div class="flex h-auto w-auto items-center justify-center gap-2">
                 <a
                   href="edit/1"
@@ -53,11 +56,11 @@
                   />
                 </a>
 
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
+                <!-- svelte-ignore a11y_no_static_element_interactions -->
                 <a
                   class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full"
-                  on:click={() => (deleteModal = true)}
+                  onclick={() => (deleteModal = true)}
                 >
                   <img
                     src="/images/delete.png"

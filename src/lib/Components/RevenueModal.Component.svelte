@@ -13,17 +13,20 @@
   } from "flowbite-svelte";
   import { onMount } from "svelte";
   import { _ } from "svelte-i18n";
-  export let revenueModal: boolean = false;
-  
-   onMount(async () => {
+  interface Props {
+    revenueModal?: boolean;
+  }
+
+  let { revenueModal = $bindable(false) }: Props = $props();
+
+  onMount(async () => {
     await incomeStore.getAll();
     await outcomeStore.getAll();
-   });
-  </script>
-  
-  <Modal size="xl" title="Revenue Modal" bind:open={revenueModal}>
-   
-    <Tabs
+  });
+</script>
+
+<Modal size="xl" title="Revenue Modal" bind:open={revenueModal}>
+  <Tabs
     defaultClass="flex flex-wrap space-x-2 rtl:space-x-reverse w-full flex justify-center items-center bg-transparent"
     style="backdrop-blur:blur(10px);"
     id="modalHeader"
@@ -31,27 +34,27 @@
     contentClass="p-4 bg-gray-50 rounded-lg bg-transparent mt-4"
     activeClasses="p-4 rounded-full bg-green-600 text-white"
     inactiveClasses="p-4 dark:text-white text-black  rounded-full hover:text-white "
-    >
-        <TabItem open title="Income">
-          <div class="w-full h-auto bg-[#ffffff] dark:bg-[#081c18] rounded-b-xl">
-            <Table striped={true}>
-              <TableHead theadClass="bg-white dark:bg-[#212121] text-center">
-                <TableHeadCell>{$_("income-date")}</TableHeadCell>
-                <TableHeadCell>{$_("price")}</TableHeadCell>
-              </TableHead>
-              <TableBody tableBodyClass="divide-y text-center">
-                {#if $incomeStore.data.length > 0}
-                  {#each $incomeStore.data as income}
-                    <TableBodyRow>
-                      <TableBodyCell>{income.date}</TableBodyCell>
-                      <TableBodyCell>{income.overall_price}</TableBodyCell>
-                    </TableBodyRow>
-                  {/each}
-                {/if}
-              </TableBody>
-            </Table>
-          </div>
-        </TabItem>
+  >
+    <TabItem open title="Income">
+      <div class="w-full h-auto bg-[#ffffff] dark:bg-[#081c18] rounded-b-xl">
+        <Table striped={true}>
+          <TableHead theadClass="bg-white dark:bg-[#212121] text-center">
+            <TableHeadCell>{$_("income-date")}</TableHeadCell>
+            <TableHeadCell>{$_("price")}</TableHeadCell>
+          </TableHead>
+          <TableBody tableBodyClass="divide-y text-center">
+            {#if $incomeStore.data.length > 0}
+              {#each $incomeStore.data as income}
+                <TableBodyRow>
+                  <TableBodyCell>{income.date}</TableBodyCell>
+                  <TableBodyCell>{income.overall_price}</TableBodyCell>
+                </TableBodyRow>
+              {/each}
+            {/if}
+          </TableBody>
+        </Table>
+      </div>
+    </TabItem>
 
     <TabItem title="Outcome">
       <div class="w-full h-auto bg-[#ffffff] dark:bg-[#081c18] rounded-b-xl">
@@ -74,9 +77,11 @@
       </div>
     </TabItem>
   </Tabs>
+  {@render footer()}
+</Modal>
 
-  <svelte:fragment slot="footer">
-    <!-- <Button
+{#snippet footer()}
+  <!-- <Button
         class="w-full h-12 bg-red-500 dark:bg-red-500 hover:bg-red-400 dark:hover:bg-red-400 rounded-xl duration-300 ease-in-out"
         >No</Button
       >
@@ -84,5 +89,4 @@
         class="w-full h-12 bg-green-500 dark:bg-green-500 hover:bg-green-400 dark:hover:bg-green-400 rounded-xl duration-300 ease-in-out"
        >Yes</Button
       > -->
-  </svelte:fragment>
-</Modal>
+{/snippet}

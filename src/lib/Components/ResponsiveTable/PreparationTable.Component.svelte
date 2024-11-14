@@ -10,18 +10,22 @@
   import { VITE_SUPABASE_BUCKET_SANYA } from "$env/static/public";
   import { _ } from "svelte-i18n";
   import ImageDialog from "../ImageDialog.Component.svelte";
-  let deleteModal = false;
+  let deleteModal = $state(false);
   let depositLoading = false;
   let financialLoading = false;
-  export let preparations: Store<
-    Database["public"]["Tables"]["Preparations"]["Row"]
-  > = {
-    data: [],
-    count: 0,
-    error: "",
-  };
-  let selectedImage: string = "";
-  let imageDialog = false;
+  interface Props {
+    preparations?: Store<Database["public"]["Tables"]["Preparations"]["Row"]>;
+  }
+
+  let {
+    preparations = $bindable({
+      data: [],
+      count: 0,
+      error: "",
+    }),
+  }: Props = $props();
+  let selectedImage: string = $state("");
+  let imageDialog = $state(false);
 
   let deposits: Array<{
     preparation_id: number;
@@ -33,7 +37,7 @@
     financial_count: number;
     total_price: number;
   }> = [];
-  let deleteId: number = 0;
+  let deleteId: number = $state(0);
   onMount(async () => {
     depositLoading = true;
     financialLoading = true;
@@ -85,15 +89,15 @@
           <tr>
             <td class="flex justify-center h-28 items-center">
               <div class="relative group">
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
+                <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
                 <img
                   src={preparation.image
                     ? `${VITE_SUPABASE_BUCKET_SANYA}${preparation.image}`
                     : "/images/spark.png"}
                   class="w-10 h-10 object-contain rounded-lg transition-all duration-300 group-hover:scale-150 group-hover:z-10 cursor-pointer"
                   alt={preparation.image}
-                  on:click={() => {
+                  onclick={() => {
                     selectedImage = preparation.image
                       ? `${VITE_SUPABASE_BUCKET_SANYA}${preparation.image}`
                       : "/images/spark.png";
@@ -117,12 +121,12 @@
                     alt=""
                   />
                 </a>
-                <!-- svelte-ignore a11y-missing-attribute -->
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <!-- svelte-ignore a11y_missing_attribute -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
+                <!-- svelte-ignore a11y_no_static_element_interactions -->
                 <a
                   class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-                  on:click={() => {
+                  onclick={() => {
                     deleteModal = true;
                     deleteId = preparation.id;
                   }}

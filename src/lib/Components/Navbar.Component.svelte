@@ -14,15 +14,17 @@
   import { authStore } from "$lib/Store/Auth.Store";
   import { _, locale } from "svelte-i18n";
 
-  $: activeUrl = $page.url.pathname;
+  let activeUrl = $derived($page.url.pathname);
   let activeClass =
     "text-white bg-green-700 md:bg-transparent md:text-green-700 md:dark:text-green-300 dark:bg-green-600 md:dark:bg-transparent duration-300 ease-in-out";
   let nonActiveClass =
     "text-white hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 dark:text-white md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent duration-300 ease-in-out";
 
-  // Add these classes for responsive text
+  interface Props {
+    isLoading: boolean;
+  }
 
-  export let isLoading;
+  let { isLoading = $bindable(false) }: Props = $props();
 
   function toggleNavBar() {
     document.querySelector(".navbarContainer")?.setAttribute("hidden", "true");
@@ -236,19 +238,8 @@
           class="text-lg"
           btnClass="text-gray-500 dark:text-gray-400 rounded-lg text-sm p-2.5"
         >
-          <img
-            src="/images/sun.png"
-            slot="lightIcon"
-            class="w-4 sm:w-6 md:w-8 object-cover"
-            alt=""
-          />
-
-          <img
-            src="/images/moon.png"
-            slot="darkIcon"
-            class="w-4 sm:w-6 md:w-8 object-cover"
-            alt=""
-          />
+          {@render lightIcon()}
+          {@render darkIcon()}
         </DarkMode>
         <button class="uppercase w-fit"
           ><Img
@@ -296,3 +287,11 @@
     >{$authStore?.name}</Tooltip
   >
 </div>
+
+{#snippet lightIcon()}
+  <img src="/images/sun.png" class="w-4 sm:w-6 md:w-8 object-cover" alt="" />
+{/snippet}
+
+{#snippet darkIcon()}
+  <img src="/images/moon.png" class="w-4 sm:w-6 md:w-8 object-cover" alt="" />
+{/snippet}

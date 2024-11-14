@@ -10,7 +10,7 @@
 
     import DeleteModal from '$lib/Components/DeleteModal.Component.svelte';
 
-    let deleteModal = false;
+    let deleteModal = $state(false);
 	
 </script>
 
@@ -31,9 +31,9 @@
                         <TableBodyCell>22/01/2024</TableBodyCell>
     
                         <TableBodyCell>
-                            <!-- svelte-ignore a11y-click-events-have-key-events -->
-                            <!-- svelte-ignore a11y-no-static-element-interactions -->
-                            <!-- svelte-ignore a11y-no-static-element-interactions -->
+                            <!-- svelte-ignore a11y_click_events_have_key_events -->
+                            <!-- svelte-ignore a11y_no_static_element_interactions -->
+                            <!-- svelte-ignore a11y_no_static_element_interactions -->
                             <div class="flex h-auto w-auto items-center justify-center gap-2">
                                 
 
@@ -41,9 +41,9 @@
                                         <img src="/images/edit.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                     
-                                    <!-- svelte-ignore a11y-click-events-have-key-events -->
-                                    <!-- svelte-ignore a11y-missing-attribute -->
-                                    <a  class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full" on:click={() => (deleteModal = true)}>
+                                    <!-- svelte-ignore a11y_click_events_have_key_events -->
+                                    <!-- svelte-ignore a11y_missing_attribute -->
+                                    <a  class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full" onclick={() => (deleteModal = true)}>
                                         <img src="/images/delete.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                 
@@ -65,7 +65,7 @@
                                         <img src="/images/edit.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                     
-                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full" on:click={() => (deleteModal = true)}>
+                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full" onclick={() => (deleteModal = true)}>
                                         <img src="/images/delete.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                 
@@ -87,7 +87,7 @@
                                         <img src="/images/edit.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                     
-                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full" on:click={() => (deleteModal = true)}>
+                                    <a href="edit/1" class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full" onclick={() => (deleteModal = true)}>
                                         <img src="/images/delete.png" class="h-8 w-8 object-contain" alt="" />
                                     </a>
                                 

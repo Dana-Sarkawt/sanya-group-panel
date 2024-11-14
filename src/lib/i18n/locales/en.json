@@ -265,5 +265,6 @@
   "login": "Login",
   "view": "View",
   "failed-to-upload-image": "Failed to upload image",
-  "failed-to-delete-image": "Failed to delete image"
+  "failed-to-delete-image": "Failed to delete image",
+  "deposit": "Deposit"
 }

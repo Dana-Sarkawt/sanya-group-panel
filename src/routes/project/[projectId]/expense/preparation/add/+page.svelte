@@ -9,12 +9,12 @@
   import { _ } from "svelte-i18n";
   import { Spinner } from "flowbite-svelte";
 
-  const preparationRequest = {
+  const preparationRequest = $state({
     ...new Preparation.Create(),
     project_id: Number($page.params.projectId),
-  };
+  });
   const image = new ImageCommon();
-  let isLoading = false;
+  let isLoading = $state(false);
 
   async function addPreparation(request: Preparation.Create) {
     if (isLoading) return;
@@ -64,13 +64,13 @@
       <textarea
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
         bind:value={preparationRequest.description}
-      />
+></textarea>
     </div>
 
     {#if !isLoading}
       <button
         class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={() => addPreparation(preparationRequest)}
+      onclick={() => addPreparation(preparationRequest)}
     >
         {$_("add-preparation")}
       </button>

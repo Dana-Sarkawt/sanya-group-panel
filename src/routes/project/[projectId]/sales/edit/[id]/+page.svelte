@@ -10,12 +10,12 @@
   import { _ } from "svelte-i18n";
   import { Spinner } from "flowbite-svelte";
 
-  let saleRequest = {
+  let saleRequest = $state({
     ...new Sale.Update(),
     project_id: Number($page.params.projectId),
-  };
-  const image = new ImageCommon();
-  let isLoading = false;
+  });
+  const image = $state(new ImageCommon());
+  let isLoading = $state(false);
 
   onMount(async () => {
     const sale = await saleStore.get(Number($page.params.id));
@@ -81,13 +81,13 @@
       <textarea
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
         bind:value={saleRequest.description}
-      />
+></textarea>
     </div>
 
     {#if !isLoading}
       <button
         class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-        on:click={() => updateSale(saleRequest)}
+        onclick={() => updateSale(saleRequest)}
     >
         {$_("update-sale")}
       </button>

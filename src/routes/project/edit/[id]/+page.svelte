@@ -9,8 +9,8 @@
   import { ImageCommon } from "$lib/Models/Common/Image.Common.Model";
   import { storageStore } from "$lib/Store/Storage.Store";
   import { _ } from "svelte-i18n";
-  let projectRequest = new Project.Update();
-  const image = new ImageCommon();
+  let projectRequest = $state(new Project.Update());
+  const image = $state(new ImageCommon());
 
   onMount(async () => {
     const project = await projectStore.get(Number($page.params.id));
@@ -93,7 +93,7 @@
 
     <button
       class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={() => UpdateProject(projectRequest)}
+      onclick={() => UpdateProject(projectRequest)}
     >
       {$_("update-project")}
     </button>

@@ -20,7 +20,7 @@ const createCapitalStore = () => {
     set: async (data: Store<Database["public"]["Tables"]["Capitals"]["Row"]>) =>
       set(data),
     create: async (
-      data: Database["public"]["Tables"]["Capitals"]["Insert"],
+      data: Database["public"]["Tables"]["Capitals"]["Insert"]
     ) => {
       try {
         if (!data.date || data.date === "") {
@@ -120,7 +120,7 @@ const createCapitalStore = () => {
       }
     },
     update: async (
-      data: Database["public"]["Tables"]["Capitals"]["Update"],
+      data: Database["public"]["Tables"]["Capitals"]["Update"]
     ) => {
       try {
         const response = await capitalsRepository.updateCapitalAsync(data);
@@ -130,7 +130,7 @@ const createCapitalStore = () => {
         toastStore.success(get(_)("capital-updated-successfully"));
         update((store) => {
           store.data = store.data.map((item) =>
-            item.id === response.data.id ? response.data : item,
+            item.id === response.data.id ? response.data : item
           );
           return store;
         });

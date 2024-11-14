@@ -264,5 +264,6 @@
   "login": "تسجيل الدخول",
   "view": "منظر",
   "failed-to-upload-image": "فشل تحميل الصورة",
-  "failed-to-delete-image": "فشل حذف الصورة"
+  "failed-to-delete-image": "فشل حذف الصورة",
+  "deposit": "إيداع"
 }

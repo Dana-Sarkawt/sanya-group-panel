@@ -27,8 +27,8 @@
                         class="flex h-16 w-full items-center justify-between rounded-t-lg  p-2 dark:bg-[#081c18] bg-[#ffffff]"
                 >
                     <!-- <div class="flex h-auto w-auto items-center justify-center gap-2"> -->
-                        <!-- svelte-ignore a11y-click-events-have-key-events -->
-                        <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+                        <!-- svelte-ignore a11y_click_events_have_key_events -->
+                        <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
                         <!-- <img
                             src="/images/search.png"
                             class="h-8 w-8 cursor-pointer object-contain duration-300 ease-in-out"

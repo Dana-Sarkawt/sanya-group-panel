@@ -9,12 +9,12 @@
   import { FilterTextFieldToNumbers } from "$lib/Utils/FilterFields.Utils";
   import { ImageCommon } from "$lib/Models/Common/Image.Common.Model";
   import { storageStore } from "$lib/Store/Storage.Store";
-  export let financialRequest = {
+  let { financialRequest = $bindable({
     ...new FinancialDues.Update(),
     [`${$page.params.name}_id`]: Number($page.params.id),
-  };
+  }) } = $props();
 
-  const image = new ImageCommon();
+  const image = $state(new ImageCommon());
 
   onMount(async () => {
     const finance = await financialDueStore.get(Number($page.params.financeId));
@@ -52,12 +52,12 @@
   }
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div class="w-full h-auto flex justify-center items-center md:px-44">
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <!-- svelte-ignore a11y-missing-attribute -->
-  <a on:click={() => window.history.back()} class="cursor-pointer">
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <!-- svelte-ignore a11y_missing_attribute -->
+  <a onclick={() => window.history.back()} class="cursor-pointer">
     <p
       class="w-24 h-12 rounded-xl flex justify-center items-center bg-green-700 hover:bg-green-500 text-white duration-300 ease-in-out"
     >
@@ -83,7 +83,7 @@
       <textarea
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
         bind:value={financialRequest.description}
-      />
+></textarea>
     </div>
 
     <div class="w-full h-auto flex flex-col justify-center items-start">
@@ -91,7 +91,7 @@
       <input
         type="text"
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
-        on:input={FilterTextFieldToNumbers}
+        oninput={FilterTextFieldToNumbers}
         bind:value={financialRequest.price}
       />
     </div>
@@ -107,7 +107,7 @@
 
     <button
       class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={() => updateFinancial(financialRequest)}>Update Finance</button
+      onclick={() => updateFinancial(financialRequest)}>Update Finance</button
     >
   </div>
 </div>

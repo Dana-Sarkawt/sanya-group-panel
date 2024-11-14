@@ -15,10 +15,10 @@
   import { Overhaul } from "$lib/Models/Common/Overhaul.Common.Model";
   import { _ } from "svelte-i18n";
 
-  let totalDaily = 0;
-  let isLoading = false;
-  let workers: Overhaul = new Overhaul();
-  let preparations: Overhaul = new Overhaul();
+  let totalDaily = $state(0);
+  let isLoading = $state(false);
+  let workers: Overhaul = $state(new Overhaul());
+  let preparations: Overhaul = $state(new Overhaul());
   onMount(async () => {
     isLoading = true;
     try {
@@ -130,24 +130,26 @@
       inactiveClasses="w-60 h-28 bg-[#c6257080] rounded-2xl text-white "
       on:click={retrieveDaily}
     >
-      <div
-        slot="title"
-        class="w-full h-full flex flex-col justify-center gap-2"
-      >
-        <img
-          src="/images/daily.png"
-          class="w-6 h-6 object-contain absolute mb-16 ml-3"
-          alt=""
-        />
-        <div class=" h-auto text-xl rounded-full font-bold mt-4">
-          {#if isLoading}
-            <span class="loaderPink"></span>
-          {:else}
-            {formatNumber(totalDaily)}
-          {/if}
+      {#snippet title()}
+            <div
+          
+          class="w-full h-full flex flex-col justify-center gap-2"
+        >
+          <img
+            src="/images/daily.png"
+            class="w-6 h-6 object-contain absolute mb-16 ml-3"
+            alt=""
+          />
+          <div class=" h-auto text-xl rounded-full font-bold mt-4">
+            {#if isLoading}
+              <span class="loaderPink"></span>
+            {:else}
+              {formatNumber(totalDaily)}
+            {/if}
+          </div>
+          <p class="h-auto w-full">{$_("daily")}</p>
         </div>
-        <p class="h-auto w-full">{$_("daily")}</p>
-      </div>
+          {/snippet}
 
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"
@@ -179,7 +181,7 @@
             <button
               class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 text-[8px] md:text-lg duration-300 ease-in-out"
               style="box-shadow:0 1px 8px 0px #24b97d;"
-              on:click={async () => {
+              onclick={async () => {
                 const datas = await dailyStore.getAllWithoutFilter(
                   Number($page.params.projectId)
                 );
@@ -222,40 +224,42 @@
       inactiveClasses="w-60 h-28 bg-[#21ACD659] rounded-2xl text-white "
       on:click={retrieveWorker}
     >
-      <div
-        slot="title"
-        class="w-full h-full flex flex-col justify-end pb-3 gap-2"
-      >
-        <img
-          src="/images/worker.png"
-          class="w-6 h-6 object-contain absolute mb-16 ml-3"
-          alt=""
-        />
-        <p class="h-auto w-full text-xl font-bold">{$_("worker")}</p>
+      {#snippet title()}
+            <div
+          
+          class="w-full h-full flex flex-col justify-end pb-3 gap-2"
+        >
+          <img
+            src="/images/worker.png"
+            class="w-6 h-6 object-contain absolute mb-16 ml-3"
+            alt=""
+          />
+          <p class="h-auto w-full text-xl font-bold">{$_("worker")}</p>
 
-        <div class="w-full h-auto flex justify-center items-center gap-2">
-          <div
-            class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
-          >
-            <span class="text-gray-400 text-xs">{$_("deposit:")} </span>
-            {#if isLoading}
-              <span class="loader2"></span>
-            {:else}
-              {formatNumber(workers.deposits.overall_total_price)}
-            {/if}
-          </div>
-          <div
-            class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
-          >
-            <span class="text-gray-400 text-xs">{$_("financial:")} </span>
-            {#if isLoading}
-              <span class="loader2"></span>
-            {:else}
-              {formatNumber(workers.financials.overall_total_price)}
-            {/if}
+          <div class="w-full h-auto flex justify-center items-center gap-2">
+            <div
+              class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
+            >
+              <span class="text-gray-400 text-xs">{$_("deposit:")} </span>
+              {#if isLoading}
+                <span class="loader2"></span>
+              {:else}
+                {formatNumber(workers.deposits.overall_total_price)}
+              {/if}
+            </div>
+            <div
+              class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
+            >
+              <span class="text-gray-400 text-xs">{$_("financial:")} </span>
+              {#if isLoading}
+                <span class="loader2"></span>
+              {:else}
+                {formatNumber(workers.financials.overall_total_price)}
+              {/if}
+            </div>
           </div>
         </div>
-      </div>
+          {/snippet}
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"
         id="subDiv"
@@ -288,7 +292,7 @@
           <button
             class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 text-[8px] md:text-lg duration-300 ease-in-out"
             style="box-shadow:0 1px 8px 0px #24b97d;"
-            on:click={async () => {
+            onclick={async () => {
               const datas = await workerStore.getAllWithoutFilter(
                 Number($page.params.projectId)
               );
@@ -331,40 +335,42 @@
       inactiveClasses="w-60 h-28 bg-[#886DFF4d] rounded-2xl text-white "
       on:click={retrievePreparation}
     >
-      <div
-        slot="title"
-        class="w-full h-full flex flex-col justify-end pb-3 gap-2"
-      >
-        <img
-          src="/images/preparation.png"
-          class="w-6 h-6 object-contain absolute mb-16 ml-3"
-          alt=""
-        />
-        <p class="h-auto w-full text-xl font-bold">{$_("preparation")}</p>
+      {#snippet title()}
+            <div
+          
+          class="w-full h-full flex flex-col justify-end pb-3 gap-2"
+        >
+          <img
+            src="/images/preparation.png"
+            class="w-6 h-6 object-contain absolute mb-16 ml-3"
+            alt=""
+          />
+          <p class="h-auto w-full text-xl font-bold">{$_("preparation")}</p>
 
-        <div class="w-full h-auto flex justify-center items-center gap-2">
-          <div
-            class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
-          >
-            <span class="text-gray-400 text-xs">{$_("deposit:")} </span>
-            {#if isLoading}
-              <span class="loader2"></span>
-            {:else}
-              {formatNumber(preparations.deposits.overall_total_price)}
-            {/if}
-          </div>
-          <div
-            class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
-          >
-            <span class="text-gray-400 text-xs">{$_("financial:")} </span>
-            {#if isLoading}
-              <span class="loader2"></span>
-            {:else}
-              {formatNumber(preparations.financials.overall_total_price)}
-            {/if}
+          <div class="w-full h-auto flex justify-center items-center gap-2">
+            <div
+              class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
+            >
+              <span class="text-gray-400 text-xs">{$_("deposit:")} </span>
+              {#if isLoading}
+                <span class="loader2"></span>
+              {:else}
+                {formatNumber(preparations.deposits.overall_total_price)}
+              {/if}
+            </div>
+            <div
+              class="w-auto h-8 flex justify-center items-center bg-[#10323c92] p-2 rounded-lg gap-2"
+            >
+              <span class="text-gray-400 text-xs">{$_("financial:")} </span>
+              {#if isLoading}
+                <span class="loader2"></span>
+              {:else}
+                {formatNumber(preparations.financials.overall_total_price)}
+              {/if}
+            </div>
           </div>
         </div>
-      </div>
+          {/snippet}
       <div
         class="  flex h-[100vh] w-full flex-col justify-start items-center"
         id="subDiv"
@@ -397,7 +403,7 @@
           <button
             class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 text-[8px] md:text-lg duration-300 ease-in-out"
             style="box-shadow:0 1px 8px 0px #24b97d;"
-            on:click={async () => {
+            onclick={async () => {
               const datas = await preparationStore.getAllWithoutFilter(
                 Number($page.params.projectId)
               );

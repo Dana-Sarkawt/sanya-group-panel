@@ -7,16 +7,22 @@
   import { _ } from "svelte-i18n";
   import ImageDialog from "../ImageDialog.Component.svelte";
 
-  export let users: Store<Database["public"]["Tables"]["Users"]["Row"]> = {
-    data: [],
-    count: 0,
-  };
+  interface Props {
+    users?: Store<Database["public"]["Tables"]["Users"]["Row"]>;
+  }
 
-  let deleteId: number = 0;
-  let deleteModal = false;
+  let {
+    users = $bindable({
+      data: [],
+      count: 0,
+    }),
+  }: Props = $props();
 
-  let selectedImage: string = "";
-  let imageDialog = false;
+  let deleteId: number = $state(0);
+  let deleteModal = $state(false);
+
+  let selectedImage: string = $state("");
+  let imageDialog = $state(false);
 </script>
 
 <div class="w-full h-auto flex justify-center items-center mx-2">
@@ -38,8 +44,8 @@
             <td>{user.email}</td>
 
             <td>
-              <!-- svelte-ignore a11y-no-static-element-interactions -->
-              <!-- svelte-ignore a11y-missing-attribute -->
+              <!-- svelte-ignore a11y_no_static_element_interactions -->
+              <!-- svelte-ignore a11y_missing_attribute -->
               <div class="flex h-auto w-auto items-center justify-center gap-2">
                 <a
                   href="edit/{user.id}"
@@ -51,11 +57,11 @@
                     alt=""
                   />
                 </a>
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
+                <!-- svelte-ignore a11y_no_static_element_interactions -->
                 <a
                   class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-                  on:click={() => {
+                  onclick={() => {
                     deleteModal = true;
                     deleteId = user.id;
                   }}

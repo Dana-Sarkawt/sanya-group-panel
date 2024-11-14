@@ -264,5 +264,6 @@
   "login": "چوونەژوورەوە",
   "view": "لێکۆلینەوە",
   "failed-to-upload-image": "شکستی هێنا لە بارکردنی وێنە",
-  "failed-to-delete-image": "شکستی هێنا لە سڕینەوەی وێنە"
+  "failed-to-delete-image": "شکستی هێنا لە سڕینەوەی وێنە",
+  "deposit": "پارە دانان"
 }

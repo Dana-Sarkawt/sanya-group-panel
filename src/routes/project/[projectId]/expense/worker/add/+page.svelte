@@ -9,12 +9,12 @@
   import { _ } from "svelte-i18n";
   import { Spinner } from "flowbite-svelte";
 
-  const workerRequest = {
+  const workerRequest = $state({
     ...new Worker.Create(),
     project_id: Number($page.params.projectId),
-  };
+  });
   const image = new ImageCommon();
-  let isLoading = false;
+  let isLoading = $state(false);
 
   async function addWorker(request: Worker.Create) {
     if (isLoading) return;
@@ -71,7 +71,7 @@
     {#if !isLoading}
       <button
         class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-        on:click={() => addWorker(workerRequest)}
+        onclick={() => addWorker(workerRequest)}
       >
         {$_("add-worker")}
       </button>

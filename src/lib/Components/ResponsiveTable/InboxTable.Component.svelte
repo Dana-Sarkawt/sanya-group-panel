@@ -13,42 +13,46 @@
   import { Spinner } from "flowbite-svelte";
 
   let isMobile: boolean;
-  let delete_id = 0;
-  let Store: any;
-  let totalIncome: number = 0;
-  let totalOutcome: number = 0;
-  let deleteModal = false;
-  let incomeAddModal = false;
-  let outcomeAddModal = false;
-  let incomeUpdateModal = false;
-  let outcomeUpdateModal = false;
-  let createIncome: Database["public"]["Tables"]["Income"]["Insert"] = {
+  let delete_id = $state(0);
+  let Store: any = $state();
+  let totalIncome: number = $state(0);
+  let totalOutcome: number = $state(0);
+  let deleteModal = $state(false);
+  let incomeAddModal = $state(false);
+  let outcomeAddModal = $state(false);
+  let incomeUpdateModal = $state(false);
+  let outcomeUpdateModal = $state(false);
+  let createIncome: Database["public"]["Tables"]["Income"]["Insert"] = $state({
     date: moment().format("YYYY-MM-DD"),
     overall_price: 0,
-  };
-  let createOutcome: Database["public"]["Tables"]["Outcome"]["Insert"] = {
-    date: moment().format("YYYY-MM-DD"),
-    overall_price: 0,
-  };
-  let updateIncome: Database["public"]["Tables"]["Income"]["Update"] = {
+  });
+  let createOutcome: Database["public"]["Tables"]["Outcome"]["Insert"] = $state(
+    {
+      date: moment().format("YYYY-MM-DD"),
+      overall_price: 0,
+    }
+  );
+  let updateIncome: Database["public"]["Tables"]["Income"]["Update"] = $state({
     id: 0,
     date: "",
     overall_price: 0,
-  };
-  let updateOutcome: Database["public"]["Tables"]["Outcome"]["Update"] = {
-    id: 0,
-    date: "",
-    overall_price: 0,
-  };
-  let filter = {
+  });
+  let updateOutcome: Database["public"]["Tables"]["Outcome"]["Update"] = $state(
+    {
+      id: 0,
+      date: "",
+      overall_price: 0,
+    }
+  );
+  let filter = $state({
     page: 0,
     limit: 10,
-  };
-  let isAddingIncome = false;
-  let isAddingOutcome = false;
-  let isUpdatingIncome = false;
-  let isUpdatingOutcome = false;
-  let isTableLoading = false;
+  });
+  let isAddingIncome = $state(false);
+  let isAddingOutcome = $state(false);
+  let isUpdatingIncome = $state(false);
+  let isUpdatingOutcome = $state(false);
+  let isTableLoading = $state(false);
 
   onMount(async () => {
     await handleIncome();
@@ -230,13 +234,13 @@
                         ? Math.abs(outcome.overall_price).toLocaleString()
                         : $_("no-price")}</td
                     >
-                    <!-- svelte-ignore a11y-no-static-element-interactions -->
+                    <!-- svelte-ignore a11y_no_static_element_interactions -->
                     <td
                       class="flex h-auto w-auto items-center justify-center gap-2"
                     >
                       <button
                         class="bg-sky-600 hover:bg-sky-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-                        on:click={() => {
+                        onclick={() => {
                           outcomeUpdateModal = true;
                           updateOutcome = {
                             id: outcome.id,
@@ -251,11 +255,11 @@
                           alt=""
                         />
                       </button>
-                      <!-- svelte-ignore a11y-missing-attribute -->
-                      <!-- svelte-ignore a11y-click-events-have-key-events -->
+                      <!-- svelte-ignore a11y_missing_attribute -->
+                      <!-- svelte-ignore a11y_click_events_have_key_events -->
                       <button
                         class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full cursor-pointer"
-                        on:click={() => {
+                        onclick={() => {
                           deleteModal = true;
                           delete_id = outcome.id;
                           Store = outcomeStore;
@@ -366,14 +370,14 @@
                         ? Math.abs(income.overall_price).toLocaleString()
                         : $_("no-price")}</td
                     >
-                    <!-- svelte-ignore a11y-no-static-element-interactions -->
+                    <!-- svelte-ignore a11y_no_static_element_interactions -->
                     <td
                       class="flex h-auto w-auto items-center justify-center gap-2"
                     >
                       <button
                         id="update-button-{income.id}"
                         class="bg-sky-600 hover:bg-sky-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full"
-                        on:click={() => {
+                        onclick={() => {
                           incomeUpdateModal = true;
                           updateIncome = {
                             id: income.id,
@@ -391,12 +395,12 @@
                       <Tooltip triggeredBy={`#update-button-${income.id}`}>
                         {$_("edit")}
                       </Tooltip>
-                      <!-- svelte-ignore a11y-missing-attribute -->
-                      <!-- svelte-ignore a11y-click-events-have-key-events -->
+                      <!-- svelte-ignore a11y_missing_attribute -->
+                      <!-- svelte-ignore a11y_click_events_have_key_events -->
                       <button
                         id={`delete-button-${income.id}`}
                         class="bg-red-600 hover:bg-red-500 w-6 h-6 md:h-12 md:w-12 p-2 flex justify-center items-center rounded-full cursor-pointer"
-                        on:click={() => {
+                        onclick={() => {
                           deleteModal = true;
                           delete_id = income.id;
                           Store = incomeStore;
@@ -466,22 +470,7 @@
       <Input bind:value={createIncome.overall_price} type="number" />
     </div>
   </div>
-  <svelte:fragment slot="footer">
-    <Button
-      on:click={handleCreateIncome}
-      color="green"
-      disabled={isAddingIncome}
-    >
-      {isAddingIncome ? $_("loading") : $_("add-income")}
-    </Button>
-    <Button
-      on:click={() => (incomeAddModal = false)}
-      color="red"
-      disabled={isAddingIncome}
-    >
-      {$_("cancel")}
-    </Button>
-  </svelte:fragment>
+  {@render footerIncome()}
 </Modal>
 
 <Modal
@@ -504,22 +493,7 @@
       <Input bind:value={createOutcome.overall_price} type="number" />
     </div>
   </div>
-  <svelte:fragment slot="footer">
-    <Button
-      on:click={handleCreateOutcome}
-      color="green"
-      disabled={isAddingOutcome}
-    >
-      {isAddingOutcome ? $_("loading") : $_("add-outcome")}
-    </Button>
-    <Button
-      on:click={() => (outcomeAddModal = false)}
-      color="red"
-      disabled={isAddingOutcome}
-    >
-      {$_("cancel")}
-    </Button>
-  </svelte:fragment>
+  {@render footerOutcome()}
 </Modal>
 
 <Modal
@@ -542,22 +516,7 @@
       <Input bind:value={updateIncome.overall_price} type="number" />
     </div>
   </div>
-  <svelte:fragment slot="footer">
-    <Button
-      on:click={handleUpdateIncome}
-      color="green"
-      disabled={isUpdatingIncome}
-    >
-      {isUpdatingIncome ? $_("loading") : $_("update")}
-    </Button>
-    <Button
-      on:click={() => (incomeUpdateModal = false)}
-      color="red"
-      disabled={isUpdatingIncome}
-    >
-      {$_("cancel")}
-    </Button>
-  </svelte:fragment>
+  {@render footerUpdateIncome()}
 </Modal>
 
 <Modal
@@ -580,20 +539,69 @@
       <Input bind:value={updateOutcome.overall_price} type="number" />
     </div>
   </div>
-  <svelte:fragment slot="footer">
-    <Button
-      on:click={handleUpdateOutcome}
-      color="green"
-      disabled={isUpdatingOutcome}
-    >
-      {isUpdatingOutcome ? $_("loading") : $_("update")}
-    </Button>
-    <Button
-      on:click={() => (outcomeUpdateModal = false)}
-      color="red"
-      disabled={isUpdatingOutcome}
-    >
-      {$_("cancel")}
-    </Button>
-  </svelte:fragment>
+  {@render footerUpdateOutcome()}
 </Modal>
+
+{#snippet footerOutcome()}
+  <Button
+    on:click={handleCreateOutcome}
+    color="green"
+    disabled={isAddingOutcome}
+  >
+    {isAddingOutcome ? $_("loading") : $_("add-outcome")}
+  </Button>
+  <Button
+    on:click={() => (outcomeAddModal = false)}
+    color="red"
+    disabled={isAddingOutcome}
+  >
+    {$_("cancel")}
+  </Button>
+{/snippet}
+
+{#snippet footerUpdateOutcome()}
+  <Button
+    on:click={handleUpdateOutcome}
+    color="green"
+    disabled={isUpdatingOutcome}
+  >
+    {isUpdatingOutcome ? $_("loading") : $_("update")}
+  </Button>
+  <Button
+    on:click={() => (outcomeUpdateModal = false)}
+    color="red"
+    disabled={isUpdatingOutcome}
+  >
+    {$_("cancel")}
+  </Button>
+{/snippet}
+
+{#snippet footerIncome()}
+  <Button on:click={handleCreateIncome} color="green" disabled={isAddingIncome}>
+    {isAddingIncome ? $_("loading") : $_("add-income")}
+  </Button>
+  <Button
+    on:click={() => (incomeAddModal = false)}
+    color="red"
+    disabled={isAddingIncome}
+  >
+    {$_("cancel")}
+  </Button>
+{/snippet}
+
+{#snippet footerUpdateIncome()}
+  <Button
+    on:click={handleUpdateIncome}
+    color="green"
+    disabled={isUpdatingIncome}
+  >
+    {isUpdatingIncome ? $_("loading") : $_("update")}
+  </Button>
+  <Button
+    on:click={() => (incomeUpdateModal = false)}
+    color="red"
+    disabled={isUpdatingIncome}
+  >
+    {$_("cancel")}
+  </Button>
+{/snippet}

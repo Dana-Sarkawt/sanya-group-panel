@@ -10,8 +10,8 @@
   import { phone } from "phone";
   import { _ } from "svelte-i18n";
   import { Spinner } from 'flowbite-svelte';
-  let userRequest = new User.Update();
-  let isLoading = false;
+  let userRequest = $state(new User.Update());
+  let isLoading = $state(false);
 
   onMount(async () => {
     const user = await userStore.get(Number($page.params.id));
@@ -112,7 +112,7 @@
               : 'focus:ring-red-500'
             : 'focus:ring-0'}"
           bind:value={userRequest.phone}
-          on:input={phoneField}
+          oninput={phoneField}
         />
 
         <div class="w-auto h-auto flex justify-center items-center px-2">
@@ -176,7 +176,7 @@
 
     <button
       class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center"
-      on:click={() => updateUser(userRequest)}
+      onclick={() => updateUser(userRequest)}
       disabled={isLoading}
     >
       {#if isLoading}

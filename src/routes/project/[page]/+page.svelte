@@ -6,7 +6,11 @@
   import ProjectTable from "$lib/Components/ResponsiveTable/ProjectTable.Component.svelte";
   import { exportAsExcelFile } from "$lib/Utils/ExportAsExcel.Utils";
   import { _ } from "svelte-i18n";
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
+
+  let { data = $bindable() }: Props = $props();
   let isLoading = false;
 </script>
 
@@ -69,7 +73,7 @@
           <button
             class="h-12 w-auto flex justify-center items-center rounded-lg bg-blue-500 hover:bg-blue-400 px-4 text-white gap-2 text-[10px] md:text-lg duration-300 ease-in-out"
             style="box-shadow:0 1px 8px 0px #24b97d;"
-            on:click={async () => {
+            onclick={async () => {
               const datas = await projectStore.getAllWithoutFilter();
               await exportAsExcelFile(datas?.data, "projects");
             }}

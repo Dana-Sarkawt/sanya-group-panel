@@ -12,11 +12,15 @@
   import type { Store } from "$lib/Models/Response/Store.Response.Model";
   import { saleStore } from "$lib/Store/Sale.Store";
   import { _ } from "svelte-i18n";
-  let deleteModal = false;
-  export let sales: Store<Database["public"]["Tables"]["Sales"]["Row"]> = {
+  let deleteModal = $state(false);
+  interface Props {
+    sales?: Store<Database["public"]["Tables"]["Sales"]["Row"]>;
+  }
+
+  let { sales = {
     data: [],
     count: 0,
-  };
+  } }: Props = $props();
 </script>
 
 <div
@@ -65,7 +69,7 @@
                 <a
                   href="edit/1"
                   class="bg-red-600 hover:bg-red-500 h-12 w-12 p-2 flex justify-center items-center rounded-full"
-                  on:click={() => (deleteModal = true)}
+                  onclick={() => (deleteModal = true)}
                 >
                   <img
                     src="/images/delete.png"

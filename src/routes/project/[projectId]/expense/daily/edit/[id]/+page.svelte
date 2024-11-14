@@ -12,12 +12,12 @@
   import { _ } from "svelte-i18n";
   import { Spinner } from "flowbite-svelte";
 
-  let dailyRequest = {
+  let dailyRequest = $state({
     ...new Daily.Update(),
     project_id: Number($page.params.projectId),
-  };
-  const image = new ImageCommon();
-  let isLoading = false;
+  });
+  const image = $state(new ImageCommon());
+  let isLoading = $state(false);
   onMount(async () => {
     const daily = await dailyStore.get(Number($page.params.id));
     if (!daily) {
@@ -84,7 +84,7 @@
       <textarea
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
         bind:value={dailyRequest.description}
-      />
+></textarea>
     </div>
 
     <div class="w-full h-auto flex flex-col justify-center items-start">
@@ -92,7 +92,7 @@
       <input
         type="text"
         class="w-full bg-[#daffee] dark:bg-[#0d2621] rounded-xl border-0 dark:text-white"
-        on:input={FilterTextFieldToNumbers}
+        oninput={FilterTextFieldToNumbers}
         bind:value={dailyRequest.price}
       />
     </div>
@@ -109,7 +109,7 @@
     {#if !isLoading}
       <button
         class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={() => UpdateDaily(dailyRequest)}
+      onclick={() => UpdateDaily(dailyRequest)}
       >
         {$_("update-daily")}
       </button>

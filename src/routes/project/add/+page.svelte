@@ -7,7 +7,7 @@
   import { Project } from "$lib/Models/Request/Project.Request.Model";
   import ImageField from "$lib/Components/ImageField.Component.svelte";
   import { _ } from "svelte-i18n";
-  const projectRequest = new Project.Create();
+  const projectRequest = $state(new Project.Create());
   const image = new ImageCommon();
 
   async function addProject(request: Project.Create) {
@@ -76,7 +76,7 @@
 
     <button
       class="w-full h-12 rounded-xl bg-green-600 hover:bg-green-500 text-white duration-300 ease-in-out"
-      on:click={async () => addProject(projectRequest)}
+      onclick={async () => addProject(projectRequest)}
     >
       {$_("add-project")}
     </button>

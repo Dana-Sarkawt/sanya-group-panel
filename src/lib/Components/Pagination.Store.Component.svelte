@@ -1,20 +1,33 @@
 <script lang="ts">
+  import { run } from "svelte/legacy";
+
   import { goto } from "$app/navigation";
   import type { GenericListOptions } from "$lib/Models/Common/ListOptions.Common.Model";
   import { Pagination, type LinkType } from "flowbite-svelte";
   import { onMount } from "svelte";
   import { _ } from "svelte-i18n";
 
-  export let filter: GenericListOptions = {
-    page: 0,
-    limit: 10,
-  };
-  export let StoreData: any;
-  export let Store: any;
-  export let currentPage: number;
-  export let project_id: number;
-  export let expenseTable: boolean = false;
-  let pageCount: LinkType[] = [];
+  interface Props {
+    filter?: GenericListOptions;
+    StoreData: any;
+    Store: any;
+    currentPage: number;
+    project_id: number;
+    expenseTable?: boolean;
+  }
+
+  let {
+    filter = $bindable({
+      page: 0,
+      limit: 10,
+    }),
+    StoreData,
+    Store,
+    currentPage = $bindable(),
+    project_id,
+    expenseTable = false,
+  }: Props = $props();
+  let pageCount: LinkType[] = $state([]);
 
   onMount(() => {
     fetchData();
@@ -62,7 +75,7 @@
     fetchData();
   };
 
-  const next = async () => {
+  const nextAction = async () => {
     if (currentPage == StoreData.pages! - 1) {
       return;
     }
@@ -90,10 +103,12 @@
     fetchData();
   };
 
-  $: if (currentPage) {
-    filter.page = currentPage;
-    fetchData();
-  }
+  run(() => {
+    if (currentPage) {
+      filter.page = currentPage;
+      fetchData();
+    }
+  });
 </script>
 
 {#if StoreData && (StoreData.pages ?? 0) > 1}
@@ -109,13 +124,16 @@
       setPage(event);
     }}
   >
-    <svelte:fragment slot="prev">
-      <span class="sr-only">{$_("previous")}</span>
-      <p>{$_("previous")}</p>
-    </svelte:fragment>
-    <svelte:fragment slot="next">
-      <span class="sr-only">{$_("next")}</span>
-      <p>{$_("next")}</p>
-    </svelte:fragment>
+    {@render prev()}
+    {@render next()}
   </Pagination>
 {/if}
+
+{#snippet prev()}
+  <span class="sr-only">{$_("previous")}</span>
+  <p>{$_("previous")}</p>
+{/snippet}
+{#snippet next()}
+  <span class="sr-only">{$_("next")}</span>
+  <p>{$_("next")}</p>
+{/snippet}

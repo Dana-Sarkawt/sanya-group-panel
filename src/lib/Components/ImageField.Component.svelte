@@ -4,7 +4,11 @@
   import { Dropzone } from "flowbite-svelte";
   import { _ } from "svelte-i18n";
 
-  export let image: ImageCommon | undefined = new ImageCommon();
+  interface Props {
+    image?: ImageCommon | undefined;
+  }
+
+  let { image = new ImageCommon() }: Props = $props();
 
   function handleFileChange(event: Event) {
     const input = event.target as HTMLInputElement;

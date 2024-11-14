@@ -23,8 +23,7 @@ const createSaleStore = () => {
       try {
         const response = await salesRepository.createSaleAsync(data);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-create-sale"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-create-sale"));
         }
         toastStore.success(get(_)("sale-created-successfully"));
         update((store) => {
@@ -34,27 +33,33 @@ const createSaleStore = () => {
         });
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-create-sale"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-create-sale"));
+        }
       }
     },
     get: async (id: number) => {
       try {
         const response = await salesRepository.readSaleAsync(id);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-sale"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-sale"));
         }
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-sale"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-sale"));
+        }
       }
     },
     getAll: async (options?: GenericListOptions) => {
       try {
         const response = await salesRepository.readSalesAsync(options);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-sale"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-sale"));
         }
         const pages = Math.ceil(response.count! / (options?.limit! ?? 10));
         set({
@@ -64,7 +69,11 @@ const createSaleStore = () => {
         });
         return { data: response.data, count: response.count ?? 0, pages };
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-sale"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-sale"));
+        }
       }
     },
     getAllWithoutFilter: async (projectId: number) => {
@@ -72,15 +81,18 @@ const createSaleStore = () => {
         const response =
           await salesRepository.readSalesWithoutFilterAsync(projectId);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-sale"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-sale"));
         }
         return {
           data: response.data,
           count: response.count ?? 0,
         };
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-sale"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-sale"));
+        }
       }
     },
     getOverhaulDepositsByProjectId: async (projectId: number) => {
@@ -88,12 +100,15 @@ const createSaleStore = () => {
         const response =
           await salesRepository.readOverhaulDepositsByProjectIdAsync(projectId);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-sale"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-sale"));
         }
         return response.data;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-sale"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-sale"));
+        }
       }
     },
     getOverhaulFinancialsByProjectId: async (projectId: number) => {
@@ -103,12 +118,15 @@ const createSaleStore = () => {
             projectId,
           );
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-sale"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-sale"));
         }
         return response.data;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-sale"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-sale"));
+        }
       }
     },
     getDepositsBySaleIds: async (ids: number[]) => {
@@ -116,24 +134,30 @@ const createSaleStore = () => {
         console.log("ids", ids);
         const response = await salesRepository.readDepositsBySaleIdsAsync(ids);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-sale"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-sale"));
         }
         return response.data;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-sale"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+            toastStore.error(get(_)("failed-to-get-sale"));
+        }
       }
     },
     getFinancialBySaleIds: async (ids: number[]) => {
       try {
         const response = await salesRepository.readFinancialBySaleIdsAsync(ids);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-sale"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-sale"));
         }
         return response.data;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-sale"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-sale"));
+        }
       }
     },
     update: async (data: Database["public"]["Tables"]["Sales"]["Update"]) => {
@@ -143,8 +167,7 @@ const createSaleStore = () => {
         }
         const response = await salesRepository.updateSaleAsync(data);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-update-sale"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-update-sale"));
         }
         toastStore.success(get(_)("sale-updated-successfully"));
         update((store) => {
@@ -155,15 +178,18 @@ const createSaleStore = () => {
         });
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-update-sale"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-update-sale"));
+        }
       }
     },
     delete: async (id: number) => {
       try {
         const response = await salesRepository.deleteSaleAsync(id);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-delete-sale"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-delete-sale"));
         }
         toastStore.success(get(_)("sale-deleted-successfully"));
         update((store) => {
@@ -173,7 +199,11 @@ const createSaleStore = () => {
         });
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-delete-sale"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-delete-sale"));
+        }
       }
     },
   };

@@ -23,14 +23,12 @@ const createWorkerStore = () => {
     create: async (data: Database["public"]["Tables"]["Workers"]["Insert"]) => {
       try {
         if (!data.name || data.name === "") {
-          toastStore.error(get(_)("name-is-required"));
           throw new Error(get(_)("name-is-required"));
         }
         const response = await workersRepository.createWorkerAsync(data);
 
         if (response.error) {
-          toastStore.error(get(_)("failed-to-create-worker"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-create-worker"));
         }
 
         update((store) => {
@@ -41,7 +39,11 @@ const createWorkerStore = () => {
 
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-create-worker"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-create-worker"));
+        }
       }
     },
     get: async (id: number) => {
@@ -54,7 +56,11 @@ const createWorkerStore = () => {
 
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-worker"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-worker"));
+        }
       }
     },
     getAll: async (options?: GenericListOptions) => {
@@ -75,7 +81,11 @@ const createWorkerStore = () => {
 
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-workers"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-workers"));
+        }
       }
     },
     getAllWithoutFilter: async (projectId: number) => {
@@ -90,7 +100,11 @@ const createWorkerStore = () => {
           count: response.count ?? 0,
         };
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-workers"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-workers"));
+        }
       }
     },
     getOverhaulDepositsByProjectId: async (projectId: number) => {
@@ -104,7 +118,11 @@ const createWorkerStore = () => {
         }
         return response.data;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-overhaul-deposits"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-overhaul-deposits"));
+        }
       }
     },
     getOverhaulFinancialsByProjectId: async (projectId: number) => {
@@ -118,7 +136,11 @@ const createWorkerStore = () => {
         }
         return response.data;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-overhaul-financials"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-overhaul-financials"));
+        }
       }
     },
     getDepositsByWorkerIds: async (ids: number[]) => {
@@ -130,7 +152,11 @@ const createWorkerStore = () => {
         }
         return response.data;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-deposits"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-deposits"));
+        }
       }
     },
     getFinancialByWorkerIds: async (ids: number[]) => {
@@ -142,7 +168,11 @@ const createWorkerStore = () => {
         }
         return response.data;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-financials"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-financials"));
+        }
       }
     },
     update: async (data: Database["public"]["Tables"]["Workers"]["Update"]) => {
@@ -150,8 +180,7 @@ const createWorkerStore = () => {
         const response = await workersRepository.updateWorkerAsync(data);
 
         if (response.error) {
-          toastStore.error(get(_)("failed-to-update-worker"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-update-worker"));
         }
         toastStore.success(get(_)("worker-updated-successfully"));
         update((store) => {
@@ -162,7 +191,11 @@ const createWorkerStore = () => {
 
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-update-worker"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-update-worker"));
+        }
       }
     },
     delete: async (id: number) => {
@@ -170,7 +203,6 @@ const createWorkerStore = () => {
         const response = await workersRepository.deleteWorkerAsync(id);
 
         if (response.error) {
-          toastStore.error(get(_)("failed-to-delete-worker"));
           throw new Error(response.error.message);
         }
         toastStore.success(get(_)("worker-deleted-successfully"));
@@ -181,7 +213,11 @@ const createWorkerStore = () => {
           return store;
         });
       } catch (error) {
-        toastStore.error(get(_)("failed-to-delete-worker"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-delete-worker"));
+        }
       }
     },
   };

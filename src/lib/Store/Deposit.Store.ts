@@ -25,8 +25,7 @@ const createDepositStore = () => {
       try {
         const response = await depositsRepository.createDepositAsync(data);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-create-deposit"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-create-deposit"));
         }
         toastStore.success(get(_)("deposit-created-successfully"));
         update((store) => {
@@ -36,27 +35,33 @@ const createDepositStore = () => {
         });
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-create-deposit"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-create-deposit"));
+        }
       }
     },
     get: async (id: number) => {
       try {
         const response = await depositsRepository.readDepositAsync(id);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-deposit"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-deposit"));
         }
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-deposit"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-deposit"));
+        }
       }
     },
     getAll: async (options?: GenericListOptions) => {
       try {
         const response = await depositsRepository.readDepositsAsync(options);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-deposit"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-deposit"));
         }
 
         const pages = Math.ceil(response.count! / (options?.limit! ?? 10));
@@ -73,7 +78,11 @@ const createDepositStore = () => {
           pages: pages,
         };
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-deposit"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-deposit"));
+        }
       }
     },
     update: async (
@@ -81,13 +90,11 @@ const createDepositStore = () => {
     ) => {
       try {
         if (!data.id || data.id === 0) {
-          toastStore.error(get(_)("invalid-deposit-id"));
           throw new Error(get(_)("invalid-deposit-id"));
         }
         const response = await depositsRepository.updateDepositAsync(data);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-update-deposit"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-update-deposit"));
         }
         toastStore.success(get(_)("deposit-updated-successfully"));
         update((store) => {
@@ -98,19 +105,21 @@ const createDepositStore = () => {
         });
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-update-deposit"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-update-deposit"));
+        }
       }
     },
     delete: async (id: number) => {
       try {
         if (!id || id === 0) {
-          toastStore.error(get(_)("invalid-deposit-id"));
           throw new Error(get(_)("invalid-deposit-id"));
         }
         const response = await depositsRepository.deleteDepositAsync(id);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-delete-deposit"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-delete-deposit"));
         }
         toastStore.success(get(_)("deposit-deleted-successfully"));
         update((store) => {
@@ -120,7 +129,11 @@ const createDepositStore = () => {
         });
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-delete-deposit"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-delete-deposit"));
+        }
       }
     },
   };

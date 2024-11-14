@@ -262,5 +262,7 @@
   "failed-to-get-outcomes-total": "شکستی هێنا لە بەدەستهێنانی کۆی گشتی دەرئەنجامەکان",
   "total-income-tooltip": "کۆی گشتی داهات",
   "login": "چوونەژوورەوە",
-  "view": "لێکۆلینەوە"
+  "view": "لێکۆلینەوە",
+  "failed-to-upload-image": "شکستی هێنا لە بارکردنی وێنە",
+  "failed-to-delete-image": "شکستی هێنا لە سڕینەوەی وێنە"
 }

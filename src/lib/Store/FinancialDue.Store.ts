@@ -27,8 +27,7 @@ const createFinancialDueStore = () => {
         const response =
           await financialDuesRepository.createFinancialDueAsync(data);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-create-financial-due"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-create-financial-due"));
         }
         toastStore.success(get(_)("financial-due-created-successfully"));
         update((store) => {
@@ -38,7 +37,11 @@ const createFinancialDueStore = () => {
         });
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-create-financial-due"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-create-financial-due"));
+        }
       }
     },
     get: async (id: number) => {
@@ -46,12 +49,15 @@ const createFinancialDueStore = () => {
         const response =
           await financialDuesRepository.readFinancialDueAsync(id);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-financial-due"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-financial-due"));
         }
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-financial-due"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-financial-due"));
+        }
       }
     },
     getAll: async (options?: GenericListOptions) => {
@@ -59,8 +65,7 @@ const createFinancialDueStore = () => {
         const response =
           await financialDuesRepository.readFinancialDuesAsync(options);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-financial-due"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-financial-due"));
         }
         const pages = Math.ceil(response.count! / (options?.limit! ?? 10));
         set({
@@ -74,7 +79,11 @@ const createFinancialDueStore = () => {
           pages,
         };
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-financial-due"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-financial-due"));
+        }
       }
     },
     update: async (
@@ -84,8 +93,7 @@ const createFinancialDueStore = () => {
         const response =
           await financialDuesRepository.updateFinancialDueAsync(data);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-update-financial-due"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-update-financial-due"));
         }
         toastStore.success(get(_)("financial-due-updated-successfully"));
         update((store) => {
@@ -96,7 +104,11 @@ const createFinancialDueStore = () => {
         });
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-update-financial-due"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-update-financial-due"));
+        }
       }
     },
     delete: async (id: number) => {
@@ -104,8 +116,7 @@ const createFinancialDueStore = () => {
         const response =
           await financialDuesRepository.deleteFinancialDueAsync(id);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-delete-financial-due"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-delete-financial-due"));
         }
         toastStore.success(get(_)("financial-due-deleted-successfully"));
         update((store) => {
@@ -117,7 +128,11 @@ const createFinancialDueStore = () => {
         });
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-delete-financial-due"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-delete-financial-due"));
+        }
       }
     },
   };

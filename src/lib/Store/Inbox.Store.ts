@@ -22,8 +22,7 @@ const createInboxStore = () => {
       try {
         const response = await inboxRepository.createInboxAsync(data);
         if (response.error) {
-          toastStore.error(response.error.message);
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-create-inbox-item"));
         }
         update((store) => {
           store.data.push(response.data);
@@ -33,27 +32,33 @@ const createInboxStore = () => {
         toastStore.success(get(_)("inbox-item-created"));
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-create-inbox-item"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-create-inbox-item"));
+        }
       }
     },
     get: async (id: number) => {
       try {
         const response = await inboxRepository.readInboxAsync(id);
         if (response.error) {
-          toastStore.error(response.error.message);
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-inbox-item"));
         }
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-inbox-item"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-inbox-item"));
+        }
       }
     },
     getAll: async (options?: GenericListOptions) => {
       try {
         const response = await inboxRepository.readInboxesAsync(options);
         if (response.error) {
-          toastStore.error(response.error.message);
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-inboxes"));
         }
 
         const pages = Math.ceil(response.count! / (options?.limit! ?? 10));
@@ -70,7 +75,11 @@ const createInboxStore = () => {
           pages: pages,
         };
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-inboxes"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-inboxes"));
+        }
       }
     },
     update: async (data: Database["public"]["Tables"]["Inbox"]["Update"]) => {
@@ -87,7 +96,11 @@ const createInboxStore = () => {
         toastStore.success(get(_)("inbox-item-updated"));
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-update-inbox-item"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-update-inbox-item"));
+        }
       }
     },
     delete: async (id: number) => {
@@ -101,7 +114,11 @@ const createInboxStore = () => {
         toastStore.success(get(_)("inbox-item-deleted"));
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-delete-inbox-item"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-delete-inbox-item"));
+        }
       }
     },
   };

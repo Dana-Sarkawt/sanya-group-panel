@@ -23,38 +23,42 @@ const createAuthStore = () => {
           request.email,
         );
         if (checkEmail.data) {
-          toastStore.error(get(_)("email-already-exists"));
           throw new Error(get(_)("email-already-exists"));
         }
         const checkPhone = await usersRepository.readUserByPhoneAsync(
           request.phone,
         );
         if (checkPhone.data) {
-          toastStore.error(get(_)("phone-number-already-exists"));
           throw new Error(get(_)("phone-number-already-exists"));
         }
         const response = await authRepository.createAsync(request);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-create-user"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-create-user"));
         }
         toastStore.success(get(_)("user-created-successfully"));
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-create-user"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-create-user"));
+        }
       }
     },
     get: async () => {
       try {
         const response = await authRepository.getUserAsync();
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-user"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-user"));
         }
         set(response.data);
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-user"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-user"));
+        }
         set(null);
         return null;
       }
@@ -63,13 +67,16 @@ const createAuthStore = () => {
       try {
         const response = await authRepository.loginAsync(email, password);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-login"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-login"));
         }
         set(response.data);
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-login"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-login"));
+        }
         set(null);
       }
     },
@@ -78,7 +85,11 @@ const createAuthStore = () => {
         await authRepository.logoutAsync();
         set(null);
       } catch (error) {
-        toastStore.error(get(_)("failed-to-logout"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-logout"));
+        }
         set(null);
       }
     },

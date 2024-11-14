@@ -25,8 +25,7 @@ const createOutcomeStore = () => {
         const response = await outcomeRepository.createOutcomeAsync(data);
 
         if (response.error) {
-          toastStore.error(get(_)("failed-to-create-outcome"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-create-outcome"));
         }
 
         update((state) => ({
@@ -36,7 +35,11 @@ const createOutcomeStore = () => {
         toastStore.success(get(_)("outcome-created-successfully"));
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-create-outcome"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-create-outcome"));
+        }
       }
     },
     get: async (id: number) => {
@@ -44,13 +47,16 @@ const createOutcomeStore = () => {
         const response = await outcomeRepository.readOutcomeAsync(id);
 
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-outcome"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-outcome"));
         }
 
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-outcome"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-outcome"));
+        }
       }
     },
     getTotal: async () => {
@@ -58,7 +64,11 @@ const createOutcomeStore = () => {
         const response = await outcomeRepository.readOutcomesTotalAsync();
         return response.data?.total ?? 0;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-outcomes-total"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-outcomes-total"));
+        }
         return 0;
       }
     },
@@ -75,7 +85,11 @@ const createOutcomeStore = () => {
         toastStore.success(get(_)("outcome-updated-successfully"));
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-update-outcome"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-update-outcome"));
+        }
       }
     },
     getAll: async (options?: GenericListOptions) => {
@@ -83,8 +97,7 @@ const createOutcomeStore = () => {
         const response = await outcomeRepository.readOutcomesAsync(options);
 
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-outcome"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-outcome"));
         }
 
         const pages = Math.ceil((response.count ?? 0) / (options?.limit || 10));
@@ -96,7 +109,11 @@ const createOutcomeStore = () => {
 
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-outcome"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-outcome"));
+        }
       }
     },
   };

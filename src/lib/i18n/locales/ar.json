@@ -262,5 +262,7 @@
   "failed-to-get-outcomes-total": "فشل في الحصول على إجمالي النتائج",
   "total-income-tooltip": "إجمالي الدخل",
   "login": "تسجيل الدخول",
-  "view": "منظر"
+  "view": "منظر",
+  "failed-to-upload-image": "فشل تحميل الصورة",
+  "failed-to-delete-image": "فشل حذف الصورة"
 }

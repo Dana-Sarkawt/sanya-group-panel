@@ -17,7 +17,11 @@ const createStorageStore = () => {
         toastStore.success(get(_)("image-uploaded-successfully"));
         return url;
       } catch (error) {
-        throw error;
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-upload-image"));
+        }
       }
     },
     deleteImage: async (id: string) => {
@@ -26,7 +30,11 @@ const createStorageStore = () => {
         set("");
         toastStore.success(get(_)("image-deleted-successfully"));
       } catch (error) {
-        throw error;
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-delete-image"));
+        }
       }
     },
   };

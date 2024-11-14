@@ -76,11 +76,9 @@
     fetchData();
   };
 
-  $: {
-    if (currentPage) {
-      filter.page = currentPage;
-      fetchData();
-    }
+  $: if (currentPage) {
+    filter.page = currentPage;
+    fetchData();
   }
 </script>
 

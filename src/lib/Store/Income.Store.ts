@@ -25,8 +25,7 @@ const createIncomeStore = () => {
         const response = await incomeRepository.createIncomeAsync(data);
 
         if (response.error) {
-          toastStore.error(response.error.message);
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-create-income"));
         }
 
         update((state) => ({
@@ -37,7 +36,11 @@ const createIncomeStore = () => {
         toastStore.success(get(_)("income-created-successfully"));
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-create-income"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-create-income"));
+        }
       }
     },
 
@@ -46,13 +49,16 @@ const createIncomeStore = () => {
         const response = await incomeRepository.readIncomeAsync(id);
 
         if (response.error) {
-          toastStore.error(response.error.message);
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-income"));
         }
 
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-income"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-income"));
+        }
       }
     },
     getAll: async (options?: GenericListOptions) => {
@@ -60,8 +66,7 @@ const createIncomeStore = () => {
         const response = await incomeRepository.readIncomesAsync(options);
 
         if (response.error) {
-          toastStore.error(response.error.message);
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-incomes"));
         }
 
         const pages = Math.ceil((response.count ?? 0) / (options?.limit || 10));
@@ -75,7 +80,11 @@ const createIncomeStore = () => {
 
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-incomes"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-incomes"));
+        }
       }
     },
     getTotal: async () => {
@@ -83,7 +92,11 @@ const createIncomeStore = () => {
         const response = await incomeRepository.readIncomesTotalAsync();
         return response.data?.total ?? 0;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-incomes-total"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-incomes-total"));
+        }
         return 0;
       }
     },
@@ -99,7 +112,11 @@ const createIncomeStore = () => {
         toastStore.success(get(_)("income-updated-successfully"));
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-update-income"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-update-income"));
+        }
       }
     },
     delete: async (id: number) => {
@@ -109,7 +126,11 @@ const createIncomeStore = () => {
         toastStore.success(get(_)("income-deleted-successfully"));
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-delete-income"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-delete-income"));
+        }
       }
     },
   };

@@ -263,5 +263,7 @@
   "failed-to-get-outcomes-total": "Failed to get Outcomes Total",
   "total-income-tooltip": "Total Income",
   "login": "Login",
-  "view": "View"
+  "view": "View",
+  "failed-to-upload-image": "Failed to upload image",
+  "failed-to-delete-image": "Failed to delete image"
 }

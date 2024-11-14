@@ -24,17 +24,14 @@ const createCapitalStore = () => {
     ) => {
       try {
         if (!data.date || data.date === "") {
-          toastStore.error(get(_)("date-is-required"));
           throw new Error(get(_)("date-is-required"));
         }
         if (!data.price || data.price === 0) {
-          toastStore.error(get(_)("price-is-required"));
           throw new Error(get(_)("price-is-required"));
         }
         const response = await capitalsRepository.createCapitalAsync(data);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-create-capital"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-create-capital"));
         }
         toastStore.success(get(_)("capital-created-successfully"));
         update((store) => {
@@ -44,27 +41,33 @@ const createCapitalStore = () => {
         });
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-create-capital"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-create-capital"));
+        }
       }
     },
     get: async (id: number) => {
       try {
         const response = await capitalsRepository.readCapitalAsync(id);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-capital"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-capital"));
         }
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-capital"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-capital"));
+        }
       }
     },
     getAll: async (options?: GenericListOptions) => {
       try {
         const response = await capitalsRepository.readCapitalsAsync(options);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-capitals"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-capitals"));
         }
         const pages = Math.ceil(response.count! / (options?.limit ?? 10));
         set({
@@ -74,7 +77,11 @@ const createCapitalStore = () => {
         });
         return { data: response.data, count: response.count ?? 0 };
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-capitals"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-capitals"));
+        }
       }
     },
     getAllWithoutFilter: async (projectId: number) => {
@@ -82,15 +89,18 @@ const createCapitalStore = () => {
         const response =
           await capitalsRepository.readCapitalsWithoutFilterAsync(projectId);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-capitals"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-capitals"));
         }
         return {
           data: response.data,
           count: response.count ?? 0,
         };
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-capitals"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-capitals"));
+        }
       }
     },
     getTotalPrice: async (projectId: number) => {
@@ -98,12 +108,15 @@ const createCapitalStore = () => {
         const response =
           await capitalsRepository.readCapitalsTotalPriceAsync(projectId);
         if (response == 0) {
-          toastStore.error(get(_)("no-capitals-found-for-this-project"));
           throw new Error(get(_)("no-capitals-found-for-this-project"));
         }
         return response;
       } catch (error) {
-        toastStore.error(get(_)("no-capitals-found-for-this-project"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("no-capitals-found-for-this-project"));
+        }
       }
     },
     update: async (
@@ -112,8 +125,7 @@ const createCapitalStore = () => {
       try {
         const response = await capitalsRepository.updateCapitalAsync(data);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-update-capital"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-update-capital"));
         }
         toastStore.success(get(_)("capital-updated-successfully"));
         update((store) => {
@@ -124,15 +136,18 @@ const createCapitalStore = () => {
         });
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-update-capital"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-update-capital"));
+        }
       }
     },
     delete: async (id: number) => {
       try {
         const response = await capitalsRepository.deleteCapitalAsync(id);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-delete-capital"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-delete-capital"));
         }
         update((store) => {
           store.data = store.data.filter((item) => item.id !== id);
@@ -141,7 +156,11 @@ const createCapitalStore = () => {
         });
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-delete-capital"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-delete-capital"));
+        }
       }
     },
   };

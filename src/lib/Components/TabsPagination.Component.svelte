@@ -77,11 +77,9 @@
     debouncedFetchData();
   };
 
-  $: {
-    if (currentPage) {
-      filter.page = currentPage;
-      debouncedFetchData();
-    }
+  $: if (currentPage) {
+    filter.page = currentPage;
+    debouncedFetchData();
   }
 
   function debounce(func: any, wait: number) {

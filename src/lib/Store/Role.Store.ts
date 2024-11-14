@@ -22,13 +22,11 @@ const createRoleStore = () => {
     create: async (data: Database["public"]["Tables"]["Roles"]["Insert"]) => {
       try {
         if (!data.name || data.name === "") {
-          toastStore.error(get(_)("name-is-required"));
           throw new Error(get(_)("name-is-required"));
         }
         const response = await rolesRepository.createRoleAsync(data);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-create-role"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-create-role"));
         }
         toastStore.success(get(_)("role-created-successfully"));
         update((store) => {
@@ -38,27 +36,33 @@ const createRoleStore = () => {
         });
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-create-role"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-create-role"));
+        }
       }
     },
     get: async (id: number) => {
       try {
         const response = await rolesRepository.readRoleAsync(id);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-role"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-role"));
         }
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-role"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-role"));
+        }
       }
     },
     getAll: async (options?: GenericListOptions) => {
       try {
         const response = await rolesRepository.readRolesAsync(options);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-role"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-role"));
         }
         set({
           data: response.data,
@@ -69,30 +73,36 @@ const createRoleStore = () => {
           count: response.count ?? 0,
         };
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-role"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-role"));
+        }
       }
     },
     getAllWithoutFilter: async () => {
       try {
         const response = await rolesRepository.readRolesWithoutFilterAsync();
         if (response.error) {
-          toastStore.error(get(_)("failed-to-get-role"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-get-role"));
         }
         return {
           data: response.data,
           count: response.count ?? 0,
         };
       } catch (error) {
-        toastStore.error(get(_)("failed-to-get-role"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-get-role"));
+        }
       }
     },
     update: async (data: Database["public"]["Tables"]["Roles"]["Update"]) => {
       try {
         const response = await rolesRepository.updateRoleAsync(data);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-update-role"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-update-role"));
         }
         toastStore.success(get(_)("role-updated-successfully"));
         update((store) => {
@@ -102,15 +112,18 @@ const createRoleStore = () => {
         });
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-update-role"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-update-role"));
+        }
       }
     },
     delete: async (id: number) => {
       try {
         const response = await rolesRepository.deleteRoleAsync(id);
         if (response.error) {
-          toastStore.error(get(_)("failed-to-delete-role"));
-          throw new Error(response.error.message);
+          throw new Error(get(_)("failed-to-delete-role"));
         }
         toastStore.success(get(_)("role-deleted-successfully"));
         update((store) => {
@@ -120,7 +133,11 @@ const createRoleStore = () => {
         });
         return response;
       } catch (error) {
-        toastStore.error(get(_)("failed-to-delete-role"));
+        if (error instanceof Error) {
+          toastStore.error(error.message);
+        } else {
+          toastStore.error(get(_)("failed-to-delete-role"));
+        }
       }
     },
   };

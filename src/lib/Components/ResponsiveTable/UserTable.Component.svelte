@@ -23,6 +23,7 @@
 
 	let selectedImage: string = $state('');
 	let imageDialog = $state(false);
+	let isLoading = $state(false);
 </script>
 
 <div class="mx-2 flex h-auto w-full items-center justify-center">
